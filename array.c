@@ -9,7 +9,7 @@ int main(void)
         array[i] = i + 10;
 
     for (i = 0; i < 10; i++)
-        printf("Value at index %d = %d", i, array[i]);
+        printf("Value at index %d = %d\n", i, array[i]);
 
     return 0;
 }
