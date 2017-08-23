@@ -5,7 +5,7 @@
     "workbench.activityBar.visible": false,
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": false,
-    "workbench.editor.showIcons": false,
+    "workbench.editor.showIcons": true,
     "workbench.editor.tabCloseButton": "off",
     "workbench.sideBar.location": "right",
 
