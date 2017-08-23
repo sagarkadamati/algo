@@ -1,0 +1,21 @@
+{
+    "workbench.colorTheme": "Solarized Light",
+    "workbench.startupEditor": "newUntitledFile",
+
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": true,
+    "workbench.editor.showTabs": false,
+    "workbench.editor.showIcons": false,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.sideBar.location": "right",
+
+    "editor.lineNumbers": "off",
+    "editor.minimap.enabled": false,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "underline-thin",
+    "editor.hideCursorInOverviewRuler": true,
+
+    "window.title": "Coder",
+    "window.menuBarVisibility": "toggle",
+    "window.zoomLevel": 0
+}
