@@ -80,6 +80,16 @@
         "when": "terminalFocus"
     },
     {
+        "key": "ctrl+alt+e",
+        "command": "search.action.focusActiveEditor",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+alt+t",
+        "command": "workbench.action.terminal.focus",
+        "when": "editorTextFocus"
+    },
+    {
         "key": "ctrl+shift+e",
         "command": "workbench.view.explorer",
         "when": "editorTextFocus"
@@ -95,6 +105,10 @@
     },
     {   "key": "ctrl+l",
         "command": "cursorWordStartRight",
+        "when": "editorTextFocus"
+    },{
+        "key": "ctrl+alt+h",
+        "command": "commandId",
         "when": "editorTextFocus"
     },
     {   "key": "ctrl+shift+j",
