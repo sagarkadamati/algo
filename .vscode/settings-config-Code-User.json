@@ -14,6 +14,8 @@
     "editor.cursorBlinking": "solid",
     "editor.cursorStyle": "underline-thin",
     "editor.hideCursorInOverviewRuler": true,
+    "editor.overviewRulerBorder": false,
+    "editor.overviewRulerLanes": 0,
 
     "window.title": "Coder",
     "window.menuBarVisibility": "toggle",
