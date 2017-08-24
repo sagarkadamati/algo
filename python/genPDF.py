@@ -15,9 +15,6 @@ for i in range(1):
     page3 = reader.getPage(i + 2)
     page4 = reader.getPage(i + 3)
 
-    # page1.scaleTo(width=5.5, height=8.5)
-    # page2.scaleTo(width=5.5, height=8.5)
-
     tx = page2.mediaBox.getWidth()
     ty = 0
     translation = [[1, 0, 0],
