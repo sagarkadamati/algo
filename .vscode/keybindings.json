@@ -30,11 +30,6 @@
     },
 
     {
-        "key": "ctrl+e",
-        "command": "workbench.action.quickOpen",
-        "when": "editorTextFocus"
-    },
-    {
         "key": "ctrl+p",
         "command": "cursorUp",
         "when": "editorTextFocus"
@@ -75,33 +70,24 @@
 
     
     {
-        "key": "ctrl+shift+e",
-        "command": "search.action.focusActiveEditor",
-        "when": "terminalFocus"
-    },
-    {
         "key": "ctrl+alt+e",
         "command": "search.action.focusActiveEditor",
-        "when": "terminalFocus"
+        "when": "!editorTextFocus"
     },
     {
         "key": "ctrl+alt+t",
         "command": "workbench.action.terminal.focus",
-        "when": "editorTextFocus"
+        "when": "!terminalFocus"
     },
     {
-        "key": "ctrl+shift+e",
+        "key": "ctrl+shift+alt+e",
         "command": "workbench.view.explorer",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+e",
+        "key": "ctrl+shift+alt+e",
         "command": "workbench.action.toggleSidebarVisibility",
         "when": "explorerViewletFocus"
-    },
-    {   "key": "ctrl+j",
-        "command": "cursorWordStartLeft",
-        "when": "editorTextFocus"
     },
     {   "key": "ctrl+l",
         "command": "cursorWordStartRight",
@@ -109,10 +95,6 @@
     },{
         "key": "ctrl+alt+h",
         "command": "commandId",
-        "when": "editorTextFocus"
-    },
-    {   "key": "ctrl+shift+j",
-        "command": "cursorWordStartLeftSelect",
         "when": "editorTextFocus"
     },
     {   "key": "ctrl+shift+l",
@@ -126,5 +108,17 @@
     {
         "key": "ctrl+alt+m",
         "command": "workbench.action.toggleMaximizedPanel"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "-editor.action.startFindReplaceAction"
+    },
+    {   "key": "ctrl+h",
+        "command": "cursorWordStartLeft",
+        "when": "editorTextFocus"
+    },
+    {   "key": "ctrl+shift+h",
+        "command": "cursorWordStartLeftSelect",
+        "when": "editorTextFocus"
     }
 ]
