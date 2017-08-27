@@ -28,7 +28,6 @@
         "key": "ctrl+shift+b",
         "command": "-workbench.action.tasks.build"
     },
-
     {
         "key": "ctrl+p",
         "command": "cursorUp",
@@ -67,8 +66,6 @@
         "key": "ctrl+shift+e",
         "command": "-workbench.view.explorer"
     },
-
-    
     {
         "key": "ctrl+alt+e",
         "command": "search.action.focusActiveEditor",
@@ -91,10 +88,6 @@
     },
     {   "key": "ctrl+l",
         "command": "cursorWordStartRight",
-        "when": "editorTextFocus"
-    },{
-        "key": "ctrl+alt+h",
-        "command": "commandId",
         "when": "editorTextFocus"
     },
     {   "key": "ctrl+shift+l",
@@ -119,6 +112,119 @@
     },
     {   "key": "ctrl+shift+h",
         "command": "cursorWordStartLeftSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+n",
+        "command": "-workbench.action.newWindow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "cursorRightSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "cursorUpSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+n",
+        "command": "cursorDownSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+b",
+        "command": "cursorLeftSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "cursorEndSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "cursorHomeSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "editor.action.clipboardCopyAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+y",
+        "command": "editor.action.clipboardPasteAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+; v",
+        "command": "workbench.action.splitEditor",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+h",
+        "command": "workbench.action.focusPreviousGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+l",
+        "command": "workbench.action.focusNextGroup",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "deleteRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "editor.action.clipboardCutAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+n",
+        "command": "cursorPageDown",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+p",
+        "command": "cursorPageUp",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+n",
+        "command": "cursorPageDownSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+p",
+        "command": "cursorPageUpSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+h",
+        "command": "-workbench.action.output.toggleOutput"
+    },
+    {
+        "key": "ctrl+a",
+        "command": "-editor.action.selectAll"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "cursorLineEnd",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+a",
+        "command": "cursorLineStart",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+alt+b",
+        "command": "workbench.action.toggleSidebarVisibility",
         "when": "editorTextFocus"
     }
 ]
