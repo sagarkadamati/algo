@@ -2,7 +2,7 @@
     "workbench.colorTheme": "Solarized Light",
     "workbench.startupEditor": "newUntitledFile",
 
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": false,
     "workbench.editor.showIcons": true,
@@ -19,5 +19,33 @@
 
     "window.title": "Coder",
     "window.menuBarVisibility": "toggle",
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+
+    "terminal.integrated.cursorStyle": "underline",
+    "terminal.integrated.cursorBlinking": false,
+    "editor.renderIndentGuides": false,
+
+    "workbench.colorCustomizations": {
+        "editor.background": "#FDF6E3",
+        "editor.foreground": "#657B83",
+        "editor.lineHighlightBackground": "#F9F3E2",
+        "scrollbarSlider.background": "#FDF6E3",
+        "statusBar.background": "#FDF6E3",
+        "statusBar.foreground": "#2aa198",
+        "activityBar.background": "#FDF6E3",
+        "activityBar.foreground": "#2aa198",
+        "activityBarBadge.background": "#657B83",
+        "activityBarBadge.foreground": "#FDF6E3",
+        "terminal.background": "#FDF6E3",
+        "terminal.foreground": "#657B83",
+        "terminalCursor.background": "#FDF6E3",
+        "terminalCursor.foreground": "#657B83",
+        "editorGroup.border": "#F9F3E2"
+    },
+
+    "editor.tokenColorCustomizations": {
+        "functions":{
+            "foreground": "#657B83"
+        }
+    }
 }
