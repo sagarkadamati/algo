@@ -41,12 +41,31 @@
         "terminalCursor.background": "#FDF6E3",
         "terminalCursor.foreground": "#657B83",
         "editorGroup.border": "#F9F3E2",
-        "scrollbar.shadow": "#FDF6E3"
+        "scrollbar.shadow": "#FDF6E3",
+        "sideBar.background": "#FDF6E3",
+        "sideBar.foreground": "#2aa198",
+        "sideBarSectionHeader.background": "#FDF6E3",
+        "sideBarSectionHeader.foreground": "#2aa198",
+        "sideBarTitle.foreground": "#29A197",
+        "list.hoverBackground": "#F9F3E2",
+        "list.hoverForeground": "#29A197",
+        "list.activeSelectionBackground": "#F9F3E2",
+        "list.activeSelectionForeground": "#29A197",
+        "list.focusBackground": "#F9F3E2",
+        "list.focusForeground": "#29A197",
+        "list.highlightForeground": "#29A197",
+        "list.inactiveFocusBackground": "#F9F3E2",
+        "list.inactiveSelectionBackground": "#F9F3E2"
     },
 
     "editor.tokenColorCustomizations": {
         "functions":{
             "foreground": "#657B83"
-        }
+        },
+        "textMateRules": [
+            {
+                "name": ""
+            }
+        ]
     }
 }
