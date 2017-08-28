@@ -2,7 +2,7 @@
     "workbench.colorTheme": "Solarized Light",
     "workbench.startupEditor": "newUntitledFile",
 
-    "workbench.activityBar.visible": true,
+    "workbench.activityBar.visible": false,
     "workbench.statusBar.visible": true,
     "workbench.editor.showTabs": false,
     "workbench.editor.showIcons": true,
@@ -40,7 +40,8 @@
         "terminal.foreground": "#657B83",
         "terminalCursor.background": "#FDF6E3",
         "terminalCursor.foreground": "#657B83",
-        "editorGroup.border": "#F9F3E2"
+        "editorGroup.border": "#F9F3E2",
+        "scrollbar.shadow": "#FDF6E3"
     },
 
     "editor.tokenColorCustomizations": {
