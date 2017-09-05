@@ -19,7 +19,7 @@
 
     "window.title": "Coder",
     "window.menuBarVisibility": "toggle",
-    "window.zoomLevel": 2,
+    "window.zoomLevel": 1,
 
     "terminal.integrated.cursorStyle": "underline",
     "terminal.integrated.cursorBlinking": false,
@@ -28,7 +28,7 @@
     "workbench.colorCustomizations": {
         "editor.background": "#FDF6E3",
         "editor.foreground": "#657B83",
-        "editor.lineHighlightBackground": "#F9F3E2",
+        "editor.lineHighlightBackground": "#FDF6E3",
         "editorGroup.border": "#F9F3E2",
 
         "scrollbarSlider.background": "#FDF6E3",

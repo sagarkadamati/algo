@@ -1,43 +1,58 @@
+#!/usr/bin/env python3
+'''This file is used to prepare pdf to printable format'''
+
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-pdfFileObj = open('02 The Cosmic Manifestation.pdf', 'rb')
-outstream  = open("output.pdf", 'wb')
+PDFFILEOBJ = open('02 The Cosmic Manifestation.pdf', 'rb')
+OUTSTREAM = open("output.pdf", 'wb')
 
-reader = PdfFileReader(pdfFileObj)
-writer = PdfFileWriter()
+READER = PdfFileReader(PDFFILEOBJ)
+WRITER = PdfFileWriter()
 
-page0 = reader.getPage(0)
+i = 0
+PAGES = READER.numPages
 
-print(reader.numPages)
-for i in range(reader.numPages):
-    page1 = reader.getPage(i)
-    page2 = reader.getPage(i + 1)
-    page3 = reader.getPage(i + 2)
-    page4 = reader.getPage(i + 3)
+while i < PAGES:
+    PAGE1 = READER.getPage(i)
 
-    tx = page2.mediaBox.getWidth()
-    ty = 0
-    translation = [[1, 0, 0],
+    if (i + 1) < PAGES:
+        PAGE2 = READER.getPage(i + 1)
+    else:
+        PAGE2 = PAGE1.createBlankPAGE(None, PAGE1.mediaBox.getWidth(), PAGE1.mediaBox.getHeight())
+
+    if (i + 2) < PAGES:
+        PAGE3 = READER.getPage(i + 2)
+    else:
+        PAGE3 = PAGE1.createBlankPAGE(None, PAGE1.mediaBox.getWidth(), PAGE1.mediaBox.getHeight())
+
+    if (i + 3) < PAGES:
+        PAGE4 = READER.getPage(i + 3)
+    else:
+        PAGE4 = PAGE1.createBlankPAGE(None, PAGE1.mediaBox.getWidth(), PAGE1.mediaBox.getHeight())
+
+    TX = PAGE1.mediaBox.getWidth()
+    TY = 0
+    TRANSLATION = [[1, 0, 0],
                    [0, 1, 0],
-                   [tx, ty, 1]]
+                   [TX, TY, 1]]
 
-    frontSide = page0.createBlankPage(None, page0.mediaBox.getWidth() * 2, page0.mediaBox.getHeight())
-    backSide = page0.createBlankPage(None, page0.mediaBox.getWidth() * 2, page0.mediaBox.getHeight())
+    FRONT = PAGE1.createBlankPAGE(None, PAGE1.mediaBox.getWidth() * 2, PAGE1.mediaBox.getHeight())
+    FRONT.mergePAGE(PAGE4)
+    FRONT.mergeTransformedPAGE(PAGE1, [TRANSLATION[0][0], TRANSLATION[0][1],
+                                       TRANSLATION[1][0], TRANSLATION[1][1],
+                                       TRANSLATION[2][0], TRANSLATION[2][1]])
 
-    frontSide.mergePage(page4)
-    backSide.mergePage(page2)
+    BACK = PAGE1.createBlankPAGE(None, PAGE1.mediaBox.getWidth() * 2, PAGE1.mediaBox.getHeight())
+    BACK.mergePAGE(PAGE2)
+    BACK.mergeTransformedPAGE(PAGE3, [TRANSLATION[0][0], TRANSLATION[0][1],
+                                      TRANSLATION[1][0], TRANSLATION[1][1],
+                                      TRANSLATION[2][0], TRANSLATION[2][1]])
 
-    frontSide.mergeTransformedPage(page1, [translation[0][0], translation[0][1],
-                                          translation[1][0], translation[1][1],
-                                          translation[2][0], translation[2][1]])
-    backSide.mergeTransformedPage(page3, [translation[0][0], translation[0][1],
-                                          translation[1][0], translation[1][1],
-                                          translation[2][0], translation[2][1]])
+    WRITER.addPage(FRONT)
+    WRITER.addPage(BACK)
+    i += 4
 
-    writer.addPage(frontSide)
-    writer.addPage(backSide)
+WRITER.write(OUTSTREAM)
 
-writer.write(outstream)
-
-outstream.close()
-pdfFileObj.close()
+OUTSTREAM.close()
+PDFFILEOBJ.close()
