@@ -38,7 +38,8 @@ while i < PAGES:
 
     CANVAS.setStrokeColorRGB(0, 0, 0.5)
     CANVAS.setFillColorRGB(0, 0, 0.5)
-    CANVAS.setFont('DejaVuSans', 8 * POINT)
+    CANVAS.setFontSize(8)
+    # CANVAS.setFont('DejaVuSans', 8 * POINT)
 
     PAGE1 = READER.getPage(i)
     PAGE1.scaleTo(PAGEWIDTH, PAGEHEIGHT)
@@ -58,7 +59,8 @@ while i < PAGES:
 
     CANVAS.setStrokeColorRGB(0, 0, 0.5)
     CANVAS.setFillColorRGB(0, 0, 0.5)
-    CANVAS.setFont('DejaVuSans', 8 * POINT)
+    CANVAS.setFontSize(8)
+    # CANVAS.setFont('DejaVuSans', 8 * POINT)
 
     if (i + 1) < PAGES:
         PAGE2 = READER.getPage(i + 1)
