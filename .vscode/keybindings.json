@@ -180,6 +180,16 @@
         "when": "editorTextFocus"
     },
     {
+        "key": "ctrl+k h",
+        "command": "workbench.action.moveActiveEditorGroupLeft",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k l",
+        "command": "workbench.action.moveActiveEditorGroupRight",
+        "when": "editorTextFocus"
+    },
+    {
         "key": "ctrl+d",
         "command": "deleteRight",
         "when": "editorTextFocus"

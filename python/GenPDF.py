@@ -2,6 +2,8 @@
 
 ''' This program is used to prepare pdf for printing '''
 
+import os
+
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 from reportlab.pdfgen import canvas
@@ -27,8 +29,19 @@ BORDER = 0.5 * POINTSPI
 WIDTH = 8.27 * POINTSPI
 HEIGHT = 11.69 * POINTSPI
 
-PAGEWIDTH = (HEIGHT / 2) - (2 * BORDER)
-PAGEHEIGHT = WIDTH - (2 * BORDER)
+HEADER = 0.12 * POINTSPI
+FOOTER = 0
+
+TOP = BORDER
+LEFT = BORDER
+RIGHT = BORDER
+BOTTOM = BORDER
+
+PAGEWIDTH = (HEIGHT / 2) - (LEFT + RIGHT)
+PAGEHEIGHT = WIDTH - (TOP + BOTTOM + HEADER + FOOTER)
+
+LEFTTITLE = "Bhagavatam"
+RIGHTTITLE = "The Cosmic Manifestation"
 
 PAGES = READER.numPages
 
@@ -44,17 +57,24 @@ while i < PAGES:
     PAGE1 = READER.getPage(i)
     PAGE1.scaleTo(PAGEWIDTH, PAGEHEIGHT)
 
-    CANVAS.drawString((HEIGHT / 2) + (BORDER * 1.75), WIDTH - (BORDER * 1), "Page 1")
-
     if (i + 3) < PAGES:
         PAGE4 = READER.getPage(i + 3)
         PAGE4.scaleTo(PAGEWIDTH, PAGEHEIGHT)
-        CANVAS.drawString((BORDER * 1.75), WIDTH - (BORDER * 1), "Page 4")
+
+        CANVAS.drawString(LEFT + (BORDER * 0.7) + (7 * len(str(i + 4))),
+                          BOTTOM + FOOTER + PAGEHEIGHT, LEFTTITLE)
+        CANVAS.drawString(LEFT + (BORDER * 0.7),
+                          BOTTOM + FOOTER + PAGEHEIGHT, str(i + 4))
     else:
         PAGE4 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
 
-    CANVAS.drawString(HEIGHT - (BORDER * 2.05), WIDTH - (BORDER * 1), str(i + 1))
-    CANVAS.drawString((HEIGHT / 2) - (BORDER * 2.05), WIDTH - (BORDER * 1), str(i + 4))
+    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7)
+                      - (4 * len(RIGHTTITLE)),
+                      BOTTOM + FOOTER + PAGEHEIGHT, RIGHTTITLE)
+    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7),
+                      BOTTOM + FOOTER + PAGEHEIGHT, str(i + 1))
+    # CANVAS.setFontSize(6)
+    CANVAS.drawString(HEIGHT - (TOP * 0.75), WIDTH - (RIGHT * 0.5), str(int((i + 4) / 4)))
     CANVAS.showPage()
 
     CANVAS.setStrokeColorRGB(0, 0, 0.5)
@@ -65,19 +85,24 @@ while i < PAGES:
     if (i + 1) < PAGES:
         PAGE2 = READER.getPage(i + 1)
         PAGE2.scaleTo(PAGEWIDTH, PAGEHEIGHT)
-        CANVAS.drawString((BORDER * 1.75), WIDTH - (BORDER * 1), "Page 2")
+        CANVAS.drawString(LEFT + (BORDER * 0.7) + (7 * len(str(i + 2))),
+                          BOTTOM + FOOTER + PAGEHEIGHT, LEFTTITLE)
+        CANVAS.drawString(LEFT + (BORDER * 0.7),
+                          BOTTOM + FOOTER + PAGEHEIGHT, str(i + 2))
     else:
         PAGE2 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
 
     if (i + 2) < PAGES:
         PAGE3 = READER.getPage(i + 2)
         PAGE3.scaleTo(PAGEWIDTH, PAGEHEIGHT)
-        CANVAS.drawString((HEIGHT / 2) + (BORDER * 1.75), WIDTH - (BORDER * 1), "Page 3")
+        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7)
+                          - (4 * len(RIGHTTITLE)),
+                          BOTTOM + FOOTER + PAGEHEIGHT, RIGHTTITLE)
+        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7),
+                          BOTTOM + FOOTER + PAGEHEIGHT, str(i + 3))
     else:
         PAGE3 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
 
-    CANVAS.drawString((HEIGHT / 2) - (BORDER * 2.05), WIDTH - (BORDER * 1), str(i + 2))
-    CANVAS.drawString(HEIGHT - (BORDER * 2.05), WIDTH - (BORDER * 1), str(i + 3))
     CANVAS.showPage()
     CANVAS.save()
 
@@ -138,3 +163,5 @@ BACKWRITER.write(BACKOUTSTREAM)
 FRONTOUTSTREAM.close()
 BACKOUTSTREAM.close()
 PDFFILEOBJ.close()
+
+os.remove("nos.pdf")
