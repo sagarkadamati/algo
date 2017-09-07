@@ -10,8 +10,6 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-pdfmetrics.registerFont(TTFont('DejaVuSans', 'DejaVuSans.ttf'))
-
 FILENAME = "Skandamu02"
 
 PDFFILEOBJ = open("Bhagavatam/" + FILENAME + ".pdf", 'rb')
@@ -23,13 +21,14 @@ FRONTWRITER = PdfFileWriter()
 BACKWRITER = PdfFileWriter()
 
 POINT = 1
-POINTSPI = 72
-BORDER = 0.5 * POINTSPI
+POINTSPI = 300
+BORDER = 0.25 * POINTSPI
+ADJUSTMENT = (0.38 * POINTSPI)
 
-WIDTH = 8.27 * POINTSPI
-HEIGHT = 11.69 * POINTSPI
+WIDTH = 11.69 * POINTSPI
+HEIGHT = 8.27 * POINTSPI
 
-HEADER = 0.12 * POINTSPI
+HEADER = 0.25 * POINTSPI
 FOOTER = 0
 
 TOP = BORDER
@@ -37,22 +36,29 @@ LEFT = BORDER
 RIGHT = BORDER
 BOTTOM = BORDER
 
-PAGEWIDTH = (HEIGHT / 2) - (LEFT + RIGHT)
-PAGEHEIGHT = WIDTH - (TOP + BOTTOM + HEADER + FOOTER)
+PAGEWIDTH = (WIDTH / 2) - (LEFT + RIGHT)
+PAGEHEIGHT = HEIGHT - (TOP + BOTTOM + HEADER + FOOTER)
 
 LEFTTITLE = "Bhagavatam"
 RIGHTTITLE = "The Cosmic Manifestation"
+
+if POINTSPI == 72:
+    FONTSIZE = 8
+else:
+    FONTSIZE = 33.33
+
+ADJUSTMENTSIZE = 0.4 * POINTSPI
+ADJUSTMENT = ADJUSTMENTSIZE * (PAGEWIDTH / (WIDTH / 2))
 
 PAGES = READER.numPages
 
 i = 0
 while i < PAGES:
-    CANVAS = canvas.Canvas("nos.pdf", pagesize=(HEIGHT, WIDTH))
+    CANVAS = canvas.Canvas("nos.pdf", pagesize=(WIDTH, HEIGHT))
 
     CANVAS.setStrokeColorRGB(0, 0, 0.5)
     CANVAS.setFillColorRGB(0, 0, 0.5)
-    CANVAS.setFontSize(8)
-    # CANVAS.setFont('DejaVuSans', 8 * POINT)
+    CANVAS.setFontSize(FONTSIZE)
 
     PAGE1 = READER.getPage(i)
     PAGE1.scaleTo(PAGEWIDTH, PAGEHEIGHT)
@@ -61,33 +67,32 @@ while i < PAGES:
         PAGE4 = READER.getPage(i + 3)
         PAGE4.scaleTo(PAGEWIDTH, PAGEHEIGHT)
 
-        CANVAS.drawString(LEFT + (BORDER * 0.7) + (7 * len(str(i + 4))),
+        CANVAS.drawString(LEFT + ADJUSTMENT + (FONTSIZE * len(str(i + 4))),
                           BOTTOM + FOOTER + PAGEHEIGHT, LEFTTITLE)
-        CANVAS.drawString(LEFT + (BORDER * 0.7),
+        CANVAS.drawString(LEFT + ADJUSTMENT,
                           BOTTOM + FOOTER + PAGEHEIGHT, str(i + 4))
     else:
         PAGE4 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
 
-    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7)
-                      - (4 * len(RIGHTTITLE)),
+    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - ADJUSTMENT
+                      - ((FONTSIZE / 2) * len(RIGHTTITLE)),
                       BOTTOM + FOOTER + PAGEHEIGHT, RIGHTTITLE)
-    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7),
+    CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - ADJUSTMENT,
                       BOTTOM + FOOTER + PAGEHEIGHT, str(i + 1))
-    # CANVAS.setFontSize(6)
-    CANVAS.drawString(HEIGHT - (TOP * 0.75), WIDTH - (RIGHT * 0.5), str(int((i + 4) / 4)))
+    CANVAS.drawString(WIDTH - (FONTSIZE * 2), HEIGHT - (FONTSIZE * 2),
+                      str(int((i + 4) / 4)))
     CANVAS.showPage()
 
     CANVAS.setStrokeColorRGB(0, 0, 0.5)
     CANVAS.setFillColorRGB(0, 0, 0.5)
-    CANVAS.setFontSize(8)
-    # CANVAS.setFont('DejaVuSans', 8 * POINT)
+    CANVAS.setFontSize(FONTSIZE)
 
     if (i + 1) < PAGES:
         PAGE2 = READER.getPage(i + 1)
         PAGE2.scaleTo(PAGEWIDTH, PAGEHEIGHT)
-        CANVAS.drawString(LEFT + (BORDER * 0.7) + (7 * len(str(i + 2))),
+        CANVAS.drawString(LEFT + ADJUSTMENT + (FONTSIZE * len(str(i + 2))),
                           BOTTOM + FOOTER + PAGEHEIGHT, LEFTTITLE)
-        CANVAS.drawString(LEFT + (BORDER * 0.7),
+        CANVAS.drawString(LEFT + ADJUSTMENT,
                           BOTTOM + FOOTER + PAGEHEIGHT, str(i + 2))
     else:
         PAGE2 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
@@ -95,10 +100,10 @@ while i < PAGES:
     if (i + 2) < PAGES:
         PAGE3 = READER.getPage(i + 2)
         PAGE3.scaleTo(PAGEWIDTH, PAGEHEIGHT)
-        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7)
-                          - (4 * len(RIGHTTITLE)),
+        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - ADJUSTMENT
+                          - ((FONTSIZE / 2) * len(RIGHTTITLE)),
                           BOTTOM + FOOTER + PAGEHEIGHT, RIGHTTITLE)
-        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - (BORDER * 0.7),
+        CANVAS.drawString((2 * (LEFT + PAGEWIDTH)) + RIGHT - ADJUSTMENT,
                           BOTTOM + FOOTER + PAGEHEIGHT, str(i + 3))
     else:
         PAGE3 = PAGE1.createBlankPage(None, PAGEWIDTH, PAGEHEIGHT)
@@ -106,8 +111,8 @@ while i < PAGES:
     CANVAS.showPage()
     CANVAS.save()
 
-    FRONT = PAGE1.createBlankPage(None, HEIGHT, WIDTH)
-    BACK = PAGE1.createBlankPage(None, HEIGHT, WIDTH)
+    FRONT = PAGE1.createBlankPage(None, WIDTH, HEIGHT)
+    BACK = PAGE1.createBlankPage(None, WIDTH, HEIGHT)
 
     TX = LEFT
     TY = BOTTOM + FOOTER
