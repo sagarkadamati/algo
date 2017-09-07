@@ -109,8 +109,8 @@ while i < PAGES:
     FRONT = PAGE1.createBlankPage(None, HEIGHT, WIDTH)
     BACK = PAGE1.createBlankPage(None, HEIGHT, WIDTH)
 
-    TX = BORDER
-    TY = BORDER
+    TX = LEFT
+    TY = BOTTOM + FOOTER
     TRANSLATION = [[1, 0, 0],
                    [0, 1, 0],
                    [TX, TY, 1]]
@@ -118,8 +118,8 @@ while i < PAGES:
                                        TRANSLATION[1][0], TRANSLATION[1][1],
                                        TRANSLATION[2][0], TRANSLATION[2][1]])
 
-    TX = PAGEWIDTH + (3 * BORDER)
-    TY = BORDER
+    TX = PAGEWIDTH + (2 * LEFT) + RIGHT
+    TY = BOTTOM + FOOTER
     TRANSLATION = [[1, 0, 0],
                    [0, 1, 0],
                    [TX, TY, 1]]
