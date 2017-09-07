@@ -4,35 +4,35 @@ import getopt, sys
 from pyPdf import PdfFileWriter, PdfFileReader
 
 def usage ():
-    print """sjvr767\'s PDF Cropping Script.
-Example:
-my_pdf_crop.py -s -p 0.5 -i input.pdf -o output.pdf
-my_pdf_crop.py --skip --percent 0.5 -input input.pdf -output output.pdf
-\n
-REQUIRED OPTIONS:
--p\t--percent
-The factor by which to crop. Must be positive and less than or equal to 1.
+    print ("""sjvr767\'s PDF Cropping Script.
+        Example:
+        my_pdf_crop.py -s -p 0.5 -i input.pdf -o output.pdf
+        my_pdf_crop.py --skip --percent 0.5 -input input.pdf -output output.pdf
+        \n
+        REQUIRED OPTIONS:
+        -p\t--percent
+        The factor by which to crop. Must be positive and less than or equal to 1.
 
--i\t--input
-The path to the file to be cropped.
-\n
-OPTIONAL:
--s\t--skip
-Skip the first page. Ouptut file will not contain the first page of the input file.
+        -i\t--input
+        The path to the file to be cropped.
+        \n
+        OPTIONAL:
+        -s\t--skip
+        Skip the first page. Ouptut file will not contain the first page of the input file.
 
--o\t--output
-Specify the name and path of the output file. If none specified, the script appends \'cropped\' to the file name.
-"""
+        -o\t--output
+        Specify the name and path of the output file. If none specified, the script appends \'cropped\' to the file name.
+        """)
     sys.exit(0)
 
 def cut_length(dictionary, key, factor):
-    cut_factor = 1-factor
-    cut = dictionary[key]*cut_factor
+    cut_factor = 1 - factor
+    cut = dictionary[key] * cut_factor
     cut = cut / 4
     return cut
 
 def new_coords(dictionary, key, cut):
-    return abs(dictionary[key]-cut)
+    return abs(dictionary[key] - cut)
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "sp:i:o:s", ["skip", "percent=", "input=", "output="])
