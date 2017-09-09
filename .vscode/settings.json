@@ -26,6 +26,16 @@
     "editor.renderIndentGuides": false,
 
     "workbench.colorCustomizations": {
+        "panel.border": "#FDF6E3",
+        "panel.background": "#FDF6E3",
+        "panelTitle.activeBorder": "#FDF6E3",
+        "panelTitle.activeForeground": "#002b36",
+        "panelTitle.inactiveForeground": "#2aa198",
+
+        "dropdown.border": "#FDF6E3",
+        "dropdown.background": "#FDF6E3",
+        "dropdown.foreground": "#002b36",
+
         "editor.background": "#FDF6E3",
         "editor.foreground": "#657B83",
         "editor.lineHighlightBackground": "#FDF6E3",

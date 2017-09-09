@@ -7,10 +7,48 @@ import os
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 from reportlab.pdfgen import canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 
-FILENAME = "Skandamu02"
+BOOK = 2
+
+FILES = [
+    "Skandamu01",
+    "Skandamu02",
+    "Skandamu03",
+    "Skandamu04",
+    "Skandamu05",
+    "Skandamu06",
+    "Skandamu07",
+    "Skandamu08",
+    "Skandamu09",
+    "Skandamu10A",
+    "Skandamu10B",
+    "Skandamu10C",
+    "Skandamu11A",
+    "Skandamu11B",
+    "Skandamu12",
+]
+
+TITTLES = [
+    "Creation",
+    "The Cosmic Manifestation",
+    "The Status Quo",
+    "The Creation of the Fourth Order",
+    "The Creative Impetus",
+    "Prescribed Duties for Mankind",
+    "The Science of God",
+    "Withdrawal of the Cosmic Creations",
+    "Liberation",
+    "The Summum Bonum",
+    "The Summum Bonum",
+    "The Summum Bonum",
+    "General History",
+    "General History",
+    "The Age of Deterioration",
+]
+
+FILENAME = FILES[BOOK - 1]
+RIGHTTITLE = TITTLES[BOOK - 1]
+LEFTTITLE = "Bhagavatam"
 
 PDFFILEOBJ = open("Bhagavatam/" + FILENAME + ".pdf", 'rb')
 FRONTOUTSTREAM = open(FILENAME + "-front.pdf", 'wb')
@@ -39,15 +77,12 @@ BOTTOM = BORDER
 PAGEWIDTH = (WIDTH / 2) - (LEFT + RIGHT)
 PAGEHEIGHT = HEIGHT - (TOP + BOTTOM + HEADER + FOOTER)
 
-LEFTTITLE = "Bhagavatam"
-RIGHTTITLE = "The Cosmic Manifestation"
-
 if POINTSPI == 72:
     FONTSIZE = 8
 else:
     FONTSIZE = 33.33
 
-ADJUSTMENTSIZE = 0.4 * POINTSPI
+ADJUSTMENTSIZE = 0.75 * POINTSPI
 ADJUSTMENT = ADJUSTMENTSIZE * (PAGEWIDTH / (WIDTH / 2))
 
 PAGES = READER.numPages
@@ -83,8 +118,8 @@ while i < PAGES:
                       str(int((i + 4) / 4)))
     CANVAS.showPage()
 
-    CANVAS.setStrokeColorRGB(0, 0, 0.5)
-    CANVAS.setFillColorRGB(0, 0, 0.5)
+    CANVAS.setStrokeColorRGB(0.396, 0.482, 0.514)
+    CANVAS.setFillColorRGB(0.396, 0.482, 0.514)
     CANVAS.setFontSize(FONTSIZE)
 
     if (i + 1) < PAGES:

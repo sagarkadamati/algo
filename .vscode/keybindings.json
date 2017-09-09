@@ -241,5 +241,32 @@
         "key": "ctrl+shift+alt+b",
         "command": "workbench.action.toggleSidebarVisibility",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+t",
+        "command": "workbench.action.terminal.toggleTerminal",
+        "when": "terminalFocus"
+    },
+    {   "key": "ctrl+; r",
+        "command": "editor.action.startFindReplaceAction"
+    },
+    {   "key": "ctrl+; w",
+        "command": "workbench.action.closeActiveEditor"
+    },
+    {   "key": "ctrl+; ctrl+e",
+        "command": "cursorBottom",
+        "when": "editorTextFocus"
+    },
+    {   "key": "ctrl+shift+; ctrl+shift+e",
+        "command": "cursorBottomSelect",
+        "when": "editorTextFocus"
+    },
+    {   "key": "ctrl+; ctrl+b",
+        "command": "cursorTop",
+        "when": "editorTextFocus"
+    },
+    {   "key": "ctrl+shift+; ctrl+shift+b",
+        "command": "cursorTopSelect",
+        "when": "editorTextFocus"
     }
 ]
