@@ -456,12 +456,12 @@ int main()
 	convert("org/Skandamu02.pdf" , "finial/Skandamu02.pdf" , "R10", 1, 0);
  	convert("org/Skandamu03.pdf" , "finial/Skandamu03.pdf" , "R10", 1, 0);
 	convert("org/Skandamu04.pdf" , "finial/Skandamu04.pdf" , "F3" , 1, 0);
-	convert("org/Skandamu05.pdf" , "finial/Skandamu05.pdf" , "R10", 1, 0);
+	convert("org/Skandamu05.pdf" , "finial/Skandamu05.pdf" , "R10", 1, 4);
 
 	convert("org/Skandamu06.pdf" , "finial/Skandamu06.pdf" , "R10", 1, 0);
 	convert("org/Skandamu07.pdf" , "finial/Skandamu07.pdf" , "R10", 1, 0);
 	convert("org/Skandamu08.pdf" , "finial/Skandamu08.pdf" , "R10", 1, 0);
-	convert("org/Skandamu09.pdf" , "finial/Skandamu09.pdf" , "R10", 1, 0);
+	convert("org/Skandamu09.pdf" , "finial/Skandamu09.pdf" , "R10", 1, 4);
 	convert("org/Skandamu10A.pdf", "finial/Skandamu10A.pdf", "F2" , 1, 0);
 
 	convert("org/Skandamu10B.pdf", "finial/Skandamu10B.pdf", "F2" , 1, 0);
