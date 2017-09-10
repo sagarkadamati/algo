@@ -130,13 +130,13 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 					red = stack.top().GetReal();
 					stack.pop();
 
-					// red = 0.0;
-					// green = 0.0;
-					// blue = 0.0;
+					red = 0.0;
+					green = 0.0;
+					blue = 0.0;
 
-					red = 0.396;
-					green = 0.482;
-					blue = 0.514;
+					// red = 0.396;
+					// green = 0.482;
+					// blue = 0.514;
 				
 					block << red << " " 
 					      << green << " " 
@@ -388,7 +388,7 @@ void get_glimpse( PdfMemDocument* pDocument, PdfPage* pPage )
 		}
 }
 
-void convert(string input,string output, string removefont, int del_start, int del_end)
+void convert(string input,string output, string removefont, int del_start, int del_end, int range)
 {
 	int pn, pc;
 
@@ -420,6 +420,8 @@ void convert(string input,string output, string removefont, int del_start, int d
 	if(del_end)
 		pdf.DeletePages(pc - del_end - 1, del_end);
 
+	if(range)
+		pdf.DeletePages(163, 3);
 
 	pc = pdf.GetPageCount();
 	for (pn = 0; pn < pc; ++pn) {
@@ -452,21 +454,21 @@ void convert(string input,string output, string removefont, int del_start, int d
 int main()
 {
 	system("mkdir -p finial");
-	convert("org/Skandamu01.pdf" , "finial/Skandamu01.pdf" , "F1" , 11, 0);
-	convert("org/Skandamu02.pdf" , "finial/Skandamu02.pdf" , "R10", 1, 0);
- 	convert("org/Skandamu03.pdf" , "finial/Skandamu03.pdf" , "R10", 1, 0);
-	convert("org/Skandamu04.pdf" , "finial/Skandamu04.pdf" , "F3" , 1, 0);
-	convert("org/Skandamu05.pdf" , "finial/Skandamu05.pdf" , "R10", 1, 4);
+	convert("org/Skandamu01.pdf" , "finial/Skandamu01.pdf" , "F1" , 11, 0, 0);
+	convert("org/Skandamu02.pdf" , "finial/Skandamu02.pdf" , "R10", 1, 0, 0);
+ 	convert("org/Skandamu03.pdf" , "finial/Skandamu03.pdf" , "R10", 1, 0, 0);
+	convert("org/Skandamu04.pdf" , "finial/Skandamu04.pdf" , "F3" , 1, 0, 0);
+	convert("org/Skandamu05.pdf" , "finial/Skandamu05.pdf" , "R10", 1, 4, 1);
 
-	convert("org/Skandamu06.pdf" , "finial/Skandamu06.pdf" , "R10", 1, 0);
-	convert("org/Skandamu07.pdf" , "finial/Skandamu07.pdf" , "R10", 1, 0);
-	convert("org/Skandamu08.pdf" , "finial/Skandamu08.pdf" , "R10", 1, 0);
-	convert("org/Skandamu09.pdf" , "finial/Skandamu09.pdf" , "R10", 1, 4);
-	convert("org/Skandamu10A.pdf", "finial/Skandamu10A.pdf", "F2" , 1, 0);
+	convert("org/Skandamu06.pdf" , "finial/Skandamu06.pdf" , "R10", 1, 0, 0);
+	convert("org/Skandamu07.pdf" , "finial/Skandamu07.pdf" , "R10", 1, 0, 0);
+	convert("org/Skandamu08.pdf" , "finial/Skandamu08.pdf" , "R10", 1, 0, 0);
+	convert("org/Skandamu09.pdf" , "finial/Skandamu09.pdf" , "R10", 1, 4, 0);
+	convert("org/Skandamu10A.pdf", "finial/Skandamu10A.pdf", "F2" , 1, 0, 0);
 
-	convert("org/Skandamu10B.pdf", "finial/Skandamu10B.pdf", "F2" , 1, 0);
-	convert("org/Skandamu10C.pdf", "finial/Skandamu10C.pdf", "F2" , 1, 0);
-	convert("org/Skandamu11A.pdf", "finial/Skandamu11A.pdf", "F3" , 1, 0);
-	convert("org/Skandamu11B.pdf", "finial/Skandamu11B.pdf", "F2" , 1, 0);
-	convert("org/Skandamu12.pdf" , "finial/Skandamu12.pdf" , "F3" , 1, 0);
+	convert("org/Skandamu10B.pdf", "finial/Skandamu10B.pdf", "F2" , 1, 0, 0);
+	convert("org/Skandamu10C.pdf", "finial/Skandamu10C.pdf", "F2" , 1, 0, 0);
+	convert("org/Skandamu11A.pdf", "finial/Skandamu11A.pdf", "F3" , 1, 0, 0);
+	convert("org/Skandamu11B.pdf", "finial/Skandamu11B.pdf", "F2" , 1, 0, 0);
+	convert("org/Skandamu12.pdf" , "finial/Skandamu12.pdf" , "F3" , 1, 0, 0);
 }

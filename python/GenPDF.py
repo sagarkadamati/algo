@@ -91,8 +91,8 @@ i = 0
 while i < PAGES:
     CANVAS = canvas.Canvas("nos.pdf", pagesize=(WIDTH, HEIGHT))
 
-    CANVAS.setStrokeColorRGB(0, 0, 0.5)
-    CANVAS.setFillColorRGB(0, 0, 0.5)
+    CANVAS.setStrokeColorRGB(0, 0, 0.0)
+    CANVAS.setFillColorRGB(0, 0, 0.0)
     CANVAS.setFontSize(FONTSIZE)
 
     PAGE1 = READER.getPage(i)
@@ -118,8 +118,8 @@ while i < PAGES:
                       str(int((i + 4) / 4)))
     CANVAS.showPage()
 
-    CANVAS.setStrokeColorRGB(0.396, 0.482, 0.514)
-    CANVAS.setFillColorRGB(0.396, 0.482, 0.514)
+    CANVAS.setStrokeColorRGB(0, 0, 0.0)
+    CANVAS.setFillColorRGB(0, 0, 0.0)
     CANVAS.setFontSize(FONTSIZE)
 
     if (i + 1) < PAGES:
