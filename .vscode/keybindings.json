@@ -323,5 +323,9 @@
         "key": "ctrl+shift+alt+g",
         "command": "editor.action.goToImplementation",
         "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+; r",
+        "command": "workbench.action.files.revert"
     }
 ]

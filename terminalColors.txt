@@ -1,0 +1,19 @@
+Text Color: #657B8 3
+Background Color:  #FDF6E3
+ 
+Palette Entry 01 : #073642
+Palette Entry 02 : #DC322F
+Palette Entry 03 : #859900
+Palette Entry 04 : #B58900
+Palette Entry 05 : #268BD2
+Palette Entry 06 : #D33682
+Palette Entry 07 : #2AA198
+Palette Entry 08 : #EEE8D5
+Palette Entry 09 : #002B36
+Palette Entry 10 : #CB4B16
+Palette Entry 11 : #586E75
+Palette Entry 12 : #657B83
+Palette Entry 13 : #839496
+Palette Entry 14 : #6C71C4
+Palette Entry 15 : #93A1A1
+Palette Entry 16 : #FDF6E3
