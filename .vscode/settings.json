@@ -9,6 +9,8 @@
     "workbench.editor.tabCloseButton": "off",
     "workbench.sideBar.location": "right",
 
+    "window.enableMenuBarMnemonics": false,
+
     "editor.lineNumbers": "off",
     "editor.minimap.enabled": false,
     "editor.cursorBlinking": "solid",
@@ -25,7 +27,19 @@
     "terminal.integrated.cursorBlinking": false,
     "editor.renderIndentGuides": false,
 
-    "workbench.colorCustomizations": {
+"workbench.colorCustomizations": {
+        "widget.shadow": "#FDF6E3",
+        "editorWidget.background": "#FDF6E3",
+        "editorWidget.border": "#FDF6E3",
+        "input.background": "#FDF6E3",
+        "input.border": "#FDF6E3",
+        "input.foreground": "#002b36",
+        "focusBorder": "#002b36",
+
+        "editor.findMatchBackground": "#FDF6E3",
+        "editor.findMatchHighlightBackground": "#FDF6E3",
+        "editor.findRangeHighlightBackground": "#FDF6E3",
+
         "panel.border": "#FDF6E3",
         "panel.background": "#FDF6E3",
         "panelTitle.activeBorder": "#FDF6E3",
@@ -271,49 +285,53 @@
             {
                 "scope":"keyword",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2"
                 }
             },
             {
                 "scope":"keyword.control",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2"
                 }
             },
             {
                 "scope":"keyword.operator",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2"
                 }
             },
             {
                 "scope":"keyword.operator.arithmetic",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "scope":"keyword.operator.assignment",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#dc322f",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "scope":"keyword.operator.logical",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "scope":"keyword.operator.new",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2",
+                    "fontStyle": "bold"
                 }
             },
             {
                 "scope":"keyword.other",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2"
                 }
             },
             {
@@ -451,7 +469,7 @@
             {
                 "scope":"meta.preprocessor",
                 "settings": {
-                    "foreground": "#657B83"
+                    "foreground": "#268bd2"
                 }
             },
             {
@@ -655,25 +673,25 @@
             {
                 "scope":"variable",
                 "settings": {
-                    "foreground": "#d33682"
+                    "foreground": "#657B83"
                 }
             },
             {
                 "scope":"variable.language",
                 "settings": {
-                    "foreground": "#d33682"
+                    "foreground": "#657B83"
                 }
             },
             {
                 "scope":"variable.name",
                 "settings": {
-                    "foreground": "#d33682"
+                    "foreground": "#657B83"
                 }
             },
             {
                 "scope":"variable.other",
                 "settings": {
-                    "foreground": "#d33682"
+                    "foreground": "#657B83"
                 }
             },
             {

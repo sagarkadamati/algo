@@ -91,11 +91,13 @@
         "command": "workbench.action.toggleSidebarVisibility",
         "when": "explorerViewletFocus"
     },
-    {   "key": "ctrl+l",
+    {
+        "key": "ctrl+alt+f",
         "command": "cursorWordStartRight",
         "when": "editorTextFocus"
     },
-    {   "key": "ctrl+shift+l",
+    {
+        "key": "ctrl+shift+alt+f",
         "command": "cursorWordStartRightSelect",
         "when": "editorTextFocus"
     },
@@ -111,11 +113,13 @@
         "key": "ctrl+h",
         "command": "-editor.action.startFindReplaceAction"
     },
-    {   "key": "ctrl+h",
+    {
+        "key": "ctrl+alt+b",
         "command": "cursorWordStartLeft",
         "when": "editorTextFocus"
     },
-    {   "key": "ctrl+shift+h",
+    {
+        "key": "ctrl+shift+alt+b",
         "command": "cursorWordStartLeftSelect",
         "when": "editorTextFocus"
     },
@@ -170,13 +174,13 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+k ctrl+h",
-        "command": "workbench.action.focusPreviousGroup",
+        "key": "alt+h",
+        "command": "workbench.action.focusFirstEditorGroup",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+k ctrl+l",
-        "command": "workbench.action.focusNextGroup",
+        "key": "alt+l",
+        "command": "workbench.action.focusSecondEditorGroup",
         "when": "editorTextFocus"
     },
     {
@@ -238,11 +242,6 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+alt+b",
-        "command": "workbench.action.toggleSidebarVisibility",
-        "when": "editorTextFocus"
-    },
-    {
         "key": "ctrl+alt+t",
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "terminalFocus"
@@ -268,5 +267,61 @@
     {   "key": "ctrl+shift+; ctrl+shift+b",
         "command": "cursorTopSelect",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "cursorHome",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "git.openChange"
+    },
+    {
+        "key": "alt+shift+n",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "alt+shift+p",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.nextEditorInGroup"
+    },
+    {
+        "key": "alt+p",
+        "command": "workbench.action.previousEditorInGroup"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.closeWindow",
+        "when": "!editorIsOpen"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "-workbench.action.closeWindow"
+    },
+    {
+        "key": "ctrl+k f",
+        "command": "-workbench.action.closeFolder"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "-workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "ctrl+k ctrl+w",
+        "command": "-workbench.action.closeAllEditors"
+    },
+    {
+        "key": "ctrl+alt+g",
+        "command": "editor.action.goToDeclaration",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+shift+alt+g",
+        "command": "editor.action.goToImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
     }
 ]
