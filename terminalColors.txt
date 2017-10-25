@@ -1,4 +1,4 @@
-Text Color: #657B8 3
+Text Color: #657B83
 Background Color:  #FDF6E3
  
 Palette Entry 01 : #073642

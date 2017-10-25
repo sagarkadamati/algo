@@ -174,12 +174,12 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "alt+h",
+        "key": "ctrl+h",
         "command": "workbench.action.focusFirstEditorGroup",
         "when": "editorTextFocus"
     },
     {
-        "key": "alt+l",
+        "key": "ctrl+l",
         "command": "workbench.action.focusSecondEditorGroup",
         "when": "editorTextFocus"
     },
@@ -327,5 +327,25 @@
     {
         "key": "ctrl+; r",
         "command": "workbench.action.files.revert"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "-workbench.action.togglePanel"
+    },
+    {
+        "key": "alt+x",
+        "command": "workbench.action.showCommands"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+g ctrl+g",
+        "command": "workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+shift+L",
+        "command": "workbench.action.moveEditorLeftInGroup"
     }
 ]
