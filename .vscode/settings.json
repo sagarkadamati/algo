@@ -14,7 +14,7 @@
 	"workbench.editor.tabCloseButton": "off",
 	"workbench.startupEditor": "newUntitledFile",
 	"workbench.sideBar.location": "right",
-	"workbench.statusBar.visible": true,
+	"workbench.statusBar.visible": false,
 	"workbench.activityBar.visible": false,
 	"workbench.colorTheme": "Solarized Light",
 	"workbench.colorCustomizations": {
