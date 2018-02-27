@@ -346,6 +346,14 @@
         "command": "workbench.view.scm"
     },
     {
+        "key": "ctrl+g ctrl+a",
+        "command": "git.commitStagedAmend"
+    },
+    {
+        "key": "ctrl+shift+g ctrl+shift+a",
+        "command": "git.commitAllAmend"
+    },
+    {
         "key": "ctrl+g ctrl+p",
         "command": "git.pull"
     },

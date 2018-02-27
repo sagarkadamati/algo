@@ -1,0 +1,72 @@
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 129 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 111 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 237 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 234 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 165: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 166: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 194: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 195: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 196: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 197: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+==> 197 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 148 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 168 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 210 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+
+!!! Warning: Empty Bounding Box is returned by Ghostscript!
+!!!   Page 188: 0 0 0 0
+!!! Either there is a problem with the page or with Ghostscript.
+!!! Recovery is tried by embedding the page in its original size.
+
+==> 189 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 242 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 251 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 215 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 203 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 93 pages written on `croppedBhagavatam.pdf'.
+PDFCROP 1.38, 2012/11/02 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==> 95 pages written on `croppedBhagavatam.pdf'.

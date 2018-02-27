@@ -1,0 +1,30 @@
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu01.pdf
+Width: 496 Height: 716
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu02.pdf
+Width: 470 Height: 727
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu03.pdf
+Width: 540 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu04.pdf
+Width: 471 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu05.pdf
+Width: 595 Height: 842
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu06.pdf
+Width: 519 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu07.pdf
+Width: 470 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu08.pdf
+Width: 471 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu09.pdf
+Width: 595 Height: 842
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu10A.pdf
+Width: 476 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu10B.pdf
+Width: 469 Height: 715
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu10C.pdf
+Width: 475 Height: 716
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu11A.pdf
+Width: 471 Height: 716
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu11B.pdf
+Width: 468 Height: 716
+09:53 PM sagar@kadamati (python)$ ./GetDimensions.py cropped/Skandamu12.pdf
+Width: 469 Height: 716
