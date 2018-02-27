@@ -54,8 +54,12 @@
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+s",
+        "key": "ctrl+; ctrl+f",
         "command": "actions.find"
+    },
+    {
+        "key": "ctrl+; ctrl+r",
+        "command": "editor.action.startFindReplaceAction"
     },
     {
         "key": "ctrl+shift+b",
@@ -112,6 +116,10 @@
     {
         "key": "ctrl+h",
         "command": "-editor.action.startFindReplaceAction"
+    },
+    {
+        "key": "ctrl+; ctrl+r",
+        "command": "editor.action.startFindReplaceAction"
     },
     {
         "key": "ctrl+alt+b",
@@ -246,9 +254,6 @@
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "terminalFocus"
     },
-    {   "key": "ctrl+; r",
-        "command": "editor.action.startFindReplaceAction"
-    },
     {   "key": "ctrl+; w",
         "command": "workbench.action.closeActiveEditor"
     },
@@ -338,6 +343,42 @@
     },
     {
         "key": "ctrl+g ctrl+g",
+        "command": "workbench.view.scm"
+    },
+    {
+        "key": "ctrl+g ctrl+p",
+        "command": "git.pull"
+    },
+    {
+        "key": "ctrl+shift+g ctrl+shift+p",
+        "command": "git.pushTo"
+    },
+    {
+        "key": "ctrl+g ctrl+c",
+        "command": "git.commit"
+    },
+    {
+        "key": "ctrl+shift+g ctrl+shift+c",
+        "command": "git.commitAllSigned"
+    },
+    {
+        "key": "ctrl+g ctrl+s",
+        "command": "git.stage"
+    },
+    {
+        "key": "ctrl+shift+g ctrl+shift+s",
+        "command": "git.stageAll"
+    },
+    {
+        "key": "ctrl+g ctrl+u",
+        "command": "git.unstage"
+    },
+    {
+        "key": "ctrl+shift+g ctrl+shift+u",
+        "command": "git.unstageAll"
+    },
+    {
+        "key": "alt+g",
         "command": "workbench.action.gotoLine"
     },
     {
@@ -374,4 +415,16 @@
         "command": "editor.action.previousMatchFindAction",
         "when": "editorFocus && findWidgetVisible"
     },
+    {
+        "key": "ctrl+meta+s",
+        "command": "workbench.action.toggleStatusbarVisibility",
+    },
+    {
+        "key": "ctrl+meta+a",
+        "command": "workbench.action.toggleActivityBarVisibility",
+    },
+    {
+        "key": "ctrl+meta+e",
+        "command": "workbench.action.focusSideBar",
+    }
 ]
