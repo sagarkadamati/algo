@@ -434,5 +434,17 @@
     {
         "key": "ctrl+meta+e",
         "command": "workbench.action.focusSideBar",
+    },
+    {
+        "key": "ctrl+meta+t",
+        "command": "workbench.action.toggleTabsVisibility"
+    },
+    {
+        "key": "ctrl+meta+w",
+        "command": "-workbench.action.toggleTabsVisibility"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "editor.action.toggleRenderWhitespace"
     }
 ]
