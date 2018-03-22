@@ -446,5 +446,9 @@
     {
         "key": "ctrl+shift+w",
         "command": "editor.action.toggleRenderWhitespace"
+    },
+    {
+        "key": "ctrl+; ctrl+p",
+        "command": "workbench.action.quickOpen"
     }
 ]
