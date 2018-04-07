@@ -138,10 +138,10 @@
 		"when": "inQuickOpen && inRecentFilesPicker"
 	},
 	{
-        "key": "ctrl+p",
-		"command": "list.focusUp",
-		"when": "inQuickOpen && !inEditorsPicker && !inFilesPicker && !inRecentFilesPicker"
-    },
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpenNavigatePrevious",
+		"when": "inQuickOpen"
+	},
 
 
 	// Ctrl + N
@@ -194,6 +194,11 @@
 		"key": "ctrl+n",
 		"command": "workbench.action.quickOpenNavigateNextInRecentFilesPicker",
 		"when": "inQuickOpen && inRecentFilesPicker"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.quickOpenNavigateNext",
+		"when": "inQuickOpen"
 	},
 
 
