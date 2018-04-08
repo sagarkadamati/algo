@@ -9,7 +9,7 @@
 
 	"workbench.startupEditor": "newUntitledFile",
 	"workbench.colorTheme": "MyTheme",
-	"workbench.statusBar.visible": true,
+	"workbench.statusBar.visible": false,
 	"workbench.sideBar.location": "right",
 	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
@@ -46,4 +46,5 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
+
 }
