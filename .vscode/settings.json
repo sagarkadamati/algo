@@ -27,6 +27,11 @@
 	"editor.overviewRulerLanes": 0,
 	"editor.hideCursorInOverviewRuler": true,
 	"editor.renderIndentGuides": false,
+	"editor.fontLigatures": true,
+
+	"telemetry.enableTelemetry": false,
+	"telemetry.enableCrashReporter": false,
+	"update.channel": "none",
 
 	"C_Cpp.intelliSenseEngine": "Tag Parser",
 
@@ -41,9 +46,4 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
-
-	"editor.fontSize": 15,
-	"editor.fontFamily": "'Hasklig', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-	// "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-	"editor.fontLigatures": true
 }
