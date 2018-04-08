@@ -35,7 +35,8 @@
 
 	"C_Cpp.intelliSenseEngine": "Tag Parser",
 
-	"gitlens.gitExplorer.files.layout": "tree",
+	"gitlens.gitExplorer.files.layout": "auto",
+	"gitlens.historyExplorer.enabled": false,
 	"gitlens.advanced.messages": {
 		"suppressCommitHasNoPreviousCommitWarning": false,
 		"suppressCommitNotFoundWarning": false,
@@ -45,6 +46,5 @@
 		"suppressNoRepositoryWarning": false,
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
-	},
-
+	}
 }
