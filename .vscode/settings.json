@@ -28,6 +28,7 @@
 	"editor.hideCursorInOverviewRuler": true,
 	"editor.renderIndentGuides": false,
 	"editor.fontLigatures": true,
+	"explorer.openEditors.visible": 0,
 
 	"telemetry.enableTelemetry": false,
 	"telemetry.enableCrashReporter": false,

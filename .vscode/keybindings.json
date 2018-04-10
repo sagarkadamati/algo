@@ -113,6 +113,11 @@
 		"when": "listFocus && !inputFocus"
 	},
 	{
+		"key": "ctrl+alt+p",
+		"command": "list.focusPageUp",
+		"when": "listFocus && !inputFocus"
+	},
+	{
 		"key": "ctrl+p",
 		"command": "editor.action.previousMatchFindAction",
 		"when": "editorFocus && findWidgetVisible"
@@ -171,6 +176,11 @@
 		"when": "listFocus && !inputFocus"
 	},
 	{
+		"key": "ctrl+alt+n",
+		"command": "list.focusPageDown",
+		"when": "listFocus && !inputFocus"
+	},
+	{
 		"key": "ctrl+n",
 		"command": "editor.action.nextMatchFindAction",
 		"when": "editorFocus && findWidgetVisible"
@@ -200,7 +210,6 @@
 		"command": "workbench.action.quickOpenNavigateNext",
 		"when": "inQuickOpen"
 	},
-
 
 	// Ctrl + B
 	{
@@ -337,7 +346,7 @@
 	},
 
 	{
-		"key": "alt+s",
+		"key": "ctrl+l",
 		"command": "workbench.action.toggleSidebarVisibility"
 	},
 	{
@@ -532,6 +541,11 @@
 		"command": "deleteWordRight",
 		"when": "editorTextFocus"
 	},
+	{
+		"key": "ctrl+shift+v",
+		"command": "workbench.action.toggleCenteredLayout",
+		"when": "editorTextFocus"
+	}
 
 
 	// Editor Focus Commands
@@ -550,12 +564,7 @@
 		"when": "listFocus && !inputFocus"
 	},
 	{
-		"key": "ctrl+l",
-		"command": "workbench.action.focusSecondEditorGroup",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+l",
+		"key": "ctrl+alt+h",
 		"command": "list.expand",
 		"when": "listFocus && !inputFocus"
 	},
@@ -597,11 +606,6 @@
 		"when": "editorTextFocus && editorLangId == 'cpp'"
 	},
 	{
-		"key": "ctrl+; ctrl+n",
-		"command": "C_Cpp.Navigate",
-		"when": "editorTextFocus && editorLangId == 'cpp'"
-	},
-	{
 		"key": "ctrl+; ctrl+d",
 		"command": "C_Cpp.GoToDeclaration",
 		"when": "editorTextFocus && editorLangId == 'c'"
@@ -616,9 +620,26 @@
 		"command": "C_Cpp.SwitchHeaderSource",
 		"when": "editorTextFocus && editorLangId == 'c'"
 	},
+
 	{
-		"key": "ctrl+; ctrl+n",
-		"command": "C_Cpp.Navigate",
-		"when": "editorTextFocus && editorLangId == 'c'"
+		"key": "ctrl+alt+/",
+		"command": "workbench.action.gotoSymbol",
+		"when": "editorTextFocus"
 	},
+	{
+		"key": "ctrl+o",
+		"command": "workbench.action.quickOpen",
+	},
+	{
+		"key": "ctrl+shift+o",
+		"command": "workbench.action.files.openFile",
+	},
+	{
+		"key": "ctrl+alt+v",
+		"command": "workbench.action.toggleCenteredLayout",
+	},
+	{
+		"key": "ctrl+k ctrl+k",
+		"command": "workbench.action.keepEditor",
+	}
 ]
