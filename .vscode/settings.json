@@ -15,9 +15,11 @@
 	"workbench.editor.showTabs": false,
 	"workbench.editor.showIcons": true,
 	"workbench.editor.tabCloseButton": "off",
-
+	"workbench.editor.labelFormat": "short",
+	"workbench.iconTheme": "file-icons-colourless",
+	
 	"zenMode.fullScreen": false,
-
+	
 	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
 	"editor.lineNumbers": "off",
@@ -28,6 +30,7 @@
 	"editor.hideCursorInOverviewRuler": true,
 	"editor.renderIndentGuides": false,
 	"editor.fontLigatures": true,
+
 	"explorer.openEditors.visible": 0,
 
 	"telemetry.enableTelemetry": false,
@@ -47,5 +50,9 @@
 		"suppressNoRepositoryWarning": false,
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
-	}
+	},
+
+	"markdown.styles": [
+		".vscode/markdown.css"
+	],
 }

@@ -542,7 +542,7 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+shift+v",
+		"key": "ctrl+alt+v",
 		"command": "workbench.action.toggleCenteredLayout",
 		"when": "editorTextFocus"
 	}
@@ -633,10 +633,6 @@
 	{
 		"key": "ctrl+shift+o",
 		"command": "workbench.action.files.openFile",
-	},
-	{
-		"key": "ctrl+alt+v",
-		"command": "workbench.action.toggleCenteredLayout",
 	},
 	{
 		"key": "ctrl+k ctrl+k",
