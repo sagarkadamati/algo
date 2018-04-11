@@ -8,10 +8,10 @@
 	"terminal.integrated.cursorBlinking": false,
 
 	"workbench.startupEditor": "newUntitledFile",
-	"workbench.colorTheme": "MyTheme",
+	"workbench.colorTheme": "My Theme Light",
 	"workbench.statusBar.visible": false,
 	"workbench.sideBar.location": "right",
-	"workbench.activityBar.visible": false,
+	"workbench.activityBar.visible": true,
 	"workbench.editor.showTabs": false,
 	"workbench.editor.showIcons": true,
 	"workbench.editor.tabCloseButton": "off",
@@ -51,8 +51,4 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
-
-	"markdown.styles": [
-		".vscode/markdown.css"
-	],
 }
