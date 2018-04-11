@@ -366,7 +366,6 @@
 	{
 		"key": "ctrl+k ctrl+k",
 		"command": "workbench.action.keepEditor",
-		"when": "editorTextFocus"
 	},
 	{
 		"key": "alt+n",

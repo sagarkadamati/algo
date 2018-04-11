@@ -11,7 +11,7 @@
 	"workbench.colorTheme": "My Theme Light",
 	"workbench.statusBar.visible": false,
 	"workbench.sideBar.location": "right",
-	"workbench.activityBar.visible": true,
+	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
 	"workbench.editor.showIcons": true,
 	"workbench.editor.tabCloseButton": "off",
