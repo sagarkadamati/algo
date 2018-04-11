@@ -514,15 +514,15 @@
 	},
 
 	{
-		"key": "alt+shift+a",
+		"key": "alt+a",
 		"command": "workbench.action.toggleActivityBarVisibility",
 	},
 	{
-		"key": "alt+shift+t",
+		"key": "alt+t",
 		"command": "workbench.action.toggleTabsVisibility"
 	},
 	{
-		"key": "alt+shift+s",
+		"key": "alt+s",
 		"command": "workbench.action.toggleStatusbarVisibility",
 	},
 
