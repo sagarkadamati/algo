@@ -259,22 +259,22 @@
 
 		// Editor Movments
 	{
-		"key": "ctrl+; e",
+		"key": "ctrl+; ctrl+e",
 		"command": "cursorBottom",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; shift+e",
+		"key": "ctrl+; ctrl+shift+e",
 		"command": "cursorBottomSelect",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; b",
+		"key": "ctrl+; ctrl+b",
 		"command": "cursorTop",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; shift+b",
+		"key": "ctrl+; ctrl+shift+b",
 		"command": "cursorTopSelect",
 		"when": "editorTextFocus"
 	},
