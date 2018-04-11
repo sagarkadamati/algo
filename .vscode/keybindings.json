@@ -87,6 +87,26 @@
 
 	// ################## Editor Commands ##################
 	// Editor: General
+	{
+		"key": "ctrl+i",
+		"command": "cursorHome",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "deleteRight",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+d",
+		"command": "deleteWordRight",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+v",
+		"command": "workbench.action.toggleCenteredLayout",
+		"when": "editorTextFocus"
+	},
 
 	// Editor: Char Movments
 	{
@@ -198,23 +218,18 @@
 
 	// Editor: Find and Replace Commands
 	{
-		"key": "ctrl+; ctrl+f",
+		"key": "ctrl+; f",
 		"command": "actions.find",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+r",
+		"key": "ctrl+; r",
 		"command": "editor.action.startFindReplaceAction",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+r",
+		"key": "ctrl+; shift+r",
 		"command": "workbench.action.replaceInFiles",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+; r",
-		"command": "workbench.action.files.revert",
 		"when": "editorTextFocus"
 	},
 
@@ -244,43 +259,23 @@
 
 		// Editor Movments
 	{
-		"key": "ctrl+i",
-		"command": "cursorHome",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+; ctrl+e",
+		"key": "ctrl+; e",
 		"command": "cursorBottom",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+shift+; ctrl+shift+e",
+		"key": "ctrl+; shift+e",
 		"command": "cursorBottomSelect",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+b",
+		"key": "ctrl+; b",
 		"command": "cursorTop",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+shift+; ctrl+shift+b",
+		"key": "ctrl+; shift+b",
 		"command": "cursorTopSelect",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+d",
-		"command": "deleteRight",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+d",
-		"command": "deleteWordRight",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+v",
-		"command": "workbench.action.toggleCenteredLayout",
 		"when": "editorTextFocus"
 	},
 
@@ -297,12 +292,12 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+h",
+		"key": "ctrl+; h",
 		"command": "workbench.action.focusFirstEditorGroup",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+l",
+		"key": "ctrl+; l",
 		"command": "workbench.action.focusSecondEditorGroup",
 		"when": "editorTextFocus"
 	},
@@ -311,52 +306,52 @@
 
 	// Editor: Code Navigation Commands
 	{
-		"key": "ctrl+; ctrl+s",
+		"key": "ctrl+; s",
 		"command": "C_Cpp.SwitchHeaderSource",
 		"when": "editorTextFocus && editorLangId == 'cpp'"
 	},
 	{
-		"key": "ctrl+; ctrl+s",
+		"key": "ctrl+; s",
 		"command": "C_Cpp.SwitchHeaderSource",
 		"when": "editorTextFocus && editorLangId == 'c'"
 	},
 	{
-		"key": "ctrl+alt+g",
+		"key": "ctrl+; g",
 		"command": "workbench.action.gotoLine",
 		"when": "editorFocus"
 	},
 	{
-		"key": "ctrl+alt+/",
+		"key": "ctrl+; /",
 		"command": "workbench.action.gotoSymbol",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+i",
+		"key": "ctrl+; i",
 		"command": "editor.action.goToImplementation",
 		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+i",
+		"key": "ctrl+; shift+i",
 		"command": "editor.action.goToDeclaration",
 		"when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
 	},
 	{
-		"key": "ctrl+; ctrl+d",
+		"key": "ctrl+; d",
 		"command": "C_Cpp.GoToDeclaration",
 		"when": "editorTextFocus && editorLangId == 'cpp'"
 	},
 	{
-		"key": "ctrl+; ctrl+d",
+		"key": "ctrl+; d",
 		"command": "C_Cpp.GoToDeclaration",
 		"when": "editorTextFocus && editorLangId == 'c'"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+d",
+		"key": "ctrl+; shift+d",
 		"command": "C_Cpp.PeekDeclaration",
 		"when": "editorTextFocus && editorLangId == 'cpp'"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+d",
+		"key": "ctrl+; shift+d",
 		"command": "C_Cpp.PeekDeclaration",
 		"when": "editorTextFocus && editorLangId == 'c'"
 	},
@@ -364,7 +359,7 @@
 
 	// Editor: Editor Commands
 	{
-		"key": "ctrl+k ctrl+k",
+		"key": "ctrl+k k",
 		"command": "workbench.action.keepEditor",
 	},
 	{
@@ -508,7 +503,7 @@
 		"when": "terminalFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+p",
+		"key": "ctrl+; p",
 		"command": "workbench.action.showCommands"
 	},
 
@@ -527,6 +522,11 @@
 
 
 	// ################## Git Commands ##################
+	{
+		"key": "ctrl+g ctrl+g",
+		"command": "workbench.view.scm",
+		"when": "editorFocus"
+	},
 	{
 		"key": "ctrl+g s",
 		"command": "git.stage",
@@ -655,5 +655,35 @@
 	{
 		"key": "ctrl+shift+o",
 		"command": "workbench.action.files.openFile",
+	},
+	{
+		"key": "ctrl+; shift+r",
+		"command": "workbench.action.files.revert",
+	},
+
+
+	// ################## Settings Commands ##################
+	// Settings: Settings
+	{
+		"key": "ctrl+i",
+		"command": "settings.action.search",
+		"when": "inSettingsEditor"
+	},
+	{
+		"key": "ctrl+f",
+		"command": "settings.action.focusSettingsFile",
+		"when": "inSettingsEditor"
+	},
+
+	// Settings: Keybindings
+	{
+		"key": "ctrl+i",
+		"command": "keybindings.editor.searchKeybindings",
+		"when": "inKeybindings"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "keybindings.editor.focusKeybindings",
+		"when": "inKeybindings"
 	},
 ]

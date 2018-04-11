@@ -22,6 +22,7 @@
 	
 	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
+	"editor.minimap.showSlider": "mouseover",
 	"editor.lineNumbers": "off",
 	"editor.cursorBlinking": "solid",
 	"editor.cursorStyle": "line",
