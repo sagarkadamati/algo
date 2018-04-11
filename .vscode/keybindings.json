@@ -466,30 +466,36 @@
 		"key": "ctrl+l",
 		"command": "workbench.action.toggleSidebarVisibility"
 	},
+	// {
+	// 	"key": "ctrl+s",
+	// 	"command": "workbench.view.search",
+	// 	"when": "!terminalFocus && !editorFocus && !inQuickOpen"
+	// "when": "explorerViewletFocus"
+	// },
 	{
 		"key": "ctrl+s",
 		"command": "workbench.view.search",
-		"when": "explorerViewletFocus"
+		"when": "!editorFocus && !inQuickOpen"
 	},
 	{
 		"key": "ctrl+e",
 		"command": "workbench.view.explorer",
-		"when": "explorerViewletFocus"
+		"when": "!editorFocus && !inQuickOpen && !explorerViewletFocus"
 	},
 	{
 		"key": "ctrl+d",
 		"command": "workbench.view.debug",
-		"when": "explorerViewletFocus"
+		"when": "!editorFocus && !inQuickOpen"
 	},
 	{
 		"key": "ctrl+g",
 		"command": "workbench.view.scm",
-		"when": "explorerViewletFocus"
+		"when": "!editorFocus && !inQuickOpen"
 	},
 	{
 		"key": "ctrl+x",
 		"command": "workbench.view.extensions",
-		"when": "explorerViewletFocus"
+		"when": "!editorFocus && !inQuickOpen"
 	},
 
 	// UI: Panel
