@@ -264,7 +264,7 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+e",
+		"key": "ctrl+shift+; ctrl+shift+e",
 		"command": "cursorBottomSelect",
 		"when": "editorTextFocus"
 	},
@@ -274,7 +274,7 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+shift+b",
+		"key": "ctrl+shift+; ctrl+shift+b",
 		"command": "cursorTopSelect",
 		"when": "editorTextFocus"
 	},
