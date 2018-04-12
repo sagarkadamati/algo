@@ -327,12 +327,12 @@
 	},
 	{
 		"key": "ctrl+; i",
-		"command": "editor.action.goToImplementation",
+		"command": "editor.action.goToDeclaration",
 		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
 	},
 	{
 		"key": "ctrl+; shift+i",
-		"command": "editor.action.goToDeclaration",
+		"command": "editor.action.goToImplementation",
 		"when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
 	},
 	{
