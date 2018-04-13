@@ -676,7 +676,7 @@
 		"when": "inSettingsEditor"
 	},
 	{
-		"key": "ctrl+f",
+		"key": "ctrl+; f",
 		"command": "settings.action.focusSettingsFile",
 		"when": "inSettingsEditor"
 	},
@@ -690,6 +690,67 @@
 	{
 		"key": "ctrl+n",
 		"command": "keybindings.editor.focusKeybindings",
-		"when": "inKeybindings"
+		"when": "inKeybindings && inKeybindingsSearch"
 	},
+
+	// ################## Explorer Commands ##################
+	{
+		"key": "ctrl+shift+n",
+		"command": "explorer.newFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+alt+n",
+		"command": "explorer.newFolder",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+alt+d",
+		"command": "deleteFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+shift+c",
+		"command": "workbench.files.action.collapseExplorerFolders",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+shift+r",
+		"command": "workbench.files.action.refreshFilesExplorer",
+		"when": "explorerViewletFocus"
+	},
+
+	// ################## Explorer Commands ##################
+	{
+		"key": "ctrl+p",
+		"command": "scrollPageUp",
+		"when": "webviewEditorFocus"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "PageDown",
+		"when": "webviewEditorFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "editor.action.webvieweditor.hideFind",
+		"when": "webviewEditorFocus && webviewFindWidgetVisible"
+	},
+	{
+		"key": "ctrl+; /",
+		"command": "workbench.action.gotoSymbol",
+		"when": "webviewEditorFocus"
+	},
+
+	// TASKS
+	{
+		"key": "ctrl+shift+c",
+		"command": "workbench.action.tasks.runTask",
+		"args": "build"
+	},
+	{
+		"key": "ctrl+shift+r",
+		"command": "workbench.action.tasks.runTask",
+		"args": "run"
+	}
 ]

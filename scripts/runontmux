@@ -1,0 +1,14 @@
+#!/bin/bash
+
+TMUX="tmux -2"
+
+runon()
+{
+    session_name=Workspace
+    window=${session}:$1
+    # pane=${window}.0
+    ${TMUX} send-keys -t "$window" "$2" Enter
+}
+
+runon Tree "clear; sleep 2; make run; tmux detach"
+tmux a

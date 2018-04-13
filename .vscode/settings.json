@@ -52,4 +52,6 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
+	"explorer.confirmDragAndDrop": false,
+	"[plaintext]": {},
 }
