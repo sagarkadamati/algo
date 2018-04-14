@@ -213,18 +213,8 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+f",
-		"command": "workbench.view.search",
-		"when": "editorTextFocus"
-	},
-	{
 		"key": "ctrl+; r",
 		"command": "editor.action.startFindReplaceAction",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+; ctrl+r",
-		"command": "workbench.action.replaceInFiles",
 		"when": "editorTextFocus"
 	},
 	// Editor: Other
@@ -271,19 +261,16 @@
 	},
 	// Editor Focus Commands
 	{
-		"key": "ctrl+; w",
+		"key": "ctrl+; ctrl+w",
 		"command": "editor.action.toggleRenderWhitespace",
-		"when": "editorTextFocus"
 	},
 	{
 		"key": "ctrl+; ctrl+h",
 		"command": "workbench.action.focusFirstEditorGroup",
-		"when": "editorTextFocus"
 	},
 	{
 		"key": "ctrl+; ctrl+l",
 		"command": "workbench.action.focusSecondEditorGroup",
-		"when": "editorTextFocus"
 	},
 	// Editor: Code Navigation Commands
 	{
@@ -338,7 +325,7 @@
 	},
 	// Editor: Editor Commands
 	{
-		"key": "ctrl+k k",
+		"key": "ctrl+; k",
 		"command": "workbench.action.keepEditor",
 	},
 	{
@@ -348,14 +335,6 @@
 	{
 		"key": "alt+p",
 		"command": "workbench.action.previousEditorInGroup"
-	},
-	{
-		"key": "alt+shift+p",
-		"command": "workbench.action.previousEditor"
-	},
-	{
-		"key": "alt+shift+n",
-		"command": "workbench.action.nextEditor"
 	},
 	// ################## Quick Open Commands ##################
 	{
@@ -424,20 +403,27 @@
 		"when": "listFocus && !inputFocus"
 	},
 	{
-		"key": "ctrl+alt+h",
+		"key": "ctrl+h",
 		"command": "list.collapse",
 		"when": "listFocus && !inputFocus"
 	},
 	{
-		"key": "ctrl+h",
-		"command": "list.expand",
+		"key": "ctrl+l",
+		"command": "list.toggleExpand",
 		"when": "listFocus && !inputFocus"
 	},
+	
 	// ################## UI Commands ##################
+	// UI: Activity Bar
+	{
+		"key": "alt+shift+a",
+		"command": "workbench.action.toggleActivityBarVisibility",
+	},
 	// UI: Side Bar
 	{
 		"key": "ctrl+l",
-		"command": "workbench.action.toggleSidebarVisibility"
+		"command": "workbench.action.focusSideBar",
+		"when": "editorTextFocus"
 	},
 	// {
 	// 	"key": "ctrl+s",
@@ -473,7 +459,7 @@
 	// UI: Panel
 	{
 		"key": "ctrl+j",
-		"command": "workbench.action.terminal.toggleTerminal",
+		"command": "workbench.action.togglePanel",
 	},
 	{
 		"key": "ctrl+m",
@@ -485,10 +471,6 @@
 		"command": "workbench.action.showCommands"
 	},
 	{
-		"key": "alt+shift+a",
-		"command": "workbench.action.toggleActivityBarVisibility",
-	},
-	{
 		"key": "alt+shift+t",
 		"command": "workbench.action.toggleTabsVisibility"
 	},
@@ -496,7 +478,7 @@
 		"key": "alt+shift+s",
 		"command": "workbench.action.toggleStatusbarVisibility",
 	},
-	// UI: Explorer
+	// UI: WebView
 	{
 		"key": "ctrl+p",
 		"command": "workbench.action.interactivePlayground.pageUp",
@@ -519,11 +501,6 @@
 	},
 	// ################## Git Commands ##################
 	{
-		"key": "ctrl+g ctrl+g",
-		"command": "workbench.view.scm",
-		"when": "editorFocus"
-	},
-	{
 		"key": "ctrl+g s",
 		"command": "git.stage",
 		"when": "editorFocus"
@@ -541,11 +518,6 @@
 	{
 		"key": "ctrl+g shift+u",
 		"command": "git.unstageAll",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+g c",
-		"command": "git.commit",
 		"when": "editorFocus"
 	},
 	{
@@ -675,32 +647,80 @@
 		"command": "keybindings.editor.focusKeybindings",
 		"when": "inKeybindings && inKeybindingsSearch"
 	},
-	// ################## Explorer Commands ##################
+	// ################## Explorer View Commands ##################
 	{
-		"key": "ctrl+shift+n",
+		"key": "ctrl+; ctrl+;",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; n",
 		"command": "explorer.newFile",
 		"when": "explorerViewletFocus"
 	},
 	{
-		"key": "ctrl+alt+n",
+		"key": "ctrl+; ctrl+n",
 		"command": "explorer.newFolder",
 		"when": "explorerViewletFocus"
 	},
 	{
-		"key": "ctrl+alt+d",
+		"key": "ctrl+; d",
 		"command": "deleteFile",
 		"when": "explorerViewletFocus"
 	},
 	{
-		"key": "ctrl+shift+c",
+		"key": "ctrl+; c",
 		"command": "workbench.files.action.collapseExplorerFolders",
 		"when": "explorerViewletFocus"
 	},
 	{
-		"key": "ctrl+shift+r",
+		"key": "ctrl+; r",
 		"command": "workbench.files.action.refreshFilesExplorer",
 		"when": "explorerViewletFocus"
 	},
+	// ################## Serach View Commands ##################
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "searchViewletVisible"
+	},
+	{
+		"key": "ctrl+; ctrl+f",
+		"command": "workbench.view.search",
+	},
+	{
+		"key": "ctrl+; ctrl+r",
+		"command": "workbench.action.replaceInFiles",
+	},
+	{
+		"key": "ctrl+c",
+		"command": "search.action.clearSearchResults",
+		"when": "searchViewletVisible && searchInputBoxFocus"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "search.action.focusNextSearchResult",
+		"when": "searchViewletVisible && searchInputBoxFocus"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "search.action.focusPreviousSearchResult",
+		"when": "searchViewletVisible && searchInputBoxFocus"
+	},
+	// ################## Source Control View Commands ##################
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "scmViewletFocus"
+	},
+	{
+		"key": "ctrl+g ctrl+c",
+		"command": "workbench.view.scm",
+	},
+	// ################## Debug View Commands ##################
+	// ################## Extension View Commands ##################
+
+	
 	// TASKS
 	{
 		"key": "ctrl+shift+c",
@@ -711,5 +731,5 @@
 		"key": "ctrl+shift+r",
 		"command": "workbench.action.tasks.runTask",
 		"args": "run"
-	}
+	},
 ]
