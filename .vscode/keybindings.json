@@ -536,11 +536,6 @@
 		"when": "editorFocus"
 	},
 	{
-		"key": "ctrl+g r",
-		"command": "git.refresh",
-		"when": "editorFocus"
-	},
-	{
 		"key": "ctrl+g b",
 		"command": "gitlens.toggleFileBlame",
 		"when": "editorTextFocus && gitlens:activeIsBlameable"
@@ -604,6 +599,17 @@
 		"key": "ctrl+g shift+w",
 		"command": "gitlens.diffWithWorking",
 		"when": "editorTextFocus && gitlens:activeIsTracked"
+	},
+	// ################## Diff Editor Commands ##################
+	{
+		"key": "ctrl+shift+p",
+		"command": "editor.action.diffReview.prev",
+		"when": "isInDiffEditor"
+	},
+	{
+		"key": "ctrl+shift+n",
+		"command": "editor.action.diffReview.next",
+		"when": "isInDiffEditor"
 	},
 	// ################## File Commands ##################
 	{
@@ -706,6 +712,10 @@
 	{
 		"key": "ctrl+g ctrl+c",
 		"command": "workbench.view.scm",
+	},
+	{
+		"key": "ctrl+g r",
+		"command": "git.refresh",
 	},
 	{
 		"key": "ctrl+g p",
