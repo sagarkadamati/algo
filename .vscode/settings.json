@@ -8,8 +8,8 @@
 	"terminal.integrated.cursorBlinking": false,
 
 	"workbench.startupEditor": "newUntitledFile",
-	"workbench.colorTheme": "My Theme Light",
-	"workbench.statusBar.visible": false,
+	"workbench.colorTheme": "Day Time",
+	"workbench.statusBar.visible": true,
 	"workbench.sideBar.location": "right",
 	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
@@ -33,6 +33,7 @@
 	"editor.fontLigatures": true,
 
 	"explorer.openEditors.visible": 0,
+	"explorer.confirmDragAndDrop": false,
 
 	"telemetry.enableTelemetry": false,
 	"telemetry.enableCrashReporter": false,
@@ -51,7 +52,5 @@
 		"suppressNoRepositoryWarning": false,
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
-	},
-	"explorer.confirmDragAndDrop": false,
-	"[plaintext]": {},
+	}
 }

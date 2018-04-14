@@ -6,6 +6,9 @@ https://www.sublimetext.com/docs/3/scope_naming.html
 
 # Sample Markdown
 
+>- [x] Done
+>- [ ] Progress
+
 # H1
 ## H2
 ### H3
