@@ -536,16 +536,6 @@
 		"when": "editorFocus"
 	},
 	{
-		"key": "ctrl+g p",
-		"command": "git.pull",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+g shift+p",
-		"command": "git.pushTo",
-		"when": "editorFocus"
-	},
-	{
 		"key": "ctrl+g r",
 		"command": "git.refresh",
 		"when": "editorFocus"
@@ -711,11 +701,19 @@
 	{
 		"key": "ctrl+; ctrl+;",
 		"command": "workbench.action.toggleSidebarVisibility",
-		"when": "scmViewletFocus"
+		"when": "scmViewletVisible"
 	},
 	{
 		"key": "ctrl+g ctrl+c",
 		"command": "workbench.view.scm",
+	},
+	{
+		"key": "ctrl+g p",
+		"command": "git.pull",
+	},
+	{
+		"key": "ctrl+g shift+p",
+		"command": "git.push",
 	},
 	// ################## Debug View Commands ##################
 	// ################## Extension View Commands ##################
