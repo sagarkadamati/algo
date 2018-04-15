@@ -20,7 +20,7 @@
 	
 	"zenMode.fullScreen": false,
 	
-	"editor.renderWhitespace": "all",
+	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
 	"editor.lineNumbers": "off",

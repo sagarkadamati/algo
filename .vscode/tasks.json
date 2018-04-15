@@ -24,7 +24,7 @@
 		{
 			"label": "run",
 			"type": "shell",
-			"command": "${cwd}/scripts/runontmux",
+			"command": "${cwd}/scripts/fandmake",
 			"args": [
 				"${cwd}",
 				"${file}",
@@ -36,7 +36,7 @@
 			},
 			"presentation": {
 				"echo": false,
-				"reveal": "silent",
+				"reveal": "always",
 				"focus": true,
 				"panel": "shared"
 			},
@@ -44,7 +44,7 @@
 				"owner": "cpp",
 				"fileLocation": [
 					"relative",
-					"${workspaceFolder}/c/agent"
+					"${workspaceFolder}"
 				],
 				"pattern": [
 					{
@@ -73,7 +73,7 @@
 			},
 			"presentation": {
 				"echo": false,
-				"reveal": "silent",
+				"reveal": "never",
 				"focus": true,
 				"panel": "shared"
 			},
