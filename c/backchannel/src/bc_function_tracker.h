@@ -1,5 +1,5 @@
-#ifndef __TRACE__
-#define __TRACE__
+#ifndef __BC_FUNCTION_TRACKER__
+#define __BC_FUNCTION_TRACKER__
 
 #include"bc_os_headers.h"
 
@@ -16,4 +16,4 @@ int  bc_print_functions(const char *fmt, ...);
 void __cyg_profile_func_enter(void *func, void *caller);
 void __cyg_profile_func_exit(void *func, void *caller);
 
-#endif /* __TRACE__ */
+#endif /* __BC_FUNCTION_TRACER__ */
