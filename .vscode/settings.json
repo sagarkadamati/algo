@@ -31,6 +31,8 @@
 	"editor.hideCursorInOverviewRuler": true,
 	"editor.renderIndentGuides": false,
 	"editor.fontLigatures": true,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
 
 	"explorer.openEditors.visible": 0,
 	"explorer.confirmDragAndDrop": false,

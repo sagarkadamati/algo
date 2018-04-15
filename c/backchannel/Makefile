@@ -6,7 +6,7 @@ SRCS += $(call rwildcard,test/,*.c)
 APP = $(shell basename $(shell pwd))
 INCLUDE = -I./src
 LIBS  = -lpthread -lrt
-CFLAGS = -Wall -finstrument-functions
+CFLAGS = -Wall -finstrument-functions -g
 
 clean:
 	@ rm -rf bin
