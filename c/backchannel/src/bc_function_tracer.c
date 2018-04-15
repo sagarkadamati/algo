@@ -1,7 +1,7 @@
 #include "bc_function_tracer.h"
 
 int
-	__attribute__((__no_instrument_function__))
+	__NO_TRACKING__
 	bc_print_functions(const char *fmt, ...)
 {
 	char log[LOG_BUFFER_LENGTH];
@@ -16,7 +16,7 @@ int
 }
 
 void
-	__attribute__((__no_instrument_function__))
+	__NO_TRACKING__
 	bc_update_functions(enum position pos, void *func, void *caller)
 {
 	long int ns;
@@ -39,20 +39,22 @@ void
 }
 
 void
-	__attribute__((__no_instrument_function__))
+	__NO_TRACKING__
 	__cyg_profile_func_exit(void *func, void *caller)
 {
 	bc_update_functions(EXIT, func, caller);
 }
 
 void
-	__attribute__((__no_instrument_function__))
+	__NO_TRACKING__
 	__cyg_profile_func_enter(void *func, void *caller)
 {
 	bc_update_functions(ENTER, func, caller);
 }
 
-void bc_init_function_tracer(void)
+void
+	__NO_TRACKING__
+	bc_init_function_tracer(void)
 {
 	printf("DEBUG: Function tracer enabled\n");
 
@@ -62,7 +64,9 @@ void bc_init_function_tracer(void)
 	printf("DEBUG: Function tracer enabled\n");
 }
 
-void bc_deinit_function_tracer(void)
+void
+	__NO_TRACKING__
+	bc_deinit_function_tracer(void)
 {
 	if (bc_function_tracker_fd)
 		close(bc_function_tracker_fd);
