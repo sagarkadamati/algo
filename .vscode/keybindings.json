@@ -85,6 +85,11 @@
 	// ################## Editor Commands ##################
 	// Editor: General
 	{
+		"key": "ctrl+; n",
+		"command": "explorer.newFile",
+		"when": "editorTextFocus"
+	},
+	{
 		"key": "ctrl+i",
 		"command": "cursorHome",
 		"when": "editorTextFocus"
@@ -219,6 +224,11 @@
 	},
 	// Editor: Other
 	{
+		"key": "ctrl+; ctrl+s",
+		"command": "markdown.showPreview",
+		"when": "editorTextFocus && editorLangId == 'markdown'"
+	},
+	{
 		"key": "ctrl+n",
 		"command": "editor.action.nextMatchFindAction",
 		"when": "editorFocus && findWidgetVisible"
@@ -274,12 +284,12 @@
 	},
 	// Editor: Code Navigation Commands
 	{
-		"key": "ctrl+; s",
+		"key": "ctrl+; ctrl+s",
 		"command": "C_Cpp.SwitchHeaderSource",
 		"when": "editorTextFocus && editorLangId == 'cpp'"
 	},
 	{
-		"key": "ctrl+; s",
+		"key": "ctrl+; ctrl+s",
 		"command": "C_Cpp.SwitchHeaderSource",
 		"when": "editorTextFocus && editorLangId == 'c'"
 	},
@@ -480,6 +490,11 @@
 	},
 	// UI: WebView
 	{
+		"key": "ctrl+; ctrl+s",
+		"command": "workbench.action.previousEditorInGroup",
+		"when": "webviewEditorFocus"
+	},
+	{
 		"key": "ctrl+p",
 		"command": "workbench.action.interactivePlayground.pageUp",
 		"when": "webviewEditorFocus"
@@ -557,7 +572,7 @@
 	},
 	{
 		"key": "ctrl+g l",
-		"command": "gitlens.toggleCodeLens",
+		"command": "gitlens.toggleLineBlame",
 		"when": "editorTextFocus && gitlens:canToggleCodeLens && gitlens:enabled"
 	},
 	{

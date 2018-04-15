@@ -7,11 +7,11 @@ After running the Server you can see the attached Shared Memory
 vgupta80@linux unixprog> ipcs -m
 
 ------ Shared Memory Segments --------
-key        shmid      owner      perms      bytes      nattch     status
-0x0000162e 65537      vgupta80  666        27         1
+key		shmid	  owner	  perms	  bytes	  nattch	 status
+0x0000162e 65537	  vgupta80  666		27		 1
 
 After running the client the memory is freed.
 
 ------ Shared Memory Segments --------
-key        shmid      owner      perms      bytes      nattch     status
-0x0000162e 65537      vgupta80  666        27         0
+key		shmid	  owner	  perms	  bytes	  nattch	 status
+0x0000162e 65537	  vgupta80  666		27		 0

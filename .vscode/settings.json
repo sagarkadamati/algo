@@ -9,7 +9,7 @@
 
 	"workbench.startupEditor": "newUntitledFile",
 	"workbench.colorTheme": "Day Time",
-	"workbench.statusBar.visible": true,
+	"workbench.statusBar.visible": false,
 	"workbench.sideBar.location": "right",
 	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
@@ -20,7 +20,7 @@
 	
 	"zenMode.fullScreen": false,
 	
-	"editor.renderWhitespace": "none",
+	"editor.renderWhitespace": "all",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
 	"editor.lineNumbers": "off",

@@ -29,9 +29,9 @@ int main(){
 
   /*---- Listen on the socket, with 5 max connection requests queued ----*/
   if(listen(welcomeSocket,5)==0)
-    printf("Listening\n");
+	printf("Listening\n");
   else
-    printf("Error\n");
+	printf("Error\n");
 
   /*---- Accept call creates a new socket for the incoming connection ----*/
   addr_size = sizeof serverStorage;

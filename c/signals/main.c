@@ -9,7 +9,7 @@ char i;
 static void DisasterSignals(int signal)
 {
   /* We cannot save the situation, the purpose of catching the signal is
-     only to do something clever to aid debugging before we go. */
+	 only to do something clever to aid debugging before we go. */
   write(1, "11\n", 3);
   *ptr = &i;
   write(1, "13\n", 3);

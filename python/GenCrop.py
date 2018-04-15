@@ -21,27 +21,27 @@ PAGES = READER.numPages
 
 i = 0
 while i < PAGES:
-    PAGE = READER.getPage(i)
-    PAGE.mediaBox.setLowerLeft(
-        (abs(PAGE.mediaBox.getLowerLeft_x() + ADJUSTMENT),
-         abs(PAGE.mediaBox.getLowerLeft_y() + ADJUSTMENT))
-        )
-    PAGE.mediaBox.setLowerRight(
-        (abs(PAGE.mediaBox.getLowerRight_x() - ADJUSTMENT),
-         abs(PAGE.mediaBox.getLowerRight_y() + ADJUSTMENT))
-        )
-    PAGE.mediaBox.setUpperLeft(
-        (abs(PAGE.mediaBox.getUpperLeft_x() + ADJUSTMENT),
-         abs(PAGE.mediaBox.getUpperLeft_y() - ADJUSTMENT))
-        )
-    PAGE.mediaBox.setUpperRight(
-        (abs(PAGE.mediaBox.getUpperRight_x() - ADJUSTMENT),
-         abs(PAGE.mediaBox.getUpperRight_y() - ADJUSTMENT))
-        )
+	PAGE = READER.getPage(i)
+	PAGE.mediaBox.setLowerLeft(
+		(abs(PAGE.mediaBox.getLowerLeft_x() + ADJUSTMENT),
+		 abs(PAGE.mediaBox.getLowerLeft_y() + ADJUSTMENT))
+		)
+	PAGE.mediaBox.setLowerRight(
+		(abs(PAGE.mediaBox.getLowerRight_x() - ADJUSTMENT),
+		 abs(PAGE.mediaBox.getLowerRight_y() + ADJUSTMENT))
+		)
+	PAGE.mediaBox.setUpperLeft(
+		(abs(PAGE.mediaBox.getUpperLeft_x() + ADJUSTMENT),
+		 abs(PAGE.mediaBox.getUpperLeft_y() - ADJUSTMENT))
+		)
+	PAGE.mediaBox.setUpperRight(
+		(abs(PAGE.mediaBox.getUpperRight_x() - ADJUSTMENT),
+		 abs(PAGE.mediaBox.getUpperRight_y() - ADJUSTMENT))
+		)
 
-    WRITER.addPage(PAGE)
+	WRITER.addPage(PAGE)
 
-    i += 1
+	i += 1
 
 WRITER.write(OUTSTREAM)
 

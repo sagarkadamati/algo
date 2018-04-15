@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	/* Waiting for threads to complete */
 	for (i = 0; i < NUM_THREADS; i++)
 	{
-	    pthread_join(workers[i], NULL);
+		pthread_join(workers[i], NULL);
 	}
 	
 	for(i = 0; i < M; i++)

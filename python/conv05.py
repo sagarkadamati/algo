@@ -9,22 +9,22 @@ HEIGHT = 0
 WIDTH = 0
 
 def GetHeightAndWidth(fileName):
-    PDFFILEOBJ = open(fileName, 'rb')
-    READER = PdfFileReader(PDFFILEOBJ)
+	PDFFILEOBJ = open(fileName, 'rb')
+	READER = PdfFileReader(PDFFILEOBJ)
 
-    global HEIGHT
-    global WIDTH
+	global HEIGHT
+	global WIDTH
 
-    for i in range(READER.numPages):
-        PAGE = READER.getPage(i)
+	for i in range(READER.numPages):
+		PAGE = READER.getPage(i)
 
-        if HEIGHT < PAGE.mediaBox.getHeight():
-            HEIGHT = PAGE.mediaBox.getHeight()
+		if HEIGHT < PAGE.mediaBox.getHeight():
+			HEIGHT = PAGE.mediaBox.getHeight()
 
-        if WIDTH < PAGE.mediaBox.getWidth():
-            WIDTH = PAGE.mediaBox.getWidth()
+		if WIDTH < PAGE.mediaBox.getWidth():
+			WIDTH = PAGE.mediaBox.getWidth()
 
-    PDFFILEOBJ.close()
+	PDFFILEOBJ.close()
 
 GetHeightAndWidth(str(sys.argv[1]))
 print ("Width: " + str(WIDTH) + " Height: " + str(HEIGHT))

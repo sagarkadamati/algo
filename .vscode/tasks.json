@@ -1,99 +1,99 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build",
-            "type": "shell",
-            "command": "${cwd}/scripts/fandmake",
-            "args": [
-                "${cwd}",
-                "${file}",
-                "build"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "echo": false,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared"
-            }
-        },
-        {
-            "label": "run",
-            "type": "shell",
-            "command": "${cwd}/scripts/runontmux",
-            "args": [
-                "${cwd}",
-                "${file}",
-                "run"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true,
-            },
-            "presentation": {
-                "echo": false,
-                "reveal": "silent",
-                "focus": true,
-                "panel": "shared"
-            },
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": [
-                    "relative",
-                    "${workspaceFolder}/c/agent"
-                ],
-                "pattern": [
-                    {
-                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                        "file": 1,
-                        "line": 2,
-                        "column": 3,
-                        "severity": 4,
-                        "message": 5
-                    }
-                ]
-            }
-        },
-        {
-            "label": "tmux",
-            "type": "shell",
-            "command": "${cwd}/scripts/runontmux",
-            "args": [
-                "${cwd}",
-                "${file}",
-                "run"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true,
-            },
-            "presentation": {
-                "echo": false,
-                "reveal": "silent",
-                "focus": true,
-                "panel": "shared"
-            },
-            "problemMatcher": {
-                "owner": "cpp",
-                "fileLocation": [
-                    "relative",
-                    "${workspaceFolder}/c/agent"
-                ],
-                "pattern": [
-                    {
-                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                        "file": 1,
-                        "line": 2,
-                        "column": 3,
-                        "severity": 4,
-                        "message": 5
-                    }
-                ]
-            }
-        }
-    ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"command": "${cwd}/scripts/fandmake",
+			"args": [
+				"${cwd}",
+				"${file}",
+				"build"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "run",
+			"type": "shell",
+			"command": "${cwd}/scripts/runontmux",
+			"args": [
+				"${cwd}",
+				"${file}",
+				"run"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": true,
+				"panel": "shared"
+			},
+			"problemMatcher": {
+				"owner": "cpp",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}/c/agent"
+				],
+				"pattern": [
+					{
+						"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"message": 5
+					}
+				]
+			}
+		},
+		{
+			"label": "tmux",
+			"type": "shell",
+			"command": "${cwd}/scripts/runontmux",
+			"args": [
+				"${cwd}",
+				"${file}",
+				"run"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true,
+			},
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": true,
+				"panel": "shared"
+			},
+			"problemMatcher": {
+				"owner": "cpp",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}/c/agent"
+				],
+				"pattern": [
+					{
+						"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"message": 5
+					}
+				]
+			}
+		}
+	]
 }

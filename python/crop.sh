@@ -1,8 +1,8 @@
 #!/bin/bash
 
 crop() {
-    pdfcrop Bhagavatam/Skandamu$1.pdf croppedBhagavatam.pdf
-    ./CropCopy.py cropped/Skandamu$1.pdf
+	pdfcrop Bhagavatam/Skandamu$1.pdf croppedBhagavatam.pdf
+	./CropCopy.py cropped/Skandamu$1.pdf
 }
 
 mkdir -p cropped

@@ -128,11 +128,11 @@ But let's throw in a <b>tag</b>.
 
 Colons can be used to align columns.
 
-| Tables        | Are           | Cool  |
+| Tables		| Are		   | Cool  |
 | ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| col 3 is	  | right-aligned | $1600 |
+| col 2 is	  | centered	  |   $12 |
+| zebra stripes | are neat	  |	$1 |
 
 There must be at least 3 dashes separating each header cell.
 The outer pipes (|) are optional, and you don't need to make the 
@@ -203,40 +203,40 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 Description for rule 1.
 
 <div style="-webkit-column-count: 2; -moz-column-count: 2; column-count: 2; -webkit-column-rule: 1px dotted #e0e0e0; -moz-column-rule: 1px dotted #e0e0e0; column-rule: 1px dotted #e0e0e0;">
-    <div style="display: inline-block;">
-        <h2>
-          Good
-        </h2>
-        <pre>
-          <code class="language-c">
+	<div style="display: inline-block;">
+		<h2>
+		  Good
+		</h2>
+		<pre>
+		  <code class="language-c">
 int foo (void) {
   int i;
 }
-          </code>
-        </pre>
-      </div>
-    <div style="display: inline-block;">
-      <h2>
-        Bad
-      </h2>
-      <pre>
-          <code class="language-c">
+		  </code>
+		</pre>
+	  </div>
+	<div style="display: inline-block;">
+	  <h2>
+		Bad
+	  </h2>
+	  <pre>
+		  <code class="language-c">
 int foo (void) {
   int i;
 }
-        </code>
-      </pre>
-    </div>
+		</code>
+	  </pre>
+	</div>
 </div>
 
 
 ## collapsible markdown?
 
 <details>
-    <summary>
-        CLICK ME
-    </summary>
-    <p>
+	<summary>
+		CLICK ME
+	</summary>
+	<p>
 
 #### yes, even hidden code blocks!
 

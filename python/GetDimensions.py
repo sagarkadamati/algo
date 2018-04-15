@@ -9,23 +9,23 @@ HEIGHT = 0
 WIDTH = 0
 
 def getheightandwidth(filename):
-    PDFFILEOBJ = open(filename, 'rb')
-    READER = PdfFileReader(PDFFILEOBJ)
+	PDFFILEOBJ = open(filename, 'rb')
+	READER = PdfFileReader(PDFFILEOBJ)
 
-    global HEIGHT
-    global WIDTH
+	global HEIGHT
+	global WIDTH
 
-    for i in range(READER.numPages):
-        PAGE = READER.getPage(i)
+	for i in range(READER.numPages):
+		PAGE = READER.getPage(i)
 
-        if HEIGHT < PAGE.mediaBox.getHeight():
-            HEIGHT = PAGE.mediaBox.getHeight()
+		if HEIGHT < PAGE.mediaBox.getHeight():
+			HEIGHT = PAGE.mediaBox.getHeight()
 
-        if WIDTH < PAGE.mediaBox.getWidth():
-            WIDTH = PAGE.mediaBox.getWidth()
+		if WIDTH < PAGE.mediaBox.getWidth():
+			WIDTH = PAGE.mediaBox.getWidth()
 
-    PDFFILEOBJ.close()
-    return
+	PDFFILEOBJ.close()
+	return
 
 getheightandwidth("BhagavatamCrop/Skandamu01.pdf")
 getheightandwidth("BhagavatamCrop/Skandamu02.pdf")
@@ -52,19 +52,19 @@ READER = PdfFileReader(PDFFILEOBJ)
 WRITER = PdfFileWriter()
 
 for i in range(READER.numPages):
-    PAGE = READER.getPage(i)
-    NEWPAGE = PAGE.createBlankPage(None, WIDTH, HEIGHT)
+	PAGE = READER.getPage(i)
+	NEWPAGE = PAGE.createBlankPage(None, WIDTH, HEIGHT)
 
-    TX = 0
-    TY = HEIGHT - PAGE.mediaBox.getHeight()
-    TRANSLATION = [[1, 0, 0],
-                   [0, 1, 0],
-                   [TX, TY, 1]]
-    NEWPAGE.mergeTransformedPage(PAGE, [TRANSLATION[0][0], TRANSLATION[0][1],
-                                        TRANSLATION[1][0], TRANSLATION[1][1],
-                                        TRANSLATION[2][0], TRANSLATION[2][1]])
+	TX = 0
+	TY = HEIGHT - PAGE.mediaBox.getHeight()
+	TRANSLATION = [[1, 0, 0],
+				   [0, 1, 0],
+				   [TX, TY, 1]]
+	NEWPAGE.mergeTransformedPage(PAGE, [TRANSLATION[0][0], TRANSLATION[0][1],
+										TRANSLATION[1][0], TRANSLATION[1][1],
+										TRANSLATION[2][0], TRANSLATION[2][1]])
 
-    WRITER.addPage(NEWPAGE)
+	WRITER.addPage(NEWPAGE)
 
 WRITER.write(OUTSTREAM)
 OUTSTREAM.close()

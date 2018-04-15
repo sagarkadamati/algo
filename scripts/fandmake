@@ -6,17 +6,17 @@ TASK="$3"
 
 DIR="$FILE"
 while true; do
-    DIR=`dirname "$DIR"`
+	DIR=`dirname "$DIR"`
 
-    ls "$DIR/Makefile" 1>/dev/null 2>/dev/null
-    if [ "$?" -eq 0 ]; then
-        echo "Project: \"$DIR\""
-        echo ""
-        make "$TASK" --no-print-directory -C "$DIR"
-        exit
-    fi
+	ls "$DIR/Makefile" 1>/dev/null 2>/dev/null
+	if [ "$?" -eq 0 ]; then
+		echo "Project: \"$DIR\""
+		echo ""
+		make "$TASK" --no-print-directory -C "$DIR"
+		exit
+	fi
 
-    if [ "$ROOT" == "$DIR" ]; then
-        exit
-    fi
+	if [ "$ROOT" == "$DIR" ]; then
+		exit
+	fi
 done

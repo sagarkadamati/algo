@@ -12,7 +12,7 @@ READER = PdfFileReader(PDFFILEOBJ)
 WRITER = PdfFileWriter()
 
 for i in range(READER.numPages):
-    WRITER.addPage(READER.getPage(i))
+	WRITER.addPage(READER.getPage(i))
 
 WRITER.write(OUTSTREAM)
 OUTSTREAM.close()

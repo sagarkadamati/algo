@@ -9,7 +9,7 @@ using namespace std;
 using namespace PoDoFo;
 
 void ReplaceStringInPlace(std::string& subject, const std::string& search,
-                          const std::string& replace) {
+						  const std::string& replace) {
 	size_t pos = 0;
 	while ((pos = subject.find(search, pos)) != std::string::npos) {
 		subject.replace(pos, search.length(), replace);
@@ -19,28 +19,28 @@ void ReplaceStringInPlace(std::string& subject, const std::string& search,
 
 std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefont) 
 {
-	const char*      pszToken = NULL;
-	PdfVariant       var;
+	const char*	  pszToken = NULL;
+	PdfVariant	   var;
 	EPdfContentsType eType;
 
 	PdfContentsTokenizer tokenizer( pPage );
 
-	double x            = 0.0;
-	double y            = 0.0;
+	double x			= 0.0;
+	double y			= 0.0;
 
-	double red          = 0.0;
-	double green        = 0.0;
-	double blue         = 0.0;
+	double red		  = 0.0;
+	double green		= 0.0;
+	double blue		 = 0.0;
 
-	double td_x         = 0.0;
-	double td_y         = 0.0;
+	double td_x		 = 0.0;
+	double td_y		 = 0.0;
 
-	double scale_x      = 0.0;
-	double shear_x      = 0.0;
-	double shear_y      = 0.0;
-	double scale_y      = 0.0;
-	double offset_x     = 0.0;
-	double offset_y     = 0.0;
+	double scale_x	  = 0.0;
+	double shear_x	  = 0.0;
+	double shear_y	  = 0.0;
+	double scale_y	  = 0.0;
+	double offset_x	 = 0.0;
+	double offset_y	 = 0.0;
 
 	double size;
 	double g;
@@ -77,11 +77,11 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 					stack.pop();
 				
 					block << scale_x << " " 
-					      << shear_x << " " 
-					      << shear_y << " " 
-					      << scale_y << " " 
-					      << offset_x << " " 
-					      << offset_y << " cm " << endl;
+						  << shear_x << " " 
+						  << shear_y << " " 
+						  << scale_y << " " 
+						  << offset_x << " " 
+						  << offset_y << " cm " << endl;
 				}
 
 				if( strcmp( pszToken, "re" ) == 0 ) 
@@ -96,24 +96,24 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 					stack.pop();
 				
 					block << shear_y << " " 
-					      << scale_y << " " 
-					      << offset_x << " " 
-					      << offset_y << " " 
-					      << pszToken << " " << endl;
+						  << scale_y << " " 
+						  << offset_x << " " 
+						  << offset_y << " " 
+						  << pszToken << " " << endl;
 				}
 
 				if( strcmp( pszToken, "W" ) == 0 ||
-				    strcmp( pszToken, "n" ) == 0 ||
-				    strcmp( pszToken, "q" ) == 0 ||
-				    strcmp( pszToken, "Q" ) == 0 )
+					strcmp( pszToken, "n" ) == 0 ||
+					strcmp( pszToken, "q" ) == 0 ||
+					strcmp( pszToken, "Q" ) == 0 )
 				{
 					block << pszToken << endl;
 				}
 
 				if( strcmp( pszToken, "w" ) == 0 ||
-				    strcmp( pszToken, "Tz" ) == 0 ||
-				    strcmp( pszToken, "g" ) == 0 ||
-				    strcmp( pszToken, "G" ) == 0 )
+					strcmp( pszToken, "Tz" ) == 0 ||
+					strcmp( pszToken, "g" ) == 0 ||
+					strcmp( pszToken, "G" ) == 0 )
 				{
 					g = stack.top().GetReal();
 					stack.pop();
@@ -121,7 +121,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 				}
 
 				if( strcmp( pszToken, "rg" ) == 0 ||
-				    strcmp( pszToken, "RG" ) == 0 )
+					strcmp( pszToken, "RG" ) == 0 )
 				{
 					blue = stack.top().GetReal();
 					stack.pop();
@@ -139,19 +139,19 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 					// blue = 0.514;
 				
 					block << red << " " 
-					      << green << " " 
-					      << blue << " " 
-					      << pszToken << endl;
+						  << green << " " 
+						  << blue << " " 
+						  << pszToken << endl;
 
 					// cout << red << " " 
-					//       << green << " " 
-					//       << blue << " " 
-					//       << pszToken << endl;
+					//	   << green << " " 
+					//	   << blue << " " 
+					//	   << pszToken << endl;
 				}
 
 				// support 'l' and 'm' tokens
 				if( strcmp( pszToken, "l" ) == 0 || 
-				    strcmp( pszToken, "m" ) == 0 )
+					strcmp( pszToken, "m" ) == 0 )
 				{
 					x = stack.top().GetReal();
 					stack.pop();
@@ -160,7 +160,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 				}
 				else if( strcmp( pszToken, "BT" ) == 0 ) 
 				{
-					bTextBlock   = true;     
+					bTextBlock   = true;	 
 					block << "BT" << endl;
 				}
 				else if( strcmp( pszToken, "ET" ) == 0 ) 
@@ -189,27 +189,27 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 
 					if(record)
 						block << "/" 
-						      << str
-						      << " " << size << " " 
-						      << "Tf" << endl;
+							  << str
+							  << " " << size << " " 
+							  << "Tf" << endl;
 
 					// cout << "/" 
-					//       << str
-					//       << " " << size << " " 
-					//       << "Tf" << endl;
+					//	   << str
+					//	   << " " << size << " " 
+					//	   << "Tf" << endl;
 				}
 
 				if(record) {
 					if( strcmp( pszToken, "gs" ) == 0 ) 
 					{
 						block << "/" 
-						      << stack.top().GetName().GetName() 
-						      << " " << "gs" << endl;
+							  << stack.top().GetName().GetName() 
+							  << " " << "gs" << endl;
 					}
 
 					if( strcmp( pszToken, "Tc" ) == 0 ||
-					    strcmp( pszToken, "TL" ) == 0 ||
-					    strcmp( pszToken, "Tw" ) == 0 )
+						strcmp( pszToken, "TL" ) == 0 ||
+						strcmp( pszToken, "Tw" ) == 0 )
 					{
 						td_y = stack.top().GetReal();
 						stack.pop();
@@ -218,7 +218,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 					}
 
 					if( strcmp( pszToken, "TD" ) == 0 ||
-					    strcmp( pszToken, "Td" ) == 0)
+						strcmp( pszToken, "Td" ) == 0)
 					{
 						td_y = stack.top().GetReal();
 						stack.pop();
@@ -226,8 +226,8 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 						stack.pop();
 				
 						block << td_x << " " 
-						      << td_y << " " 
-						      << pszToken << endl;
+							  << td_y << " " 
+							  << pszToken << endl;
 					}
 					else if( strcmp( pszToken, "Tm" ) == 0 )
 					{
@@ -245,12 +245,12 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 						stack.pop();
 				
 						block << scale_x << " " 
-						      << shear_x << " " 
-						      << shear_y << " " 
-						      << scale_y << " " 
-						      << offset_x << " " 
-						      << offset_y << " " 
-						      << pszToken << endl;
+							  << shear_x << " " 
+							  << shear_y << " " 
+							  << scale_y << " " 
+							  << offset_x << " " 
+							  << offset_y << " " 
+							  << pszToken << endl;
 					}
 					else if( strcmp( pszToken, "Tj" ) == 0 ||
 						 strcmp( pszToken, "'" ) == 0 ) 
@@ -261,7 +261,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 						ReplaceStringInPlace(str, ")", "\\)");
 		
 						block << "(" << str 
-						      << ")" << pszToken << endl;
+							  << ")" << pszToken << endl;
 						stack.pop();
 					}
 					else if( strcmp( pszToken, "TJ" ) == 0 ) 
@@ -281,8 +281,8 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 								ReplaceStringInPlace(str, ")", "\\)");
 							
 								block << "("
-								      << str
-								      << ")";
+									  << str
+									  << ")";
 							}
 							else if( array[i].IsNumber())
 								block << array[i].GetReal();
@@ -352,17 +352,17 @@ std::string process_glimps(string font)
 
 void get_glimpse( PdfMemDocument* pDocument, PdfPage* pPage ) 
 {
-	const char*          pszToken = NULL;
-	PdfVariant           var;
-	EPdfContentsType     eType;
-	string               str;
+	const char*		  pszToken = NULL;
+	PdfVariant		   var;
+	EPdfContentsType	 eType;
+	string			   str;
 
 	PdfContentsTokenizer tokenizer( pPage );
 	
 	while( tokenizer.ReadNext( eType, pszToken, var ) )
 		if( eType == ePdfContentsType_Keyword ) {
 			if( strcmp( pszToken, "Tj" ) == 0 ||
-			    strcmp( pszToken, "'" ) == 0 ) {
+				strcmp( pszToken, "'" ) == 0 ) {
 
 				str = var.GetString().GetString();
 				for (int i = 0; i < str.size(); i++)
@@ -394,15 +394,15 @@ void convert(string input,string output, string removefont, int del_start, int d
 
 	PdfMemDocument pdf(input.c_str());
 
-	PdfPage*       page = pdf.GetPage(1);
-	PdfObject*     contents = page->GetContents();
-	PdfObject*     resources = page->GetResources();
-	// PdfStream*     stream = contents->GetStream();
-	PdfRect        mediabox = page->GetMediaBox();
+	PdfPage*	   page = pdf.GetPage(1);
+	PdfObject*	 contents = page->GetContents();
+	PdfObject*	 resources = page->GetResources();
+	// PdfStream*	 stream = contents->GetStream();
+	PdfRect		mediabox = page->GetMediaBox();
 
-	char*          pBuffer;
-	pdf_long       lLen;
-	string         str;
+	char*		  pBuffer;
+	pdf_long	   lLen;
+	string		 str;
 
 	cout << "Skandam " << input << "Processing" << endl;
 
@@ -425,7 +425,7 @@ void convert(string input,string output, string removefont, int del_start, int d
 
 	pc = pdf.GetPageCount();
 	for (pn = 0; pn < pc; ++pn) {
-		PdfPage*        page = pdf.GetPage(pn);		
+		PdfPage*		page = pdf.GetPage(pn);		
 
 		get_glimpse(&pdf, page);
 

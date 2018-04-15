@@ -32,11 +32,11 @@ const (
 		}
 	` + "\x00"
 
-	rows    = 100
+	rows	= 100
 	columns = 100
 
 	threshold = 0.15
-	fps       = 10
+	fps	   = 10
 )
 
 var (
@@ -54,7 +54,7 @@ var (
 type cell struct {
 	drawable uint32
 
-	alive     bool
+	alive	 bool
 	aliveNext bool
 
 	x int
