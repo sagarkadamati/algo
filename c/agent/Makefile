@@ -1,8 +1,21 @@
-build: clean
-	@gcc agent.c -o agent
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
-run: build
-	@./agent
+SRCS := $(call rwildcard,src/,*.c)
+SRCS := $(call rwildcard,test/,*.c)
+
+APP = $(shell basename $(shell pwd))
+LIBS  = -lpthread -lrt
+CFLAGS = -Wall
 
 clean:
-	@rm -rf agent
+	@ rm -rf bin
+
+build: clean
+	@ mkdir bin
+	@ gcc $(SRCS) $(CFLAGS) $(LIBS) -o bin/$(APP)
+
+run: build
+	@ ./bin/$(APP) &
+
+
+

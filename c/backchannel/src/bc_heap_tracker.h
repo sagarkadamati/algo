@@ -17,6 +17,7 @@ struct bc_struct_heap_tracker
 };
 
 void bc_init_heap_tracker(void);
+void bc_deinit_heap_tracker(void);
 void bc_update_heap_tracker(void);
 void bc_malloc_probe_pt(void *ptr, const char *func, int line);
 void bc_calloc_probe_pt(void *ptr, const char *func, int line);

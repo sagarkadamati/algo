@@ -35,10 +35,20 @@ void bc_free_probe_pt(void *ptr, const char *func, int line) {
 
 void bc_init_heap_tracker()
 {
+	printf("DEBUG: Heap tracer enabled\n");
+
 	if ((bc_heap_tracker_fd = shm_open(HEAP_TRACKER, O_RDWR | O_CREAT, 0666)) < 0)
 		return;
+
+	printf("DEBUG: Heap tracer enabled\n");
 
 	heap_tracker_cbs.malloc = bc_malloc_probe_pt;
 	heap_tracker_cbs.calloc = bc_calloc_probe_pt;
 	heap_tracker_cbs.free = bc_free_probe_pt;
+}
+
+void bc_deinit_heap_tracker()
+{
+	if (bc_heap_tracker_fd)
+		close(bc_heap_tracker_fd);
 }
