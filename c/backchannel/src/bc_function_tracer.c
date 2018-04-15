@@ -56,12 +56,8 @@ void
 	__NO_TRACKING__
 	bc_init_function_tracer(void)
 {
-	printf("DEBUG: Function tracer enabled\n");
-
 	if ((bc_function_tracker_fd = shm_open(FUNCTION_TRACKER, O_RDWR | O_CREAT, 0666)) < 0)
 		return;
-
-	printf("DEBUG: Function tracer enabled\n");
 }
 
 void

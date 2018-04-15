@@ -53,8 +53,6 @@ void
 {
 	if ((bc_ioctl_tracker_fd = shm_open(IOCTL_TRACKER, O_RDWR | O_CREAT, 0666)) < 0)
 		return;
-
-	printf("DEBUG: IOCTL tracer enabled\n");
 }
 
 void
