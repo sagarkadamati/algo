@@ -224,6 +224,16 @@
 	},
 	// Editor: Other
 	{
+	        "key": "alt+e",
+	        "command": "workbench.view.explorer",
+	        "when": "editorFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.focusSideBar",
+		"when": "editorTextFocus"
+	},
+	{
 		"key": "ctrl+; ctrl+s",
 		"command": "markdown.showPreview",
 		"when": "editorTextFocus && editorLangId == 'markdown'"
@@ -275,11 +285,11 @@
 		"command": "editor.action.toggleRenderWhitespace",
 	},
 	{
-		"key": "ctrl+; ctrl+h",
+		"key": "ctrl+shift+h",
 		"command": "workbench.action.focusFirstEditorGroup",
 	},
 	{
-		"key": "ctrl+; ctrl+l",
+		"key": "ctrl+shift+l",
 		"command": "workbench.action.focusSecondEditorGroup",
 	},
 	// Editor: Code Navigation Commands
@@ -335,7 +345,7 @@
 	},
 	// Editor: Editor Commands
 	{
-		"key": "ctrl+; k",
+		"key": "ctrl+k ctrl+k",
 		"command": "workbench.action.keepEditor",
 	},
 	{
@@ -345,6 +355,14 @@
 	{
 		"key": "alt+p",
 		"command": "workbench.action.previousEditorInGroup"
+	},
+	{
+		"key": "alt+u",
+		"command": "editor.action.transformToUppercase"
+	},
+	{
+		"key": "alt+l",
+		"command": "editor.action.transformToLowercase"
 	},
 	// ################## Quick Open Commands ##################
 	{
@@ -422,6 +440,16 @@
 		"command": "list.toggleExpand",
 		"when": "listFocus && !inputFocus"
 	},
+	{
+		"key": "ctrl+; ctrl+e",
+		"command": "list.focusLast",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+b",
+		"command": "list.focusFirst",
+		"when": "listFocus && !inputFocus"
+	},
 	
 	// ################## UI Commands ##################
 	// UI: Activity Bar
@@ -431,40 +459,8 @@
 	},
 	// UI: Side Bar
 	{
-		"key": "ctrl+l",
-		"command": "workbench.action.focusSideBar",
-		"when": "editorTextFocus"
-	},
-	// {
-	// 	"key": "ctrl+s",
-	// 	"command": "workbench.view.search",
-	// 	"when": "!terminalFocus && !editorFocus && !inQuickOpen"
-	// "when": "explorerViewletFocus"
-	// },
-	{
-		"key": "ctrl+s",
-		"command": "workbench.view.search",
-		"when": "!editorFocus && !inQuickOpen"
-	},
-	{
-		"key": "ctrl+e",
-		"command": "workbench.view.explorer",
-		"when": "!editorFocus && !inQuickOpen && !explorerViewletFocus"
-	},
-	{
-		"key": "ctrl+d",
-		"command": "workbench.view.debug",
-		"when": "!editorFocus && !inQuickOpen"
-	},
-	{
-		"key": "ctrl+g",
-		"command": "workbench.view.scm",
-		"when": "!editorFocus && !inQuickOpen"
-	},
-	{
-		"key": "ctrl+x",
-		"command": "workbench.view.extensions",
-		"when": "!editorFocus && !inQuickOpen"
+		"key": "ctrl+'",
+		"command": "workbench.action.toggleSidebarVisibility",
 	},
 	// UI: Panel
 	{
@@ -503,11 +499,6 @@
 		"key": "ctrl+n",
 		"command": "workbench.action.interactivePlayground.pageDown",
 		"when": "webviewEditorFocus"
-	},
-	{
-		"key": "ctrl+; ctrl+;",
-		"command": "editor.action.webvieweditor.hideFind",
-		"when": "webviewEditorFocus && webviewFindWidgetVisible"
 	},
 	{
 		"key": "ctrl+; /",
@@ -660,11 +651,6 @@
 	},
 	// ################## Explorer View Commands ##################
 	{
-		"key": "ctrl+; ctrl+;",
-		"command": "workbench.action.toggleSidebarVisibility",
-		"when": "explorerViewletFocus"
-	},
-	{
 		"key": "ctrl+; n",
 		"command": "explorer.newFile",
 		"when": "explorerViewletFocus"
@@ -672,6 +658,16 @@
 	{
 		"key": "ctrl+; ctrl+n",
 		"command": "explorer.newFolder",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "filesExplorer.copy",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+v",
+		"command": "filesExplorer.paste",
 		"when": "explorerViewletFocus"
 	},
 	{
@@ -690,11 +686,6 @@
 		"when": "explorerViewletFocus"
 	},
 	// ################## Serach View Commands ##################
-	{
-		"key": "ctrl+; ctrl+;",
-		"command": "workbench.action.toggleSidebarVisibility",
-		"when": "searchViewletVisible && !editorTextFocus"
-	},
 	{
 		"key": "ctrl+; shift+f",
 		"command": "workbench.view.search",
@@ -716,24 +707,9 @@
 	{
 		"key": "ctrl+i",
 		"command": "workbench.view.search",
-		"when": "searchViewletVisible && !editorTextFocus"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "list.focusDown",
-		"when": "searchViewletVisible && !editorTextFocus"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "list.focusUp",
-		"when": "searchViewletVisible && !editorTextFocus"
+		"when": "searchViewletVisible && !editorTextFocus && !searchInputBoxFocus"
 	},
 	// ################## Source Control View Commands ##################
-	{
-		"key": "ctrl+; ctrl+;",
-		"command": "workbench.action.toggleSidebarVisibility",
-		"when": "scmViewletVisible"
-	},
 	{
 		"key": "ctrl+g ctrl+c",
 		"command": "workbench.view.scm",
