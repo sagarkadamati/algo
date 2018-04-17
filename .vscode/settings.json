@@ -54,5 +54,27 @@
 		"suppressNoRepositoryWarning": false,
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
-	}
+	},
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+
+		"**/bin/**": true,
+	},
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/bower_components": true,
+
+		"**/bin/**": true,
+	},
+	"files.watcherExclude": {
+		"**/.git/objects/**": true,
+		"**/.git/subtree-cache/**": true,
+		"**/node_modules/**": true,
+
+		"**/bin/**": true,
+	},
 }
