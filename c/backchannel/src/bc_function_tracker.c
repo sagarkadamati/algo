@@ -1,4 +1,5 @@
 #include "bc_function_tracker.h"
+#include "bc_tracker.h"
 
 int
 	__NO_TRACKING__
@@ -28,11 +29,11 @@ void
 	switch(pos)
 	{
 		case ENTER:
-			bc_print_functions("| %-50s | %-5s | %lu |\n",
+			bc_print_functions("| 0x%-10x | %-5s | %lu |\n",
 				func, pos ? "EXIT" : "ENTER", ns / 1000000);
 			break;
 		case EXIT:
-			bc_print_functions("| %-50s | %-5s | %lu |\n",
+			bc_print_functions("| 0x%-10x | %-5s | %lu |\n",
 				func, pos ? "EXIT" : "ENTER", ns / 1000000);
 			break;
 	}
@@ -56,8 +57,11 @@ void
 	__NO_TRACKING__
 	bc_init_function_tracer(void)
 {
-	if ((bc_function_tracker_fd = shm_open(FUNCTION_TRACKER, O_RDWR | O_CREAT, 0666)) < 0)
+	tracker *t = bc_allocate_tracker(FUNCTION_TRACKER, 100);
+	if (t->fd < 0)
 		return;
+		
+	bc_function_tracker_fd = t->fd;
 }
 
 void

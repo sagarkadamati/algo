@@ -2,6 +2,8 @@
 
 #include "bc_os_headers.h"
 
+#include "bc_tracker.h"
+
 #include "bc_heap_tracker.h"
 #include "bc_ioctl_tracker.h"
 #include "bc_function_tracker.h"

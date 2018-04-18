@@ -34,7 +34,7 @@
 			"name": "C/C++ (gdb)",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceRoot}/a.out",
+			"program": "${workspaceRoot}/c/backchannel/bin/backchannel",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceRoot}",

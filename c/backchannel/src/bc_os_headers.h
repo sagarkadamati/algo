@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <time.h>
+#include <stddef.h>
 
 enum position{
 	ENTER,

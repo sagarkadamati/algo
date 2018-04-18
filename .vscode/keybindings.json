@@ -224,17 +224,15 @@
 	},
 	// Editor: Other
 	{
-	        "key": "alt+e",
-	        "command": "workbench.view.explorer",
-	        "when": "editorFocus"
+        "key": "alt+e",
+        "command": "workbench.view.explorer",
 	},
 	{
-		"key": "ctrl+l",
+		"key": "alt+l",
 		"command": "workbench.action.focusSideBar",
-		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+; ctrl+s",
+		"key": "alt+o",
 		"command": "markdown.showPreview",
 		"when": "editorTextFocus && editorLangId == 'markdown'"
 	},
@@ -285,11 +283,11 @@
 		"command": "editor.action.toggleRenderWhitespace",
 	},
 	{
-		"key": "ctrl+shift+h",
+		"key": "ctrl+h",
 		"command": "workbench.action.focusFirstEditorGroup",
 	},
 	{
-		"key": "ctrl+shift+l",
+		"key": "ctrl+l",
 		"command": "workbench.action.focusSecondEditorGroup",
 	},
 	// Editor: Code Navigation Commands
@@ -459,7 +457,7 @@
 	},
 	// UI: Side Bar
 	{
-		"key": "ctrl+'",
+		"key": "ctrl+shift+l",
 		"command": "workbench.action.toggleSidebarVisibility",
 	},
 	// UI: Panel

@@ -40,32 +40,32 @@ void sighandlers(int signal)
     switch(signal)
     {
         case SIGTERM:
-            bc_deinit();
+            // bc_deinit();
             break;
         case SIGSEGV:
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
             break;
         case SIGINT:
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
             break;
         case SIGILL:
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
             break;
         case SIGABRT:
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
             break;
         case SIGFPE:
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
             break;
         default:
             break;
-            bc_deinit();
-			print_backtrace();
+            // bc_deinit();
+			// print_backtrace();
     }
 
     abort();
