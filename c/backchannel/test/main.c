@@ -96,6 +96,6 @@ int main(void)
 	bc_update_cmd(ENTER, CMD2, 0);
 	bc_update_cmd(EXIT, CMD2, -1);
 
-    while(1);
+    // while(1);
     return 0;
 }

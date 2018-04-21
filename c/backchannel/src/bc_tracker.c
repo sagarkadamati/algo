@@ -18,7 +18,7 @@ int bc_update_tracker(tracker *t, int line, const char *fmt, ...)
 
 tracker* bc_allocate_tracker(char* tracker_name, int lines)
 {
-	tracker *t = calloc(1, sizeof(tracker));
+	tracker *t = bc_calloc(1, sizeof(tracker));
 	list_add(&trackers, &t->head);
 
 	t->lines = lines;

@@ -2,30 +2,42 @@
 #define __BC_HEAP_TRACKER__
 
 #include "bc_os_headers.h"
+#include "bc_tracker.h"
 
-#define LOG_BUFFER_LENGTH   100
 #define HEAP_TRACKER        "bc_heap"
+#define HEAP_SIZE           2
 
-int bc_heap_tracker_fd;
-void* bc_heap_tracker_data;
-
-struct bc_struct_heap_tracker
-{
-  void (*malloc)(void *ptr, const char *func, int line);
-  void (*calloc)(void *ptr, const char *func, int line);
-  void (*free)(void *ptr, const char *func, int line);
+enum alloc_type {
+	MALLOC,
+	CALLOC,
 };
+
+typedef struct heap_block {
+	void* ptr;
+	const char* func;
+	int line;
+	int size;
+	enum alloc_type type;
+	list_node mblock;
+} heap_block;
+
+struct heap_tracker_struct {
+	tracker *tracker;
+	struct bc_struct_heap_tracker *cbs;
+
+	list_node mblocks;
+
+	int msize;
+	int mfree;
+	int csize;
+	int cfree;
+
+} heap_tracker;
 
 void bc_init_heap_tracker(void);
 void bc_deinit_heap_tracker(void);
-void bc_update_heap_tracker(void);
-void bc_malloc_probe_pt(void *ptr, const char *func, int line);
-void bc_calloc_probe_pt(void *ptr, const char *func, int line);
+void bc_malloc_probe_pt(void *ptr, int size, const char *func, int line);
+void bc_calloc_probe_pt(void *ptr, int size, const char *func, int line);
 void bc_free_probe_pt(void *ptr, const char *func, int line);
-int  bc_print_allocations(const char *fmt, ...);
-
-#ifndef __BC_PROCESS_HEADERS__
-struct bc_struct_heap_tracker heap_tracker_cbs;
-#endif /* __BC_PROCESS_HEADERS__ */
 
 #endif /* __BC_HEAP_TRACKER__ */

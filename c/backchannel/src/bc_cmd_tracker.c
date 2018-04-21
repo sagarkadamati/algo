@@ -64,7 +64,7 @@ void bc_update_cmd_tracker_header()
 
 void* bc_allocate_cmds()
 {
-	void* data = calloc(BC_CMDS_COUNT, sizeof(struct cmd_struct));
+	void* data = bc_calloc(BC_CMDS_COUNT, sizeof(struct cmd_struct));
 	if (data)
 		bc_init_cmds(data);
 
@@ -74,7 +74,7 @@ void* bc_allocate_cmds()
 void bc_deallocate_cmds()
 {
 	if(cmd_stream.cmds)
-		free(cmd_stream.cmds);
+		bc_free(cmd_stream.cmds);
 }
 
 void bc_init_cmd_tracker()
