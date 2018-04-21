@@ -20,5 +20,6 @@ void bc_init_tracker();
 void bc_deinit_tracker();
 tracker* bc_allocate_tracker(char* tracker_name, int lines);
 void bc_deallocate_tracker(tracker *t);
+int bc_update_tracker(tracker *t, int line, const char *fmt, ...);
 
 #endif /* __BC_TRACKER__ */
