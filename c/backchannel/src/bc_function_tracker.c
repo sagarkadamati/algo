@@ -57,7 +57,7 @@ void
 	__NO_TRACKING__
 	bc_init_function_tracer(void)
 {
-	tracker *t = bc_allocate_tracker(FUNCTION_TRACKER, 100);
+	tracker *t = bc_allocate_tracker(FUNCTION_TRACKER);
 	if (t->fd < 0)
 		return;
 		

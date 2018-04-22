@@ -5,7 +5,7 @@
 #include "bc_tracker.h"
 
 #define HEAP_TRACKER        "bc_heap"
-#define HEAP_SIZE           2
+#define HEAP_SIZE           3
 
 enum alloc_type {
 	MALLOC,
@@ -18,15 +18,15 @@ typedef struct heap_block {
 	int line;
 	int size;
 	enum alloc_type type;
-	list_node mblock;
+	list_node hblock;
 } heap_block;
 
 struct heap_tracker_struct {
 	tracker *tracker;
+	tracker_mblock *mblock;
 	struct bc_struct_heap_tracker *cbs;
 
-	list_node mblocks;
-
+	list_node hblocks;
 	int msize;
 	int mfree;
 	int csize;

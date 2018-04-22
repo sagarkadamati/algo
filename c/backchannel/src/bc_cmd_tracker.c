@@ -8,7 +8,7 @@ void bc_update_cmd_data(int index)
 	timespec_diff(&cmd_stream.cmds[index].tenter,
 			&cmd_stream.cmds[index].texit, &spec);
 
-	bc_update_tracker(cmd_stream.tracker, (index + 3),
+	bc_update_tracker(cmd_stream.mblock, (index + 3),
 		"\n| %-50s | %4lu.%09lu | %5d | %5d |",
 		cmd_stream.cmds[index].name,
 		spec.tv_sec, spec.tv_nsec,
@@ -42,21 +42,21 @@ void bc_update_cmd(enum position pos, int cmd, int status)
 
 void bc_update_cmd_tracker_header()
 {
-	bc_update_tracker(cmd_stream.tracker, 0,
+	bc_update_tracker(cmd_stream.mblock, 0,
 		"|-%-50s-+--%14s--+-%5s-|", "----------"
 		"----------""----------""----------""----------",
 		"----------""----","-----");
 
-	bc_update_tracker(cmd_stream.tracker, 1,
+	bc_update_tracker(cmd_stream.mblock, 1,
 		"\n| %-20s%-10s%-20s |  %14s  | %5s |",
 		" ", "CMD NAME", " ", "Execution Time", "Count");
 
-	bc_update_tracker(cmd_stream.tracker, 2,
+	bc_update_tracker(cmd_stream.mblock, 2,
 		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
 		"----------""----------""----------""----------",
 		"----------""----","-----");
 
-	bc_update_tracker(cmd_stream.tracker, (BC_CMDS_COUNT - 1),
+	bc_update_tracker(cmd_stream.mblock, (BC_CMDS_COUNT - 1),
 		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
 		"----------""----------""----------""----------",
 		"----------""----","-----");
@@ -79,7 +79,8 @@ void bc_deallocate_cmds()
 
 void bc_init_cmd_tracker()
 {
-	cmd_stream.tracker = bc_allocate_tracker(CMD_TRACKER, BC_CMDS_COUNT);
+	cmd_stream.tracker = bc_allocate_tracker(CMD_TRACKER);
+	cmd_stream.mblock = bc_allocate_mblock(cmd_stream.tracker, CMDS_SIZE);
 
 	bc_update_cmd_tracker_header();
 	cmd_stream.cmds = bc_allocate_cmds();

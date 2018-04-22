@@ -6,20 +6,30 @@
 
 #define TRACKER_LINE_SIZE 100
 
-typedef struct struct_tracker {
-	int fd;
+typedef struct struct_tracker_mblock {
 	char* mmap;
 	int mmap_size;
 	int lines;
-	list_node head;
+	list_node node;
+} tracker_mblock;
+
+typedef struct struct_tracker {
+	int fd;
+	char* name;
+	int size;
+	list_node mblocks;
+	list_node node;
 } tracker;
 
 list_node trackers;
 
 void bc_init_tracker();
 void bc_deinit_tracker();
-tracker* bc_allocate_tracker(char* tracker_name, int lines);
+tracker* bc_allocate_tracker(char* tracker_name);
+tracker_mblock* bc_allocate_mblock(tracker *t, int lines);
 void bc_deallocate_tracker(tracker *t);
-int bc_update_tracker(tracker *t, int line, const char *fmt, ...);
+void bc_deallocate_mblock(tracker_mblock*);
+int bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...);
+tracker* bc_get_tracker(char* tracker_name);
 
 #endif /* __BC_TRACKER__ */

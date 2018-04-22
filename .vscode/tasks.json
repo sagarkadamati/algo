@@ -19,6 +19,23 @@
 				"reveal": "always",
 				"focus": true,
 				"panel": "shared"
+			},
+			"problemMatcher": {
+				"owner": "cpp",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}/c/backchannel"
+				],
+				"pattern": [
+					{
+						"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"message": 5
+					}
+				]
 			}
 		},
 		{

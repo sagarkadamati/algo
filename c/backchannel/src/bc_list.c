@@ -14,7 +14,8 @@ void list_add(list_node *head, list_node *node)
 
 void list_add_tail(list_node *head, list_node *node)
 {
-
+	list_attach(head->prev, node);
+	list_attach(node, head);
 }
 
 void list_remove(list_node *node) {

@@ -5,7 +5,8 @@
 #include "bc_tracker.h"
 #include "bc_time.h"
 
-#define CMD_TRACKER       "bc_cmds"
+#define CMD_TRACKER     "bc_cmds"
+#define CMDS_SIZE       100
 
 #define CMD1 1
 #define CMD2 2
@@ -26,6 +27,8 @@ typedef struct cmd_struct {
 
 struct cmd_stream {
 	tracker *tracker;
+	tracker_mblock *mblock;
+
 	cmd_struct *cmds;
 	list_node head;
 } cmd_stream;
