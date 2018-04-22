@@ -1,19 +1,51 @@
-#ifndef __BC_FUNCTION_TRACKER__
-#define __BC_FUNCTION_TRACKER__
+#ifndef __BC_function_TRACKER__
+#define __BC_function_TRACKER__
 
-#include"bc_os_headers.h"
+#include "bc_os_headers.h"
+#include "bc_tracker.h"
+#include "bc_time.h"
 
-#define LOG_BUFFER_LENGTH   100
-#define FUNCTION_TRACKER    "bc_function"
+#define FUNCTION_TRACKER     "bc_functions"
+#define FUNCTIONS_SIZE       100
 
-int bc_function_tracker_fd;
-void* bc_function_tracker_data;
+enum condition {
+	DISABLE,
+	ENABLE,
+	ENABLE_LEVEL,
+	ENABLE_SELECT_COUNT,
+};
 
-void bc_init_function_tracer(void);
-void bc_deinit_function_tracer(void);
-int  bc_print_functions(const char *fmt, ...);
+typedef struct function_struct {
+	int id;
+	char* name;
+	long int xcount;
+	struct timespec tenter;
+	struct timespec texit;
+	struct timespec tavg;
+	int status;
+} function_struct;
+
+struct function_stream {
+	tracker *tracker;
+	tracker_mblock *mblock;
+
+	function_struct *functions;
+	list_node head;
+	enum condition cond;
+	int level;
+	int level_count;
+	int level_enabled;
+	int level_count_enabled;
+} function_stream;
 
 void __cyg_profile_func_enter(void *func, void *caller);
 void __cyg_profile_func_exit(void *func, void *caller);
 
-#endif /* __BC_FUNCTION_TRACER__ */
+void bc_init_function_tracker(void);
+void bc_deinit_function_tracker(void);
+void bc_update_function_tracker_header(void);
+void bc_update_function(enum position pos, void *func, void *caller);
+
+void bc_deallocate_functions(void);
+
+#endif /* __BC_FUNCTION_TRACKER__ */

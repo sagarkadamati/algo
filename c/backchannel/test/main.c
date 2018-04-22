@@ -1,5 +1,6 @@
 #include "main.h"
 #include "../src/bc_cmd_tracker.h"
+#include "../src/bc_function_tracker.h"
 
 // static void full_write(int fd, const char *buf, size_t len)
 // {
@@ -94,7 +95,11 @@ int main(void)
 	bc_update_cmd(ENTER, CMD1, 0);
 	bc_update_cmd(EXIT, CMD1, 0);
 	bc_update_cmd(ENTER, CMD2, 0);
+	function_stream.level = 0;
+	function_stream.level_enabled = 1;
+	function_stream.cond = ENABLE_LEVEL;
 	bc_update_cmd(EXIT, CMD2, -1);
+	function_stream.cond = DISABLE;
 
     // while(1);
     return 0;

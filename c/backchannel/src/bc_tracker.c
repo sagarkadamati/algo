@@ -1,6 +1,6 @@
 #include "bc_tracker.h"
 
-int bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...)
+int __NO_TRACKING__ bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...)
 {
 	int len;
 	va_list args;
