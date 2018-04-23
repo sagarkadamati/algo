@@ -4,7 +4,7 @@
 #define ADD_CMD(_cmd) BC_##_cmd,
 
 enum commands {
-	#include "bc_cmds.h"
+	#include CMDS_FILE
 	BC_CMDS_COUNT
 };
 
@@ -18,7 +18,7 @@ int bc_cmd_index(int cmd)
 {
 	switch (cmd)
 	{
-	#include "bc_cmds.h"
+	#include CMDS_FILE
 	default:
 		return -1;
 		break;
@@ -35,7 +35,7 @@ char* bc_cmd_name(int cmd)
 {
 	switch (cmd)
 	{
-	#include "bc_cmds.h"
+	#include CMDS_FILE
 	default:
 		return (char*)"---- NO CMD FOUND ----";
 		break;
@@ -53,7 +53,7 @@ void bc_init_cmds(struct cmd_struct *cmds)
 {
 	int i = 0;
 
-	#include "bc_cmds.h"
+	#include CMDS_FILE
 }
 
 #endif  /* __BC_CMD_FACTORY__ */

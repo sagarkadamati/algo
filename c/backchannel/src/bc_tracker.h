@@ -28,7 +28,7 @@ void bc_deinit_tracker();
 tracker* bc_allocate_tracker(char* tracker_name);
 tracker_mblock* bc_allocate_mblock(tracker *t, int lines);
 void bc_deallocate_tracker(tracker *t);
-void bc_deallocate_mblock(tracker_mblock*);
+void bc_deallocate_mblock(tracker_mblock* mblock);
 int bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...);
 tracker* bc_get_tracker(char* tracker_name);
 

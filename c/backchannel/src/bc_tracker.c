@@ -73,6 +73,14 @@ tracker_mblock* bc_allocate_mblock(tracker *t, int lines)
 	return mblock;
 }
 
+void bc_deallocate_mblock(tracker_mblock* mblock)
+{
+	/* TBD */
+
+	// if(mblock)
+	// 	munmap(mblock, );
+}
+
 void bc_deallocate_tracker(tracker *t)
 {
 	list_node *node = &t->mblocks;
