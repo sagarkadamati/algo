@@ -77,13 +77,4 @@
 
 		"**/bin/**": true,
 	},
-	"files.associations": {
-		"initializer_list": "c",
-		"bc_cmd_tracker.h": "c",
-		"bc_os_headers.h": "c",
-		"bc_init.h": "c",
-		"bc_heap_internal.h": "c",
-		"bc_heap_tracker.h": "c",
-		"bc_tracker.h": "c"
-	},
 }
