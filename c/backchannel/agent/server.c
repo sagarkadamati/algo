@@ -43,9 +43,6 @@ void serve_request(int socket)
 	mmaped_mem = (char*) mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	send(socket, mmaped_mem, size, 0);
 
-	for(int i = 0; i < size; i++)
-	printf("%c", mmaped_mem[i]);
-
 	munmap(mmaped_mem, size);
 	close(fd);
 }
