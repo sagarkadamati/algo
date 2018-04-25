@@ -41,7 +41,7 @@
 	"telemetry.enableCrashReporter": false,
 	"update.channel": "none",
 
-	"C_Cpp.intelliSenseEngine": "Tag Parser",
+	// "C_Cpp.intelliSenseEngine": "Tag Parser",
 
 	"gitlens.gitExplorer.files.layout": "auto",
 	"gitlens.historyExplorer.enabled": false,
@@ -76,5 +76,8 @@
 		"**/node_modules/**": true,
 
 		"**/bin/**": true,
+	},
+	"files.associations": {
+		"initializer_list": "c"
 	},
 }

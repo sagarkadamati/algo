@@ -3,6 +3,7 @@
 
 #include "socket.h"
 
+void process_request(int socket);
 void server(void);
 
 #endif /* __SERVER__ */

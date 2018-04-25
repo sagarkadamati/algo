@@ -43,16 +43,6 @@ int accept_connection(int socket)
 	return accept(socket, (struct sockaddr *)&serverStorage, &addr_size);
 }
 
-void process_request(int socket)
-{
-	char buffer[1024];
-
-	recv(socket, buffer, 1024, 0);
-		
-	strcpy(buffer, "My Hello World\n");
-	send(socket, buffer, 1024, 0);
-}
-
 void release_socket(int socket)
 {
 	shutdown(socket, 2);

@@ -12,7 +12,6 @@ void connect_socket(int socket);
 void bind_socket(int socket);
 void listen_for_connections(int socket);
 int accept_connection(int socket);
-void process_request(int socket);
 void release_socket(int socket);
 
 #endif /* __SOCKET__ */
