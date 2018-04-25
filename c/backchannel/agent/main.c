@@ -8,7 +8,7 @@ void start_agent(enum MODE mode)
 			bridge();
 			break;
 		case SERVER:
-			// run_as_background();
+			run_as_background();
 			server();
 			break;
 		default:
