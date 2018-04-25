@@ -2,33 +2,17 @@
 
 void server()
 {
-	int welcomeSocket, newSocket;
-	char buffer[1024];
-	struct sockaddr_in serverAddr;
-	struct sockaddr_storage serverStorage;
-	socklen_t addr_size;
+	int sskt, cskt;
 
-	welcomeSocket = socket(PF_INET, SOCK_STREAM, 0);
-
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(7891);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
-
-	bind(welcomeSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
+	sskt = alloc_socket();
+	bind_socket(sskt);
 
 	while (1) {
-		if (listen(welcomeSocket, 5) == 0)
-			printf("Listening\n");
-		else
-			printf("Error\n");
+		listen_for_connections(sskt);
+		cskt = accept_connection(sskt);
 
-		addr_size = sizeof serverStorage;
-		newSocket = accept(welcomeSocket, (struct sockaddr *)&serverStorage, &addr_size);
-
-		recv(newSocket, buffer, 1024, 0);
-		
-		strcpy(buffer, "My Hello World\n");
-		send(newSocket, buffer, 1024, 0);
+		process_request(cskt);
 	}
+
+	release_socket(sskt);
 }
