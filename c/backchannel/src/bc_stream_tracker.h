@@ -16,6 +16,37 @@ enum STREAM_TYPE {
 	TYPE2
 };
 
+struct streams_header {
+	char name[100];
+	int  enable;
+
+	int streams_offset;
+	int streams_size;
+};
+
+struct streams {
+	char name[100];
+	int  enable;
+
+	int id;
+	int type;
+	int sid;
+	pid_t pid;
+
+	struct cmd_str {
+		char name[100];
+		int  enable;
+
+		int cmd;
+		int status;
+		int xcount;
+
+		struct timespec tenter;
+		struct timespec texit;
+		struct timespec tavg;
+	} cmds[CMDS_SIZE];
+};
+
 struct stream_struct {
 	int id;
 	int enable;
@@ -33,7 +64,12 @@ struct stream_struct {
 
 struct stream_tracker {
 	tracker *tracker;
-	struct streamannel {
+	tracker_mblock *mblock;
+
+	struct streams_header *header;
+	struct streams *streams;
+
+	struct stream {
 		tracker_mblock *mblock;
 		struct stream_struct *data;
 		struct cmds *cmds;
@@ -54,4 +90,12 @@ void bc_update_stream_type(int sid, enum STREAM_TYPE type);
 char* bc_get_stream_name(int cmd);
 int get_stream_count(void);
 int bc_get_stream_num(int cmd);
+
+void bc_update_streams(int stream, const char *name, pid_t pid);
+void bc_update_streams_cmd(int stream, int cmd, enum position pos, int status);
+void bc_enable_stream(int stream);
+void bc_disable_stream(int stream);
+void bc_update_stream_offsets(void);
+void bc_init_stream_tracker(void);
+
 #endif /* __BC_STREAM_TRACKER__ */

@@ -3,6 +3,6 @@
 
 #include "socket.h"
 
-void client(void);
+void client(int argc, char *argv[]);
 
 #endif /* __CLIENT__ */

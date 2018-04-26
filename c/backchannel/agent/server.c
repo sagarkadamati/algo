@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stddef.h>
 
-#define CMDS_FILE "bc_cmds"
+#define STREAM_FILE "bc_stream"
 
 void process_request(int socket)
 {
@@ -33,7 +33,7 @@ void serve_request(int socket)
 
 	recv(socket, buffer, 1024, 0);
 
-	fd = shm_open(CMDS_FILE, O_RDWR | O_CREAT, 0666);
+	fd = shm_open(STREAM_FILE, O_RDWR | O_CREAT, 0666);
 	fstat(fd, &stat_buf);
 	size = stat_buf.st_size;
 	send(socket, &size, sizeof(int), 0);

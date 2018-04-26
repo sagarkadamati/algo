@@ -3,15 +3,27 @@
 int i = 0;
 void __NO_TRACKING__ bc_update_function(enum position pos, void *func, void *caller)
 {
+	struct function_struct *f;
+	f = (struct function_struct*) function_stream.mblock->mmap;
+	f += i;
 	switch (pos)
 	{
 		case ENTER:
-			bc_update_tracker(function_stream.mblock, i++,
-				 "\nENTER 0x%x", func);
+			f->id = i + 3;
+			f->name = "TESTING";
+			i++;
+			// msync(function_stream.mblock->mmap, function_stream.mblock->mmap_size, 0);
+
+			// bc_update_tracker(function_stream.mblock, i++,
+			// 	 "\nENTER 0x%x", func);
 			break;
 		case EXIT:
-			bc_update_tracker(function_stream.mblock, i++,
-				 "\nEXIT 0x%x", func);
+			f->id = i + 3;
+			f->name = "TESTING";
+			i++;
+			// msync(function_stream.mblock->mmap, function_stream.mblock->mmap_size, 0);
+			// bc_update_tracker(function_stream.mblock, i++,
+			// 	 "\nEXIT 0x%x", func);
 			break;
 	}
 }
@@ -35,6 +47,8 @@ void __NO_TRACKING__ __cyg_profile_func_enter(void *func, void *caller)
 			if (function_stream.level_count == function_stream.level_count_enabled)
 				bc_update_function(ENTER, func, caller);
 			break;
+		case DISABLE:
+			break;
 	}
 }
 
@@ -54,6 +68,8 @@ void __NO_TRACKING__ __cyg_profile_func_exit(void *func, void *caller)
 			if (function_stream.level_count == function_stream.level_count_enabled)
 				bc_update_function(EXIT, func, caller);
 			function_stream.level--;
+		case DISABLE:
+			break;
 	}
 }
 
@@ -91,7 +107,7 @@ void bc_init_function_tracker()
 	function_stream.tracker = bc_allocate_tracker(FUNCTION_TRACKER);
 	function_stream.mblock = bc_allocate_mblock(function_stream.tracker, FUNCTIONS_SIZE);
 
-	bc_update_function_tracker_header();
+	// bc_update_function_tracker_header();
 }
 
 void bc_deinit_function_tracker()

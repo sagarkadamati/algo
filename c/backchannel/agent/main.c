@@ -1,6 +1,6 @@
 #include "main.h"
 
-void start_agent(enum MODE mode)
+void start_agent(enum MODE mode, int argc, char *argv[])
 {
 	switch(mode) {
 		case BRIDGE:
@@ -12,7 +12,7 @@ void start_agent(enum MODE mode)
 			server();
 			break;
 		default:
-			client();
+			client(argc, argv);
 	}
 }
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	start_agent(mode);
+	start_agent(mode, argc, argv);
 
 	return 0;
 }

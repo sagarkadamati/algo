@@ -8,6 +8,7 @@
 #include "bc_ioctl_tracker.h"
 #include "bc_function_tracker.h"
 #include "bc_cmd_tracker.h"
+#include "bc_stream_tracker.h"
 
 void bc_init(void);
 void bc_deinit(void);

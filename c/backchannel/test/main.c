@@ -91,15 +91,21 @@ int main(void)
     // init_sighandler();
 
     printf("DEBUG: PID: %d\n", getpid());
+	int stream = 0;
+	char *name = "Testing 1";
+	int cmd = 1;
+	int status = 0;
 
-	bc_update_cmd(ENTER, CMD1, 0);
-	bc_update_cmd(EXIT, CMD1, 0);
-	bc_update_cmd(ENTER, CMD2, 0);
-	function_stream.level = 0;
-	function_stream.level_enabled = 1;
-	function_stream.cond = ENABLE_LEVEL;
-	bc_update_cmd(EXIT, CMD2, -1);
-	function_stream.cond = DISABLE;
+	bc_enable_stream(stream);
+	bc_update_streams(stream, name, getpid());
+	bc_update_streams_cmd(stream, cmd, ENTER, status);
+	// function_stream.level = 0;
+	// function_stream.level_enabled = 1;
+	// function_stream.cond = ENABLE_LEVEL;
+	// function_stream.cond = DISABLE;
+	bc_update_streams_cmd(stream, cmd, EXIT, status);
+	bc_update_streams_cmd(stream, cmd, ENTER, status);
+	bc_update_streams_cmd(stream, cmd, EXIT, status);
 
     // while(1);
     return 0;

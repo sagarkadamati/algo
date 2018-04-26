@@ -1,6 +1,5 @@
 #include "bc_cmd_tracker.h"
 
-#define CMDS_FILE "bc_cmds.h"
 #include "bc_cmd_factory.h"
 
 void bc_update_cmd_data(struct cmds *cmds, int index)
