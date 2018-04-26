@@ -739,4 +739,20 @@
 		"command": "workbench.action.tasks.runTask",
 		"args": "run"
 	},
+
+	{
+		"key": "ctrl+; m",
+		"command": "workbench.action.joinTwoGroups",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.focusSideBar",
+		"when": "editorTextFocus && explorerViewletVisible"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.action.openNextRecentlyUsedEditor",
+		"when": "editorTextFocus"
+	}
 ]
