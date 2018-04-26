@@ -40,6 +40,7 @@ void bc_update_stream_cmd(int stream, int cmd, enum position pos, int status)
 				case ENTER:
 				 	strcpy(stream_tracker.streams[stream].cmds[id].name, name);
 					stream_tracker.streams[stream].cmds[id].cmd = cmd;
+					stream_tracker.streams[stream].cmds[id].enable = 1;
 					stream_tracker.streams[stream].cmds[id].xcount++;
 
 					clock_gettime(CLOCK_REALTIME,

@@ -21,6 +21,7 @@ void send_request(int socket)
 	int size;
 	char* ch;
 	struct streams_header *header;
+	struct streams *stream;
 	struct streams *streams;
 	int offset;
 
@@ -38,19 +39,21 @@ void send_request(int socket)
 	size = header->streams_size;
 	streams = (struct streams*) (ch + offset);
 
-	for (int i = 0; i < header->streams_count; i++) {
-		streams += i;
-		printf("| %-8s%-10s | %-8s%-10d |\n",
-			"Name : ", streams->name,
-			"PID  : ", streams->pid);
+	for (int i = 0; i < size; i++) {
+		stream = streams + i;
+		if (stream->enable) {
+			printf("| %-8s%-10s | %-8s%-10d |\n",
+				"Name : ", stream->name,
+				"PID  : ", stream->pid);
 
-		for (int j = 0; j < header->cmds_count; j++) {
-			if (streams->cmds[j].enable) {
-				printf("| %-8s%-10s | %-8s%-10d |  %4lu.%-9lu\n",
-					"CMD  : ", streams->cmds[i].name,
-					"Count: ", streams->cmds[i].xcount,
-					streams->cmds[i].tenter.tv_sec,
-					streams->cmds[i].tenter.tv_nsec);
+			for (int j = 0; j < header->cmds_count; j++) {
+				if (stream->cmds[j].enable) {
+					printf("| %-8s%-10s | %-8s%-10d |  %4lu.%-9lu\n",
+						"CMD  : ", stream->cmds[j].name,
+						"Count: ", stream->cmds[j].xcount,
+						stream->cmds[j].tenter.tv_sec,
+						stream->cmds[j].tenter.tv_nsec);
+				}
 			}
 		}
 	}
