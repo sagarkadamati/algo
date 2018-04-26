@@ -38,13 +38,13 @@ void send_request(int socket)
 	size = header->streams_size;
 	streams = (struct streams*) (ch + offset);
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < header->streams_count; i++) {
 		streams += i;
 		printf("| %-8s%-10s | %-8s%-10d |\n",
 			"Name : ", streams->name,
 			"PID  : ", streams->pid);
 
-		for (int j = 0; j < 10; j++) {
+		for (int j = 0; j < header->cmds_count; j++) {
 			if (streams->cmds[j].enable) {
 				printf("| %-8s%-10s | %-8s%-10d |  %4lu.%-9lu\n",
 					"CMD  : ", streams->cmds[i].name,

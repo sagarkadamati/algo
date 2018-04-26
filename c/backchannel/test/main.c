@@ -97,15 +97,15 @@ int main(void)
 	int status = 0;
 
 	bc_enable_stream(stream);
-	bc_update_streams(stream, name, getpid());
-	bc_update_streams_cmd(stream, cmd, ENTER, status);
+	bc_update_stream(stream, name, getpid());
+	bc_update_stream_cmd(stream, cmd, ENTER, status);
 	// function_stream.level = 0;
 	// function_stream.level_enabled = 1;
 	// function_stream.cond = ENABLE_LEVEL;
 	// function_stream.cond = DISABLE;
-	bc_update_streams_cmd(stream, cmd, EXIT, status);
-	bc_update_streams_cmd(stream, cmd, ENTER, status);
-	bc_update_streams_cmd(stream, cmd, EXIT, status);
+	bc_update_stream_cmd(stream, cmd, EXIT, status);
+	bc_update_stream_cmd(stream, cmd, ENTER, status);
+	bc_update_stream_cmd(stream, cmd, EXIT, status);
 
     // while(1);
     return 0;
