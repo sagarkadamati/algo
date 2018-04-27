@@ -6,9 +6,11 @@ typedef struct struct_list_node {
 	struct struct_list_node *prev;
 } list_node;
 
+#ifndef container_of
 #define container_of(ptr, type, member) ({                      \
         const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
         (type *)( (char *)__mptr - offsetof(type,member) );})
+#endif
 
 #define list_attach(_prev, _next) \
 	_prev->next = _next; \

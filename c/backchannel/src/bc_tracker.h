@@ -2,9 +2,10 @@
 #define __BC_TRACKER__
 
 #include "bc_os_headers.h"
+#include "bc_heap_tracker.h"
 #include "bc_list.h"
 
-#define TRACKER_LINE_SIZE 100
+#define TRACKER_LINE_SIZE 1
 
 typedef struct struct_tracker_mblock {
 	char* mmap;
@@ -23,8 +24,8 @@ typedef struct struct_tracker {
 
 list_node trackers;
 
-void bc_init_tracker();
-void bc_deinit_tracker();
+void bc_init_tracker(void);
+void bc_deinit_tracker(void);
 tracker* bc_allocate_tracker(char* tracker_name);
 tracker_mblock* bc_allocate_mblock(tracker *t, int lines);
 void bc_deallocate_tracker(tracker *t);

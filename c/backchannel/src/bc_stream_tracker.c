@@ -99,7 +99,9 @@ void bc_setup_stream()
 void bc_init_stream_tracker()
 {
 	stream_tracker.tracker = bc_allocate_tracker(STREAM_TRACKER);
-	stream_tracker.mblock = bc_allocate_mblock(stream_tracker.tracker, STREAM_SIZE);
+	stream_tracker.mblock =
+		bc_allocate_mblock(stream_tracker.tracker,
+			(1 + STREAM_SIZE) * sizeof(struct streams));
 
 	bc_setup_stream();
 }

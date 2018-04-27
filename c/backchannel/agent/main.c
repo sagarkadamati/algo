@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	int verbose = 0;
 
 	int opt;
-	while ((opt = getopt(argc, argv, "db")) != -1)
+	while ((opt = getopt(argc, argv, "dbv")) != -1)
 	{
 		switch (opt)
 		{

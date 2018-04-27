@@ -82,24 +82,27 @@ void start_request(int socket, int verbose)
 			}
 		}
 	}
+
 	if (verbose)
 		printf("done\n");
 
-	// for(int i = 0; i < size; i++)
-	// 	printf("%c", ch[i]);
 	free(ch);
 }
 
 void client(int verbose)
 {
 	int cskt = alloc_socket();
+	if (verbose)
+		printf("DEBUG: connetcing...");
 	if (!connect_socket(cskt))
 	{
+		if (verbose)
+			printf("done");
 		start_request(cskt, verbose);
 		release_socket(cskt);
 	}
 	else {
 		if (verbose)
-			printf("DEBUG: connect fail\n");
+			printf("fail\n");
 	}
 }
