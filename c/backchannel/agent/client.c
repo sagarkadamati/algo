@@ -5,15 +5,28 @@
 
 #include "../src/bc_stream_tracker.h"
 
-typedef struct function_struct {
-	int id;
-	char* name;
-	long int xcount;
-	struct timespec tenter;
-	struct timespec texit;
-	struct timespec tavg;
-	int status;
-} function_struct;
+#define MAX_BUF_SIZE 4096
+
+void receive_data(int socket, char* ch, int size)
+{
+	int size_left = size;
+	int offset = 0;;
+
+	while(size_left)
+	{
+		if (size_left > MAX_BUF_SIZE)
+		{
+			recv(socket, ch + offset, MAX_BUF_SIZE, 0);
+			offset += MAX_BUF_SIZE;
+			size_left -= MAX_BUF_SIZE;
+		}
+		else {
+			recv(socket, ch + offset, size_left, 0);
+			offset += size_left;
+			size_left = 0;
+		}
+	}
+}
 
 void send_request(int socket)
 {

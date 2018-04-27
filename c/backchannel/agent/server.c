@@ -13,6 +13,28 @@
 #include <stddef.h>
 
 #define STREAM_FILE "bc_stream"
+#define MAX_BUF_SIZE 4096
+
+void send_data(int socket, char* ch, int size)
+{
+	int size_left = size;
+	int offset = 0;;
+
+	while(size_left)
+	{
+		if (size_left > MAX_BUF_SIZE)
+		{
+			send(socket, ch + offset, MAX_BUF_SIZE, 0);
+			offset += MAX_BUF_SIZE;
+			size_left -= MAX_BUF_SIZE;
+		}
+		else {
+			send(socket, ch + offset, size_left, 0);
+			offset += size_left;
+			size_left = 0;
+		}
+	}
+}
 
 void process_request(int socket)
 {
