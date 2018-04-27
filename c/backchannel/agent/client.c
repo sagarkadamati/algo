@@ -50,14 +50,14 @@ void process_data(char* ch, int verbose)
 	for (i = 0; i < size; i++) {
 		stream = streams + i;
 		if (stream->enable) {
-			printf("Stream: %s, ID: %d PID: %d\n",
+			printf("%s %d: %d\n",
 				stream->name,
 				stream->id,
 				stream->pid);
 
 			for (j = 0; j < header->cmds_count; j++) {
 				if (stream->cmds[j].enable) {
-					printf(" %4s %-20s: count - %-10d, time - %4lu.%-9lu\n",
+					printf(" %4s %-50s: (%-10d) - %4lu.%-9lu sec\n",
 						"", stream->cmds[j].name,
 						stream->cmds[j].xcount,
 						stream->cmds[j].tavg.tv_sec,
