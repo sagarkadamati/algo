@@ -13,7 +13,7 @@
 #include <stddef.h>
 
 #define STREAM_FILE "bc_stream"
-#define MAX_BUF_SIZE 4096
+#define MAX_BUF_SIZE 100
 
 void send_data(int socket, char* ch, int size)
 {
@@ -63,7 +63,7 @@ void serve_request(int socket)
 	recv(socket, buffer, 1024, 0);
 
 	mmaped_mem = (char*) mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	send(socket, mmaped_mem, size, 0);
+	send_data(socket, mmaped_mem, size);
 
 	munmap(mmaped_mem, size);
 	close(fd);

@@ -1,5 +1,7 @@
 #include "socket.h"
 
+#define SERVER_ADDR "127.0.0.1"
+
 int alloc_socket()
 {
 	return socket(PF_INET, SOCK_STREAM, 0);
@@ -12,7 +14,7 @@ void connect_socket(int socket)
 	
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(7891);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	serverAddr.sin_addr.s_addr = inet_addr(SERVER_ADDR);
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
 	connect(socket, (struct sockaddr *)&serverAddr, addr_size);
@@ -24,7 +26,7 @@ void bind_socket(int socket)
 	
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(7891);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	serverAddr.sin_addr.s_addr = inet_addr(SERVER_ADDR);
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
 	bind(socket, (struct sockaddr *)&serverAddr, sizeof(serverAddr));	
