@@ -6,8 +6,9 @@
 #include "bc_tracker.h"
 #include "bc_cmd_tracker.h"
 
-#define STREAM_TRACKER	"bc_stream"
-#define STREAM_SIZE		3
+#define STREAM_TRACKER		"bc_stream"
+#define STREAM_ALLOC_SIZE	550
+#define STREAM_SIZE			3
 
 enum STREAM_TYPE {
 	TYPE1 = 1,
@@ -27,7 +28,9 @@ struct streams_header {
 
 struct streams {
 	char name[100];
-	int  enable;
+
+	int enable;
+	int used;
 
 	int id;
 	int type;
@@ -51,6 +54,7 @@ struct streams {
 struct stream_tracker {
 	tracker *tracker;
 	tracker_mblock *mblock;
+	int stream_index[550];
 
 	struct streams_header *header;
 	struct streams *streams;

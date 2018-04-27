@@ -63,7 +63,7 @@ void start_request(int socket, int verbose)
 	streams = (struct streams*) (ch + offset);
 
 	if (verbose)
-		printf("DEBUG: started processing data ...");
+		printf("DEBUG: Processing data\n");
 	for (i = 0; i < size; i++) {
 		stream = streams + i;
 		if (stream->enable) {
@@ -82,9 +82,6 @@ void start_request(int socket, int verbose)
 			}
 		}
 	}
-
-	if (verbose)
-		printf("done\n");
 
 	free(ch);
 }
