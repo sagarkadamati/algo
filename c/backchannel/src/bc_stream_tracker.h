@@ -7,7 +7,7 @@
 #include "bc_cmd_tracker.h"
 
 #define STREAM_TRACKER	"bc_stream"
-#define STREAM_SIZE		550
+#define STREAM_SIZE		3
 
 enum STREAM_TYPE {
 	TYPE1 = 1,
