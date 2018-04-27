@@ -2,7 +2,7 @@
 #define __BC_TRACKER__
 
 #include "bc_os_headers.h"
-#include "bc_heap_tracker.h"
+#include "bc_heap_internal.h"
 #include "bc_list.h"
 
 #define TRACKER_LINE_SIZE 1
