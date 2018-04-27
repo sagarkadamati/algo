@@ -7,7 +7,7 @@ int alloc_socket()
 	return socket(PF_INET, SOCK_STREAM, 0);
 }
 
-void connect_socket(int socket)
+int connect_socket(int socket)
 {
 	struct sockaddr_in serverAddr;
 	socklen_t addr_size = sizeof serverAddr;
@@ -17,10 +17,10 @@ void connect_socket(int socket)
 	serverAddr.sin_addr.s_addr = inet_addr(SERVER_ADDR);
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
-	connect(socket, (struct sockaddr *)&serverAddr, addr_size);
+	return connect(socket, (struct sockaddr *)&serverAddr, addr_size);
 }
 
-void bind_socket(int socket)
+int bind_socket(int socket)
 {
 	struct sockaddr_in serverAddr;
 	
@@ -29,12 +29,12 @@ void bind_socket(int socket)
 	serverAddr.sin_addr.s_addr = inet_addr(SERVER_ADDR);
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
-	bind(socket, (struct sockaddr *)&serverAddr, sizeof(serverAddr));	
+	return bind(socket, (struct sockaddr *)&serverAddr, sizeof(serverAddr));	
 }
 
-void listen_for_connections(int socket)
+int listen_for_connections(int socket)
 {
-	listen(socket, 5);
+	return listen(socket, 5);
 }
 
 int accept_connection(int socket)
@@ -45,7 +45,7 @@ int accept_connection(int socket)
 	return accept(socket, (struct sockaddr *)&serverStorage, &addr_size);
 }
 
-void release_socket(int socket)
+int release_socket(int socket)
 {
-	shutdown(socket, 2);
+	return shutdown(socket, 2);
 }

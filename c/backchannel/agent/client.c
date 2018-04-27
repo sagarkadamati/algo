@@ -31,7 +31,7 @@ void receive_data(int socket, char* ch, int size)
 	}
 }
 
-void send_request(int socket)
+void start_request(int socket)
 {
 	char buffer[1024];
 	int size;
@@ -83,10 +83,12 @@ void send_request(int socket)
 void client(int argc, char *argv[])
 {
 	int cskt = alloc_socket();
-	connect_socket(cskt);
-
-	send_request(cskt);
-	// send_request(cskt);
-
-	release_socket(cskt);
+	if (!connect_socket(cskt))
+	{
+		start_request(cskt);
+		release_socket(cskt);
+	}
+	else {
+		printf("DEBUG: connect fail\n");
+	}
 }
