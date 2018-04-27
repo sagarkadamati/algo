@@ -4,7 +4,7 @@ void bc_update_stream_type(int stream, enum STREAM_TYPE type)
 {
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (stream_tracker.streams[stream].enable)
+		if (stream_tracker.streams[stream].enable == 1)
 			stream_tracker.streams[stream].type = type;
 	}
 }
@@ -13,7 +13,7 @@ void bc_update_stream(int stream, const char *name, pid_t pid)
 {
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (stream_tracker.streams[stream].enable)
+		if (stream_tracker.streams[stream].enable == 1)
 		{
 			strcpy(stream_tracker.streams[stream].name, name);
 
@@ -28,7 +28,7 @@ void bc_update_stream_cmd(int stream, int cmd, enum position pos, int status)
 {
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (stream_tracker.streams[stream].enable)
+		if (stream_tracker.streams[stream].enable == 1)
 		{
 			struct timespec spec;
 
@@ -64,7 +64,7 @@ void bc_enable_stream(int stream)
 {
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (!stream_tracker.streams[stream].enable)
+		if (stream_tracker.streams[stream].enable == 0)
 		{
 			stream_tracker.streams[stream].enable = 1;
 			stream_tracker.header->streams_size++;
@@ -76,7 +76,7 @@ void bc_disable_stream(int stream)
 {
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (stream_tracker.streams[stream].enable)
+		if (stream_tracker.streams[stream].enable == 1)
 		{
 			stream_tracker.streams[stream].enable = 0;
 			stream_tracker.header->streams_size--;

@@ -97,7 +97,7 @@ void client(int verbose)
 	if (!connect_socket(cskt))
 	{
 		if (verbose)
-			printf("done");
+			printf("done\n");
 		start_request(cskt, verbose);
 		release_socket(cskt);
 	}
