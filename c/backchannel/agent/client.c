@@ -37,6 +37,7 @@ void send_request(int socket)
 	struct streams *stream;
 	struct streams *streams;
 	int offset;
+	int i, j;
 
 	strcpy(buffer, "AAAAA\n");
 
@@ -52,14 +53,14 @@ void send_request(int socket)
 	size = header->streams_size;
 	streams = (struct streams*) (ch + offset);
 
-	for (int i = 0; i < size; i++) {
+	for (i = 0; i < size; i++) {
 		stream = streams + i;
 		if (stream->enable) {
 			printf("| %-8s%-10s | %-8s%-10d |\n",
 				"Name : ", stream->name,
 				"PID  : ", stream->pid);
 
-			for (int j = 0; j < header->cmds_count; j++) {
+			for (j = 0; j < header->cmds_count; j++) {
 				if (stream->cmds[j].enable) {
 					printf("| %-8s%-10s | %-8s%-10d |  %4lu.%-9lu\n",
 						"CMD  : ", stream->cmds[j].name,
