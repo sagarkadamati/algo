@@ -1,6 +1,6 @@
 #include "main.h"
 
-void start_agent(enum MODE mode, int argc, char *argv[])
+void start_agent(enum MODE mode, int verbose)
 {
 	switch(mode) {
 		case BRIDGE:
@@ -12,13 +12,14 @@ void start_agent(enum MODE mode, int argc, char *argv[])
 			server();
 			break;
 		default:
-			client(argc, argv);
+			client(verbose);
 	}
 }
 
 int main(int argc, char *argv[])
 {
 	enum MODE mode = CLIENT;
+	int verbose = 0;
 
 	int opt;
 	while ((opt = getopt(argc, argv, "db")) != -1)
@@ -30,10 +31,12 @@ int main(int argc, char *argv[])
 				break;
 			case 'b':
 				mode = BRIDGE;
+			case 'v':
+				verbose = 1;
 		}
 	}
 
-	start_agent(mode, argc, argv);
+	start_agent(mode, verbose);
 
 	return 0;
 }

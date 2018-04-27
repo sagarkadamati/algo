@@ -90,29 +90,16 @@ void start_request(int socket, int verbose)
 	free(ch);
 }
 
-void client(int argc, char *argv[])
+void client(int verbose)
 {
-	int verbose = 0;
-	int cskt;
-	int opt;
-
-	while ((opt = getopt(argc, argv, "db")) != -1)
-	{
-		switch (opt)
-		{
-			case 'v':
-				verbose = 1;
-				break;
-		}
-	}
-	
-	cskt = alloc_socket();
+	int cskt = alloc_socket();
 	if (!connect_socket(cskt))
 	{
 		start_request(cskt, verbose);
 		release_socket(cskt);
 	}
 	else {
-		printf("DEBUG: connect fail\n");
+		if (verbose)
+			printf("DEBUG: connect fail\n");
 	}
 }

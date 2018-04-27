@@ -19,6 +19,7 @@ void send_data(int socket, char* ch, int size)
 {
 	int size_left = size;
 	int offset = 0;;
+	char buffer[1024];
 
 	while(size_left)
 	{
@@ -33,6 +34,7 @@ void send_data(int socket, char* ch, int size)
 			offset += size_left;
 			size_left = 0;
 		}
+		recv(socket, buffer, 1024, 0);
 	}
 }
 
