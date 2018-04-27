@@ -31,7 +31,7 @@ void receive_data(int socket, char* ch, int size)
 	}
 }
 
-void start_request(int socket)
+void start_request(int socket, int verbose)
 {
 	char buffer[1024];
 	int size;
@@ -46,16 +46,24 @@ void start_request(int socket)
 
 	send(socket, buffer, 1024, 0);
 	recv(socket, &size, sizeof(int), 0);
+	if (verbose)
+		printf("DEBUG: file size: %d\n", size);
 
 	ch = (char*) calloc(1, size);
 	send(socket, buffer, 1024, 0);
+	if (verbose)
+		printf("DEBUG: file receive in progress...");
 	receive_data(socket, ch, size);
+	if (verbose)
+		printf("done\n");
 
 	header = (struct streams_header*)ch;
 	offset = header->streams_offset;
 	size = header->streams_size;
 	streams = (struct streams*) (ch + offset);
 
+	if (verbose)
+		printf("DEBUG: started processing data ...");
 	for (i = 0; i < size; i++) {
 		stream = streams + i;
 		if (stream->enable) {
@@ -74,6 +82,8 @@ void start_request(int socket)
 			}
 		}
 	}
+	if (verbose)
+		printf("done\n");
 
 	// for(int i = 0; i < size; i++)
 	// 	printf("%c", ch[i]);
@@ -82,10 +92,24 @@ void start_request(int socket)
 
 void client(int argc, char *argv[])
 {
-	int cskt = alloc_socket();
+	int verbose = 0;
+	int cskt;
+	int opt;
+
+	while ((opt = getopt(argc, argv, "db")) != -1)
+	{
+		switch (opt)
+		{
+			case 'v':
+				verbose = 1;
+				break;
+		}
+	}
+	
+	cskt = alloc_socket();
 	if (!connect_socket(cskt))
 	{
-		start_request(cskt);
+		start_request(cskt, verbose);
 		release_socket(cskt);
 	}
 	else {
