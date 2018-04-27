@@ -1,7 +1,7 @@
 #include "client.h"
 
 #include <stdlib.h>
-#include <time.h>
+#include "time.h"
 
 #include "../src/bc_stream_tracker.h"
 
@@ -31,16 +31,48 @@ void receive_data(int socket, char* ch, int size)
 	}
 }
 
-void start_request(int socket, int verbose)
+void process_data(char* ch, int verbose)
 {
-	char buffer[1024];
-	int size;
-	char* ch;
 	struct streams_header *header;
 	struct streams *stream;
 	struct streams *streams;
 	int offset;
+	int size;
 	int i, j;
+
+	header = (struct streams_header*)ch;
+	offset = header->streams_offset;
+	size = header->streams_size;
+	streams = (struct streams*) (ch + offset);
+
+	if (verbose)
+		printf("DEBUG: Processing data\n");
+	for (i = 0; i < size; i++) {
+		stream = streams + i;
+		if (stream->enable) {
+			printf("Stream: %s, ID: %d PID: %d\n",
+				stream->name,
+				stream->id,
+				stream->pid);
+
+			for (j = 0; j < header->cmds_count; j++) {
+				if (stream->cmds[j].enable) {
+					printf(" %4s %-20s: count - %-10d, time - %4lu.%-9lu\n",
+						"", stream->cmds[j].name,
+						stream->cmds[j].xcount,
+						stream->cmds[j].tavg.tv_sec,
+						stream->cmds[j].tavg.tv_nsec);
+				}
+			}
+		}
+	}	
+}
+
+void start_request(int socket, int verbose)
+{
+	char buffer[1024];
+	char* ch;
+	int size;
 
 	strcpy(buffer, "AAAAA\n");
 
@@ -56,32 +88,8 @@ void start_request(int socket, int verbose)
 	receive_data(socket, ch, size);
 	if (verbose)
 		printf("done\n");
-
-	header = (struct streams_header*)ch;
-	offset = header->streams_offset;
-	size = header->streams_size;
-	streams = (struct streams*) (ch + offset);
-
-	if (verbose)
-		printf("DEBUG: Processing data\n");
-	for (i = 0; i < size; i++) {
-		stream = streams + i;
-		if (stream->enable) {
-			printf("| %-8s%-10s | %-8s%-10d |\n",
-				"Name : ", stream->name,
-				"PID  : ", stream->pid);
-
-			for (j = 0; j < header->cmds_count; j++) {
-				if (stream->cmds[j].enable) {
-					printf("| %-8s%-10s | %-8s%-10d |  %4lu.%-9lu\n",
-						"CMD  : ", stream->cmds[j].name,
-						"Count: ", stream->cmds[j].xcount,
-						stream->cmds[j].tenter.tv_sec,
-						stream->cmds[j].tenter.tv_nsec);
-				}
-			}
-		}
-	}
+	
+	process_data(ch, verbose);
 
 	free(ch);
 }
