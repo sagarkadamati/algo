@@ -57,7 +57,7 @@ void process_data(char* ch, int verbose)
 
 			for (j = 0; j < header->cmds_count; j++) {
 				if (stream->cmds[j].enable) {
-					printf(" %4s %-40s: %5d, %4lu.%-09lu sec\n",
+					printf("%4s %-40s: %5d, %4lu.%09lu sec\n",
 						"", stream->cmds[j].name,
 						stream->cmds[j].xcount,
 						stream->cmds[j].tavg.tv_sec,
