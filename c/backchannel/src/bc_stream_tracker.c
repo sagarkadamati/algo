@@ -72,18 +72,19 @@ void bc_allocate_stream(int id)
 			stream_tracker.stream_index[id] = stream;
 			break;
 		}
-	}	
+	}
 }
 
 void bc_enable_stream(int stream)
 {
-	stream = stream_tracker.stream_index[stream];
-	if (stream == -1)
+	int index = stream_tracker.stream_index[stream];
+	if (index == -1)
 		bc_allocate_stream(stream);
 
+	stream = stream_tracker.stream_index[stream];
 	if (stream < stream_tracker.header->streams_count)
 	{
-		if (stream_tracker.streams[stream].enable)
+		if (!stream_tracker.streams[stream].enable)
 		{
 			stream_tracker.streams[stream].enable = 1;
 			stream_tracker.header->streams_size++;
