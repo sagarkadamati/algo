@@ -91,7 +91,7 @@ void clear_rb_node(rb_node* root, int key)
 			tnode = rnode;
 
 			if (rchild(tnode))
-				replace_parent_child(tnode, rchild(tnode);
+				replace_parent_child(tnode, rchild(tnode));
 		}
 		else
 			replace_parent_child(tnode, lchild(tnode));
