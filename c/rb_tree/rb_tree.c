@@ -58,7 +58,9 @@ rb_node *get_rb_node(rb_node *root, int key)
 		init_rb_node(tnode);
 		tnode->key = key;
 
-		if (key < tkey)
+		if (!root)
+			root = tnode;			
+		else if (key < tkey)
 			link_lchild(pnode, tnode);
 		else
 			link_rchild(pnode, tnode);

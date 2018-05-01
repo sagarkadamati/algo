@@ -2,8 +2,8 @@
 
 int main()
 {
-	rb_node node;
-	rb_node* rnode = &node;
+	// rb_node node;
+	rb_node* rnode;
 	rb_node* tnode;
 
 	init_rb_node(rnode);
@@ -79,12 +79,12 @@ int main()
 	tnode = get_rb_node(rnode, 3);
 	printf("Key: %d, Data: %d\n", tnode->key, tnode->data);
 
-	// clear_rb_node(rnode, 5);
+	clear_rb_node(rnode, 5);
 	clear_rb_node(rnode, 7);
 	printf("\n");
 	bfs(rnode);
 
-	clear_rb_node(rnode, 1);
+	clear_rb_node(rnode, 3);
 	printf("\n");
 	bfs(rnode);
 
@@ -92,7 +92,7 @@ int main()
 	printf("\n");
 	bfs(rnode);
 
-	clear_rb_node(rnode, 3);
+	clear_rb_node(rnode, 1);
 	printf("\n");
 	bfs(rnode);
 
