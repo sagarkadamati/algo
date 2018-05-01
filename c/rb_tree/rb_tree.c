@@ -10,9 +10,49 @@ void free_rb_node(rb_node *tnode)
 	free(tnode);
 }
 
-void fix_voilations(rb_node* root, rb_node* tnode)
+rb_node* uncle(rb_node* tnode)
 {
+	if (is_rchild_of_parent(parent(tnode)))
+		tnode = lchild(gparent(tnode));
 
+	if (is_lchild_of_parent(parent(tnode)))
+		tnode = rchild(gparent(tnode));
+
+	return tnode;
+}
+
+void fix_voilations(rb_node* root, rb_node* child)
+{
+	if (root == child)
+		color(child) = BLACK;
+	else
+	{
+		if(is_red(uncle(child)))
+		{
+			color(parent(child)) = BLACK;
+			color(uncle(child))  = BLACK;
+		}
+		else
+		{
+			if(is_line(child))
+			{
+				if(is_lchild_of_parent(parent(child)))
+					rrotate(gparent(child));
+				else
+					lrotate(gparent(child));
+
+				recolor(gparent(child));
+				recolor(parent(child));
+			}
+			else
+			{
+				if(is_lchild_of_parent(child))
+					rrotate(parent(child));
+				else
+					lrotate(parent(child));
+			}
+		}
+	}
 }
 
 void print_level(rb_node *rnode, int level)
@@ -59,7 +99,7 @@ rb_node *get_rb_node(rb_node *root, int key)
 		tnode->key = key;
 
 		if (!root)
-			root = tnode;			
+			root = tnode;
 		else if (key < tkey)
 			link_lchild(pnode, tnode);
 		else

@@ -28,41 +28,59 @@ typedef struct rb_node {
 #define color(_node)   _node->color
 #define key(_node)     _node->key
 
-#define is_lchild_of_parent(_rb_node)			\
+#define is_lchild_of_parent(_rb_node)				\
 		(lchild(parent(_rb_node)) == _rb_node)
 
-#define is_rchild_of_parent(_rb_node)			\
+#define is_rchild_of_parent(_rb_node)				\
 		(rchild(parent(_rb_node)) == _rb_node)
 
-#define init_rb_node(_rb_node) ({ \
-		parent(_rb_node) = NULL;  \
-		rchild(_rb_node) = NULL;  \
-		lchild(_rb_node) = NULL;  \
-		color(_rb_node)  = RED;   \
+#define is_red(_node)								\
+		(color(_node) == RED)
+
+/*
+#define uncle(_node) ({								\
+		if (is_rchild_of_parent(parent(_node)))		\
+			lchild(gparent(_node));					\
+		if (is_lchild_of_parent(parent(_node)))		\
+			rchild(gparent(_node));					\
+	})
+*/
+
+#define is_line(_rb_node) 0
+
+#define rrotate(_rb_node)
+#define lrotate(_rb_node)
+#define recolor(_rb_node)
+
+#define init_rb_node(_rb_node) ({ 					\
+		parent(_rb_node) = NULL;  					\
+		rchild(_rb_node) = NULL;  					\
+		lchild(_rb_node) = NULL;  					\
+		color(_rb_node)  = RED;   					\
 	})
 
-#define deinit_rb_node(_rb_node) ({				\
-		if (is_rchild_of_parent(_rb_node))		\
-			rchild(parent(_rb_node)) = NULL;	\
-		else if (is_lchild_of_parent(_rb_node))	\
-			lchild(parent(_rb_node)) = NULL;	\
+#define deinit_rb_node(_rb_node) ({					\
+		if (is_rchild_of_parent(_rb_node))			\
+			rchild(parent(_rb_node)) = NULL;		\
+		else if (is_lchild_of_parent(_rb_node))		\
+			lchild(parent(_rb_node)) = NULL;		\
 	})
 
-#define replace_parent_child(_rb_node, _child) ({				\
-		if (is_rchild_of_parent(_rb_node))		\
-			rchild(parent(_rb_node)) = _child;	\
-		else if (is_lchild_of_parent(_rb_node))	\
-			lchild(parent(_rb_node)) = _child;	\
+#define replace_parent_child(_rb_node, _child) ({	\
+		if (is_rchild_of_parent(_rb_node))			\
+			rchild(parent(_rb_node)) = _child;		\
+		else if (is_lchild_of_parent(_rb_node))		\
+			lchild(parent(_rb_node)) = _child;		\
 	})
 
-#define link_lchild(_parent, _child) ({ \
-		lchild(_parent) = _child; 		\
-		parent(_child)  = _parent; 		\
+#define link_lchild(_parent, _child) ({ 			\
+		lchild(_parent) = _child; 					\
+		parent(_child)  = _parent; 					\
 	})
 
-#define link_rchild(_parent, _child) ({ \
-		rchild(_parent) = _child; 		\
-		parent(_child)  = _parent; 		\
+#define link_rchild(_parent, _child) ({ 			\
+		rchild(_parent) = _child; 					\
+		parent(_child)  = _parent; 					\
 	})
 
 rb_node* new_rb_node(void);

@@ -3,12 +3,8 @@
 int main()
 {
 	// rb_node node;
-	rb_node* rnode;
+	rb_node* rnode = NULL;
 	rb_node* tnode;
-
-	init_rb_node(rnode);
-	rnode->key = 5;
-	rnode->data = rnode->key * 3;
 
 	tnode = get_rb_node(rnode, 7);
 	tnode->data = tnode->key * 3;
