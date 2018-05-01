@@ -21,6 +21,22 @@ rb_node* uncle(rb_node* tnode)
 	return tnode;
 }
 
+int is_line(rb_node* child)
+{
+	if (is_lchild_of_parent(child))
+	{
+		if(is_lchild_of_parent(parent(child)))
+			return 1;
+	}
+	else if (is_rchild_of_parent(child))
+	{
+		if(is_rchild_of_parent(parent(child)))
+			return 1;
+	}
+	else
+		return 0;
+}
+
 void fix_voilations(rb_node* root, rb_node* child)
 {
 	if (root == child)

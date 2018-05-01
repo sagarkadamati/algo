@@ -46,7 +46,7 @@ typedef struct rb_node {
 	})
 */
 
-#define is_line(_rb_node) 0
+// #define is_line(_rb_node) 0
 
 #define rrotate(_rb_node)
 #define lrotate(_rb_node)
