@@ -15,6 +15,23 @@ void fix_voilations(rb_node* root, rb_node* tnode)
 
 }
 
+void print_level(rb_node *rnode, int level)
+{
+	if (rnode)
+	{
+		print_level(lchild(rnode), level++);
+		printf(" %d ", key(rnode));
+		print_level(rchild(rnode), level++);
+	}
+}
+
+void bfs(rb_node* root)
+{
+	int level = 0;
+
+	print_level(root, level);
+}
+
 rb_node *get_rb_node(rb_node *root, int key)
 {
 	rb_node *tnode = root;
@@ -23,7 +40,7 @@ rb_node *get_rb_node(rb_node *root, int key)
 
 	while (tnode)
 	{
-		tkey = tnode->key;
+		tkey = key(tnode);
 		if (key == tkey)
 			break;
 
@@ -69,15 +86,18 @@ void clear_rb_node(rb_node* root, int key)
 		if (rchild(tnode)) {
 			rnode = get_least_key_node(rchild(tnode));
 
-			tnode->key = rnode->key;
+			key(tnode) = key(rnode);
 			tnode->data = rnode->data;
 			tnode = rnode;
+
+			if (rchild(tnode))
+				replace_parent_child(tnode, rchild(tnode);
 		}
 		else
-			replace_parent_child(tnode, tnode->lchild);
+			replace_parent_child(tnode, lchild(tnode));
 	}
 	else if (rchild(tnode))
-		replace_parent_child(tnode, tnode->rchild);
+		replace_parent_child(tnode, rchild(tnode));
 
 	fix_voilations(root, parent(tnode));
 

@@ -73,4 +73,7 @@ void free_rb_node(rb_node *tnode);
 void fix_voilations(rb_node* root, rb_node* tnode);
 void clear_rb_node(rb_node* root, int key);
 
+void print_level(rb_node *rnode, int level);
+void bfs(rb_node* root);
+
 #endif /* __RB_TREE__ */
