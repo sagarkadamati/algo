@@ -7,31 +7,45 @@
 #define HEAP_TRACKER        "bc_heap"
 #define HEAP_SIZE           3
 
-enum alloc_type {
+enum state {
 	MALLOC,
 	CALLOC,
+	FREE,
+	DOUBLE_FREE
+};
+
+struct location {
+	char func[50];
+	int line;
 };
 
 typedef struct heap_block {
 	void* ptr;
+	enum state state;
+	int size;
+	list_node hblock;
+
 	const char* func;
 	int line;
-	int size;
-	enum alloc_type type;
-	list_node hblock;
+
+	struct location alloc_at;
+	struct location free_at;
+	struct location double_free_at;
 } heap_block;
 
-struct heap_tracker_struct {
-	tracker *tracker;
-	tracker_mblock *mblock;
-	struct bc_struct_heap_tracker *cbs;
-
-	list_node hblocks;
+typedef struct heap_status {
 	int msize;
 	int mfree;
 	int csize;
 	int cfree;
+} heap_status;
 
+struct heap_tracker_struct {
+	tracker *tracker;
+
+	list_node hblocks;
+	heap_status *status;
+	heap_block *alloc_ptr;
 } heap_tracker;
 
 void bc_init_heap_tracker(void);
@@ -39,5 +53,8 @@ void bc_deinit_heap_tracker(void);
 void bc_malloc_probe_pt(void *ptr, int size, const char *func, int line);
 void bc_calloc_probe_pt(void *ptr, int size, const char *func, int line);
 void bc_free_probe_pt(void *ptr, const char *func, int line);
+heap_block* new_heap_block(void);
+void release_heap_block(heap_block* block);
+heap_block* get_heap_block(void* ptr);
 
 #endif /* __BC_HEAP_TRACKER__ */

@@ -19,7 +19,7 @@ int __NO_TRACKING__ bc_update_tracker(tracker_mblock *mblock, int line, const ch
 tracker* bc_get_tracker(char* tracker_name)
 {
 	list_node *node = trackers.next;
-	tracker *t;
+	tracker *t = NULL;
 
 	while (node != &trackers)
 	{
@@ -31,9 +31,15 @@ tracker* bc_get_tracker(char* tracker_name)
 	}
 
 	t = bc_calloc(1, sizeof(tracker));
+	t->name = tracker_name;
 	list_add(&trackers, &t->node);
 
 	return t;
+}
+
+void bc_release_tracker(tracker* t)
+{
+
 }
 
 tracker* bc_allocate_tracker(char* tracker_name)
@@ -48,12 +54,12 @@ tracker* bc_allocate_tracker(char* tracker_name)
 
 tracker_mblock* bc_allocate_mblock(tracker *t, int lines)
 {
-	tracker_mblock *mblock = bc_calloc(1, sizeof(tracker_mblock));	
+	tracker_mblock *mblock = bc_calloc(1, sizeof(tracker_mblock));
 	list_add(&t->mblocks, &mblock->node);
 
 	mblock->lines = lines;
 	mblock->mmap_size = TRACKER_LINE_SIZE * lines;
-	
+
 	t->size = mblock->mmap_size;
 	t->fd = shm_open(t->name, O_RDWR | O_CREAT, 0666);
 	if ( t->fd < 0)
@@ -97,6 +103,32 @@ void bc_deallocate_tracker(tracker *t)
 
 	list_remove(&t->node);
 	bc_free(t);
+}
+
+tracker* bc_new_tracker(char* tname, int size)
+{
+	tracker *t = bc_get_tracker(tname);
+	if (t)
+	{
+		int fd = shm_open(tname, O_RDWR | O_CREAT, 0666);
+		if (fd)
+		{
+			ftruncate(fd, size);
+			t->size   = size;
+			t->mblock = (char*) mmap(0, size,
+								PROT_READ | PROT_WRITE,
+								MAP_SHARED,	fd, 0);
+
+			if (t->mblock == MAP_FAILED)
+			{
+				bc_release_tracker(t);
+			}
+			close(fd);
+		}
+		else
+			bc_release_tracker(t);
+	}
+	return t;
 }
 
 void bc_init_tracker()

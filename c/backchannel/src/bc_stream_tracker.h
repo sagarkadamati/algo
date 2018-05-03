@@ -53,7 +53,6 @@ struct streams {
 
 struct stream_tracker {
 	tracker *tracker;
-	tracker_mblock *mblock;
 	int stream_index[550];
 
 	struct streams_header *header;
@@ -73,5 +72,6 @@ void bc_update_stream_data(int index);
 void bc_update_stream_header(int stream);
 void bc_update_stream_type(int stream, enum STREAM_TYPE type);
 void bc_allocate_stream(int id);
+void bc_tspec_avg(struct timespec *old, struct timespec* new, int count);
 
 #endif /* __BC_STREAM_TRACKER__ */

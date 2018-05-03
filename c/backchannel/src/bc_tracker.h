@@ -17,6 +17,7 @@ typedef struct struct_tracker_mblock {
 typedef struct struct_tracker {
 	int fd;
 	char* name;
+	char* mblock;
 	int size;
 	list_node mblocks;
 	list_node node;
@@ -32,5 +33,7 @@ void bc_deallocate_tracker(tracker *t);
 void bc_deallocate_mblock(tracker_mblock* mblock);
 int bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...);
 tracker* bc_get_tracker(char* tracker_name);
+tracker* bc_new_tracker(char* tname, int size);
+void bc_release_tracker(tracker* t);
 
 #endif /* __BC_TRACKER__ */
