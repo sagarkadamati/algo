@@ -56,6 +56,7 @@ typedef struct struct_tracker_mblock {
 
 typedef struct struct_tracker {
 	int fd;
+	int id;
 	char* name;
 	char* mblock;
 	int size;

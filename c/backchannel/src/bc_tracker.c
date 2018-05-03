@@ -24,33 +24,6 @@ struct tracker_header thread_headers[] = {
 	},
 };
 
-int __NO_TRACKING__ bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...)
-{
-	int len;
-	va_list args;
-
-	if (line >= mblock->lines)
-		return 0;
-
-	va_start(args, fmt);
-	len = vsnprintf(mblock->mmap + (line * TRACKER_LINE_SIZE),
-			TRACKER_LINE_SIZE, fmt, args);
-	va_end(args);
-
-	return len;
-}
-
-char* bc_get_mblock(int fd, int offset, int size)
-{
-	void* map = mmap(0, size,
-				PROT_READ | PROT_WRITE,
-				MAP_SHARED,	fd, offset);
-	if (map == MAP_FAILED)
-		return NULL;
-
-	return (char*) map;
-}
-
 void print_theaders()
 {
 	for (int id = 0; id < new_trackers.header->tcount; id++)
@@ -63,30 +36,15 @@ void print_theaders()
 	}
 }
 
-int bc_load_tracker()
+char* bc_get_mblock(int fd, int offset, int size)
 {
-	int fd = shm_open("bc_tracker", O_RDWR, 0666);
-	if (fd)
-	{
-		struct tracker_meta_header header;
+	void* map = mmap(0, size,
+				PROT_READ | PROT_WRITE,
+				MAP_SHARED,	fd, offset);
+	if (map == MAP_FAILED)
+		return NULL;
 
-		read(fd, &header, sizeof(header));
-		new_trackers.mblock.mmap	= bc_get_mblock(fd, 0, header.size);
-		new_trackers.mblock.size	= header.size;
-
-		new_trackers.header			= (struct tracker_meta_header*)
-										new_trackers.mblock.mmap;
-
-		new_trackers.theaders		= (struct tracker_header*)
-										new_trackers.mblock.mmap +
-										new_trackers.header->t_hoffset;
-		close(fd);
-
-		print_theaders();
-		return 0;
-	}
-
-	return 1;
+	return (char*) map;
 }
 
 void bc_setup_header(struct tracker_meta_header *header)
@@ -124,7 +82,7 @@ void bc_setup_tracker()
 
 		for (int id = 0; id < header->tcount; id++)
 		{
-			// strcpy(theaders[id].name, thread_headers[id].name);
+			strcpy(theaders[id].name, thread_headers[id].name);
 			theaders[id].id = thread_headers[id].id;
 			theaders[id].data_offset = thread_headers[id].data_offset;
 			theaders[id].size = thread_headers[id].size;
@@ -136,6 +94,107 @@ void bc_setup_tracker()
 
 		close(fd);
 	}
+}
+
+int bc_load_tracker()
+{
+	int fd = shm_open("bc_tracker", O_RDWR, 0666);
+	if (fd)
+	{
+		struct tracker_meta_header header;
+
+		read(fd, &header, sizeof(header));
+		new_trackers.mblock.mmap	= bc_get_mblock(fd, 0, header.size);
+		new_trackers.mblock.size	= header.size;
+
+		new_trackers.header			= (struct tracker_meta_header*)
+										new_trackers.mblock.mmap;
+
+		new_trackers.theaders		= (struct tracker_header*)
+										new_trackers.mblock.mmap +
+										new_trackers.header->t_hoffset;
+		close(fd);
+
+		print_theaders();
+		return 0;
+	}
+
+	return 1;
+}
+
+tracker* bc_get_tracker_by_id(int id)
+{
+	list_node *node = trackers.next;
+	tracker *t = NULL;
+	int index;
+
+	while (node != &trackers)
+	{
+		t = container_of(node, tracker, node);
+		if (t->id == id)
+			return t;
+
+		node = node->next;
+	}
+
+	t = bc_calloc(1, sizeof(tracker));
+	for (index = 0; index < new_trackers.header->tcount; index++)
+		if (new_trackers.theaders[index].id == id)
+		{
+			t->mblock = (new_trackers.mblock.mmap +
+							new_trackers.header->t_doffset +
+							new_trackers.theaders[index].data_offset);
+			t->size = new_trackers.theaders[index].size;
+			t->id = id;
+		}
+
+	list_add(&trackers, &t->node);
+	return t;
+}
+
+tracker* bc_get_tracker_by_name(char* tracker_name)
+{
+	list_node *node = trackers.next;
+	tracker *t = NULL;
+	int index;
+
+	while (node != &trackers)
+	{
+		t = container_of(node, tracker, node);
+		if (!strcmp(t->name, tracker_name))
+			return t;
+
+		node = node->next;
+	}
+
+	t = bc_calloc(1, sizeof(tracker));
+	for (index = 0; index < new_trackers.header->tcount; index++)
+		if (!strcmp(new_trackers.theaders[index].name, tracker_name)) {
+			t->mblock = (new_trackers.mblock.mmap +
+							new_trackers.header->t_doffset +
+							new_trackers.theaders[index].data_offset);
+			t->size = new_trackers.theaders[index].size;
+			strcpy(t->name, new_trackers.theaders[index].name);
+		}
+
+	list_add(&trackers, &t->node);
+	return t;
+}
+
+int __NO_TRACKING__ bc_update_tracker(tracker_mblock *mblock, int line, const char *fmt, ...)
+{
+	int len;
+	va_list args;
+
+	if (line >= mblock->lines)
+		return 0;
+
+	va_start(args, fmt);
+	len = vsnprintf(mblock->mmap + (line * TRACKER_LINE_SIZE),
+			TRACKER_LINE_SIZE, fmt, args);
+	va_end(args);
+
+	return len;
 }
 
 tracker* bc_get_tracker(char* tracker_name)
