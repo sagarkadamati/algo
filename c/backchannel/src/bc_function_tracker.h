@@ -32,7 +32,10 @@ struct function_stream {
 	function_struct *functions;
 	list_node head;
 	enum condition cond;
+	int enable;
+	int depth;
 	int level;
+	int enable_level_at_depth;
 	int level_count;
 	int level_enabled;
 	int level_count_enabled;
