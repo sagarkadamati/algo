@@ -1,34 +1,11 @@
 #include "bc_tracker.h"
 
-struct tracker_header thread_headers[] = {
-	{
-		TRACKER1_NAME,
-		TRACKER1_ID,
-		TRACKER1_OFFSET,
-		TRACKER1_SIZE,
-		TRACKER_DONT_USE,
-	},
-	{
-		TRACKER2_NAME,
-		TRACKER2_ID,
-		TRACKER2_OFFSET,
-		TRACKER2_SIZE,
-		TRACKER_DONT_USE,
-	},
-	{
-		TRACKER3_NAME,
-		TRACKER3_ID,
-		TRACKER3_OFFSET,
-		TRACKER3_SIZE,
-		TRACKER_DONT_USE,
-	},
-};
-
 void print_theaders()
 {
 	for (int id = 0; id < new_trackers.header->tcount; id++)
 	{
-		printf("\nName       : %s\n", new_trackers.theaders[id].name);
+		printf("\n");
+		printf("Name       : %s\n", new_trackers.theaders[id].name);
 		printf("id         : %d\n", new_trackers.theaders[id].id);
 		printf("data_offset: %d\n", new_trackers.theaders[id].data_offset);
 		printf("size       : %d\n", new_trackers.theaders[id].size);
@@ -53,40 +30,65 @@ void bc_setup_header(struct tracker_meta_header *header)
 
 void bc_setup_tracker()
 {
+	struct tracker_header thread_headers[] = {
+		{
+			TRACKER1_NAME,
+			TRACKER1_ID,
+			TRACKER1_OFFSET,
+			TRACKER1_SIZE,
+			TRACKER_DONT_USE,
+		},
+		{
+			TRACKER2_NAME,
+			TRACKER2_ID,
+			TRACKER2_OFFSET,
+			TRACKER2_SIZE,
+			TRACKER_DONT_USE,
+		},
+		{
+			TRACKER3_NAME,
+			TRACKER3_ID,
+			TRACKER3_OFFSET,
+			TRACKER3_SIZE,
+			TRACKER_DONT_USE,
+		},
+	};
+
 	int fd = shm_open("bc_tracker", O_RDWR | O_CREAT, 0666);
 	if (fd)
 	{
 		struct tracker_meta_header *header;
 		struct tracker_header *theaders;
+		char* map;
 
 		int meta_hsize			= sizeof(struct tracker_meta_header);
 		int tracker_hsize		= sizeof(struct tracker_header);
 		int size				= meta_hsize + TRACKER_TOTAL_SIZE +
 									(TRACKERS * tracker_hsize);
-
 		ftruncate(fd, size);
-		new_trackers.mblock.mmap	= bc_get_mblock(fd, 0, size);
-		new_trackers.mblock.size	= size;
+		map						= bc_get_mblock(fd, 0, size);
 
-		header					= (struct tracker_meta_header*)
-									new_trackers.mblock.mmap;
-
+		header					= (struct tracker_meta_header*) map;
 		header->size			= size;
 		header->tcount			= TRACKERS;
 		header->t_hoffset		= meta_hsize;
 		header->t_doffset		= meta_hsize + (TRACKERS * tracker_hsize);
 
 		theaders				= (struct tracker_header*)
-									new_trackers.mblock.mmap +
-									header->t_hoffset;
+									map + header->t_hoffset;
 
 		for (int id = 0; id < header->tcount; id++)
 		{
 			strcpy(theaders[id].name, thread_headers[id].name);
-			theaders[id].id = thread_headers[id].id;
-			theaders[id].data_offset = thread_headers[id].data_offset;
-			theaders[id].size = thread_headers[id].size;
-			theaders[id].use = thread_headers[id].use;
+			theaders[id].size	= thread_headers[id].size;
+			theaders[id].use	= TRACKER_DONT_USE;
+			theaders[id].id		= id;
+
+			if (id)
+				theaders[id].data_offset =	thread_headers[id - 1].data_offset +
+											thread_headers[id - 1].size;
+			else
+				theaders[id].data_offset = 0;
 		}
 
 		// new_trackers.header		= header;
