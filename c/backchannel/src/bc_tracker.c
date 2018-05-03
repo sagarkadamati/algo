@@ -7,7 +7,7 @@ void print_theaders()
 		printf("\n");
 		printf("Name       : %s\n", new_trackers.theaders[id].name);
 		printf("id         : %d\n", new_trackers.theaders[id].id);
-		printf("data_offset: %d\n", new_trackers.theaders[id].data_offset);
+		printf("offset: %d\n", new_trackers.theaders[id].offset);
 		printf("size       : %d\n", new_trackers.theaders[id].size);
 		printf("use        : %d\n", new_trackers.theaders[id].use);
 	}
@@ -60,10 +60,10 @@ void bc_setup_header(struct tracker_meta_header *header,
 		theaders[id].id		= id;
 
 		if (id)
-			theaders[id].data_offset =	thread_headers[id - 1].data_offset +
+			theaders[id].offset =	thread_headers[id - 1].offset +
 										thread_headers[id - 1].size;
 		else
-			theaders[id].data_offset = 0;
+			theaders[id].offset = 0;
 	}	
 }
 
@@ -146,7 +146,7 @@ tracker* bc_get_tracker_by_id(int id)
 		{
 			t->mblock = (new_trackers.mblock.mmap +
 							new_trackers.header->t_doffset +
-							new_trackers.theaders[index].data_offset);
+							new_trackers.theaders[index].offset);
 			t->size = new_trackers.theaders[index].size;
 			t->id = id;
 		}
@@ -175,7 +175,7 @@ tracker* bc_get_tracker_by_name(char* tracker_name)
 		if (!strcmp(new_trackers.theaders[index].name, tracker_name)) {
 			t->mblock = (new_trackers.mblock.mmap +
 							new_trackers.header->t_doffset +
-							new_trackers.theaders[index].data_offset);
+							new_trackers.theaders[index].offset);
 			t->size = new_trackers.theaders[index].size;
 			strcpy(t->name, new_trackers.theaders[index].name);
 		}

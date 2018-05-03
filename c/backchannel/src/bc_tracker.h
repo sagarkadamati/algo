@@ -31,7 +31,7 @@ struct tracker_meta_header {
 struct tracker_header {
 	char name[TRACKER_NAME_SIZE];
 	int id;
-	int data_offset;
+	int offset;
 	int size;
 	int use;
 };
