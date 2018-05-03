@@ -77,9 +77,9 @@ tracker* bc_get_tracker(char* tracker_name);
 tracker* bc_new_tracker(char* tname, int size);
 void bc_release_tracker(tracker* t);
 
-#define TRACKER1_NAME "bc_tracker1"
-#define TRACKER2_NAME "bc_tracker2"
-#define TRACKER3_NAME "bc_tracker3"
+#define TRACKER1_NAME "bc_heap"
+#define TRACKER2_NAME "bc_cmds"
+#define TRACKER3_NAME "bc_stream"
 
 #define TRACKER1_SIZE 100
 #define TRACKER2_SIZE 100

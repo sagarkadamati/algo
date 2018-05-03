@@ -14,6 +14,23 @@
 #define CMD4 4
 #define CMD5 5
 
+#define CMD_NAME_SIZE 100
+
+typedef struct command {
+	char name[CMD_NAME_SIZE];
+	int cmd;
+	int enable;
+	int status;
+	int xcount;
+	int state;
+	int max_states;
+	struct timespec timespec[10];
+
+	struct timespec tenter;
+	struct timespec texit;
+	struct timespec tavg;
+} command;
+
 typedef struct cmd_struct {
 	int id;
 	char* name;

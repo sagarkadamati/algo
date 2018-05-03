@@ -7,7 +7,7 @@ void print_theaders()
 		printf("\n");
 		printf("Name       : %s\n", new_trackers.theaders[id].name);
 		printf("id         : %d\n", new_trackers.theaders[id].id);
-		printf("offset: %d\n", new_trackers.theaders[id].offset);
+		printf("offset     : %d\n", new_trackers.theaders[id].offset);
 		printf("size       : %d\n", new_trackers.theaders[id].size);
 		printf("use        : %d\n", new_trackers.theaders[id].use);
 	}

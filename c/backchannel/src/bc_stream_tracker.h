@@ -7,8 +7,11 @@
 #include "bc_cmd_tracker.h"
 
 #define STREAM_TRACKER		"bc_stream"
-#define STREAM_ALLOC_SIZE	550
-#define STREAM_SIZE			3
+
+#define MAX_STREAMS			3
+#define MAX_VSTREAMS		550
+
+#define STREAM_NAME_SIZE	20
 
 enum STREAM_TYPE {
 	TYPE1 = 1,
@@ -16,7 +19,7 @@ enum STREAM_TYPE {
 };
 
 struct streams_header {
-	char name[100];
+	char name[STREAM_NAME_SIZE];
 	int  enable;
 
 	int streams_offset;
@@ -27,7 +30,7 @@ struct streams_header {
 };
 
 struct streams {
-	char name[100];
+	char name[STREAM_NAME_SIZE];
 
 	int enable;
 	int used;
@@ -37,23 +40,20 @@ struct streams {
 	int sid;
 	pid_t pid;
 
-	struct cmd_str {
-		char name[100];
-		int  enable;
+	command cmds[CMDS_SIZE];
+};
 
-		int cmd;
-		int status;
-		int xcount;
-
-		struct timespec tenter;
-		struct timespec texit;
-		struct timespec tavg;
-	} cmds[CMDS_SIZE];
+struct new_stream_tracker {
+	int enable;
+	int sindex[MAX_VSTREAMS];
+	struct streams_header header;
+	struct streams streams[MAX_STREAMS];
 };
 
 struct stream_tracker {
 	tracker *tracker;
-	int stream_index[550];
+	int stream_index[MAX_VSTREAMS];
+	int enable;
 
 	struct streams_header *header;
 	struct streams *streams;
