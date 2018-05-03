@@ -80,5 +80,6 @@
 
 		"**/bin/**": true,
 	},
-	"git.autofetch": true
+	"git.autofetch": true,
+	"git.autorefresh": true
 }

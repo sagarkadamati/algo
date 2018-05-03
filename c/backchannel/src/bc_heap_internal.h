@@ -9,6 +9,7 @@ struct bc_struct_heap_tracker
 	void (*free)(void *ptr, const char *func, int line);
 };
 extern struct bc_struct_heap_tracker heap_tracker_cbs;
+struct bc_struct_heap_tracker heap_tracker_cbs;
 
 #define bc_malloc(_size) ({ \
             void *p; \

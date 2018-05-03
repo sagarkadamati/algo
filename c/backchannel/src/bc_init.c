@@ -10,6 +10,9 @@ void
 	bc_init_cmd_tracker();
 	bc_init_stream_tracker();
 	// bc_init_function_tracker();
+
+	bc_setup_tracker();
+	bc_load_tracker();
 }
 
 void

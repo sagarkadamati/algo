@@ -37,6 +37,8 @@ typedef struct rb_node {
 #define is_red(_node)								\
 		(color(_node) == RED)
 
+#define is_root(_rb_node) (!parent(_rb_node))
+
 /*
 #define uncle(_node) ({								\
 		if (is_rchild_of_parent(parent(_node)))		\
