@@ -79,5 +79,6 @@
 		"**/node_modules/**": true,
 
 		"**/bin/**": true,
-	}
+	},
+	"git.autofetch": true
 }
