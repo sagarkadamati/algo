@@ -24,12 +24,10 @@ char* bc_get_mblock(int fd, int offset, int size)
 	return (char*) map;
 }
 
-void bc_setup_header(struct tracker_meta_header *header)
+void bc_setup_header(struct tracker_meta_header *header,
+						struct tracker_header *theaders)
 {
-}
-
-void bc_setup_tracker()
-{
+	int id;
 	struct tracker_header thread_headers[] = {
 		{
 			TRACKER1_NAME,
@@ -54,6 +52,23 @@ void bc_setup_tracker()
 		},
 	};
 
+	for (id = 0; id < header->tcount; id++)
+	{
+		strcpy(theaders[id].name, thread_headers[id].name);
+		theaders[id].size	= thread_headers[id].size;
+		theaders[id].use	= TRACKER_DONT_USE;
+		theaders[id].id		= id;
+
+		if (id)
+			theaders[id].data_offset =	thread_headers[id - 1].data_offset +
+										thread_headers[id - 1].size;
+		else
+			theaders[id].data_offset = 0;
+	}	
+}
+
+void bc_setup_tracker()
+{
 	int fd = shm_open("bc_tracker", O_RDWR | O_CREAT, 0666);
 	if (fd)
 	{
@@ -65,6 +80,7 @@ void bc_setup_tracker()
 		int tracker_hsize		= sizeof(struct tracker_header);
 		int size				= meta_hsize + TRACKER_TOTAL_SIZE +
 									(TRACKERS * tracker_hsize);
+
 		ftruncate(fd, size);
 		map						= bc_get_mblock(fd, 0, size);
 
@@ -72,28 +88,13 @@ void bc_setup_tracker()
 		header->size			= size;
 		header->tcount			= TRACKERS;
 		header->t_hoffset		= meta_hsize;
-		header->t_doffset		= meta_hsize + (TRACKERS * tracker_hsize);
+		header->t_doffset		= header->t_hoffset + (TRACKERS * tracker_hsize);
 
 		theaders				= (struct tracker_header*)
 									map + header->t_hoffset;
 
-		for (int id = 0; id < header->tcount; id++)
-		{
-			strcpy(theaders[id].name, thread_headers[id].name);
-			theaders[id].size	= thread_headers[id].size;
-			theaders[id].use	= TRACKER_DONT_USE;
-			theaders[id].id		= id;
-
-			if (id)
-				theaders[id].data_offset =	thread_headers[id - 1].data_offset +
-											thread_headers[id - 1].size;
-			else
-				theaders[id].data_offset = 0;
-		}
-
-		// new_trackers.header		= header;
-		// new_trackers.theaders	= theaders;
-
+		bc_setup_header(header, theaders);
+		munmap(map, size);
 		close(fd);
 	}
 }
