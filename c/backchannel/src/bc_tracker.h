@@ -2,7 +2,6 @@
 #define __BC_TRACKER__
 
 #include "bc_os_headers.h"
-#include "bc_heap_internal.h"
 #include "bc_list.h"
 
 #define TRACKER_LINE_SIZE 1
@@ -10,15 +9,8 @@
 #define TRACKER_NAME_SIZE 20
 
 enum tracker_use {
-	TRACKER_DONT_USE,
-	TRACKER_USE,
-};
-
-enum tracker_ids {
-	TRACKER1_ID,
-	TRACKER2_ID,
-	TRACKER3_ID,
-	TRACKERS,
+	DONT_USE_TRACKER,
+	USE_TRACKER,
 };
 
 struct tracker_meta_header {
@@ -57,6 +49,7 @@ typedef struct struct_tracker_mblock {
 typedef struct struct_tracker {
 	int fd;
 	int id;
+	int use;
 	char* name;
 	char* mblock;
 	int size;
@@ -65,6 +58,8 @@ typedef struct struct_tracker {
 } tracker;
 
 list_node trackers;
+
+#define can_we_use(_tracker) (_tracker->use)
 
 void bc_init_tracker(void);
 void bc_deinit_tracker(void);
@@ -77,12 +72,22 @@ tracker* bc_get_tracker(char* tracker_name);
 tracker* bc_new_tracker(char* tname, int size);
 void bc_release_tracker(tracker* t);
 
+enum tracker_ids {
+	TRACKER1_ID,
+	TRACKER2_ID,
+	TRACKER3_ID,
+	TRACKERS,
+};
+
+#include "bc_heap_internal.h"
+#include "bc_cmd_tracker.h"
+
 #define TRACKER1_NAME "bc_heap"
 #define TRACKER2_NAME "bc_cmds"
 #define TRACKER3_NAME "bc_stream"
 
 #define TRACKER1_SIZE 100
-#define TRACKER2_SIZE 100
+#define TRACKER2_SIZE (BC_CMDS_COUNT * sizeof(command))
 #define TRACKER3_SIZE 100
 #define TRACKER_TOTAL_SIZE (TRACKER1_SIZE + TRACKER2_SIZE + TRACKER3_SIZE)
 
@@ -90,7 +95,9 @@ void bc_release_tracker(tracker* t);
 #define TRACKER2_OFFSET (TRACKER1_OFFSET + TRACKER1_SIZE)
 #define TRACKER3_OFFSET (TRACKER2_OFFSET + TRACKER2_SIZE)
 
+int  bc_load_tracker(void);
 void bc_setup_tracker(void);
-int bc_load_tracker(void);
+void bc_enable_tracker(tracker *t);
+void bc_disable_tracker(tracker *t);
 
 #endif /* __BC_TRACKER__ */

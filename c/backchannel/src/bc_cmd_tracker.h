@@ -1,6 +1,9 @@
 #ifndef __BC_CMD_TRACKER__
 #define __BC_CMD_TRACKER__
 
+#define CMDS_FILE "bc_cmds.h"
+
+#include "bc_cmd_factory.h"
 #include "bc_os_headers.h"
 #include "bc_tracker.h"
 #include "bc_time.h"
@@ -16,14 +19,26 @@
 
 #define CMD_NAME_SIZE 100
 
+enum states{
+	STATE1,
+	STATE2,
+	STATE3,
+	STATE4,
+	STATE5,
+	STATE6,
+};
+
 typedef struct command {
-	char name[CMD_NAME_SIZE];
+	char* name;
+	char new_name[CMD_NAME_SIZE];
 	int cmd;
 	int enable;
 	int status;
 	int xcount;
 	int state;
+	int cur_state;
 	int max_states;
+	int ftracer_cond;
 	struct timespec timespec[10];
 
 	struct timespec tenter;
@@ -31,47 +46,31 @@ typedef struct command {
 	struct timespec tavg;
 } command;
 
-typedef struct cmd_struct {
-	int id;
-	char* name;
-	long int xcount;
-	int enable;
-	struct timespec tenter;
-	struct timespec texit;
-	struct timespec tavg;
-	int status;
-} cmd_struct;
-
 struct cmds {
 	tracker_mblock *mblock;
-	cmd_struct *cmd;
+	command *cmd;
 };
 
 struct cmd_stream {
 	tracker *tracker;
 
-	struct cmds *cmds;
+	struct command *cmds;
 	list_node head;
 } cmd_stream;
 
 void bc_init_cmd_tracker(void);
 void bc_deinit_cmd_tracker(void);
-void bc_update_cmd_data(struct cmds *cmds, int index);
-void bc_update_cmd(enum position pos, int cmd, int status);
-void bc_update_cmd_internal(struct cmds *cmds, enum position pos, int cmd, int status);
-void bc_update_cmd_tracker_header(struct cmds *cmds);
+void bc_update_cmd(int cmd, enum states state, int status);
+void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status);
+void bc_update_cmd_tracker_header(void);
+
 int bc_get_cmd_num(int cmd);
 char* bc_get_cmd_name(int cmd);
-void bc_init_cmds(struct cmd_struct *cmds);
+void bc_init_cmds(struct cmd_stream* stream);
 
 void bc_print_cmds(int index, const char *fmt, ...);
 void bc_add_cmds(void);
-void bc_deallocate_cmds(struct cmds *cmds);
-int get_cmds_count(void);
-struct cmds* bc_allocate_cmds(tracker *t);
-// void bc_update_cmds(enum position pos, int cmd);
-
-int bc_cmd_index(int cmd);
-char* bc_cmd_name(int cmd);
+void bc_allocate_cmds(struct cmd_stream* stream, int size);
+void bc_deallocate_cmds(struct cmd_stream* stream);
 
 #endif /* __BC_CMD_TRACKER__ */

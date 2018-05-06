@@ -17,9 +17,10 @@
 	"workbench.editor.tabCloseButton": "off",
 	"workbench.editor.labelFormat": "short",
 	"workbench.iconTheme": "file-icons-colourless",
-	
+
 	"zenMode.fullScreen": false,
-	
+	"zenMode.centerLayout": true,
+
 	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
@@ -81,5 +82,10 @@
 		"**/bin/**": true,
 	},
 	"git.autofetch": true,
-	"git.autorefresh": true
+	"git.autorefresh": true,
+
+	"tizen.studio.path": "/home/sagar/workspace/tools/tizen/sdk/",
+	"tizen.latest.update.date": "1525615485470",
+	"tizen.use.auto.update": "YES",
+	"csharp.suppressDotnetInstallWarning": true
 }

@@ -37,14 +37,17 @@ char* bc_cmd_name(int cmd)
 
 #undef  ADD_CMD
 #define ADD_CMD(_cmd) \
-	cmds[i].id = _cmd; \
+	cmds[i].cmd = _cmd; \
 	cmds[i].name = #_cmd; \
 	cmds[i].xcount = 0; \
 	i++;
 
-void bc_init_cmds(struct cmd_struct *cmds)
+void bc_init_cmds(struct cmd_stream* stream)
 {
-	int i = 0;
-
-	#include CMDS_FILE
+	command *cmds = stream->cmds;
+	if (cmds)
+	{
+		int i = 0;
+		#include CMDS_FILE
+	}
 }

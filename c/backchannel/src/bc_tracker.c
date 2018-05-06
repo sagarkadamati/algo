@@ -34,21 +34,21 @@ void bc_setup_header(struct tracker_meta_header *header,
 			TRACKER1_ID,
 			TRACKER1_OFFSET,
 			TRACKER1_SIZE,
-			TRACKER_DONT_USE,
+			DONT_USE_TRACKER,
 		},
 		{
 			TRACKER2_NAME,
 			TRACKER2_ID,
 			TRACKER2_OFFSET,
 			TRACKER2_SIZE,
-			TRACKER_DONT_USE,
+			DONT_USE_TRACKER,
 		},
 		{
 			TRACKER3_NAME,
 			TRACKER3_ID,
 			TRACKER3_OFFSET,
 			TRACKER3_SIZE,
-			TRACKER_DONT_USE,
+			DONT_USE_TRACKER,
 		},
 	};
 
@@ -56,7 +56,7 @@ void bc_setup_header(struct tracker_meta_header *header,
 	{
 		strcpy(theaders[id].name, thread_headers[id].name);
 		theaders[id].size	= thread_headers[id].size;
-		theaders[id].use	= TRACKER_DONT_USE;
+		theaders[id].use	= DONT_USE_TRACKER;
 		theaders[id].id		= id;
 
 		if (id)
@@ -65,6 +65,16 @@ void bc_setup_header(struct tracker_meta_header *header,
 		else
 			theaders[id].offset = 0;
 	}	
+}
+
+void bc_enable_tracker(tracker *t)
+{
+	t->use = USE_TRACKER;
+}
+
+void bc_disable_tracker(tracker *t)
+{
+	t->use = DONT_USE_TRACKER;
 }
 
 void bc_setup_tracker()
@@ -223,7 +233,7 @@ tracker* bc_get_tracker(char* tracker_name)
 
 void bc_release_tracker(tracker* t)
 {
-
+	t = NULL;
 }
 
 tracker* bc_allocate_tracker(char* tracker_name)

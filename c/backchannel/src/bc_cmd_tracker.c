@@ -1,101 +1,63 @@
 #include "bc_cmd_tracker.h"
-#include "bc_cmd_factory.h"
 
-void bc_update_cmd_data(struct cmds *cmds, int index)
+void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status)
 {
-	struct timespec spec;
+	int index = bc_cmd_index(cmd);
+	if(index != -1) {
+		command *cmd = stream->cmds + index;
 
-	timespec_diff(&cmds->cmd[index].tenter,
-			&cmds->cmd[index].texit, &spec);
-
-	bc_update_tracker(cmds->mblock, (index),
-		"\n| %-50s | %4lu.%09lu | %5d | %5d |",
-		cmds->cmd[index].name,
-		spec.tv_sec, spec.tv_nsec,
-		cmds->cmd[index].xcount,
-		cmds->cmd[index].status);
-}
-
-void bc_update_cmd_internal(struct cmds *cmds, enum position pos, int cmd, int status)
-{
-	int index;
-
-	if(cmds && cmds->cmd) {
-		index = bc_cmd_index(cmd);
-		switch(pos)
+		if (state < cmd->max_states)
 		{
-			case ENTER:
-				clock_gettime(CLOCK_REALTIME, &cmds->cmd[index].tenter);
-				break;
-			case EXIT:
-				clock_gettime(CLOCK_REALTIME, &cmds->cmd[index].texit);
+			clock_gettime(CLOCK_REALTIME, &cmd->timespec[state]);
 
-				cmds->cmd[index].xcount++;
-				cmds->cmd[index].status = status;
-
-				bc_update_cmd_data(cmds, index);
-				break;
+			if (state == 0)
+			{
+				cmd->xcount++;
+			}
+			cmd->cur_state = state;
+			cmd->status = status;
 		}
 	}
 }
 
-void bc_update_cmd(enum position pos, int cmd, int status)
+void bc_update_cmd(int cmd, enum states state, int status)
 {
-	bc_update_cmd_internal(cmd_stream.cmds, pos, cmd, status);
+	if (can_we_use(cmd_stream.tracker))
+		bc_update_cmd_internal(&cmd_stream, state, cmd, status);
 }
 
-void bc_update_cmd_tracker_header(struct cmds *cmds)
+void bc_update_cmd_tracker_header()
 {
-	bc_update_tracker(cmds->mblock, 0,
-		"|-%-50s-+--%14s--+-%5s-|", "----------"
-		"----------""----------""----------""----------",
-		"----------""----","-----");
-
-	bc_update_tracker(cmds->mblock, 1,
-		"\n| %-20s%-10s%-20s |  %14s  | %5s |",
-		" ", "CMD NAME", " ", "Execution Time", "Count");
-
-	bc_update_tracker(cmds->mblock, 2,
-		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
-		"----------""----------""----------""----------",
-		"----------""----","-----");
-
-	bc_update_tracker(cmds->mblock, (BC_CMDS_COUNT - 1),
-		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
-		"----------""----------""----------""----------",
-		"----------""----","-----");
 }
 
-struct cmds* bc_allocate_cmds(tracker *t)
+void bc_allocate_cmds(struct cmd_stream* stream, int size)
 {
-	struct cmds *cmds = bc_calloc(1, sizeof(struct cmds));
-	cmds->mblock = bc_allocate_mblock(t, CMDS_SIZE);
-	cmds->cmd = bc_calloc(BC_CMDS_COUNT, sizeof(struct cmd_struct));
-	if (cmds->cmd)
-		bc_init_cmds(cmds->cmd);
+	stream->cmds = bc_calloc(size, sizeof(command));
 
-	return cmds;
+	bc_init_cmds(stream);
 }
 
-void bc_deallocate_cmds(struct cmds *cmds)
+void bc_deallocate_cmds(struct cmd_stream* stream)
 {
-	if(cmds->mblock)
-		bc_deallocate_mblock(cmds->mblock);
-
-	if(cmds->cmd)
-		bc_free(cmds->cmd);
+	if (stream->cmds)
+			bc_free(stream->cmds);
 }
 
 void bc_init_cmd_tracker()
 {
-	cmd_stream.tracker = bc_allocate_tracker(CMD_TRACKER);
-	cmd_stream.cmds = bc_allocate_cmds(cmd_stream.tracker);
+	cmd_stream.tracker = bc_new_tracker(CMD_TRACKER, CMDS_SIZE);
 
-	// bc_update_cmd_tracker_header(cmd_stream.cmds);
+	bc_allocate_cmds(&cmd_stream, BC_CMDS_COUNT);
+	bc_update_cmd_tracker_header();
+
+	bc_enable_tracker(cmd_stream.tracker);
 }
 
 void bc_deinit_cmd_tracker()
 {
-	bc_deallocate_tracker(cmd_stream.tracker);
-	bc_deallocate_cmds(cmd_stream.cmds);
+	if (can_we_use(cmd_stream.tracker))
+	{
+		bc_deallocate_tracker(cmd_stream.tracker);
+		bc_deallocate_cmds(&cmd_stream);
+	}
 }
