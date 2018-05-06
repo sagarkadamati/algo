@@ -1,8 +1,8 @@
 #ifndef __BC_TRACKER__
 #define __BC_TRACKER__
 
-#include "bc_os_headers.h"
-#include "bc_list.h"
+#include "../src/bc_os_headers.h"
+#include "../src/bc_list.h"
 
 #define TRACKER_LINE_SIZE 1
 #define TRACKER_NAME_SIZE 20
@@ -85,8 +85,8 @@ enum tracker_ids {
 	TRACKERS,
 };
 
-#include "bc_heap_internal.h"
-#include "bc_cmd_tracker.h"
+#include "../src/bc_heap_internal.h"
+#include "../src/bc_cmd_tracker.h"
 
 #define TRACKER1_NAME "bc_heap"
 #define TRACKER2_NAME "bc_cmds"

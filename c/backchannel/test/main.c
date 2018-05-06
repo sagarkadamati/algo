@@ -107,6 +107,10 @@ int main(void)
 	bc_update_stream_cmd(stream, cmd, ENTER, status);
 	bc_update_stream_cmd(stream, cmd, EXIT, status);
 
+	bc_update_cmd(CMD1, STATE1, 0);
+	bc_update_cmd(CMD2, STATE1, 0);
+	bc_update_cmd(CMD3, STATE1, 0);
+
     // while(1);
     return 0;
 }

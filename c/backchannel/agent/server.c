@@ -12,7 +12,9 @@
 #include <time.h>
 #include <stddef.h>
 
-#define STREAM_FILE "bc_stream"
+#include "bc_tracker.h"
+
+#define STREAM_FILE "bc_tracker"
 #define MAX_BUF_SIZE 100
 
 void send_data(int socket, char* ch, int size)
@@ -77,6 +79,9 @@ void server()
 
 	sskt = alloc_socket();
 	bind_socket(sskt);
+
+	bc_setup_trackers();
+	bc_load_trackers();
 
 	while (1) {
 		listen_for_connections(sskt);

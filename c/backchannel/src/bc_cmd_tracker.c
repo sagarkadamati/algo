@@ -32,7 +32,8 @@ void bc_update_cmd_tracker_header()
 
 void bc_allocate_cmds(struct cmd_stream* stream, int size)
 {
-	stream->cmds = bc_calloc(size, sizeof(command));
+	// stream->cmds = bc_calloc(size, sizeof(command));
+	stream->cmds = (command*) cmd_stream.tracker->mblock;
 
 	bc_init_cmds(stream);
 }
@@ -40,12 +41,13 @@ void bc_allocate_cmds(struct cmd_stream* stream, int size)
 void bc_deallocate_cmds(struct cmd_stream* stream)
 {
 	if (stream->cmds)
-			bc_free(stream->cmds);
+			stream->cmds = NULL;
 }
 
 void bc_init_cmd_tracker()
 {
-	cmd_stream.tracker = bc_new_tracker(CMD_TRACKER, CMDS_SIZE);
+	// cmd_stream.tracker = bc_new_tracker(CMD_TRACKER, CMDS_SIZE);
+	cmd_stream.tracker = bc_get_tracker_by_id(TRACKER2_ID);
 
 	bc_allocate_cmds(&cmd_stream, BC_CMDS_COUNT);
 	bc_update_cmd_tracker_header();
@@ -57,6 +59,7 @@ void bc_deinit_cmd_tracker()
 {
 	if (can_we_use(cmd_stream.tracker))
 	{
+		bc_disable_tracker(cmd_stream.tracker);
 		bc_deallocate_tracker(cmd_stream.tracker);
 		bc_deallocate_cmds(&cmd_stream);
 	}

@@ -4,6 +4,9 @@ void
 	__attribute__((constructor))
 	bc_init(void)
 {
+	bc_setup_trackers();
+	bc_load_trackers();
+
 	bc_init_tracker();
 
 	bc_init_heap_tracker();
@@ -11,8 +14,6 @@ void
 	bc_init_stream_tracker();
 	// bc_init_function_tracker();
 
-	bc_setup_tracker();
-	bc_load_tracker();
 }
 
 void

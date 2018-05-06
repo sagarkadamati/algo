@@ -81,11 +81,16 @@
 
 		"**/bin/**": true,
 	},
+	"gitlens.codeLens.enabled": false,
+	"gitlens.blame.highlight.enabled": false,
 	"git.autofetch": true,
 	"git.autorefresh": true,
 
 	"tizen.studio.path": "/home/sagar/workspace/tools/tizen/sdk/",
 	"tizen.latest.update.date": "1525615485470",
 	"tizen.use.auto.update": "YES",
-	"csharp.suppressDotnetInstallWarning": true
+	"csharp.suppressDotnetInstallWarning": true,
+	"files.associations": {
+		"bc_tracker.h": "c"
+	}
 }
