@@ -1,6 +1,6 @@
 #include "main.h"
-#include "../src/bc_cmd_tracker.h"
-#include "../src/bc_function_tracker.h"
+#include "bc_cmd_tracker.h"
+#include "bc_function_tracker.h"
 
 // static void full_write(int fd, const char *buf, size_t len)
 // {

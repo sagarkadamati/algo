@@ -35,7 +35,7 @@ void bc_allocate_cmds(struct cmd_stream* stream, int size)
 	// stream->cmds = bc_calloc(size, sizeof(command));
 	stream->cmds = (command*) cmd_stream.tracker->mblock;
 
-	bc_init_cmds(stream);
+	bc_init_cmd(stream);
 }
 
 void bc_deallocate_cmds(struct cmd_stream* stream)
