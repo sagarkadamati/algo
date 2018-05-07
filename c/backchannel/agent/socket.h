@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <stdlib.h>
 
 int alloc_socket(void);
 int connect_socket(int socket);
