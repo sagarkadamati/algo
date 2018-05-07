@@ -1,7 +1,7 @@
-
 #ifndef __BC_CMD_FACTORY__
 #define __BC_CMD_FACTORY__
 
+#include "bc_cmds.h"
 #include "bc_factory_header_macros.h"
 #include "bc_factory_function_macros.h"
 
