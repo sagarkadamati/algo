@@ -1,3 +1,4 @@
+#include "bc_cmds.h"
 #include "bc_cmd_factory.h"
 
 #undef  ADD_CMD
