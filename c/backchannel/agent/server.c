@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stddef.h>
 
-#include "bc_tracker.h"
+#include "../src/bc_tracker.h"
 
 #define STREAM_FILE "bc_tracker"
 #define MAX_BUF_SIZE 100

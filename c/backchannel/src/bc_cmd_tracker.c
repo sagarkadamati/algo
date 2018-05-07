@@ -47,9 +47,9 @@ void bc_deallocate_cmds(struct cmd_stream* stream)
 void bc_init_cmd_tracker()
 {
 	// cmd_stream.tracker = bc_new_tracker(CMD_TRACKER, CMDS_SIZE);
-	cmd_stream.tracker = bc_get_tracker_by_id(TRACKER2_ID);
+	cmd_stream.tracker = bc_get_tracker_by_id(CMD_TRACKER_ID);
 
-	bc_allocate_cmds(&cmd_stream, BC_CMDS_COUNT);
+	bc_allocate_cmds(&cmd_stream, CMD_TRACKER_SIZE);
 	bc_update_cmd_tracker_header();
 
 	bc_enable_tracker(cmd_stream.tracker);

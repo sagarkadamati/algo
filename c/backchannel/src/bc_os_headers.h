@@ -12,8 +12,6 @@
 #include <time.h>
 #include <stddef.h>
 
-#include "bc_heap_internal.h"
-
 enum position{
 	ENTER,
 	EXIT

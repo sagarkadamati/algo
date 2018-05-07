@@ -4,8 +4,8 @@
 #include "bc_os_headers.h"
 #include "bc_tracker.h"
 
-#define HEAP_TRACKER        "bc_heap"
-#define HEAP_SIZE           3
+#define HEAP_TRACKER_NAME	"bc_heap"
+#define HEAP_TRACKER_SIZE	3
 
 enum state {
 	MALLOC,

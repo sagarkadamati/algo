@@ -1,11 +1,9 @@
 #ifndef __BC_CMD_FACTORY__
 #define __BC_CMD_FACTORY__
 
-#include "bc_cmd_tracker.h"
-
 #define ADD_CMD(_cmd) BC_##_cmd,
 
-enum commands {
+enum cmds_enum {
 	#include CMDS_FILE
 	BC_CMDS_COUNT
 };

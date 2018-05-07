@@ -4,6 +4,8 @@
 #include "bc_os_headers.h"
 #include "bc_list.h"
 
+#include "bc_heap_internal.h"
+
 #define TRACKER_LINE_SIZE 1
 #define TRACKER_NAME_SIZE 20
 
@@ -79,27 +81,11 @@ tracker* bc_get_tracker(char* tracker_name);
 tracker* bc_new_tracker(char* tname, int size);
 
 enum tracker_ids {
-	TRACKER1_ID,
-	TRACKER2_ID,
-	TRACKER3_ID,
-	TRACKERS,
+	HEAP_TRACKER_ID,
+	CMD_TRACKER_ID,
+	STREAM_TRACKER_ID,
+	TRACKERS_COUNT,
 };
-
-#include "bc_heap_internal.h"
-#include "bc_cmd_tracker.h"
-
-#define TRACKER1_NAME "bc_heap"
-#define TRACKER2_NAME "bc_cmds"
-#define TRACKER3_NAME "bc_stream"
-
-#define TRACKER1_SIZE 100
-#define TRACKER2_SIZE (BC_CMDS_COUNT * sizeof(command))
-#define TRACKER3_SIZE 100
-#define TRACKER_TOTAL_SIZE (TRACKER1_SIZE + TRACKER2_SIZE + TRACKER3_SIZE)
-
-#define TRACKER1_OFFSET (0)
-#define TRACKER2_OFFSET (TRACKER1_OFFSET + TRACKER1_SIZE)
-#define TRACKER3_OFFSET (TRACKER2_OFFSET + TRACKER2_SIZE)
 
 void bc_setup_headers(struct tracker_meta_header *header,
 						struct tracker_header *theaders);
@@ -109,5 +95,8 @@ int  bc_load_trackers(void);
 tracker* bc_get_tracker_by_id(int id);
 tracker* bc_get_tracker_by_name(char* name);
 int bc_load_trackers_from_data(char* data, int size);
+
+void print_theaders(void);
+char* bc_get_mblock(int fd, int offset, int size);
 
 #endif /* __BC_TRACKER__ */

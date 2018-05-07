@@ -102,7 +102,7 @@ void bc_free_probe_pt(void *ptr, const char *func, int line)
 
 void bc_init_heap_tracker()
 {
-	heap_tracker.tracker	= bc_new_tracker(HEAP_TRACKER, HEAP_SIZE);
+	heap_tracker.tracker	= bc_new_tracker(HEAP_TRACKER_NAME, HEAP_TRACKER_SIZE);
 	heap_tracker.status		= (heap_status*) heap_tracker.tracker->mblock;
 	heap_tracker.alloc_ptr	= (heap_block*)
 				 (heap_tracker.tracker->mblock + sizeof(heap_status));

@@ -2,13 +2,12 @@
 #define __BC_STREAM_TRACKER__
 
 #include "bc_os_headers.h"
-
 #include "bc_tracker.h"
+
 #include "bc_cmd_tracker.h"
 
-#define STREAM_TRACKER		"bc_stream"
-
 #define MAX_STREAMS			3
+#define MAX_CMDS			CMDS_SIZE
 #define MAX_VSTREAMS		550
 
 #define STREAM_NAME_SIZE	20
@@ -40,7 +39,7 @@ struct streams {
 	int sid;
 	pid_t pid;
 
-	command cmds[CMDS_SIZE];
+	command cmds[MAX_CMDS];
 };
 
 struct new_stream_tracker {
@@ -73,5 +72,8 @@ void bc_update_stream_header(int stream);
 void bc_update_stream_type(int stream, enum STREAM_TYPE type);
 void bc_allocate_stream(int id);
 void bc_tspec_avg(struct timespec *old, struct timespec* new, int count);
+
+#define STREAM_TRACKER_NAME	"bc_stream"
+#define STREAM_TRACKER_SIZE ((1 + MAX_STREAMS) * sizeof(struct streams))
 
 #endif /* __BC_STREAM_TRACKER__ */

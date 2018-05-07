@@ -4,10 +4,10 @@ void
 	__attribute__((constructor))
 	bc_init(void)
 {
+	bc_init_tracker();
+
 	bc_setup_trackers();
 	bc_load_trackers();
-
-	bc_init_tracker();
 
 	bc_init_heap_tracker();
 	bc_init_cmd_tracker();
