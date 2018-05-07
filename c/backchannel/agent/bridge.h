@@ -1,6 +1,8 @@
 #ifndef __BRIDGE__
 #define __BRIDGE__
 
-void bridge(void);
+#include "main.h"
+
+void bridge(struct agent_struct *agent);
 
 #endif /* __BRIDGE__ */

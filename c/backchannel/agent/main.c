@@ -1,42 +1,52 @@
 #include "main.h"
 
-void start_agent(enum MODE mode, int verbose)
+#include "daemon.h"
+#include "server.h"
+#include "client.h"
+#include "bridge.h"
+#include "signals.h"
+
+struct agent_struct agent;
+
+void start_agent()
 {
-	switch(mode) {
+	switch(agent.mode) {
 		case BRIDGE:
 			run_as_background();
-			bridge();
+			bridge(&agent);
 			break;
 		case SERVER:
 			run_as_background();
-			server();
+			server(&agent);
 			break;
 		default:
-			client(verbose);
+			client(&agent);
 	}
 }
 
 int main(int argc, char *argv[])
 {
-	enum MODE mode = CLIENT;
-	int verbose = 0;
-
 	int opt;
+	agent.mode = CLIENT;
+	agent.verbose = 0;
+
+	init_sighandlers(&agent);
+
 	while ((opt = getopt(argc, argv, "dbv")) != -1)
 	{
 		switch (opt)
 		{
 			case 'd':
-				mode = SERVER;
+				agent.mode = SERVER;
 				break;
 			case 'b':
-				mode = BRIDGE;
+				agent.mode = BRIDGE;
 			case 'v':
-				verbose = 1;
+				agent.verbose = 1;
 		}
 	}
 
-	start_agent(mode, verbose);
+	start_agent();
 
 	return 0;
 }

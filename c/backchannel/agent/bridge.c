@@ -1,6 +1,6 @@
 #include "bridge.h"
 
-void bridge()
+void bridge(struct agent_struct *agent)
 {
 	
 }

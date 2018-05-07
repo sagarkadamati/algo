@@ -9,6 +9,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-struct sigaction sa = {};
+void init_sighandlers(struct agent_struct *data);
 
 #endif /* __SIGNALS__ */

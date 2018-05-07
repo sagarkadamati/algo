@@ -45,7 +45,7 @@ void process_request(int socket)
 	char buffer[1024];
 
 	recv(socket, buffer, 1024, 0);
-		
+
 	strcpy(buffer, "My Hello World\n");
 	send(socket, buffer, 1024, 0);
 }
@@ -73,25 +73,21 @@ void serve_request(int socket)
 	close(fd);
 }
 
-void server()
+void server(struct agent_struct *agent)
 {
-	int sskt, cskt;
-
-	sskt = alloc_socket();
-	bind_socket(sskt);
+	agent->server_lskt = alloc_socket();
+	bind_socket(agent->server_lskt);
 
 	bc_setup_trackers();
 	bc_load_trackers();
 
 	while (1) {
-		listen_for_connections(sskt);
-		cskt = accept_connection(sskt);
+		listen_for_connections(agent->server_lskt);
+		agent->server_rskt = accept_connection(agent->server_lskt);
 
-		serve_request(cskt);
-		// serve_request(cskt);
-
-		release_socket(cskt);	
+		serve_request(agent->server_rskt);
+		release_socket(agent->server_rskt);
 	}
 
-	release_socket(sskt);
+	release_socket(agent->server_lskt);
 }

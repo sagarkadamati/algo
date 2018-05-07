@@ -101,20 +101,20 @@ void start_request(int socket, int verbose)
 	free(ch);
 }
 
-void client(int verbose)
+void client(struct agent_struct *agent)
 {
 	int cskt = alloc_socket();
-	if (verbose)
+	if (agent->verbose)
 		printf("DEBUG: connetcing...");
 	if (!connect_socket(cskt))
 	{
-		if (verbose)
+		if (agent->verbose)
 			printf("done\n");
-		start_request(cskt, verbose);
+		start_request(cskt, agent->verbose);
 		release_socket(cskt);
 	}
 	else {
-		if (verbose)
+		if (agent->verbose)
 			printf("fail\n");
 	}
 }
