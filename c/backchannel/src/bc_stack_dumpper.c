@@ -1,3 +1,4 @@
+#if 0
 #include "bc_stack_dumpper.h"
 
 int
@@ -48,3 +49,5 @@ void
 	if (bc_stack_dumpper_fd)
 		close(bc_stack_dumpper_fd);
 }
+
+#endif

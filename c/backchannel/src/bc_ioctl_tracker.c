@@ -1,3 +1,4 @@
+#if 0
 #include "bc_ioctl_tracker.h"
 
 void bc_update_ioctl(int index)
@@ -92,3 +93,4 @@ void
 	bc_deallocate_tracker(ioctl_tracker);
 	bc_deallocate_ioctls();
 }
+#endif

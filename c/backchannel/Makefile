@@ -7,6 +7,7 @@ APP = $(shell basename $(shell pwd))
 INCLUDE = -I./src
 LIBS  = -lpthread -lrt
 CFLAGS = -Wall -g
+CFLAGS = -g
 # CFLAGS = -Wall -finstrument-functions -g
 
 clean:
