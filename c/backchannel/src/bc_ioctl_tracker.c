@@ -1,64 +1,94 @@
 #include "bc_ioctl_tracker.h"
 
-int
-	__NO_TRACKING__
-	bc_print_ioctls(const char *fmt, ...)
+void bc_update_ioctl(int index)
 {
-	char log[LOG_BUFFER_LENGTH];
-	va_list args;
-	int len;
+	struct timespec spec;
 
-	va_start(args, fmt);
-	len = vsnprintf(log, LOG_BUFFER_LENGTH, fmt, args);
-	va_end(args);
+	bc_ioctls[index].exe_count++;
 
-	return write(bc_ioctl_tracker_fd, log, len);
+	timespec_diff(&bc_ioctls[index].tenter,
+			&bc_ioctls[index].texit, &spec);
+	bc_update_tracker(ioctl_tracker, (index + 3),
+		"\n| %-50s | %4lu.%-11lu | %5d | %5d |",
+		bc_ioctls[index].name,
+		spec.tv_sec, spec.tv_nsec,
+		bc_ioctls[index].exe_count,
+		bc_ioctls[index].status);
 }
 
 void
 	__NO_TRACKING__
-	bc_update_ioctls(enum position pos, int cmd)
+	bc_update_ioctls(enum position pos, int cmd, int status)
 {
 	long int ns;
-	struct timespec spec;
-	char* ioctl_cmd;
+	int index;
 
-#ifdef __BC_PROCESS_HEADERS__
-	ioctl_cmd = bc_get_ioctl_name(cmd);
-#else
-	ioctl_cmd = (char*)"=== PROCESS HEADERS NOT DEFINED ===";
-#endif /* __BC_PROCESS_HEADERS__ */
+	if(!bc_ioctls)
+		return;
 
-	clock_gettime(CLOCK_REALTIME, &spec);
-	ns = spec.tv_nsec;
-
+	index = bc_get_ioctl_num(cmd);
 	switch(pos)
 	{
 		case ENTER:
-			bc_print_ioctls("| %-50s | %-5s | %lu |\n",
-				ioctl_cmd, pos ? "EXIT" : "ENTER", 0);
-				enter_ns = ns;
+			clock_gettime(CLOCK_REALTIME, &bc_ioctls[index].tenter);
 			break;
 		case EXIT:
-			ns -= enter_ns;
-			bc_print_ioctls("| %-50s | %-5s | %lu |\n",
-				ioctl_cmd, pos ? "EXIT" : "ENTER", ns / 1000000);
+			clock_gettime(CLOCK_REALTIME, &bc_ioctls[index].texit);
+			bc_ioctls[index].status = status;
+			bc_update_ioctl(index);
 			break;
 	}
+}
+
+void bc_update_tracker_header()
+{
+	bc_update_tracker(ioctl_tracker, 0,
+		"|-%-50s-+--%14s--+-%5s-|", "----------"
+		"----------""----------""----------""----------",
+		"----------""----","-----");
+
+	bc_update_tracker(ioctl_tracker, 1,
+		"\n| %-20s%-10s%-20s |  %14s  | %5s |",
+		" ", "IOCTL NAME", " ", "Execution Time", "Count");
+
+	bc_update_tracker(ioctl_tracker, 2,
+		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
+		"----------""----------""----------""----------",
+		"----------""----","-----");
+
+	bc_update_tracker(ioctl_tracker, (IOCTL_SIZE - 1),
+		"\n|-%-50s-+--%14s--+-%5s-|", "----------"
+		"----------""----------""----------""----------",
+		"----------""----","-----");
+}
+
+void* bc_allocate_ioctls()
+{
+	return calloc(IOCTL_SIZE, sizeof(struct bc_ioctl_struct));
+}
+
+void bc_deallocate_ioctls()
+{
+	if(bc_ioctls)
+		free(bc_ioctls);
 }
 
 void
 	__NO_TRACKING__
 	bc_init_ioctl_tracker()
 {
-	if ((bc_ioctl_tracker_fd = shm_open(IOCTL_TRACKER, O_RDWR | O_CREAT, 0666)) < 0)
-		return;
+	ioctl_tracker = bc_allocate_tracker(IOCTL_TRACKER, IOCTL_SIZE);
+
+	bc_update_tracker_header();
+	bc_ioctls = bc_allocate_ioctls();
+	if (bc_ioctls)
+		bc_add_ioctls();
 }
 
 void
 	__NO_TRACKING__
 	bc_deinit_ioctl_tracker()
 {
-	if (bc_ioctl_tracker_fd)
-		close(bc_ioctl_tracker_fd);
+	bc_deallocate_tracker(ioctl_tracker);
+	bc_deallocate_ioctls();
 }

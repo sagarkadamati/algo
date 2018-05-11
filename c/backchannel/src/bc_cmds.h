@@ -12,4 +12,6 @@
 #define CMD8 8
 #define CMD9 9
 
+#define CMDS_LIST "bc_cmds_list.h"
+
 #endif /* __BC_CMDS__ */

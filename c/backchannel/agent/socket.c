@@ -11,7 +11,7 @@ int connect_socket(int socket)
 {
 	struct sockaddr_in serverAddr;
 	socklen_t addr_size = sizeof serverAddr;
-	char* addr = getenv("SERVER_IP");
+	char* addr = getenv("BC_SERVER_IP");
 
 	serverAddr.sin_addr.s_addr = inet_addr(addr ? addr : LOCAL_HOST);
 	serverAddr.sin_family = AF_INET;
@@ -24,7 +24,7 @@ int connect_socket(int socket)
 int bind_socket(int socket)
 {
 	struct sockaddr_in serverAddr;
-	char* addr = getenv("HOST_IP");
+	char* addr = getenv("BC_SERVER_IP");
 
 	serverAddr.sin_addr.s_addr = inet_addr(addr ? addr : LOCAL_HOST);
 	serverAddr.sin_family = AF_INET;

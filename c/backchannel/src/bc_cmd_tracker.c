@@ -1,3 +1,4 @@
+#include "bc_cmd_factory.h"
 #include "bc_cmd_tracker.h"
 
 void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status)

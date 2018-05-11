@@ -15,7 +15,7 @@ void bc_update_stream_type(int stream, enum STREAM_TYPE type)
 {
 	if (stream_tracker.enable)
 	{
-		stream = stream_tracker.stream_index[stream];
+		stream = stream_tracker.sindex[stream];
 		if (stream < stream_tracker.header->streams_count)
 		{
 			if (stream_tracker.streams[stream].enable)
@@ -28,7 +28,7 @@ void bc_update_stream(int stream, const char *name, pid_t pid)
 {
 	if (stream_tracker.enable)
 	{
-		stream = stream_tracker.stream_index[stream];
+		stream = stream_tracker.sindex[stream];
 		if (stream < stream_tracker.header->streams_count)
 		{
 			if (stream_tracker.streams[stream].enable)
@@ -47,7 +47,7 @@ void bc_update_stream_cmd(int stream, int cmd, enum position pos, int status)
 {
 	if (stream_tracker.enable)
 	{
-		stream = stream_tracker.stream_index[stream];
+		stream = stream_tracker.sindex[stream];
 		if (stream < stream_tracker.header->streams_count)
 		{
 			if (stream_tracker.streams[stream].enable)
@@ -92,7 +92,7 @@ void bc_allocate_stream(int id)
 	for (stream = 0; stream < MAX_STREAMS; stream++) {
 		if (stream_tracker.streams[stream].used == 0) {
 			stream_tracker.streams[stream].used = 1;
-			stream_tracker.stream_index[id]		= stream;
+			stream_tracker.sindex[id]		= stream;
 			break;
 		}
 	}
@@ -102,11 +102,11 @@ void bc_enable_stream(int stream)
 {
 	if (stream_tracker.enable)
 	{
-		int index = stream_tracker.stream_index[stream];
+		int index = stream_tracker.sindex[stream];
 		if (index == -1)
 			bc_allocate_stream(stream);
 
-		stream = stream_tracker.stream_index[stream];
+		stream = stream_tracker.sindex[stream];
 		if (stream < stream_tracker.header->streams_count)
 		{
 			if (!stream_tracker.streams[stream].enable)
@@ -122,14 +122,14 @@ void bc_disable_stream(int stream)
 {
 	if (stream_tracker.enable)
 	{
-		stream = stream_tracker.stream_index[stream];
+		stream = stream_tracker.sindex[stream];
 		if (stream < stream_tracker.header->streams_count)
 		{
 			if (stream_tracker.streams[stream].enable)
 			{
 				stream_tracker.streams[stream].enable	= 0;
 				stream_tracker.streams[stream].used		= 0;
-				stream_tracker.stream_index[stream]		= -1;
+				stream_tracker.sindex[stream]			= -1;
 				stream_tracker.header->streams_size--;
 			}
 		}
@@ -149,7 +149,7 @@ void bc_setup_stream()
 		(stream_tracker.tracker->mblock + stream_tracker.header->streams_offset);
 
 	for (id = 0; id < MAX_VSTREAMS; id++)
-		stream_tracker.stream_index[id]		= -1;
+		stream_tracker.sindex[id]		= -1;
 
 	for (id = 0; id < MAX_STREAMS; id++) {
 		stream_tracker.streams[id].enable	= 0;
@@ -160,8 +160,6 @@ void bc_setup_stream()
 void bc_init_stream_tracker()
 {
 	stream_tracker.tracker = bc_get_tracker_by_id(STREAM_TRACKER_ID);
-	// stream_tracker.tracker = bc_new_tracker(STREAM_TRACKER_NAME,
-	// 						(1 + MAX_STREAMS) * sizeof(struct streams));
 
 	bc_setup_stream();
 	stream_tracker.enable = 1;

@@ -78,7 +78,6 @@ void server(struct agent_struct *agent)
 	agent->server_lskt = alloc_socket();
 	bind_socket(agent->server_lskt);
 
-	bc_setup_trackers();
 	bc_load_trackers();
 
 	while (1) {

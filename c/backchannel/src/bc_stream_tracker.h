@@ -3,59 +3,35 @@
 
 #include "bc_os_headers.h"
 #include "bc_tracker.h"
+#include "bc_trackers_reg.h"
 
+#include "bc_cmd_factory.h"
 #include "bc_cmd_tracker.h"
+#include "bc_stream.h"
 
-#define MAX_STREAMS			3
 #define MAX_CMDS			CMDS_SIZE
+#define MAX_STREAMS			3
 #define MAX_VSTREAMS		550
 
-#define STREAM_NAME_SIZE	20
+DEFINE_STREAM_HEADER(streams_header, MAX_VSTREAMS);
+DEFINE_STREAM(streams, MAX_CMDS);
+
+#define STREAM_TRACKER_NAME	"stream_tracker"
+#define STREAM_TRACKER_SIZE (MAX_STREAMS * sizeof(struct streams))
 
 enum STREAM_TYPE {
 	TYPE1 = 1,
 	TYPE2
 };
 
-struct streams_header {
-	char name[STREAM_NAME_SIZE];
-	int  enable;
-
-	int streams_offset;
-	int streams_size;
-	int streams_count;
-
-	int cmds_count;
-};
-
-struct streams {
-	char name[STREAM_NAME_SIZE];
-
-	int enable;
-	int used;
-
-	int id;
-	int type;
-	int sid;
-	pid_t pid;
-
-	command cmds[MAX_CMDS];
-};
-
-struct new_stream_tracker {
+struct stream_tracker {
 	int enable;
 	int sindex[MAX_VSTREAMS];
-	struct streams_header header;
-	struct streams streams[MAX_STREAMS];
-};
-
-struct stream_tracker {
-	tracker *tracker;
-	int stream_index[MAX_VSTREAMS];
-	int enable;
 
 	struct streams_header *header;
 	struct streams *streams;
+
+	tracker *tracker;
 } stream_tracker;
 
 void bc_setup_stream(void);
@@ -72,8 +48,5 @@ void bc_update_stream_header(int stream);
 void bc_update_stream_type(int stream, enum STREAM_TYPE type);
 void bc_allocate_stream(int id);
 void bc_tspec_avg(struct timespec *old, struct timespec* new, int count);
-
-#define STREAM_TRACKER_NAME	"bc_stream"
-#define STREAM_TRACKER_SIZE ((1 + MAX_STREAMS) * sizeof(struct streams))
 
 #endif /* __BC_STREAM_TRACKER__ */

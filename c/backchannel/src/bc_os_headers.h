@@ -19,6 +19,4 @@ enum position{
 
 #define __NO_TRACKING__ __attribute__((__no_instrument_function__))
 
-// #include <bc_process_headers.h>
-
 #endif /* __BC_OS_HEADERS__ */

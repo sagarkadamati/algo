@@ -3,10 +3,8 @@
 
 #include "bc_os_headers.h"
 #include "bc_tracker.h"
+#include "bc_trackers_reg.h"
 #include "bc_time.h"
-
-#define CMDS_LIST "bc_cmds_list.h"
-#include "bc_cmd_factory.h"
 
 #define CMD_NAME_SIZE		100
 #define CMDS_SIZE			BC_CMDS_COUNT
@@ -26,14 +24,14 @@ typedef struct command {
 	int xcount;
 	int state;
 	int cur_state;
-	int max_states;
+	unsigned int max_states;
 	int ftracer_cond;
 	struct timespec timespec[STATES_COUNT];
 
 	struct timespec tenter;
 	struct timespec texit;
 	struct timespec tavg;
-} command;
+}  __attribute__ ((packed)) command;
 
 struct cmd_stream {
 	tracker *tracker;
@@ -44,20 +42,15 @@ struct cmd_stream {
 
 void bc_init_cmd_tracker(void);
 void bc_deinit_cmd_tracker(void);
-void bc_update_cmd(int cmd, enum states state, int status);
-void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status);
-void bc_update_cmd_tracker_header(void);
 
-int bc_get_cmd_num(int cmd);
-char* bc_get_cmd_name(int cmd);
-void bc_init_cmd(struct cmd_stream* stream);
-
-void bc_print_cmds(int index, const char *fmt, ...);
-void bc_add_cmds(void);
 void bc_allocate_cmds(struct cmd_stream* stream, int size);
 void bc_deallocate_cmds(struct cmd_stream* stream);
 
-#define CMD_TRACKER_NAME	"bc_cmds"
+void bc_update_cmd_tracker_header(void);
+void bc_update_cmd(int cmd, enum states state, int status);
+void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status);
+
+#define CMD_TRACKER_NAME	"cmds_tracker"
 #define CMD_TRACKER_SIZE	(CMDS_SIZE * sizeof(command))
 
 #endif /* __BC_CMD_TRACKER__ */

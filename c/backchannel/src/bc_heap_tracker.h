@@ -4,8 +4,7 @@
 #include "bc_os_headers.h"
 #include "bc_tracker.h"
 
-#define HEAP_TRACKER_NAME	"bc_heap"
-#define HEAP_TRACKER_SIZE	3
+#define MAX_HEAP_BLOCKS	100
 
 enum state {
 	MALLOC,
@@ -56,5 +55,9 @@ void bc_free_probe_pt(void *ptr, const char *func, int line);
 heap_block* new_heap_block(void);
 void release_heap_block(heap_block* block);
 heap_block* get_heap_block(void* ptr);
+
+#define HEAP_TRACKER_NAME	"heap_tracker"
+#define HEAP_TRACKER_SIZE	(sizeof(heap_status) + \
+							(MAX_HEAP_BLOCKS * sizeof(heap_block)))
 
 #endif /* __BC_HEAP_TRACKER__ */

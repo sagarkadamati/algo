@@ -80,23 +80,21 @@ tracker_mblock* bc_allocate_mblock(tracker *t, int lines);
 tracker* bc_get_tracker(char* tracker_name);
 tracker* bc_new_tracker(char* tname, int size);
 
-enum tracker_ids {
-	HEAP_TRACKER_ID,
-	CMD_TRACKER_ID,
-	STREAM_TRACKER_ID,
-	TRACKERS_COUNT,
-};
-
-void bc_setup_headers(struct tracker_meta_header *header,
-						struct tracker_header *theaders);
-void bc_setup_trackers(void);
-int  bc_load_trackers(void);
-
-tracker* bc_get_tracker_by_id(int id);
-tracker* bc_get_tracker_by_name(char* name);
+int bc_load_trackers(void);
 int bc_load_trackers_from_data(char* data, int size);
-
+tracker* bc_get_tracker_by_id(int id);
+tracker* bc_get_tracker_by_name(char* tracker_name);
 void print_theaders(void);
-char* bc_get_mblock(int fd, int offset, int size);
+
+static char* bc_get_mblock(int fd, int offset, int size)
+{
+	void* map = mmap(0, size,
+				PROT_READ | PROT_WRITE,
+				MAP_SHARED,	fd, offset);
+	if (map == MAP_FAILED)
+		return NULL;
+
+	return (char*) map;
+}
 
 #endif /* __BC_TRACKER__ */
