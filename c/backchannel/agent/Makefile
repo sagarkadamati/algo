@@ -1,19 +1,27 @@
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
-SRCS := $(call rwildcard,./,*.c)
-
-SRCS += ../src/bc_tracker.c
+GCC := "other-gcc"
 
 APP = $(shell basename $(shell pwd))
-LIBS  = -lpthread -lrt
-CFLAGS = -Wall -g
+
+SRCS := $(call rwildcard,./,*.c)
+SRCS += ../src/bc_tracker.c
+
+# CFLAGS = -Wall -g
+CFLAGS = -g
+LINUX_LIBS = -lpthread -lrt
+OTHER_LIBS = -lsocket
 
 clean:
 	@ rm -rf bin
 
 build: clean
-	@ mkdir bin
-	@ gcc $(SRCS) $(CFLAGS) $(LIBS) -o bin/$(APP)
+	@ mkdir -p bin
+	@ gcc $(SRCS) $(CFLAGS) $(LINUX_LIBS) -o bin/$(APP)
+
+buildother: clean
+	@ mkdir -p bin
+	@ ${GCC} $(SRCS) $(CFLAGS) $(OTHER_LIBS) -o bin/$(APP)
 
 run: build
 	@ ./bin/$(APP) &
