@@ -1,10 +1,11 @@
 #ifndef __BC_TRACKERS_REG__
 #define __BC_TRACKERS_REG__
 
+#define ADD_TRACKER(_id, _name, _size)	\
+	_id,
+
 enum tracker_ids {
-	HEAP_TRACKER_ID,
-	CMD_TRACKER_ID,
-	STREAM_TRACKER_ID,
+	#include "bc_trackers_list.h"
 	TRACKERS_COUNT,
 };
 

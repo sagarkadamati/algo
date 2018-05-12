@@ -1,29 +1,23 @@
 #include "bc_tracker.h"
 #include "bc_trackers_reg.h"
 
-#include "bc_heap_tracker.h"
-#include "bc_cmd_tracker.h"
-#include "bc_stream_tracker.h"
+#include "bc_trackers_headers_list.h"
 
-#define TRACKER_TOTAL_SIZE	(				\
-					HEAP_TRACKER_SIZE +	\
-					CMD_TRACKER_SIZE  +	\
-					STREAM_TRACKER_SIZE	\
-				)
+#undef  ADD_TRACKER
+#define ADD_TRACKER(_id, _name, _size)	\
+	{ _name, _size },
+
+struct tracker_header_tmp {
+	char* name;
+	int size;
+} thread_headers[] = {
+	#include "bc_trackers_list.h"
+};
 
 void bc_setup_headers(struct tracker_meta_header *header,
 						struct tracker_header *theaders)
 {
 	int id;
-	struct tracker_header_tmp {
-		char* name;
-		int size;
-	} thread_headers[] = {
-		{ HEAP_TRACKER_NAME		, HEAP_TRACKER_SIZE		},
-		{ CMD_TRACKER_NAME		, CMD_TRACKER_SIZE		},
-		{ STREAM_TRACKER_NAME	, STREAM_TRACKER_SIZE	},
-	};
-
 	for (id = 0; id < header->tcount; id++)
 	{
 		strcpy(theaders[id].name, thread_headers[id].name);
@@ -48,9 +42,16 @@ void bc_setup_trackers()
 		struct tracker_header *theaders;
 		char* map;
 
+		int id;
+		int size;
+		int tracker_total_size = 0;
 		int meta_hsize			= sizeof(struct tracker_meta_header);
 		int tracker_hsize		= TRACKERS_COUNT * sizeof(struct tracker_header);
-		int size				= meta_hsize + TRACKER_TOTAL_SIZE + tracker_hsize;
+
+		for (id = 0; id < TRACKERS_COUNT; id++)
+			tracker_total_size += thread_headers[id].size;
+
+		size = meta_hsize + tracker_total_size + tracker_hsize;
 
 		ftruncate(fd, size);
 		map						= bc_get_mblock(fd, 0, size);
