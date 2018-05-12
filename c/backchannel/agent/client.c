@@ -1,7 +1,7 @@
 #include "client.h"
 
 #include <stdlib.h>
-#include "time.h"
+#include "../src/bc_time.h"
 
 #include "data_processor.h"
 

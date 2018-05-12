@@ -1,16 +1,5 @@
 #include "bc_stream_tracker.h"
 
-void bc_tspec_avg(struct timespec *old, struct timespec* new, int count)
-{
-	old->tv_sec  *= (count - 1);
-	old->tv_sec  += new->tv_sec;
-	old->tv_sec  /= count;
-
-	old->tv_nsec *= (count - 1);
-	old->tv_nsec += new->tv_nsec;
-	old->tv_nsec /= count;
-}
-
 void bc_update_stream_type(int stream, enum STREAM_TYPE type)
 {
 	if (stream_tracker.enable)
@@ -65,17 +54,15 @@ void bc_update_stream_cmd(int stream, int cmd, enum position pos, int status)
 						stream_tracker.streams[stream].cmds[id].enable	= 1;
 						stream_tracker.streams[stream].cmds[id].xcount++;
 
-						clock_gettime(CLOCK_REALTIME,
-							&stream_tracker.streams[stream].cmds[id].tenter);
+						timespec_current(&stream_tracker.streams[stream].cmds[id].tenter);
+							
 						break;
 					case EXIT:
-						clock_gettime(CLOCK_REALTIME,
-							&stream_tracker.streams[stream].cmds[id].texit);
-
+						timespec_current(&stream_tracker.streams[stream].cmds[id].texit);
 						timespec_diff(&stream_tracker.streams[stream].cmds[id].tenter,
 							&stream_tracker.streams[stream].cmds[id].texit, &spec);
 
-						bc_tspec_avg(&stream_tracker.streams[stream].cmds[id].tavg, &spec,
+						timespec_avg(&stream_tracker.streams[stream].cmds[id].tavg, &spec,
 									stream_tracker.streams[stream].cmds[id].xcount);
 
 						stream_tracker.streams[stream].cmds[id].tavg   = spec;

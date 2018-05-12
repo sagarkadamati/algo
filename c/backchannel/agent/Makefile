@@ -6,6 +6,7 @@ APP = $(shell basename $(shell pwd))
 
 SRCS := $(call rwildcard,./,*.c)
 SRCS += ../src/bc_tracker.c
+SRCS += ../src/bc_time.c
 
 # CFLAGS = -Wall -g
 CFLAGS = -g

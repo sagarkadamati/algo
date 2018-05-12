@@ -9,10 +9,10 @@
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <time.h>
 #include <stddef.h>
 
 #include "../src/bc_tracker.h"
+#include "../src/bc_time.h"
 
 #define STREAM_FILE "bc_tracker"
 #define MAX_BUF_SIZE 100
