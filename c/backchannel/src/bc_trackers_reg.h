@@ -1,7 +1,7 @@
 #ifndef __BC_TRACKERS_REG__
 #define __BC_TRACKERS_REG__
 
-#define ADD_TRACKER(_id, _name, _size)	\
+#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
 	_id,
 
 enum tracker_ids {

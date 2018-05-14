@@ -1,10 +1,10 @@
 #include "bc_tracker.h"
 #include "bc_trackers_reg.h"
 
-#include "bc_trackers_headers_list.h"
+#include "bc_trackers_header.h"
 
 #undef  ADD_TRACKER
-#define ADD_TRACKER(_id, _name, _size)	\
+#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
 	{ _name, _size },
 
 struct tracker_header_tmp {

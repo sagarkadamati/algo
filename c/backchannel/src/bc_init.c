@@ -9,21 +9,22 @@ void
 	bc_setup_trackers();
 	bc_load_trackers();
 
-	bc_init_heap_tracker();
-	bc_init_cmd_tracker();
-	bc_init_stream_tracker();
-	// bc_init_function_tracker();
+	#undef  ADD_TRACKER
+	#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
+		_init();
 
+	#include "bc_trackers_list.h"
 }
 
 void
 	__attribute__((destructor))
 	bc_deinit(void)
 {
-	// bc_deinit_function_tracker();
-	bc_deinit_stream_tracker();
-	bc_deinit_cmd_tracker();
-	bc_deinit_heap_tracker();
+	#undef  ADD_TRACKER
+	#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
+		_deinit();
+
+	#include "bc_trackers_list.h"
 
 	bc_deinit_tracker();
 }
