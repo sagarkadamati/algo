@@ -12,26 +12,29 @@ void start_agent()
 {
 	switch(agent.mode) {
 		case BRIDGE:
-			run_as_background();
-			bridge(&agent);
+			run_as_background("Running in bridge mode");
+			bridge();
 			break;
 		case SERVER:
-			run_as_background();
-			server(&agent);
+			run_as_background("Running in server mode");
+			server();
 			break;
 		default:
-			client(&agent);
+			client();
 	}
+}
+
+static void init_agent(void)
+{
+	agent.cmd = DEFAULT;
+	agent.mode = CLIENT;
+	agent.verbose = 0;
 }
 
 int main(int argc, char *argv[])
 {
 	int opt;
-	agent.mode = CLIENT;
-	agent.verbose = 0;
-
-	init_sighandlers(&agent);
-
+	int field;
 	while ((opt = getopt(argc, argv, "dbv")) != -1)
 	{
 		switch (opt)
@@ -46,6 +49,14 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	for (field = 1; field < argc; field++)
+	{
+		if (!(strcmp(argv[field], "list")))
+			agent.cmd = LIST_TRACKERS;
+	}
+
+	init_agent();
+	init_sighandlers();
 	start_agent();
 
 	return 0;

@@ -1,8 +1,5 @@
 #include "client.h"
 
-#include <stdlib.h>
-#include "../src/bc_time.h"
-
 #include "data_processor.h"
 
 #define MAX_BUF_SIZE 100
@@ -31,7 +28,7 @@ void receive_data(int socket, char* ch, int size)
 	}
 }
 
-void start_request(int socket, int verbose)
+void start_request(int socket)
 {
 	char buffer[1024];
 	char* ch;
@@ -41,36 +38,38 @@ void start_request(int socket, int verbose)
 
 	send(socket, buffer, 1024, 0);
 	recv(socket, &size, sizeof(int), 0);
-	if (verbose)
+	if (agent.verbose)
 		printf("DEBUG: file size: %d\n", size);
 
 	ch = (char*) calloc(1, size);
 	send(socket, buffer, 1024, 0);
-	if (verbose)
+	if (agent.verbose)
 		printf("DEBUG: file receive in progress...");
 	receive_data(socket, ch, size);
-	if (verbose)
+	if (agent.verbose)
 		printf("done\n");
-	
-	process_data(ch, size, verbose);
+
+	bc_init_tracker();
+	bc_load_trackers_from_data(ch, size);
+	process_data();
 
 	free(ch);
 }
 
-void client(struct agent_struct *agent)
+void client()
 {
 	int cskt = alloc_socket();
-	if (agent->verbose)
+	if (agent.verbose)
 		printf("DEBUG: connetcing...");
 	if (!connect_socket(cskt))
 	{
-		if (agent->verbose)
+		if (agent.verbose)
 			printf("done\n");
-		start_request(cskt, agent->verbose);
+		start_request(cskt);
 		release_socket(cskt);
 	}
 	else {
-		if (agent->verbose)
+		if (agent.verbose)
 			printf("fail\n");
 	}
 }

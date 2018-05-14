@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void init_sighandlers(struct agent_struct *data);
+#include "main.h"
+#include "socket.h"
+
+void init_sighandlers(void);
 
 #endif /* __SIGNALS__ */

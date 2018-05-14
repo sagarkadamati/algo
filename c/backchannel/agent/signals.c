@@ -1,19 +1,16 @@
-#include "main.h"
 #include "signals.h"
-#include "socket.h"
 
 struct sigaction sa = {};
-struct agent_struct *agent;
 
 void sig_handlers(int signal)
 {
 	switch (signal)
 	{
 	case SIGTERM:
-		release_socket(agent->server_lskt);
+		release_socket(agent.server_lskt);
 		break;
 	case SIGINT:
-		release_socket(agent->server_lskt);
+		release_socket(agent.server_lskt);
 		break;
 	case SIGSEGV:
 		break;
@@ -28,10 +25,8 @@ void sig_handlers(int signal)
 	}
 }
 
-void init_sighandlers(struct agent_struct *data)
+void init_sighandlers()
 {
-	agent = data;
-
 	sa.sa_handler = sig_handlers;
 	sa.sa_flags = SA_SIGINFO;
 	// sa.sa_flags = /*SA_RESETHAND | */SA_NODEFER;  /* To have or have not */

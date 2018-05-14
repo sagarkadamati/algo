@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-void bridge(struct agent_struct *agent);
+void bridge(void);
 
 #endif /* __BRIDGE__ */

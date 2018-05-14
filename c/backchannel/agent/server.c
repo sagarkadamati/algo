@@ -1,22 +1,5 @@
 #include "server.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stddef.h>
-
-#include "../src/bc_tracker.h"
-#include "../src/bc_time.h"
-
-#define STREAM_FILE "bc_tracker"
-#define MAX_BUF_SIZE 100
-
 void send_data(int socket, char* ch, int size)
 {
 	int size_left = size;
@@ -73,20 +56,20 @@ void serve_request(int socket)
 	close(fd);
 }
 
-void server(struct agent_struct *agent)
+void server()
 {
-	agent->server_lskt = alloc_socket();
-	bind_socket(agent->server_lskt);
+	agent.server_lskt = alloc_socket();
+	bind_socket(agent.server_lskt);
 
 	bc_load_trackers();
 
 	while (1) {
-		listen_for_connections(agent->server_lskt);
-		agent->server_rskt = accept_connection(agent->server_lskt);
+		listen_for_connections(agent.server_lskt);
+		agent.server_rskt = accept_connection(agent.server_lskt);
 
-		serve_request(agent->server_rskt);
-		release_socket(agent->server_rskt);
+		serve_request(agent.server_rskt);
+		release_socket(agent.server_rskt);
 	}
 
-	release_socket(agent->server_lskt);
+	release_socket(agent.server_lskt);
 }

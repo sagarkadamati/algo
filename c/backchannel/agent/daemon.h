@@ -8,6 +8,6 @@
 #include <sys/stat.h>
 #include <string.h>
 
-void run_as_background(void);
+void run_as_background(char* str);
 
 #endif /* __DAEMON__ */

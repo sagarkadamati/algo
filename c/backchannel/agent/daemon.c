@@ -1,6 +1,6 @@
 #include "daemon.h"
 
-void run_as_background()
+void run_as_background(char* str)
 {
 	pid_t process_id = 0;
 	pid_t sid = 0;
@@ -17,7 +17,7 @@ void run_as_background()
 	// Parent Process. Need to kill it.
 	if (process_id > 0)
 	{
-		printf("Server Started with PID %d \n", process_id);
+		printf("%s with pid %d \n", str, process_id);
 		exit(0); // return success in exit status
 	}
 
