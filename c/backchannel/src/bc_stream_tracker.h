@@ -16,7 +16,7 @@
 DEFINE_STREAM_HEADER(streams_header, MAX_VSTREAMS);
 DEFINE_STREAM(streams, MAX_CMDS);
 
-#define STREAM_TRACKER_NAME	"stream_tracker"
+#define STREAM_TRACKER_NAME	"Stream"
 #define STREAM_TRACKER_SIZE (MAX_STREAMS * sizeof(struct streams))
 
 enum STREAM_TYPE {

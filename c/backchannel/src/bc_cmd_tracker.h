@@ -50,7 +50,7 @@ void bc_update_cmd_tracker_header(void);
 void bc_update_cmd(int cmd, enum states state, int status);
 void bc_update_cmd_internal(struct cmd_stream *stream, enum states state, int cmd, int status);
 
-#define CMD_TRACKER_NAME	"cmds_tracker"
+#define CMD_TRACKER_NAME	"Command"
 #define CMD_TRACKER_SIZE	(CMDS_SIZE * sizeof(command))
 
 #endif /* __BC_CMD_TRACKER__ */

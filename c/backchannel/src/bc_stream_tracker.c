@@ -55,7 +55,7 @@ void bc_update_stream_cmd(int stream, int cmd, enum position pos, int status)
 						stream_tracker.streams[stream].cmds[id].xcount++;
 
 						timespec_current(&stream_tracker.streams[stream].cmds[id].tenter);
-							
+
 						break;
 					case EXIT:
 						timespec_current(&stream_tracker.streams[stream].cmds[id].texit);

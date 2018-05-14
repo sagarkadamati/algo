@@ -56,7 +56,7 @@ heap_block* new_heap_block(void);
 void release_heap_block(heap_block* block);
 heap_block* get_heap_block(void* ptr);
 
-#define HEAP_TRACKER_NAME	"heap_tracker"
+#define HEAP_TRACKER_NAME	"Heap"
 #define HEAP_TRACKER_SIZE	(sizeof(heap_status) + \
 							(MAX_HEAP_BLOCKS * sizeof(heap_block)))
 
