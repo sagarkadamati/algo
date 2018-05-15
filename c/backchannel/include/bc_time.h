@@ -1,7 +1,7 @@
 #ifndef __BC_TIME__
 #define __BC_TIME__
 
-#include <time.h>
+#include "bc_os_headers.h"
 
 #define timespec_current(_time)									\
 	clock_gettime(CLOCK_REALTIME, _time);

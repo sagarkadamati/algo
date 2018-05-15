@@ -1,7 +1,7 @@
 #ifndef __BC_HEAP_TRACKER__
 #define __BC_HEAP_TRACKER__
 
-#include "stdint.h"
+#include <bc_os_headers.h>
 #include "bc_list.h"
 
 #define MAX_HEAP_BLOCKS	1000

@@ -12,6 +12,8 @@
 #include <limits.h>
 #include <sys/mman.h>
 #include <sys/types.h>
+#include <errno.h>
+#include <time.h>
 
 enum position{
 	ENTER,

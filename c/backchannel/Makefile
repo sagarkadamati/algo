@@ -4,11 +4,12 @@ SRCS := $(call rwildcard,lib/,*.c)
 SRCS += $(call rwildcard,core/,*.c)
 SRCS += $(call rwildcard,trackers/*,*.c)
 
-TEST := $(call rwildcard,test/,*.c)
+TEST += $(call rwildcard,test/,*.c)
 
-AGENT := $(call rwildcard,agent/,*.c)
+AGENT := $(call rwildcard,lib/,*.c)
+AGENT += $(call rwildcard,agent/,*.c)
 AGENT += core/bc_tracker.c
-AGENT += core/bc_print.c
+AGENT += lib/bc_print.c
 
 APP = $(shell basename $(shell pwd))
 CC = gcc
