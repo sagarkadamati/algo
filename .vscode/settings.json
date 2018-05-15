@@ -90,7 +90,4 @@
 	"tizen.latest.update.date": "1525615485470",
 	"tizen.use.auto.update": "YES",
 	"csharp.suppressDotnetInstallWarning": true,
-	"files.associations": {
-		"bc_tracker.h": "c"
-	}
 }
