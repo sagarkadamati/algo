@@ -1,13 +1,11 @@
 #ifndef __BC_STREAM_TRACKER__
 #define __BC_STREAM_TRACKER__
 
-#include "bc_os_headers.h"
-#include "bc_tracker.h"
-#include "bc_trackers_reg.h"
+#include <bc_os_headers.h>
+#include <bc_tracker.h>
 
-#include "bc_cmd_factory.h"
-#include "bc_cmd_tracker.h"
-#include "bc_stream.h"
+#include <cmd/bc_cmd_factory.h>
+#include <cmd/tracker.h>
 
 #define MAX_CMDS			CMDS_SIZE
 #define MAX_STREAMS			3

@@ -9,7 +9,6 @@ TEST += $(call rwildcard,test/,*.c)
 AGENT := $(call rwildcard,lib/,*.c)
 AGENT += $(call rwildcard,agent/,*.c)
 AGENT += core/bc_tracker.c
-AGENT += lib/bc_print.c
 
 APP = $(shell basename $(shell pwd))
 CC = gcc
@@ -17,12 +16,21 @@ CC_X = gcc
 LDFLAGS = -ldl
 CFLAGS = -Wall -g
 LIBS  = -lpthread -lrt
+LIBS_X  = -lsocket
 INCLUDE = -I./include -I./trackers
+
 # CFLAGS = -Wall -g -finstrument-functions
+all: build_agent libx
+
+allx: build_agent build_agentx libx
 
 lib: clean
 	@ mkdir -p out/lib
 	@ $(CC) $(SRCS) -shared -fPIC $(CFLAGS) $(INCLUDE) -o	 out/lib/libbctracker.so
+
+libx: clean
+	@ mkdir -p out/lib
+	@ $(CC_X) $(SRCS) -shared -fPIC $(CFLAGS) $(INCLUDE) -o	 out/lib/libbctracker.so
 
 build_app:
 	@ mkdir -p out/bin
@@ -34,7 +42,7 @@ build_agent:
 
 build_agentx:
 	@ mkdir -p out/bin
-	@ $(CC_X) $(AGENT) $(CFLAGS) $(INCLUDE) $(LIBS) -o out/bin/agentx $(LDFLAGS)
+	@ $(CC_X) $(AGENT) $(CFLAGS) $(INCLUDE) $(LIBS_X) -o out/bin/agentx
 
 run: build
 	@ ./out/bin/$(APP)

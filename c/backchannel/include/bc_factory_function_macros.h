@@ -1,7 +1,7 @@
 #ifndef __BC_FACTORY_FUNCTION_MACROS__
 #define __BC_FACTORY_FUNCTION_MACROS__
 
-#include "bc_cmd_tracker.h"
+#include <bc_cmd.h>
 
 #define CMD_ENUM(_cmd)		BC_##_cmd,
 

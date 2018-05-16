@@ -1,5 +1,6 @@
-#include "bc_function_tracker.h"
+#include "function.h"
 #include "bc_tracker.h"
+#include "../core/bc_tracker_internal.h"
 
 struct function_stream {
 	tracker *tracker;

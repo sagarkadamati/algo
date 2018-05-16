@@ -3,6 +3,7 @@
 
 #include "main.h"
 #include "bc_trackers_header.h"
+#include "../core/bc_tracker_internal.h"
 
 void process_data(void);
 void process_tracker(void);

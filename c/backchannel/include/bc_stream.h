@@ -32,4 +32,10 @@
 		command cmds[_size];						\
 	} __attribute__ ((packed))
 
+typedef struct stream {
+	int sid;
+	int soffset;
+	int ssize;
+} __attribute__ ((packed)) stream;
+
 #endif /* __BC_STREAM__ */

@@ -2,7 +2,10 @@
 #define __BC_HEAP_TRACKER__
 
 #include <bc_os_headers.h>
-#include "bc_list.h"
+#include <bc_tracker.h>
+
+#include "tracker.h"
+#include "heap_internal.h"
 
 #define MAX_HEAP_BLOCKS	1000
 

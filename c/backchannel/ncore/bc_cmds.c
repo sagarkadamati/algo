@@ -33,7 +33,6 @@ void bc_update_cmd_tracker_header()
 
 void bc_allocate_cmds(struct cmd_stream* stream, int size)
 {
-	// stream->cmds = bc_calloc(size, sizeof(command));
 	stream->cmds = (command*) cmd_stream.tracker->mblock;
 
 	bc_init_cmd(stream);
@@ -47,7 +46,6 @@ void bc_deallocate_cmds(struct cmd_stream* stream)
 
 void bc_init_cmd_tracker()
 {
-	// cmd_stream.tracker = bc_new_tracker(CMD_TRACKER, CMDS_SIZE);
 	cmd_stream.tracker = bc_get_tracker_by_id(CMD_TRACKER_ID);
 
 	bc_allocate_cmds(&cmd_stream, CMD_TRACKER_SIZE);

@@ -1,4 +1,7 @@
-#include "bc_trackers_reg_internal.h"
+#include "bc_tracker.h"
+#include "bc_trackers_reg.h"
+
+#include "bc_trackers_header.h"
 
 #undef  ADD_TRACKER
 #define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
@@ -8,7 +11,7 @@ struct tracker_header_tmp {
 	char* name;
 	int size;
 } thread_headers[] = {
-	#include <bc_trackers_list.h>
+	#include "bc_trackers_list.h"
 };
 
 static char* bc_get_mblock(int fd, int offset, int size)

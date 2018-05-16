@@ -9,7 +9,7 @@ void process_heap_data()
 
 	header		= (heap_header*) t->mblock;
 	alloc_ptr	= (heap_block*)(t->mblock + sizeof(heap_header));
-	printf("\nHeap:\n\n");
+	printf("Heap:\n\n");
 
 	printf("%4s Status:\n", "");
 		printf("%8s M Alloc : %-10u (%u blocks)\n", "", header->msize, header->mcount_alloc);

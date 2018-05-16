@@ -1,48 +1,11 @@
 #include <bc_tracker.h>
-#include "bc_tracker_internal.h"
+#include <bc_stream.h>
 
-list_node trackers;
-
-int bc_set_streams(tracker *tracker, stream *strm, unsigned int size)
-{
-	int id;
-	size_t ssize;
-
-	for (id = 0; id < size; id++) {
-		if (strm[id].ssize > 0)
-			ssize += strm[id].ssize;
-	}
-
-	if (ssize <= tracker->size) {
-		tracker->scount = size;
-		stream* tstream = (stream*) tracker->mblock;
-		for (id = 0; id < size; id++) {
-			tstream[id].sid = strm[id].sid;
-			tstream[id].ssize = strm[id].ssize;
-
-			if (id == 0)
-				tstream[id].soffset = (size * sizeof(stream));
-			else
-				tstream[id].soffset =
-					tstream[id - 1].soffset + tstream[id - 1].ssize;
-		}
-		return 0;
-	}
-
-	return -1;
-}
-
-stream* bc_get_stream_by_id(tracker *tracker, int sid)
-{
-	int id;
-
-	stream* tstream = (stream*) tracker->mblock;
-	for (id = 0; id < tracker->scount; id++)
-		if (tstream[id].sid == sid)
-			return &tstream[id];
-
-	return NULL;
-}
+struct tracker_struct {
+	struct tracker_meta_header* header;
+	struct tracker_header* theaders;
+	struct mblock_struct mblock;
+} new_trackers;
 
 static char* bc_get_mblock(int fd, int offset, int size)
 {
@@ -269,7 +232,7 @@ void bc_deallocate_tracker(tracker *t)
 	list_node *node = &t->mblocks;
 	tracker_mblock *mblock;
 
-	// bc_disable_tracker(cmd_stream.tracker);
+	bc_disable_tracker(cmd_stream.tracker);
 	while (node != &t->mblocks)
 	{
 		mblock = container_of(node, tracker_mblock, node);

@@ -1,8 +1,4 @@
-#include "bc_os_headers.h"
-#include "bc_tracker.h"
-#include "bc_trackers_reg.h"
-#include "bc_heap_internal.h"
-#include "bc_heap_tracker.h"
+#include "heap.h"
 
 struct bc_struct_heap_tracker heap_tracker_cbs;
 
