@@ -7,24 +7,24 @@ struct heap_tracker_struct {
 	int enable;
 
 	list_node hblocks;
-	heap_header *header;
+	heap_status *status;
 	heap_block *alloc_ptr;
 } heap_tracker;
 
 heap_block* new_heap_block()
 {
-	if (heap_tracker.header->blocks_size != heap_tracker.header->blocks_used)
+	if (heap_tracker.status->blocks_size != heap_tracker.status->blocks_used)
 	{
-		heap_block* block = &heap_tracker.alloc_ptr[heap_tracker.header->blocks_used++];
+		heap_block* block = &heap_tracker.alloc_ptr[heap_tracker.status->blocks_used++];
 		list_add(&heap_tracker.hblocks, &block->hblock);
 		return block;
 	}
 	else
 	{
-		if (&heap_tracker.header->free_blocks)
+		if (&heap_tracker.status->free_blocks)
 		{
-			list_node *node = heap_tracker.header->free_blocks.next;
-			if (&heap_tracker.header->free_blocks != node)
+			list_node *node = heap_tracker.status->free_blocks.next;
+			if (&heap_tracker.status->free_blocks != node)
 			{
 				heap_block* block = container_of(node, heap_block, hblock);
 
@@ -41,7 +41,7 @@ void release_heap_block(heap_block* block)
 {
 	if (block) {
 		list_remove(&block->hblock);
-		list_add(&heap_tracker.header->free_blocks, &block->hblock);
+		list_add(&heap_tracker.status->free_blocks, &block->hblock);
 	}
 }
 
@@ -68,8 +68,8 @@ void bc_malloc_probe_pt(void *ptr, int size, const char *func, int line)
 	if (heap_tracker.enable) {
 		heap_block *block = new_heap_block();
 		if (block) {
-			heap_tracker.header->msize += size;
-			heap_tracker.header->mcount_alloc++;
+			heap_tracker.status->msize += size;
+			heap_tracker.status->mcount_alloc++;
 
 			block->state = MALLOC;
 			block->ptr   = ptr;
@@ -85,8 +85,8 @@ void bc_calloc_probe_pt(void *ptr, int size, const char *func, int line)
 	if (heap_tracker.enable) {
 		heap_block *block = new_heap_block();
 		if (block) {
-			heap_tracker.header->csize += size;
-			heap_tracker.header->ccount_alloc++;
+			heap_tracker.status->csize += size;
+			heap_tracker.status->ccount_alloc++;
 
 			block->state = CALLOC;
 			block->ptr   = ptr;
@@ -106,8 +106,8 @@ void bc_free_probe_pt(void *ptr, const char *func, int line)
 			switch(block->state)
 			{
 				case MALLOC:
-					heap_tracker.header->mfree += block->size;
-					heap_tracker.header->mcount_free++;
+					heap_tracker.status->mfree += block->size;
+					heap_tracker.status->mcount_free++;
 
 					block->state = FREE;
 					strcpy(block->free_at.func, func);
@@ -115,8 +115,8 @@ void bc_free_probe_pt(void *ptr, const char *func, int line)
 
 					break;
 				case CALLOC:
-					heap_tracker.header->cfree += block->size;
-					heap_tracker.header->ccount_free++;
+					heap_tracker.status->cfree += block->size;
+					heap_tracker.status->ccount_free++;
 
 					block->state = FREE;
 					strcpy(block->free_at.func, func);
@@ -125,7 +125,7 @@ void bc_free_probe_pt(void *ptr, const char *func, int line)
 					break;
 				case FREE:
 				case DOUBLE_FREE:
-					heap_tracker.header->dfree++;
+					heap_tracker.status->dfree++;
 					strcpy(block->double_free_at.func, func);
 					block->double_free_at.line  = line;
 			}
@@ -138,7 +138,7 @@ void bc_free_probe_pt(void *ptr, const char *func, int line)
 static void setup_heap_data(void)
 {
 	list_init(&heap_tracker.hblocks);
-	list_init(&heap_tracker.header->free_blocks);
+	list_init(&heap_tracker.status->free_blocks);
 
 	heap_tracker_cbs.malloc = bc_malloc_probe_pt;
 	heap_tracker_cbs.calloc = bc_calloc_probe_pt;
@@ -147,24 +147,46 @@ static void setup_heap_data(void)
 
 void bc_init_heap_tracker()
 {
+	stream *strm;
+	stream strms[BC_HEAP_STREAM_COUNT] = {
+			{
+				BC_HEAP_STATUS_STREAM,
+				BC_HEAP_STATUS_STREAM_OBJ_SIZE,
+				BC_HEAP_STATUS_STREAM_OBJ_COUNT,
+			},
+			{
+				BC_HEAP_BLOCKS_STREAM,
+				BC_HEAP_BLOCKS_STREAM_OBJ_SIZE,
+				BC_HEAP_BLOCKS_STREAM_OBJ_COUNT,
+			},
+		};
+
 	heap_tracker.tracker	= bc_get_tracker_by_id(HEAP_TRACKER_ID);
+	bc_setup_streams(heap_tracker.tracker, strms, BC_HEAP_STREAM_COUNT);
 
-	heap_tracker.header		= (heap_header*) heap_tracker.tracker->mblock;
-	heap_tracker.header->blocks_size = MAX_HEAP_BLOCKS;
-	heap_tracker.header->blocks_used = 0;
+	strm					= bc_get_stream_by_id(heap_tracker.tracker,
+								BC_HEAP_STATUS_STREAM);
 
-	heap_tracker.header->msize = 0;
-	heap_tracker.header->mfree = 0;
-	heap_tracker.header->mcount_alloc = 0;
-	heap_tracker.header->mcount_free = 0;
-	heap_tracker.header->csize = 0;
-	heap_tracker.header->cfree = 0;
-	heap_tracker.header->ccount_alloc = 0;
-	heap_tracker.header->ccount_free = 0;
-	heap_tracker.header->dfree = 0;
+	heap_tracker.status		= (heap_status*) heap_tracker.tracker->mblock +
+								strm->soffset;
 
-	heap_tracker.alloc_ptr	= (heap_block*)
-				 (heap_tracker.tracker->mblock + sizeof(heap_header));
+	strm					= bc_get_stream_by_id(heap_tracker.tracker,
+								BC_HEAP_BLOCKS_STREAM);
+	heap_tracker.alloc_ptr	= (heap_block*) heap_tracker.tracker->mblock +
+								strm->soffset;;
+
+	heap_tracker.status->blocks_size = MAX_HEAP_BLOCKS;
+	heap_tracker.status->blocks_used = 0;
+
+	heap_tracker.status->msize = 0;
+	heap_tracker.status->mfree = 0;
+	heap_tracker.status->mcount_alloc = 0;
+	heap_tracker.status->mcount_free = 0;
+	heap_tracker.status->csize = 0;
+	heap_tracker.status->cfree = 0;
+	heap_tracker.status->ccount_alloc = 0;
+	heap_tracker.status->ccount_free = 0;
+	heap_tracker.status->dfree = 0;
 
 	setup_heap_data();
 	heap_tracker_cbs.enable = 1;

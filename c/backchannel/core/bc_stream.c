@@ -1,6 +1,6 @@
 #include <bc_tracker.h>
 
-int bc_set_streams(tracker *tracker, stream *strm, unsigned int size)
+int bc_setup_streams(tracker *tracker, stream *strm, unsigned int size)
 {
 	int id;
 	int ssize;

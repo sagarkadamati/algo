@@ -2,13 +2,13 @@
 
 void process_heap_data()
 {
-	heap_header *header;
+	heap_status *header;
 	heap_block *alloc_ptr;
 
 	tracker *t = bc_get_tracker_by_id(HEAP_TRACKER_ID);
 
-	header		= (heap_header*) t->mblock;
-	alloc_ptr	= (heap_block*)(t->mblock + sizeof(heap_header));
+	header		= (heap_status*) t->mblock;
+	alloc_ptr	= (heap_block*)(t->mblock + sizeof(heap_status));
 	printf("Heap:\n\n");
 
 	printf("%4s Status:\n", "");

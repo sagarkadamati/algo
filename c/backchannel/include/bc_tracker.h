@@ -46,7 +46,7 @@ void print_theaders(void);
 void bc_enable_tracker(tracker *t);
 void bc_disable_tracker(tracker *t);
 
-int bc_set_streams(tracker *tracker, stream *strm, unsigned int size);
+int bc_setup_streams(tracker *tracker, stream *strm, unsigned int size);
 stream* bc_get_stream_by_id(tracker *tracker, int sid);
 
 #endif /* __BC_TRACKER__ */
