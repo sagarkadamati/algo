@@ -88,12 +88,15 @@ void update_tracker_id()
 
 void process_data()
 {
-	if (agent.cmd == LIST_TRACKERS) {
-		print_theaders();
-	}
-	else {
-		if (agent.cmd == SHOW_TRACKER) {
+	switch (agent.cmd) {
+		case LIST_TRACKERS:
+			print_theaders();
+			break;
+		case SHOW_TRACKER:
 			update_tracker_id();
+			if (agent.tracker_id != -1)
+				printf("\n");
+
 			switch (agent.tracker_id) {
 				case HEAP_TRACKER_ID:
 					process_heap_data();
@@ -102,6 +105,11 @@ void process_data()
 					// process_tracker();
 					break;
 			}
-		}
+//			if (agent.tracker_id != -1)
+//				printf("\n");
+
+			break;
+		case DEFAULT:
+			break;
 	}
 }
