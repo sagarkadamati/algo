@@ -175,7 +175,7 @@ void bc_init_heap_tracker()
 	heap_tracker.alloc_ptr	= (heap_block*) heap_tracker.tracker->mblock +
 								strm->soffset;;
 
-	heap_tracker.status->blocks_size = MAX_HEAP_BLOCKS;
+	heap_tracker.status->blocks_size = BC_HEAP_BLOCKS_STREAM_OBJ_COUNT;
 	heap_tracker.status->blocks_used = 0;
 
 	heap_tracker.status->msize = 0;

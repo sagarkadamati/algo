@@ -38,4 +38,7 @@ typedef struct stream {
 	int ssize;
 } __attribute__ ((packed)) stream;
 
+#define STREAM_SIZE(_x)								\
+	(sizeof(stream))
+
 #endif /* __BC_STREAM__ */
