@@ -2,6 +2,7 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 SRCS := $(call rwildcard,lib/,*.c)
 SRCS += $(call rwildcard,core/,*.c)
+SRCS += $(call rwildcard,init/,*.c)
 SRCS += $(call rwildcard,trackers/*,*.c)
 
 TEST += $(call rwildcard,test/,*.c)

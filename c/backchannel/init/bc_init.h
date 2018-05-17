@@ -4,7 +4,7 @@
 #include <bc_tracker.h>
 #include <bc_trackers_header.h>
 
-#include "bc_trackers_reg_internal.h"
+#include "../core/bc_trackers_reg_internal.h"
 
 void bc_init(void);
 void bc_deinit(void);
