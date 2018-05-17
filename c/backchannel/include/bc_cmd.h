@@ -46,7 +46,10 @@ typedef struct command {
 
 	struct timespec tenter;
 	struct timespec texit;
+
+	struct timespec tmin;
 	struct timespec tavg;
+	struct timespec tmax;
 }  __attribute__ ((packed)) command;
 
 struct cmd_stream {

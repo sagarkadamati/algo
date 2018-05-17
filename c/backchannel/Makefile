@@ -9,6 +9,7 @@ TEST += $(call rwildcard,test/,*.c)
 AGENT := $(call rwildcard,lib/,*.c)
 AGENT += $(call rwildcard,agent/,*.c)
 AGENT += core/bc_tracker.c
+AGENT += trackers/heap/heap_viewer.c
 
 APP = $(shell basename $(shell pwd))
 CC = gcc
