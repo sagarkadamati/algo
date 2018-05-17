@@ -11,7 +11,7 @@ void
 	bc_load_trackers();
 
 	#undef  ADD_TRACKER
-	#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
+	#define ADD_TRACKER(_id, _name, _size, _streams, _init, _deinit)	\
 		_init();
 
 	#include "bc_trackers_list.h"
@@ -22,7 +22,7 @@ void
 	bc_deinit(void)
 {
 	#undef  ADD_TRACKER
-	#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
+	#define ADD_TRACKER(_id, _name, _size, _streams, _init, _deinit)	\
 		_deinit();
 
 	#include "bc_trackers_list.h"

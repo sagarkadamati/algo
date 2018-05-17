@@ -1,12 +1,13 @@
 #include "bc_trackers_reg_internal.h"
 
 #undef  ADD_TRACKER
-#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
-	{ _name, _size },
+#define ADD_TRACKER(_id, _name, _size, _streams, _init, _deinit)	\
+	{ _name, _size, _streams },
 
 struct tracker_header_tmp {
 	char* name;
 	int size;
+	int scount;
 } thread_headers[] = {
 	#include <bc_trackers_list.h>
 };
@@ -29,7 +30,8 @@ void bc_setup_headers(struct tracker_meta_header *header,
 	for (id = 0; id < header->tcount; id++)
 	{
 		strcpy(theaders[id].name, thread_headers[id].name);
-		theaders[id].size	= thread_headers[id].size;
+		theaders[id].size	= thread_headers[id].size +
+							(thread_headers[id].scount * sizeof(stream));
 		theaders[id].use	= DONT_USE_TRACKER;
 		theaders[id].id		= id;
 

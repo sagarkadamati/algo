@@ -4,7 +4,7 @@
 #include <bc_stream.h>
 #include <bc_list.h>
 
-#define ADD_TRACKER(_id, _name, _size, _init, _deinit)	\
+#define ADD_TRACKER(_id, _name, _size, _streams, _init, _deinit)	\
 	_id,
 
 enum tracker_ids {
