@@ -86,8 +86,12 @@ tracker* bc_get_tracker_by_id(int id)
 	for (index = 0; index < new_trackers.header->tcount; index++)
 		if (new_trackers.theaders[index].id == id)
 		{
+			t->streams = (stream*) (new_trackers.mblock.mmap +
+							new_trackers.header->t_doffset +
+							new_trackers.theaders[index].offset);
 			t->mblock = (new_trackers.mblock.mmap +
 							new_trackers.header->t_doffset +
+							STREAM_SIZE(new_trackers.theaders[index].scount)+
 							new_trackers.theaders[index].offset);
 			t->size = new_trackers.theaders[index].size;
 			t->scount = new_trackers.theaders[index].scount;

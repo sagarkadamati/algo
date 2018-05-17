@@ -26,7 +26,7 @@ stream* bc_get_stream_by_id(tracker *tracker, int sid)
 {
 	int id;
 
-	stream* tstream = (stream*) tracker->mblock;
+	stream* tstream = tracker->streams;
 	for (id = 0; id < tracker->scount; id++)
 		if (tstream[id].sid == sid)
 			return &tstream[id];

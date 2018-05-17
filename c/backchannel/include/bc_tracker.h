@@ -27,6 +27,7 @@ typedef struct struct_tracker {
 	int size;
 	list_node mblocks;
 	list_node node;
+	stream *streams;
 } tracker;
 
 tracker* bc_allocate_tracker(char* tracker_name);
