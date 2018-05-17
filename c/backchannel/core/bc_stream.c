@@ -3,19 +3,12 @@
 int bc_setup_streams(tracker *tracker, stream *strm, unsigned int size)
 {
 	int id;
-	int ssize;
 
-	for (id = 0; id < size; id++) {
-		if (strm[id].ssize > 0)
-			ssize += strm[id].ssize;
-	}
-
-	if (ssize <= tracker->size) {
-		tracker->scount = size;
+	if ((size <= tracker->scount) && (size >= 0)) {
 		stream* tstream = (stream*) tracker->mblock;
 		for (id = 0; id < tracker->scount; id++) {
-			tstream[id].sid = strm[id].sid;
-			tstream[id].ssize = strm[id].ssize;
+			tstream[id].sid		= strm[id].sid;
+			tstream[id].ssize	= strm[id].ssize;
 
 			if (id)
 				tstream[id].soffset =

@@ -30,8 +30,8 @@ void bc_setup_headers(struct tracker_meta_header *header,
 	for (id = 0; id < header->tcount; id++)
 	{
 		strcpy(theaders[id].name, thread_headers[id].name);
-		theaders[id].size	= thread_headers[id].size +
-							(thread_headers[id].scount * sizeof(stream));
+		theaders[id].scount	= thread_headers[id].scount;
+		theaders[id].size	= thread_headers[id].size;
 		theaders[id].use	= DONT_USE_TRACKER;
 		theaders[id].id		= id;
 

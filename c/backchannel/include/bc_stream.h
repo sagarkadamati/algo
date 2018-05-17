@@ -41,4 +41,6 @@ typedef struct stream {
 #define STREAM_SIZE(_x)								\
 	(sizeof(stream))
 
+#define STREAM_DATA(_t, _s)	(_t->mblock + _s->soffset)
+
 #endif /* __BC_STREAM__ */

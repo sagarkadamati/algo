@@ -90,6 +90,7 @@ tracker* bc_get_tracker_by_id(int id)
 							new_trackers.header->t_doffset +
 							new_trackers.theaders[index].offset);
 			t->size = new_trackers.theaders[index].size;
+			t->scount = new_trackers.theaders[index].scount;
 			t->id = id;
 		}
 

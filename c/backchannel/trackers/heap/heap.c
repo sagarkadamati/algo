@@ -151,13 +151,13 @@ void bc_init_heap_tracker()
 	stream strms[BC_HEAP_STREAM_COUNT] = {
 			{
 				BC_HEAP_STATUS_STREAM,
-				BC_HEAP_STATUS_STREAM_OBJ_SIZE,
-				BC_HEAP_STATUS_STREAM_OBJ_COUNT,
+				0,
+				BC_HEAP_STATUS_STREAM_SIZE,
 			},
 			{
 				BC_HEAP_BLOCKS_STREAM,
-				BC_HEAP_BLOCKS_STREAM_OBJ_SIZE,
-				BC_HEAP_BLOCKS_STREAM_OBJ_COUNT,
+				0,
+				BC_HEAP_BLOCKS_STREAM_SIZE,
 			},
 		};
 
@@ -167,13 +167,13 @@ void bc_init_heap_tracker()
 	strm					= bc_get_stream_by_id(heap_tracker.tracker,
 								BC_HEAP_STATUS_STREAM);
 
-	heap_tracker.status		= (heap_status*) heap_tracker.tracker->mblock +
-								strm->soffset;
+	heap_tracker.status		= (heap_status*)
+								STREAM_DATA(heap_tracker.tracker, strm);
 
 	strm					= bc_get_stream_by_id(heap_tracker.tracker,
 								BC_HEAP_BLOCKS_STREAM);
-	heap_tracker.alloc_ptr	= (heap_block*) heap_tracker.tracker->mblock +
-								strm->soffset;;
+	heap_tracker.alloc_ptr	= (heap_block*)
+								STREAM_DATA(heap_tracker.tracker, strm);
 
 	heap_tracker.status->blocks_size = BC_HEAP_BLOCKS_STREAM_OBJ_COUNT;
 	heap_tracker.status->blocks_used = 0;
