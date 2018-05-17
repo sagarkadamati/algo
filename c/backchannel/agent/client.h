@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "main.h"
+#include "agent.h"
 #include "socket.h"
 #include "server.h"
 #include "data_processor.h"

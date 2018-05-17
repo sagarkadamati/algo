@@ -1,5 +1,5 @@
-#ifndef __MAIN__
-#define __MAIN__
+#ifndef __AGENT_INTERNAL__
+#define __AGENT_INTERNAL__
 
 #include "daemon.h"
 #include "server.h"
@@ -7,7 +7,7 @@
 #include "bridge.h"
 #include "signals.h"
 
-#include "bc_print.h"
+#include <bc_print.h>
 
 enum MODE {
 	BRIDGE,
@@ -32,4 +32,4 @@ struct agent_struct {
 };
 extern struct agent_struct agent;
 
-#endif /* __MAIN__ */
+#endif /* __AGENT_INTERNAL__ */

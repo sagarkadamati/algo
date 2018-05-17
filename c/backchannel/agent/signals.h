@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "main.h"
+#include "agent.h"
 #include "socket.h"
 
 void init_sighandlers(void);

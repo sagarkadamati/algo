@@ -1,7 +1,7 @@
 #ifndef __BRIDGE__
 #define __BRIDGE__
 
-#include "main.h"
+#include "agent.h"
 
 void bridge(void);
 

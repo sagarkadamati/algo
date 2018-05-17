@@ -33,6 +33,10 @@ void process_heap_data()
 					((header->mcount_alloc + header->ccount_alloc) -
 					(header->mcount_free + header->ccount_free)));
 	printf("\n");
+	if (header->dfree) {
+		printf("%4s Double Frees:\n", "");
+
+	}
 	if ((header->msize + header->csize) - (header->mfree + header->cfree))
 	{
 		// heap_block *alloc_ptr;

@@ -12,10 +12,10 @@
 #include <sys/stat.h>
 #include <stddef.h>
 
-#include "main.h"
+#include "agent.h"
 #include "socket.h"
 
-#include "bc_tracker.h"
+#include <bc_tracker.h>
 
 #define STREAM_FILE "bc_tracker"
 #define MAX_BUF_SIZE 1024
