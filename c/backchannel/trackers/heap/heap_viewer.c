@@ -2,13 +2,14 @@
 
 void process_heap_data()
 {
+	stream *strm;
 	heap_status *header;
-	heap_block *alloc_ptr;
 
-	tracker *t = bc_get_tracker_by_id(HEAP_TRACKER_ID);
+	tracker *t	= bc_get_tracker_by_id(HEAP_TRACKER_ID);
 
-	header		= (heap_status*) t->mblock;
-	alloc_ptr	= (heap_block*)(t->mblock + sizeof(heap_status));
+	strm		= bc_get_stream_by_id(t, BC_HEAP_STATUS_STREAM);
+	header		= (heap_status*) (t->mblock + strm->soffset);
+
 	printf("Heap:\n\n");
 
 	printf("%4s Status:\n", "");
@@ -34,6 +35,11 @@ void process_heap_data()
 	printf("\n");
 	if ((header->msize + header->csize) - (header->mfree + header->cfree))
 	{
+		// heap_block *alloc_ptr;
+
+		// strm		= bc_get_stream_by_id(t, BC_HEAP_BLOCKS_STREAM);
+		// alloc_ptr	= (heap_block*)(t->mblock + sizeof(heap_status));
+
 		printf("%4s Leaks:\n", "");
 	}
 	printf("\n");
