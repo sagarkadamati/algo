@@ -94,8 +94,7 @@ tracker* bc_get_tracker_by_id(int id)
 							new_trackers.theaders[index].offset);
 			t->mblock = (new_trackers.mblock.mmap +
 							new_trackers.header->t_doffset +
-							new_trackers.theaders[index].offset) +
-							STREAM_SIZE(t->scount));
+							new_trackers.theaders[index].offset);
 		}
 
 	list_add(&trackers, &t->node);
