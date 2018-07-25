@@ -183,6 +183,7 @@ func (y *Youtube) Write(p []byte) (n int, err error) {
 	return
 }
 func (y *Youtube) videoDLWorker(destFile string, target string) error {
+	log.Printf(target)
 	resp, err := http.Get(target)
 	if err != nil {
 		log.Printf("Http.Get\nerror: %s\ntarget: %s\n", err, target)
@@ -219,8 +220,10 @@ func (y *Youtube) log(logText string) {
 }
 
 func main() {
-	currentFile, _ := filepath.Abs(os.Args[0])
-	log.Println("download to file=", currentFile)
+	if len(os.Args) <= 1 {
+		fmt.Println("usage: youtube  <filename>")	
+		os.Exit(1)
+	}
 
 	// NewYoutube(debug) if debug parameter will set true we can log of messages
 	y := NewYoutube(true)
