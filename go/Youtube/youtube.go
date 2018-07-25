@@ -1,4 +1,4 @@
-package youtube
+package main
 
 import (
 	"errors"
@@ -6,9 +6,9 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"os"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -216,4 +216,19 @@ func (y *Youtube) log(logText string) {
 	if y.DebugMode {
 		log.Println(logText)
 	}
+}
+
+func main() {
+	currentFile, _ := filepath.Abs(os.Args[0])
+	log.Println("download to file=", currentFile)
+
+	// NewYoutube(debug) if debug parameter will set true we can log of messages
+	y := NewYoutube(true)
+	y.DecodeURL(os.Args[1])
+
+	targetStream := y.StreamList[0]
+	title := targetStream["title"]
+	vtype  := strings.Split(strings.Split(targetStream["type"], ";")[0], "/")[1]
+
+	y.StartDownload(title + "." + vtype)
 }
