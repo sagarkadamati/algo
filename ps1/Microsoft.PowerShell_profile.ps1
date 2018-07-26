@@ -33,38 +33,39 @@ function installTool {
 function setup {
 	$PathSeperator = [IO.Path]::PathSeparator
 
-	$Global:Workspace = "$Home" + $DirectorySperator + "Workspace"
-	$Global:Projects = "$Workspace" + $DirectorySperator + "Projects"
-	$Global:Tools = "$Workspace" + $DirectorySperator + "Tools"
-	$Global:Scripts = "$Tools" + $DirectorySperator + "Scripts"
-	$Global:PSScripts = "$Projects" + $DirectorySperator + "algos" + $DirectorySperator + "ps1"
+	$Global:Workspace = Join-Path "$Home" "Workspace"
+	$Global:Projects  = Join-Path "$Workspace" "Projects"
+	$Global:Tools     = Join-Path "$Workspace" "Tools"
+	$Global:Scripts   = Join-Path "$Tools" "Scripts"
+	$Global:PSScripts = [IO.Path]::Combine("$Projects", "algos", "ps1")
+	$Global:JAVA_HOME = [IO.Path]::Combine("$Tools", "Android", "Android Studio", "jre")
 
 	$Global:GOROOT = "$Tools" + $DirectorySperator + "go"
 	$Global:GOPATH = "$Projects" + $DirectorySperator + "algos" + $DirectorySperator + "go"
 
-	$MYPATH = $Scripts + $PathSeperator
-	$MYPATH += $PSScripts + $PathSeperator
-
 	## PATHS
-	$GITPATH = "$Tools" + $DirectorySperator + "git" + $DirectorySperator + "bin"
-	$VSCODEPATH = "$Tools" + $DirectorySperator + "VS Code" + $DirectorySperator + "bin"
-	$PYTHONPATH = "$Tools" + $DirectorySperator + "python"
-	$KOTLINPATH = "$Tools" + $DirectorySperator + "kotlinc"
+	$GITPATH    = $(Join-Path $Tools "git"     | Join-Path -ChildPath "bin")
+	$VSCODEPATH = $(Join-Path $Tools "VS Code" | Join-Path -ChildPath "bin")
 
-	$MYPATH = "$Tools" + $DirectorySperator + "bin" + $PathSeperator
-	$MYPATH += "$GOROOT" + $DirectorySperator + "bin" + $PathSeperator
-	$MYPATH += "$GOPATH" + $DirectorySperator + "bin" + $PathSeperator
-	$MYPATH += "$GITPATH" + $PathSeperator
-	$MYPATH += "$VSCODEPATH" + $PathSeperator
-	$MYPATH += "$PYTHONPATH" + $PathSeperator
-	$MYPATH += "$KOTLINPATH" + $PathSeperator
-	$MYPATH += "$env:PATH"
+	$KOTLINPATH = $(Join-Path $Tools "kotlinc" | Join-Path -ChildPath "bin")
+	$PYTHONPATH = $(Join-Path $Tools "python"  | Join-Path -ChildPath "bin")
 
-	$env:PATH = "$MYPATH"
+	$MYPATH  = $Scripts    + $PathSeperator
+	$MYPATH += $PSScripts  + $PathSeperator
+
+	$MYPATH += $GOROOT     + $PathSeperator
+	$MYPATH += $GOPATH     + $PathSeperator
+	$MYPATH += $GITPATH    + $PathSeperator
+	$MYPATH += $VSCODEPATH + $PathSeperator
+	$MYPATH += $KOTLINPATH + $PathSeperator
+	$MYPATH += $PYTHONPATH + $PathSeperator
+	$MYPATH += $(Join-Path $JAVA_HOME "bin")  + $PathSeperator
+
+	$env:PATH = $MYPATH + $env:PATH
 }
 
 setup
-cd $Workspace
+Set-Location $Workspace
 
 function SyntaxTheme($Time) {
 	if ($Time -eq "Night") {
