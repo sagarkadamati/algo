@@ -309,11 +309,15 @@ function Script($script) {
 }
 
 function update {
+	$CWDIR = Get-Location
+
 	Proj algos
 	git pull
 
-	$MYPROFILE = $Projects + $DirectorySperator + "algos" + $DirectorySperator + "ps1" + $DirectorySperator + "Microsoft.PowerShell_profile.ps1"
+	$MYPROFILE = "ps1" + $DirectorySperator + "Microsoft.PowerShell_profile.ps1"
 	Copy-Item $MYPROFILE $PROFILE
+
+	Set-Location $CWDIR
 }
 
 # https:\\dl.google.com\go\go1.10.3.linux-386.tar.gz
