@@ -193,7 +193,7 @@ function SyntaxTheme($Time) {
 }
 
 function LinkTheme($Time) {
-	$lnk = & ("C:\Users\Sagar\Workspace\Projects\algos\ps1\Get-Link.ps1") "$Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
+	$lnk = & ("$Projects\algos\ps1\Get-Link.ps1") "$Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
 
 	# Set Common Solarized Colors
 	$lnk.ConsoleColors[0] = "#002b36"
