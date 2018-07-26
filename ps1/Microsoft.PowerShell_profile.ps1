@@ -239,8 +239,15 @@ else
 function UpdateLink {
 
 	$obj = New-Object -ComObject WScript.Shell
-	$link = $obj.CreateShortcut("$Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk")
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Windows PowerShell", "Windows PowerShell.lnk"))
 	$link.Hotkey = "Alt+Ctrl+T"
+	$link.Save()
+
+	$obj = New-Object -ComObject WScript.Shell
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VS Code.lnk"))
+	$link.TargetPath = [io.path]::combine("$Tools", "VS Code", "Code.exe")
+	$link.Arguments = "-r"
+	$link.Hotkey = "Alt+Ctrl+E"
 	$link.Save()
 
 	# $info = @{}
