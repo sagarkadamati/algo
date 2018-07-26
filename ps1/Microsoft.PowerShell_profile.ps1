@@ -320,8 +320,8 @@ function update {
 	Set-Location $CWDIR
 }
 
-# https:\\dl.google.com\go\go1.10.3.linux-386.tar.gz
+# https://dl.google.com/go/go1.10.3.linux-386.tar.gz
 
-# https:\\github.com\JetBrains\kotlin\releases\download\v1.2.51\kotlin-compiler-1.2.51.zip
-# https:\\dl.google.com\go\go1.10.3.windows-amd64.zip
-# https:\\www.python.org\ftp\python\3.7.0\python-3.7.0-embed-amd64.zip
+# https://github.com/JetBrains/kotlin/releases/download/v1.2.51/kotlin-compiler-1.2.51.zip
+# https://dl.google.com/go/go1.10.3.windows-amd64.zip
+# https://www.python.org/ftp/python/3.7.0/python-3.7.0-embed-amd64.zip
