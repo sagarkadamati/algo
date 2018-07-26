@@ -308,6 +308,14 @@ function Script($script) {
 	Set-Location $setscript
 }
 
+function update {
+	Proj algos
+	git pull
+
+	$MYPROFILE = $Projects + $DirectorySperator + "algos" + $DirectorySperator + "ps1" + $DirectorySperator + "Microsoft.PowerShell_profile.ps1"
+	Copy-Item $MYPROFILE $PROFILE
+}
+
 # https:\\dl.google.com\go\go1.10.3.linux-386.tar.gz
 
 # https:\\github.com\JetBrains\kotlin\releases\download\v1.2.51\kotlin-compiler-1.2.51.zip
