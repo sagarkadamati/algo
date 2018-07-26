@@ -295,6 +295,19 @@ function Get-Shortcut {
 	}
 }
 
+function Proj($proj) {
+	$setproj = $Projects + $DirectorySperator + $proj
+	Set-Location $setproj
+}
+function Tool($tool) {
+	$settool = $Tools + $DirectorySperator + $tool
+	Set-Location $settool
+}
+function Script($script) {
+	$setscript = $Scripts + $DirectorySperator + $script
+	Set-Location $setscript
+}
+
 # https:\\dl.google.com\go\go1.10.3.linux-386.tar.gz
 
 # https:\\github.com\JetBrains\kotlin\releases\download\v1.2.51\kotlin-compiler-1.2.51.zip
