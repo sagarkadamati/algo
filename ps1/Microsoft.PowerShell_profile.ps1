@@ -1,42 +1,28 @@
 $DirectorySperator = [IO.Path]::DirectorySeparatorChar
 
 function prompt {
-	$TEMP = $(Get-Date -UFormat "%H:%M")
-	$TEMP += " "
+	$TEMP = $(Get-Date -UFormat "%H:%M") + " "
 
-	if ($Projects) {
+	$Location = $(Get-Location).path
+
+	if ($Workspace) {
 		$PATTERN = $Projects + "*"
-		if ( $(Get-Location).path -like $PATTERN ) {
-			$PROJ += $($(Get-Location).path.split($Projects)[1].split($DirectorySperator)[1])
-			if ($PROJ) {
-				$TEMP += $($(Get-Location).path.split($Projects + $DirectorySperator)[1]).Split($DirectorySperator)[0]
-				if ($($(Get-Location).path.split($Projects + $DirectorySperator)[1]).Split($DirectorySperator)[1]) {
-					$TEMP += "("
-					$TEMP += $($(Get-Location).path.split($Projects + $DirectorySperator)[1] | Split-Path -Leaf)
-					$TEMP += ")"
+		if ($Location -like $PATTERN ) {
+			$PROJ = $Location -split "Projects\\"
+			if ($PROJ[1]) {
+				$TMP = $PROJ[1].split($DirectorySperator)
+				$TEMP += $TMP[0]
+				if ($TMP[1]) {
+					$Location = $PROJ[1] | Split-Path -Leaf
 				}
 				else {
-					$TEMP += "(.)"
+					$Location = "\\."
 				}
 			}
-			else {
-				$TEMP += "("
-				$TEMP += $(Get-Location | Split-Path -Leaf)
-				$TEMP += ")"
-			}
-		}
-		else {
-			$TEMP += "("
-			$TEMP += $(Get-Location | Split-Path -Leaf)
-			$TEMP += ")"
 		}
 	}
-	else {
-		$TEMP += "("
-		$TEMP += $(Get-Location | Split-Path -Leaf)
-		$TEMP += ")"
-	}
-	$TEMP += "> "
+
+	$TEMP += "(" + $($Location | Split-Path -Leaf) + ")> "
 
 	return $TEMP
 }
