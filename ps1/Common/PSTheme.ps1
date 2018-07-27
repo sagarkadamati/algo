@@ -109,3 +109,16 @@ function STheme($Time) {
 		}
 	}
 }
+
+if (Test-Path $(Join-Path $PSPlatfromScripts "PSTheme.ps1")) {
+	. $(Join-Path $PSPlatfromScripts "PSTheme.ps1")
+}
+
+if ($Host.UI.RawUI.BackgroundColor -eq "White")
+{
+	STheme "Day"
+}
+else
+{
+	STheme "Night"
+}

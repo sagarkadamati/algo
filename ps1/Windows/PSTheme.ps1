@@ -1,5 +1,5 @@
 function LTheme($Time) {
-	$lnk = & $(PSGetLink.ps1) "$Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
+	$lnk = & $($(Join-Path $PSPlatfromScripts "PSGetLink.ps1")) "$Home\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
 
 	# Set Common Solarized Colors
 	$lnk.ConsoleColors[0] = "#002b36"

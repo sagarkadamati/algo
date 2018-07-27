@@ -14,12 +14,12 @@ function Setup {
 	$Global:Projects  = Join-Path "$Workspace" "Projects"
 	$Global:Tools     = Join-Path "$Workspace" "Tools"
 	$Global:Scripts   = Join-Path "$Tools" "Scripts"
-	$Global:PSScriptsCommon = [IO.Path]::Combine("$Projects", "algos", "ps1", "Common")
+	$Global:PSScripts = [IO.Path]::Combine("$Projects", "algos", "ps1", "Common")
 	if ([System.Environment]::OSVersion.Platform -eq "Unix") {
-		$Global:PSScriptsPlatfrom = [IO.Path]::Combine("$Projects", "algos", "ps1", "Unix")
+		$Global:PSPlatfromScripts = [IO.Path]::Combine("$Projects", "algos", "ps1", "Unix")
 	}
 	else {
-		$Global:PSScriptsPlatfrom = [IO.Path]::Combine("$Projects", "algos", "ps1", "Windows")
+		$Global:PSPlatfromScripts = [IO.Path]::Combine("$Projects", "algos", "ps1", "Windows")
 	}
 
 	$Global:JAVA_HOME = [IO.Path]::Combine("$Tools", "Android", "Android Studio", "jre")
@@ -35,7 +35,7 @@ function Setup {
 	$PYTHONPATH = $(Join-Path $Tools "Python"  | Join-Path -ChildPath "bin")
 
 	$MYPATH     = $Scripts    + $PathSeperator
-	$MYPATH    += $PSScriptsCommon + $PathSeperator + $PSScriptsPlatfrom + $PathSeperator
+	$MYPATH    += $PSScripts  + $PathSeperator + $PSPlatfromScripts + $PathSeperator
 
 	$MYPATH    += $GOROOT     + $PathSeperator
 	$MYPATH    += $GOPATH     + $PathSeperator
