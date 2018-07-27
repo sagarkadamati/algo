@@ -1,5 +1,12 @@
 $Global:DirectorySperator = [IO.Path]::DirectorySeparatorChar
 
+Function Create-Directory($dir) {
+	if (!$(Test-Path Tools))
+	{
+		New-Item -Type Directory $dir
+	}
+}
+
 function Setup {
 	$PathSeperator = [IO.Path]::PathSeparator
 
@@ -17,15 +24,15 @@ function Setup {
 
 	$Global:JAVA_HOME = [IO.Path]::Combine("$Tools", "Android", "Android Studio", "jre")
 
-	$Global:GOROOT = "$Tools" + $DirectorySperator + "go"
+	$Global:GOROOT = "$Tools" + $DirectorySperator + "Go"
 	$Global:GOPATH = "$Projects" + $DirectorySperator + "algos" + $DirectorySperator + "go"
 
 	## PATHS
-	$GITPATH    = $(Join-Path $Tools "git"     | Join-Path -ChildPath "bin")
+	$GITPATH    = $(Join-Path $Tools "Git"     | Join-Path -ChildPath "bin")
 	$VSCODEPATH = $(Join-Path $Tools "VS Code" | Join-Path -ChildPath "bin")
 
-	$KOTLINPATH = $(Join-Path $Tools "kotlinc" | Join-Path -ChildPath "bin")
-	$PYTHONPATH = $(Join-Path $Tools "python"  | Join-Path -ChildPath "bin")
+	$KOTLINPATH = $(Join-Path $Tools "Kotlinc" | Join-Path -ChildPath "bin")
+	$PYTHONPATH = $(Join-Path $Tools "Python"  | Join-Path -ChildPath "bin")
 
 	$MYPATH     = $Scripts    + $PathSeperator
 	$MYPATH    += $PSScriptsCommon + $PathSeperator + $PSScriptsPlatfrom + $PathSeperator
@@ -40,13 +47,39 @@ function Setup {
 
 	$env:PATH = $MYPATH + $env:PATH
 }
-function Work() {
+function Workspace() {
 	Set-Location $Workspace
 }
 
-function Proj($proj) {
-	$setproj = $Projects + $DirectorySperator + $proj
-	Set-Location $setproj
+function Proj() {
+	[OutputType([System.IO.FileInfo])]
+	[CmdletBinding()]
+
+	param()
+
+	DynamicParam
+	{
+		$ParamAttrib = New-Object System.Management.Automation.ParameterAttribute
+		# $ParamAttrib.Mandatory = $true
+		$ParamAttrib.ParameterSetName = '__AllParameterSets'
+
+		$AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
+		$AttribColl.Add($ParamAttrib)
+		$configurationProjects = Get-ChildItem -Directory -Path $Projects | Select-Object -ExpandProperty Name
+		$AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationProjects)))
+
+		$RuntimeParam    = New-Object System.Management.Automation.RuntimeDefinedParameter('Name', [string], $AttribColl)
+
+		$RuntimeParamDic = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+		$RuntimeParamDic.Add('Name', $RuntimeParam)
+
+		return  $RuntimeParamDic
+	}
+
+	process
+	{
+		Set-Location $(Join-Path $Projects $PSBoundParameters.Name)
+	}
 }
 function Tool($tool) {
 	$settool = $Tools + $DirectorySperator + $tool
@@ -58,4 +91,4 @@ function Script($script) {
 }
 
 Setup
-Work
+Workspace

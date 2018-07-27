@@ -1,6 +1,7 @@
 . PSTheme.ps1
 . PSPrompt.ps1
 . PSUpdate.ps1
+# . PSTabCompletion.ps1
 
 STheme "Day"
 
