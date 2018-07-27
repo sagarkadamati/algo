@@ -12,7 +12,7 @@ function installTool {
 function Update {
 	$CWDIR = Get-Location
 
-	Proj algos
+	Proj -Name algos
 	git pull
 
 	$MYPROFILE = "ps1" + $DirectorySperator + "Common" + $DirectorySperator + "PSProfile.ps1"
