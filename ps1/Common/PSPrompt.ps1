@@ -6,11 +6,11 @@ function prompt {
 	if ($Workspace) {
 		$PATTERN = $Projects + "*"
 		if ($Location -like $PATTERN ) {
-			$PROJ = $Location -split $("Projects" + $DirectorySperator)
+			$PROJ = $Location -split $("Projects")
 			if ($PROJ[1]) {
 				$TMP = $PROJ[1].split($DirectorySperator)
-				$TEMP += $TMP[0]
-				if ($TMP[1]) {
+				$TEMP += $TMP[1]
+				if ($TMP[2]) {
  					$Location = $PROJ[1] | Split-Path -Leaf
 				}
 				else {
