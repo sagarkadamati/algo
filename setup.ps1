@@ -7,6 +7,8 @@ function Setup {
 		New-Item -Type Directory -Force $($MODULESPATH + "../../..") | Out-Null
 		Set-Location $($MODULESPATH + "../../..")
 		git clone https://github.com/sagarkadamati/algos Env
+
+		. $PROFILE
 		NightTheme
 	}
 	Set-Location $CLOC
@@ -17,5 +19,5 @@ function UpdateProfile {
 	Write-Output "SetupEnv"	
 }
 
-Setup
 UpdateProfile > $PROFILE
+Setup
