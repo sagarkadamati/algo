@@ -1,7 +1,6 @@
 param([Parameter(ValueFromPipelineByPropertyName = $true)][Alias("PSPath")][string]$Path)
 begin {
-
-Add-Type -TypeDef @"
+	Add-Type -TypeDef @"
 using System;
 using System.IO;
 using System.Text;
@@ -424,10 +423,11 @@ namespace Huddled.Interop
 	function global:Get-Link {
 		param([Parameter(ValueFromPipelineByPropertyName = $true)][Alias("PSPath")][string]$Path)
 		process {
-   New-Object Huddled.Interop.ShellLink (Convert-Path $Path)
+			New-Object Huddled.Interop.ShellLink (Convert-Path $Path)
 		}
 	}
 }
+
 process {
 	Get-Link $Path
 }
