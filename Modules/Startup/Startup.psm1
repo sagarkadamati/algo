@@ -3,12 +3,12 @@ function Prompt {
 
 	$Location = $(Get-Location).path
 
-	if ($Workspace) {
-		$PATTERN = $Projects + "*"
-		if ($Location -like $PATTERN ) {
+	if ($WorkspaceLocation) {
+		$PATTERN = $ProjectsLocation + "*"
+		if ($Location -like $PATTERN) {
 			$PROJ = $Location -split $("Projects")
 			if ($PROJ[1]) {
-				$TMP = $PROJ[1].split($DirectorySperator)
+				$TMP = $PROJ[1].split([IO.Path]::DirectorySeparatorChar)
 				$TEMP += $TMP[1]
 				if ($TMP[2]) {
  					$Location = $PROJ[1] | Split-Path -Leaf
