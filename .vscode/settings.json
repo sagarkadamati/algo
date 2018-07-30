@@ -2,7 +2,7 @@
 	"window.title": "Coder",
 	"window.menuBarVisibility": "hidden",
 	"window.enableMenuBarMnemonics": false,
-	"window.zoomLevel": 0,
+	"window.zoomLevel": 1,
 
 	"terminal.integrated.cursorStyle": "underline",
 	"terminal.integrated.cursorBlinking": false,

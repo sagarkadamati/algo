@@ -3,7 +3,7 @@ function download($URI) {
 }
 
 function Update-Tools {
-	download "https://dl.google.com/go/go1.10.3.linux-386.tar.gz"
+	download "https://dl.google.com/go/go1.10.3.linux-386.tar.gz"	
 
 	download "https://github.com/JetBrains/kotlin/releases/download/v1.2.51/kotlin-compiler-1.2.51.zip"
 	download "https://dl.google.com/go/go1.10.3.windows-amd64.zip"
