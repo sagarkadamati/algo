@@ -22,8 +22,8 @@ function Install-KeyHandlers {
 	Set-PSReadlineKeyHandler -Key "Ctrl+P"           -Function HistorySearchBackward
 
 	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
-		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+p"       -Function ScrollDisplayUp
-		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+n"       -Function ScrollDisplayDown
+		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+p"   -Function ScrollDisplayUp
+		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+n"   -Function ScrollDisplayDown
 	}
 }
 
