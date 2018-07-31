@@ -162,13 +162,19 @@ function DayTheme {
 }
 
 function Update-Theme {
-	if ($Host.UI.RawUI.BackgroundColor -match "White")
-	{
-		STheme "Day"
+	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+		if ($Host.UI.RawUI.BackgroundColor -match "White")
+		{
+			STheme "Day"
+		}
+		else
+		{
+			STheme "Night"
+		}
 	}
 	else
 	{
-		STheme "Night"
+		STheme "Day"
 	}
 }
 

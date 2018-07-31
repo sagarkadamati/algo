@@ -14,15 +14,17 @@ function Install-KeyHandlers {
 	Set-PSReadlineKeyHandler -Key "Ctrl+A"           -Function BeginningOfLine
 	Set-PSReadlineKeyHandler -Key "Shift+Ctrl+A"     -Function SelectBackwardsLine
 
-	Set-PSReadlineKeyHandler -Key "Ctrl+N"           -Function HistorySearchForward
-	Set-PSReadlineKeyHandler -Key "Ctrl+P"           -Function HistorySearchBackward
-
-	Set-PSReadlineKeyHandler -Key "Ctrl+Alt+p"       -Function ScrollDisplayUp
-	Set-PSReadlineKeyHandler -Key "Ctrl+Alt+n"       -Function ScrollDisplayDown
-
 	Set-PSReadlineKeyHandler -Key "Ctrl+D"           -Function DeleteChar
 	Set-PSReadlineKeyHandler -Key "Alt+Ctrl+D"       -Function KillWord
 	Set-PSReadlineKeyHandler -Key "Ctrl+K"           -Function KillLine
+
+	Set-PSReadlineKeyHandler -Key "Ctrl+N"           -Function HistorySearchForward
+	Set-PSReadlineKeyHandler -Key "Ctrl+P"           -Function HistorySearchBackward
+
+	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+p"       -Function ScrollDisplayUp
+		Set-PSReadlineKeyHandler -Key "Ctrl+Alt+n"       -Function ScrollDisplayDown
+	}
 }
 
 Export-ModuleMember -Function Install-KeyHandlers
