@@ -1,0 +1,62 @@
+[
+	{
+		"key": "ctrl+f",
+		"command": "cursorRight",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+f",
+		"command": "cursorWordStartRight",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+e",
+		"command": "cursorLineEnd",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "cursorLeft",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+b",
+		"command": "cursorWordStartLeft",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+a",
+		"command": "cursorLineStart",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+f",
+		"command": "cursorRightSelect",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+alt+f",
+		"command": "cursorWordStartRightSelect",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+e",
+		"command": "cursorEndSelect",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+b",
+		"command": "cursorLeftSelect",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+alt+b",
+		"command": "cursorWordStartLeftSelect",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+a",
+		"command": "cursorHomeSelect",
+		"when": "editorTextFocus"
+	}
+]

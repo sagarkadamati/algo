@@ -1,0 +1,17 @@
+[
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "closeFindWidget",
+		"when": "editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "hideSuggestWidget",
+		"when": "editorTextFocus && suggestWidgetVisible"
+	},
+	{
+		"key": "ctrl+; ctrl+;",
+		"command": "workbench.action.closeQuickOpen",
+		"when": "inQuickOpen"
+	}
+]

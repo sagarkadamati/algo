@@ -3,8 +3,8 @@
 . ([IO.Path]::Combine($PSScriptRoot, "Theme", "Theme.ps1"))
 
 function Update-VSCode {
-	Get-VSKeys
-	# Get-VSSettings
+	Get-VSKeys > ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "keybindings.json"))
+	Get-VSSettings > ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "settings.json"))
 	# Get-VSTheme
 }
 

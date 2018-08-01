@@ -1,0 +1,22 @@
+[
+	{
+		"key": "ctrl+i",
+		"command": "settings.action.search",
+		"when": "inSettingsEditor"
+	},
+	{
+		"key": "ctrl+; f",
+		"command": "settings.action.focusSettingsFile",
+		"when": "inSettingsEditor"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "keybindings.editor.searchKeybindings",
+		"when": "inKeybindings"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "keybindings.editor.focusKeybindings",
+		"when": "inKeybindings && inKeybindingsSearch"
+	}
+]

@@ -1,0 +1,37 @@
+[
+	{
+		"key": "ctrl+; n",
+		"command": "explorer.newFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+n",
+		"command": "explorer.newFolder",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "filesExplorer.copy",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+v",
+		"command": "filesExplorer.paste",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; d",
+		"command": "deleteFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; c",
+		"command": "workbench.files.action.collapseExplorerFolders",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; r",
+		"command": "workbench.files.action.refreshFilesExplorer",
+		"when": "explorerViewletFocus"
+	}
+]
