@@ -9,11 +9,16 @@
 	"workbench.editor.tabCloseButton": "off",
 	"workbench.editor.labelFormat": "short",
 	"workbench.iconTheme": "file-icons-colourless",
-	"powershell.integratedConsole.showOnStartup": false,
-	"powershell.startAutomatically": false,
+
+	"window.title": "Coder",
+	"window.menuBarVisibility": "hidden",
+	"window.enableMenuBarMnemonics": false,
+	"window.zoomLevel": 1.5,
+
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": true,
-	"editor.renderWhitespace": "none",
+
+	"editor.renderWhitespace": "all",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
 	"editor.lineNumbers": "off",
@@ -26,14 +31,31 @@
 	"editor.fontLigatures": true,
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
+	"editor.largeFileOptimizations": false,
+
 	"explorer.openEditors.visible": 0,
 	"explorer.confirmDragAndDrop": false,
+
 	"telemetry.enableTelemetry": false,
 	"telemetry.enableCrashReporter": false,
+
 	"update.channel": "none",
+
 	"markdown.preview.linkify": true,
 	"markdown.preview.doubleClickToSwitchToEditor": true,
 
+	"terminal.integrated.cursorStyle": "underline",
+	"terminal.integrated.cursorBlinking": false,
+
+	"powershell.integratedConsole.showOnStartup": false,
+	"powershell.startAutomatically": false,
+
+	"git.path": "C:\\Users\\Sagar\\Workspace\\Tools\\Git\\bin\\git.exe",
+	"git.autofetch": true,
+	"git.autorefresh": true,
+
+	"gitlens.codeLens.enabled": false,
+	"gitlens.blame.highlight.enabled": false,
 	"gitlens.gitExplorer.files.layout": "auto",
 	"gitlens.historyExplorer.enabled": false,
 	"gitlens.advanced.messages": {
@@ -46,31 +68,27 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
+
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/.DS_Store": true,
+
 		"**/bin/**": true
 	},
 	"search.exclude": {
 		"**/node_modules": true,
 		"**/bower_components": true,
+
 		"**/bin/**": true
 	},
 	"files.watcherExclude": {
 		"**/.git/objects/**": true,
 		"**/.git/subtree-cache/**": true,
 		"**/node_modules/**": true,
+
 		"**/bin/**": true
-	},
-	"gitlens.codeLens.enabled": false,
-	"gitlens.blame.highlight.enabled": false,
-	"git.autofetch": true,
-	"git.autorefresh": true,
-	"tizen.studio.path": "/home/sagar/workspace/tools/tizen/sdk/",
-	"tizen.latest.update.date": "1525615485470",
-	"tizen.use.auto.update": "YES",
-	"csharp.suppressDotnetInstallWarning": true
+	}
 }
