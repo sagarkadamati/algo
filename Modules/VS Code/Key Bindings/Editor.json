@@ -1,70 +1,16 @@
 [
 	{
-		"key": "ctrl+n",
-		"command": "cursorDown",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+n",
-		"command": "cursorPageDown",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "cursorUp",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+p",
-		"command": "cursorPageUp",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+n",
-		"command": "cursorDownSelect",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+alt+n",
-		"command": "cursorPageDownSelect",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+p",
-		"command": "cursorUpSelect",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+alt+p",
-		"command": "cursorPageUpSelect",
-		"when": "editorTextFocus"
-	},
-	{
 		"key": "ctrl+; n",
 		"command": "explorer.newFile",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+i",
-		"command": "cursorHome",
+		"key": "ctrl+; ctrl+n",
+		"command": "explorer.newFile",
 		"when": "editorTextFocus"
 	},
-	{
-		"key": "ctrl+d",
-		"command": "deleteRight",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+d",
-		"command": "deleteWordRight",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+alt+v",
-		"command": "workbench.action.toggleCenteredLayout",
-		"when": "editorTextFocus"
-	},
-	{
+
+    {
 		"key": "ctrl+; f",
 		"command": "actions.find",
 		"when": "editorTextFocus"
@@ -74,13 +20,16 @@
 		"command": "editor.action.startFindReplaceAction",
 		"when": "editorTextFocus"
 	},
+
 	{
-		"key": "alt+e",
-		"command": "workbench.view.explorer"
+		"key": "ctrl+alt+v",
+		"command": "workbench.action.toggleCenteredLayout",
+		"when": "editorTextFocus"
 	},
 	{
-		"key": "alt+l",
-		"command": "workbench.action.focusSideBar"
+		"key": "ctrl+shift+l",
+		"command": "workbench.view.explorer",
+		"when": "editorTextFocus"
 	},
 	{
 		"key": "alt+o",
@@ -89,43 +38,13 @@
 	},
 	{
 		"key": "ctrl+n",
-		"command": "editor.action.nextMatchFindAction",
-		"when": "editorFocus && findWidgetVisible"
-	},
-	{
-		"key": "ctrl+n",
 		"command": "selectNextSuggestion",
 		"when": "editorTextFocus && suggestWidgetVisible"
 	},
 	{
 		"key": "ctrl+p",
-		"command": "editor.action.previousMatchFindAction",
-		"when": "editorFocus && findWidgetVisible"
-	},
-	{
-		"key": "ctrl+p",
 		"command": "selectPrevSuggestion",
 		"when": "editorTextFocus && suggestWidgetVisible"
-	},
-	{
-		"key": "ctrl+; ctrl+e",
-		"command": "cursorBottom",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+; ctrl+shift+e",
-		"command": "cursorBottomSelect",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+; ctrl+b",
-		"command": "cursorTop",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+shift+; ctrl+shift+b",
-		"command": "cursorTopSelect",
-		"when": "editorTextFocus"
 	},
 	{
 		"key": "ctrl+; ctrl+w",

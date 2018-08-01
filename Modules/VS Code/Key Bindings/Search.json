@@ -21,5 +21,15 @@
 		"key": "ctrl+i",
 		"command": "workbench.view.search",
 		"when": "searchViewletVisible && !editorTextFocus && !searchInputBoxFocus"
+    },
+    {
+		"key": "ctrl+n",
+		"command": "editor.action.nextMatchFindAction",
+		"when": "editorFocus && findWidgetVisible"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "editor.action.previousMatchFindAction",
+		"when": "editorFocus && findWidgetVisible"
 	}
 ]
