@@ -4,11 +4,6 @@
 		"command": "explorer.newFile",
 		"when": "editorTextFocus"
 	},
-	{
-		"key": "ctrl+; ctrl+n",
-		"command": "explorer.newFile",
-		"when": "editorTextFocus"
-	},
 
     {
 		"key": "ctrl+; f",
@@ -31,7 +26,8 @@
 		"command": "workbench.view.explorer",
 		"when": "editorTextFocus"
 	},
-	{
+
+    {
 		"key": "alt+o",
 		"command": "markdown.showPreview",
 		"when": "editorTextFocus && editorLangId == 'markdown'"
