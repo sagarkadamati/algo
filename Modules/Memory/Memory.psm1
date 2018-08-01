@@ -44,3 +44,12 @@ function Get-Matches {
 		}
 	}
 }
+
+function Get-Json {
+	param(
+		[String]$File
+	)
+	process {
+		Get-Content $File | ConvertFrom-Json
+	}
+}

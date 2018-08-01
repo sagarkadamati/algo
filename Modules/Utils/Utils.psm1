@@ -37,4 +37,22 @@ Function Get-MP3MetaData {
 	}
 }
 
+function Gen-Patch {
+	param(
+		[String]$Patch
+	)
+	Process {
+		git format-patch HEAD~ --stdout > $($Patch + ".patch")
+	}
+}
+
+function Apply-Patch {
+	param(
+		[String]$Patch
+	)
+	Process {
+		git apply --stat $($Patch + ".patch")
+	}
+}
+
 Export-ModuleMember -Function Get-MP3MetaData
