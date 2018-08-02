@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+p",
 		"command": "-workbench.action.quickOpen"
@@ -63,5 +62,4 @@
 	{
 		"key": "ctrl+k ctrl+h",
 		"command": "-workbench.action.output.toggleOutput"
-	}
-]
+	},

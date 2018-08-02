@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+i",
 		"command": "settings.action.search",
@@ -18,5 +17,4 @@
 		"key": "ctrl+n",
 		"command": "keybindings.editor.focusKeybindings",
 		"when": "inKeybindings && inKeybindingsSearch"
-	}
-]
+	},

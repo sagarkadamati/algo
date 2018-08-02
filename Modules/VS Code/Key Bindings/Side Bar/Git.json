@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+g ctrl+c",
 		"command": "workbench.view.scm"
@@ -114,5 +113,4 @@
 		"key": "ctrl+g shift+w",
 		"command": "gitlens.diffWithWorking",
 		"when": "editorTextFocus && gitlens:activeIsTracked"
-	}
-]
+	},

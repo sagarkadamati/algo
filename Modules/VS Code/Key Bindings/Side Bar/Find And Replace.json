@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+; shift+f",
 		"command": "workbench.view.search"
@@ -31,5 +30,4 @@
 		"key": "ctrl+p",
 		"command": "editor.action.previousMatchFindAction",
 		"when": "editorFocus && findWidgetVisible"
-	}
-]
+	},

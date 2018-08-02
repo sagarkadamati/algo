@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+; n",
 		"command": "explorer.newFile",
@@ -73,5 +72,19 @@
 		"key": "ctrl+; ctrl+b",
 		"command": "list.focusFirst",
 		"when": "listFocus && !inputFocus"
-	}
-]
+	},
+	{
+		"key": "ctrl+; m",
+		"command": "workbench.action.joinTwoGroups",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.action.openNextRecentlyUsedEditor",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "list.focusFirst",
+		"when": "inputFocus && searchViewletVisible && !editorTextFocus"
+	},

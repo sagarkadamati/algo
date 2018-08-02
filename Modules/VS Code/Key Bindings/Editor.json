@@ -1,4 +1,3 @@
-[
 	{
 		"key": "ctrl+; n",
 		"command": "explorer.newFile",
@@ -22,7 +21,7 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+shift+l",
+		"key": "ctrl+alt+e",
 		"command": "workbench.view.explorer",
 		"when": "editorTextFocus"
 	},
@@ -185,5 +184,4 @@
 	{
 		"key": "ctrl+; shift+r",
 		"command": "workbench.action.files.revert"
-	}
-]
+	},

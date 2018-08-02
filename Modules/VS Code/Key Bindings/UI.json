@@ -1,15 +1,19 @@
-[
-	{
-		"key": "alt+shift+a",
-		"command": "workbench.action.toggleActivityBarVisibility"
-	},
 	{
 		"key": "ctrl+shift+l",
+		"command": "workbench.action.focusSideBar",
+	},
+	{
+		"key": "ctrl+shift+h",
 		"command": "workbench.action.toggleSidebarVisibility"
 	},
 	{
-		"key": "ctrl+j",
+		"key": "ctrl+shift+j",
 		"command": "workbench.action.togglePanel"
+	},
+
+	{
+		"key": "alt+shift+a",
+		"command": "workbench.action.toggleActivityBarVisibility"
 	},
 	{
 		"key": "ctrl+m",
@@ -47,5 +51,4 @@
 		"key": "ctrl+; /",
 		"command": "workbench.action.gotoSymbol",
 		"when": "webviewEditorFocus"
-	}
-]
+	},
