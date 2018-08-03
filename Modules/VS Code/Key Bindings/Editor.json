@@ -1,10 +1,4 @@
 	{
-		"key": "ctrl+; n",
-		"command": "explorer.newFile",
-		"when": "editorTextFocus"
-	},
-
-    {
 		"key": "ctrl+; f",
 		"command": "actions.find",
 		"when": "editorTextFocus"
@@ -16,13 +10,14 @@
 	},
 
 	{
-		"key": "ctrl+alt+v",
-		"command": "workbench.action.toggleCenteredLayout",
+		"key": "ctrl+; n",
+		"command": "explorer.newFile",
 		"when": "editorTextFocus"
 	},
+
 	{
-		"key": "ctrl+alt+e",
-		"command": "workbench.view.explorer",
+		"key": "ctrl+alt+v",
+		"command": "workbench.action.toggleCenteredLayout",
 		"when": "editorTextFocus"
 	},
 
@@ -30,16 +25,6 @@
 		"key": "alt+o",
 		"command": "markdown.showPreview",
 		"when": "editorTextFocus && editorLangId == 'markdown'"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "selectNextSuggestion",
-		"when": "editorTextFocus && suggestWidgetVisible"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "selectPrevSuggestion",
-		"when": "editorTextFocus && suggestWidgetVisible"
 	},
 	{
 		"key": "ctrl+; ctrl+w",
@@ -52,56 +37,6 @@
 	{
 		"key": "ctrl+l",
 		"command": "workbench.action.focusSecondEditorGroup"
-	},
-	{
-		"key": "ctrl+; ctrl+s",
-		"command": "C_Cpp.SwitchHeaderSource",
-		"when": "editorTextFocus && editorLangId == 'cpp'"
-	},
-	{
-		"key": "ctrl+; ctrl+s",
-		"command": "C_Cpp.SwitchHeaderSource",
-		"when": "editorTextFocus && editorLangId == 'c'"
-	},
-	{
-		"key": "ctrl+; g",
-		"command": "workbench.action.gotoLine",
-		"when": "editorFocus"
-	},
-	{
-		"key": "ctrl+; /",
-		"command": "workbench.action.gotoSymbol",
-		"when": "editorTextFocus"
-	},
-	{
-		"key": "ctrl+; i",
-		"command": "editor.action.goToDeclaration",
-		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-	},
-	{
-		"key": "ctrl+; shift+i",
-		"command": "editor.action.goToImplementation",
-		"when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
-	},
-	{
-		"key": "ctrl+; d",
-		"command": "C_Cpp.GoToDeclaration",
-		"when": "editorTextFocus && editorLangId == 'cpp'"
-	},
-	{
-		"key": "ctrl+; d",
-		"command": "C_Cpp.GoToDeclaration",
-		"when": "editorTextFocus && editorLangId == 'c'"
-	},
-	{
-		"key": "ctrl+; shift+d",
-		"command": "C_Cpp.PeekDeclaration",
-		"when": "editorTextFocus && editorLangId == 'cpp'"
-	},
-	{
-		"key": "ctrl+; shift+d",
-		"command": "C_Cpp.PeekDeclaration",
-		"when": "editorTextFocus && editorLangId == 'c'"
 	},
 	{
 		"key": "ctrl+k ctrl+k",
@@ -126,46 +61,6 @@
 	{
 		"key": "ctrl+o",
 		"command": "workbench.action.quickOpen"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "workbench.action.quickOpenNavigateNext",
-		"when": "inQuickOpen"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "workbench.action.quickOpenNavigateNextInFilePicker",
-		"when": "inQuickOpen && inFilesPicker"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "workbench.action.quickOpenNavigateNextInEditorPicker",
-		"when": "inQuickOpen && inEditorsPicker"
-	},
-	{
-		"key": "ctrl+n",
-		"command": "workbench.action.quickOpenNavigateNextInRecentFilesPicker",
-		"when": "inQuickOpen && inRecentFilesPicker"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "workbench.action.quickOpenNavigatePrevious",
-		"when": "inQuickOpen"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
-		"when": "inQuickOpen && inEditorsPicker"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
-		"when": "inQuickOpen && inFilesPicker"
-	},
-	{
-		"key": "ctrl+p",
-		"command": "workbench.action.quickOpenNavigatePreviousInRecentFilesPicker",
-		"when": "inQuickOpen && inRecentFilesPicker"
 	},
 	{
 		"key": "ctrl+shift+p",

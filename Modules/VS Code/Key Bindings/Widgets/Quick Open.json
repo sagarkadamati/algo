@@ -1,0 +1,40 @@
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.quickOpenNavigateNext",
+		"when": "inQuickOpen"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.quickOpenNavigateNextInFilePicker",
+		"when": "inQuickOpen && inFilesPicker"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+		"when": "inQuickOpen && inEditorsPicker"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "workbench.action.quickOpenNavigateNextInRecentFilesPicker",
+		"when": "inQuickOpen && inRecentFilesPicker"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpenNavigatePrevious",
+		"when": "inQuickOpen"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+		"when": "inQuickOpen && inEditorsPicker"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
+		"when": "inQuickOpen && inFilesPicker"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "workbench.action.quickOpenNavigatePreviousInRecentFilesPicker",
+		"when": "inQuickOpen && inRecentFilesPicker"
+	},

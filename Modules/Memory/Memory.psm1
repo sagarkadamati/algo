@@ -11,23 +11,6 @@ function ReplaceFileNames($ostr, $nstr) {
 
 function Get-FileNames {
 	param(
-		[Switch]$Recursive
-	)
-
-	process {
-		if ($Recursive)
-		{
-			((Get-ChildItem -File -recurse).FullName).Replace((Get-Location).Path + [IO.Path]::DirectorySeparatorChar, "")
-		}
-		else
-		{
-			(Get-ChildItem -File).Name
-		}
-	}
-}
-
-function Get-Matches {
-	param(
 		[Switch]$Recursive,
 		[String]$Pattern
 	)
@@ -35,8 +18,40 @@ function Get-Matches {
 	process {
 		if ($Recursive)
 		{
-			# (Get-FileNames -Recursive | foreach { Select-String -LiteralPath $_ -Pattern $Pattern } | Out-String).Trim()
-			Get-FileNames -Recursive | foreach { Select-String -LiteralPath $_ -Pattern $Pattern }
+			if ($Pattern)
+			{
+				((Get-ChildItem -File -recurse).FullName).Replace((Get-Location).Path + [IO.Path]::DirectorySeparatorChar, "") | Select-String -Pattern $Pattern
+			}
+			else
+			{
+				((Get-ChildItem -File -recurse).FullName).Replace((Get-Location).Path + [IO.Path]::DirectorySeparatorChar, "")
+			}
+		}
+		else
+		{
+			if ($Pattern)
+			{
+				(Get-ChildItem -File).Name | Select-String -Pattern $Pattern
+			}
+			else
+			{
+				(Get-ChildItem -File).Name
+			}
+		}
+	}
+}
+
+function Get-Matches {
+	param(
+		[Switch]$Recursive,
+		[String]$InputString
+	)
+
+	process {
+		if ($Recursive)
+		{
+			$Pattern = [regex]::Escape($InputString)
+			Get-FileNames -Recursive | foreach { Select-String -LiteralPath $_ -Pattern $Pattern}
 		}
 		else
 		{

@@ -17,6 +17,7 @@ function Get-VSKeys {
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Cancel.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Cursor.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Editor.json")
+	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Source Browser.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "UI.json")
 
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Config"   | Join-Path -ChildPath "Key Bindings.json")
@@ -34,6 +35,7 @@ function Get-VSKeys {
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Find And Replace.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Git.json")
 
+	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Quick Open.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json")
 	$jsondata += Get-Content $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Suggest Widget.json")
 

@@ -1,10 +1,6 @@
 	{
-		"key": "ctrl+shift+l",
-		"command": "workbench.action.focusSideBar",
-	},
-	{
-		"key": "ctrl+shift+h",
-		"command": "workbench.action.toggleSidebarVisibility"
+		"key": "ctrl+j",
+		"command": "workbench.action.togglePanel"
 	},
 	{
 		"key": "ctrl+shift+j",
