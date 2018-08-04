@@ -58,6 +58,7 @@ func (y *Youtube) StartDownload(destFile string) error {
 	//download highest resolution on [0]
 	targetStream := y.StreamList[0]
 	url := targetStream["url"] + "&signature=" + targetStream["sig"]
+	fmt.Println("url: " + url)
 	y.log(fmt.Sprintln("Download url=", url))
 
 	y.log(fmt.Sprintln("Download to file=", destFile))

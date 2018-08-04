@@ -5,7 +5,7 @@ function Update-Paths {
 	$Global:ProjectsLocation   = Join-Path $WorkspaceLocation "Projects"
 	$Global:ToolsLocation      = Join-Path $WorkspaceLocation "Tools"
 	$Global:ScriptsLocation    = [IO.Path]::Combine($ToolsLocation, "Env", "Scripts")
-	
+
 	$Global:GOROOT     = [IO.Path]::Combine($ToolsLocation,    "Go")
 	$Global:GOPATH     = [IO.Path]::Combine($ProjectsLocation, "algos",   "go")
 	$Global:JAVA_HOME  = [IO.Path]::Combine($ToolsLocation,    "Android", "Android Studio", "jre")
@@ -29,6 +29,7 @@ function Update-Paths {
 
 	Set-Location $WorkspaceLocation
 }
+
 function Workspace() {
 	Set-Location $WorkspaceLocation
 }
@@ -63,6 +64,7 @@ function Projects() {
 		Set-Location $(Join-Path $ProjectsLocation $($PSBoundParameters.Name + ""))
 	}
 }
+
 function Tools($tool) {
 	Set-Location $(Join-Path $ToolsLocation $($tool + ""))
 }

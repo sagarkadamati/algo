@@ -7,16 +7,57 @@ function Get-YoutubeVideoID($youtubeURL) {
 	return $VideoID
 }
 
-function Get-YoutubeVideoInfo($VideoID) {
+function Get-YoutubeVideoInfo($VideoURL) {
+	$VideoID = Get-YoutubeVideoID $VideoURL
+
 	$URL = "http://youtube.com/get_video_info?video_id=" + $VideoID
 
-	$Response = invoke-WebRequest -uri $URL
-
-	$Response.RawContent
+	invoke-WebRequest -Uri $URL -OutFile videoinfo.txt
 }
 
-function YoutubeParseVideoInfo($VideoInfo) {
+function Remove-InvalidFileNameChars {
+	param(
+	  [Parameter(Mandatory=$true,
+		Position=0,
+		ValueFromPipeline=$true,
+		ValueFromPipelineByPropertyName=$true)]
+	  [String]$Name
+	)
 
+	$invalidChars = [IO.Path]::GetInvalidFileNameChars() -join ''
+	$re = "[{0}]" -f [RegEx]::Escape($invalidChars)
+	return ($Name -replace $re)
+}
+
+function Get-YoutubeParseVideoInfo {
+	# [System.Web.HttpUtility]::UrlDecode($(Get-Content videoinfo.txt))
+
+	$answer = [System.Web.HttpUtility]::ParseQueryString($(Get-Content videoinfo.txt))
+	$streams = $answer["url_encoded_fmt_stream_map"] -split ','
+
+	$StreamList = @()
+
+	$index = 0
+	foreach ($stream in $streams) {
+		$ListInfo = New-Object 'system.collections.generic.dictionary[string, string]'
+
+		$videoinfo = [System.Web.HttpUtility]::ParseQueryString($stream)
+
+		$ListInfo["index"] = $index++
+		$ListInfo["url"] = $videoinfo["url"]
+		$ListInfo["title"] = Remove-InvalidFileNameChars $answer["title"]
+		# $ListInfo["title"] = $videoinfo["title"]
+		$ListInfo["quality"] = $videoinfo["quality"]
+		$ListInfo["type"] = $videoinfo["type"]
+		$ListInfo["author"] = $videoinfo["author"]
+		$ListInfo["sig"] = $videoinfo["sig"]
+		$ListInfo["extension"] = $(($ListInfo["type"] -split ';')[0] -split '/')[1]
+		$ListInfo["filename"] = $ListInfo["title"] + "." + $ListInfo["extension"]
+
+		$StreamList += $ListInfo
+	}
+
+	return $StreamList
 }
 
 function YoutubeGetURLs($youtubeURL) {
@@ -28,13 +69,37 @@ function YoutubeGetURLs($youtubeURL) {
 	return $youtubeURL
 }
 
-function Youtube($URL) {
-	$VideoUrls = YoutubeGetURLs($URL)
-	ForEach ($video in $VideoUrls) {
-		$VideoID   = Get-YoutubeVideoID $video
-		$VideoInfo = Get-YoutubeVideoInfo $VideoID
+function Youtube {
+	param (
+		[Switch]$List,
+		[String]$URL,
+		[Int]$Index
+	)
 
-		[System.Uri]$VideoInfo
+	process {
+		$VideoUrls = YoutubeGetURLs($URL)
+		ForEach ($video in $VideoUrls) {
+			Get-YoutubeVideoInfo $video
+			$Streams = Get-YoutubeParseVideoInfo
+			
+			if($List)
+			{
+				$streams
+			}
+			else
+			{
+				if ($Index) {
+					invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $streams[0]["filename"]
+				}
+				else {
+					invoke-WebRequest -Uri $streams[0]["url"] -OutFile $streams[0]["filename"]
+				}
+			}
+		}
+
+		if(Test-Path .\videoinfo.txt) {
+			Remove-Item .\videoinfo.txt
+		}
 	}
 }
 
