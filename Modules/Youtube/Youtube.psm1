@@ -31,7 +31,7 @@ function Remove-InvalidFileNameChars {
 
 function Get-YoutubeParseVideoInfo {
 	# [System.Web.HttpUtility]::UrlDecode($(Get-Content videoinfo.txt))
-
+	Add-Type -AssemblyName System.Web
 	$answer = [System.Web.HttpUtility]::ParseQueryString($(Get-Content videoinfo.txt))
 	$streams = $answer["url_encoded_fmt_stream_map"] -split ','
 
@@ -84,7 +84,7 @@ function Youtube {
 			
 			if($List)
 			{
-				$streams
+				$streams.type
 			}
 			else
 			{

@@ -55,4 +55,24 @@ function Apply-Patch {
 	}
 }
 
-Export-ModuleMember -Function Get-MP3MetaData
+function Get-Repos {
+	New-Item -Type Directory SimpleMobileTools
+	git clone https://github.com/SimpleMobileTools/Simple-Gallery
+	git clone https://github.com/SimpleMobileTools/Simple-Calendar
+	git clone https://github.com/SimpleMobileTools/Simple-Contacts
+	git clone https://github.com/SimpleMobileTools/Simple-Commons
+	git clone https://github.com/SimpleMobileTools/Simple-Notes
+	git clone https://github.com/SimpleMobileTools/Simple-App-Launcher
+	git clone https://github.com/SimpleMobileTools/Simple-Draw
+	git clone https://github.com/SimpleMobileTools/Simple-Camera
+	git clone https://github.com/SimpleMobileTools/Simple-File-Manager
+	git clone https://github.com/SimpleMobileTools/Simple-Thank-You
+	git clone https://github.com/SimpleMobileTools/Simple-Calculator
+	git clone https://github.com/SimpleMobileTools/Simple-Clock
+	git clone https://github.com/SimpleMobileTools/Simple-Music-Player
+	git clone https://github.com/SimpleMobileTools/Simple-Flashlight
+	git clone https://github.com/SimpleMobileTools/General-Discussion
+	git clone https://github.com/SimpleMobileTools/simplemobiletools.github.io
+}
+
+Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files
