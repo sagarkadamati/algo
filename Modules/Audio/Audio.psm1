@@ -31,26 +31,84 @@ function Audio($BaseURL)
 	}
 }
 
-function Update-ID3($AudioFile, $AlbumArtist) {
+function Update-ID3($AudioFile, $Artist) {
 	if ($AudioFile) {
-		$File   = (Get-ChildItem $AudioFile)
-		$Title  = $File.BaseName
-		$Album  = ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
-		$Genre  = ($File.Directory).Name
-		$Track  = ($Title -split " ")[0]
-		$Artist = ""
-
-		if ($AlbumArtist) {
-			$Artist = $AlbumArtist
+		$File  = (Get-ChildItem $AudioFile)
+		$Title = ($File.BaseName -split $([regex]::Match($File.BaseName, '(^[0-9]*[ ]*)').Groups[0].Value))[1]
+		$Album = ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
+		$Genre = ($File.Directory).Name
+		$Track = ($File.BaseName -split " ")[0]
+		$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path ($File.Directory).Name
+		if ($COVER) {
+			$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
 		}
 
-		if ($Album -notmatch $Genre) {
-			$Genre = $Album + " (" + $Genre + ")"
+		$EYED3 = [System.IO.Path]::Combine($ToolsLocation, "Python", "Scripts", "eyeD3.exe")
+
+		if ($COVER) {
+			$COVER += ":FRONT_COVER"
+			if ($Artist) {
+				& $EYED3 --to-v2.4 --add-image $COVER --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+			}
+			else {
+				& $EYED3 --to-v2.4 --add-image $COVER  --album-artist $Album --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+			}
+		}
+		else {
+			if ($Artist) {
+				& $EYED3 --to-v2.4 --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+			}
+			else {
+				& $EYED3 --to-v2.4  --album-artist $Album --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+			}
 		}
 
-		$MID3V2 = (Join-Path (where.exe python | gci).DirectoryName "Scripts") | Join-Path -ChildPath "mid3v2"
-		python $MID3V2 --artist="$Artist" --album="$Album" --song="$Title" --genre="$Genre" --track="$Track" "$AudioFile"
+		# $MID3V2 = (Join-Path (where.exe python | gci).DirectoryName "Scripts") | Join-Path -ChildPath "mid3v2"
+		# python $MID3V2 -d --artist="$Artist" --album="$Album" --song="$Title" --genre="$Genre" --track="$Track" "$AudioFile"
 	}
+}
+
+function Get-Parvam($URL) {
+	$response = Invoke-WebRequest -Uri $URL
+	$Links = ($response.Links).href | Select-String -Pattern "mp3$"
+
+	foreach ($link in $Links) {
+		if ($link) {
+			$FileName = $(Split-Path $link -Leaf)
+			$SplitFileName = $FileName.split('_')
+
+			$Track = ($SplitFileName[0] -replace 'MahaBharatam',' ').split(' ')[0]
+			$Parvam = "Vana Parvam"
+			$Title = "Bharatamlo Ramayanam.mp3"
+
+			if ($FileName -notlike "*Ramayanam*") {
+				$Parvam = StringSplitCaps $(($SplitFileName[0] -replace 'MahaBharatam',' ').split(' ')[1])
+				$Title = $SplitFileName[1]
+
+				if ($SplitFileName.Length -gt 2) {
+					foreach ($i in 2..($SplitFileName.Length - 1)) {
+						$Title += ", "
+						$Title += $SplitFileName[$i]
+					}
+				}
+			}
+
+			$NewFileName = $(StringSplitCaps $($Track + " " + $Title))
+
+			New-Item -Type Directory -Force $Parvam
+
+			# Write-Output "Invoke-WebRequest -Uri $link -OutFile $(Join-Path $Parvam $NewFileName)"
+			Invoke-WebRequest -Uri $link.Line -OutFile $(Join-Path $Parvam $NewFileName)
+		}
+	}
+}
+
+function Get-Bharatam {
+	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_adiparvam"
+	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_sabhaparvam"
+	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_vanaparvam"
+	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_virataparvam"
+	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_udyogaparvam"
 }
 
 function Update-ID3Files {

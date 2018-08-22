@@ -68,3 +68,7 @@ function Get-Json {
 		Get-Content $File | ConvertFrom-Json
 	}
 }
+
+function StringSplitCaps($Str) {
+	return ($Str.substring(0,1).toupper() + $Str.substring(1) -creplace '[A-Z]', ' $&').Trim();
+}
