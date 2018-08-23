@@ -48,18 +48,18 @@ function Update-ID3($AudioFile, $Artist) {
 		if ($COVER) {
 			$COVER += ":FRONT_COVER"
 			if ($Artist) {
-				& $EYED3 --to-v2.4 --add-image $COVER --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+				& $EYED3 --to-v2.4 --add-image $COVER --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --non-std-genres --track $Track $AudioFile
 			}
 			else {
-				& $EYED3 --to-v2.4 --add-image $COVER  --album-artist $Album --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+				& $EYED3 --to-v2.4 --add-image $COVER  --album-artist $Album --album $Album --title $Title --genre $Genre --non-std-genres --track $Track $AudioFile
 			}
 		}
 		else {
 			if ($Artist) {
-				& $EYED3 --to-v2.4 --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+				& $EYED3 --to-v2.4 --album-artist $Album --artist $Artist --album $Album --title $Title --genre $Genre --non-std-genres --track $Track $AudioFile
 			}
 			else {
-				& $EYED3 --to-v2.4  --album-artist $Album --album $Album --title $Title --genre $Genre --track $Track $AudioFile
+				& $EYED3 --to-v2.4  --album-artist $Album --album $Album --title $Title --genre $Genre --non-std-genres --track $Track $AudioFile
 			}
 		}
 
@@ -103,14 +103,6 @@ function Get-Parvam($URL) {
 	}
 }
 
-function Get-Bharatam {
-	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_adiparvam"
-	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_sabhaparvam"
-	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_vanaparvam"
-	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_virataparvam"
-	Get-Parvam "http://www.srichalapathirao.com/discourses?category=mahabharatam_udyogaparvam"
-}
-
 function Update-ID3Files {
 	param (
 		[String]$Artist
@@ -122,4 +114,39 @@ function Update-ID3Files {
 	foreach ($File in $Files) {
 		Update-ID3 "$File" "$Artist"
 	}
+}
+
+function Get-Bharatam {
+	New-Item -Type Directory "Maha Bharatam"
+	Set-Location "Maha Bharatam"
+
+	$BASEURL = "http://www.srichalapathirao.com/discourses?category=mahabharatam_"
+	$PARVALU = (
+		"adiparvam",
+		"sabhaparvam",
+		"vanaparvam",
+		"virataparvam",
+		"udyogaparvam"
+		)
+
+	foreach ($PARVAM in $PARVALU) {
+		$URL = $BASEURL + $PARVAM
+		Get-Parvam $URL
+	}
+
+	Copy-Item $([IO.Path]::Combine($ToolsLocation, "Env", "Album Arts", "Maha Baratam.jpg")) cover.jpg
+	Update-ID3Files "Sri Chalapathi Rao"
+	if (Test-Path "cover.jpg")
+	{
+		Remove-Item "cover.jpg"
+	}
+
+	Set-Location ..
+}
+
+function Get-Vedanta {
+	New-Item -Type Directory "Vedanta"
+	Set-Location "Vedanta"
+
+	Get-Bharatam
 }
