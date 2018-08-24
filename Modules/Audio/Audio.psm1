@@ -43,6 +43,7 @@ function Update-ID3($AudioFile, $Artist) {
 			$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
 		}
 
+		$COVER = "cover.jpg"
 		$EYED3 = [System.IO.Path]::Combine($ToolsLocation, "Python", "Scripts", "eyeD3.exe")
 
 		if ($COVER) {
@@ -68,9 +69,22 @@ function Update-ID3($AudioFile, $Artist) {
 	}
 }
 
+function Update-ID3Files {
+	param (
+		[String]$Artist
+	)
+
+	$Files  = Get-FileNames -Recursive "mp3"
+	$Files += Get-FileNames -Recursive "flac"
+
+	foreach ($File in $Files) {
+		Update-ID3 "$File" "$Artist"
+	}
+}
+
 function Get-Parvam($URL) {
 	$response = Invoke-WebRequest -Uri $URL
-	$Links = ($response.Links).href | Select-String -Pattern "mp3$"
+	$Links = ($response.Links).href | Select-String -Pattern "mp3$" | Get-Unique
 
 	foreach ($link in $Links) {
 		if ($link) {
@@ -98,21 +112,11 @@ function Get-Parvam($URL) {
 			New-Item -Type Directory -Force $Parvam
 
 			# Write-Output "Invoke-WebRequest -Uri $link -OutFile $(Join-Path $Parvam $NewFileName)"
-			Invoke-WebRequest -Uri $link.Line -OutFile $(Join-Path $Parvam $NewFileName)
+			$FileName = $(Join-Path $Parvam $NewFileName)
+			if (!$(Test-Path $FileName)) {
+				Get-RemoteFile $link.Line $FileName
+			}
 		}
-	}
-}
-
-function Update-ID3Files {
-	param (
-		[String]$Artist
-	)
-
-	$Files  = Get-FileNames -Recursive "mp3"
-	$Files += Get-FileNames -Recursive "flac"
-
-	foreach ($File in $Files) {
-		Update-ID3 "$File" "$Artist"
 	}
 }
 
@@ -144,9 +148,58 @@ function Get-Bharatam {
 	Set-Location ..
 }
 
+function Get-RemoteFile($URL, $FileName) {
+	if (!$FileName) {
+		$FileName = $(Split-Path $URL -Leaf)
+	}
+
+	Invoke-WebRequest -Uri $URL -OutFile $FileName
+}
+
+function Get-DasamaSkandam {
+	New-Item -Type Directory -Force "Dasama Skandam"
+	Set-Location "Dasama Skandam"
+
+	$request = Invoke-WebRequest -Uri "http://www.srichalapathirao.com/discourses?category=bhakti_dasama"
+	$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
+
+	foreach ($URL in $URLS) {
+		$File = $(Split-Path $URL -Leaf)
+		$FileName = $(StringSplitCaps $($File -replace "MP3", "mp3"))
+
+		if (!$(Test-Path $FileName)) {
+			Get-RemoteFile $URL.Line $FileName
+		}
+	}
+
+	Move-Item -Force "01 Bhagavatam10.mp3" "01 Introduction.mp3"
+	Move-Item -Force "26 Bhagavatam01.mp3" "26 Songs.mp3"
+	Move-Item -Force "27 Bhagavatam02.mp3" "27 Songs.mp3"
+	Move-Item -Force "28 Bhagavatam03.mp3" "28 Songs.mp3"
+
+	Set-Location ..
+}
+
+function Get-Bhagavatam {
+	New-Item -Type Directory -Force "Bhagavatam"
+	Set-Location "Bhagavatam"
+
+	Get-DasamaSkandam
+
+	Copy-Item $([IO.Path]::Combine($ToolsLocation, "Env", "Album Arts", "Dasama Skandam.jpg")) cover.jpg
+	Update-ID3Files "Sri Chalapathi Rao"
+	if (Test-Path "cover.jpg")
+	{
+		Remove-Item "cover.jpg"
+	}
+
+	Set-Location ..
+}
+
 function Get-Vedanta {
-	New-Item -Type Directory "Vedanta"
+	New-Item -Type Directory -Force "Vedanta"
 	Set-Location "Vedanta"
 
 	Get-Bharatam
+	Get-Bhagavatam
 }
