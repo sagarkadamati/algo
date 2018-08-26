@@ -38,12 +38,23 @@ function Update-ID3($AudioFile, $Artist) {
 		$Album = ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
 		$Genre = ($File.Directory).Name
 		$Track = ($File.BaseName -split " ")[0]
-		$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path ($File.Directory).Name
-		if ($COVER) {
-			$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
+
+		if (Test-Path $(Join-Path $(($File.Directory).Name) "cover.*"))
+		{
+			$COVER = Join-Path $(($File.Directory).Name) $(Get-ChildItem -Name -File -Filter "cover.*" -Path ($File.Directory).Name)
+		}
+		else
+		{
+			if (Test-Path "cover.*")
+			{				
+				$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
+			}
 		}
 
-		$COVER = "cover.jpg"
+		# $MID3V2 = [System.IO.Path]::Combine($ToolsLocation, "Python", "Scripts", "mid3v2")
+		# python $MID3V2 -d "$AudioFile"
+
+		# $COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
 		$EYED3 = [System.IO.Path]::Combine($ToolsLocation, "Python", "Scripts", "eyeD3.exe")
 
 		if ($COVER) {
@@ -64,7 +75,7 @@ function Update-ID3($AudioFile, $Artist) {
 			}
 		}
 
-		# $MID3V2 = (Join-Path (where.exe python | gci).DirectoryName "Scripts") | Join-Path -ChildPath "mid3v2"
+		# $MID3V2 = [System.IO.Path]::Combine($ToolsLocation, "Python", "Scripts", "mid3v2")
 		# python $MID3V2 -d --artist="$Artist" --album="$Album" --song="$Title" --genre="$Genre" --track="$Track" "$AudioFile"
 	}
 }
