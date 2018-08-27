@@ -53,6 +53,12 @@ function kt() {
 			return
 		}
 
+		if (!$(Test-Path "Main.kt"))
+		{
+			Write-Host "Please Run in Project Root"
+			return
+		}
+
 		$Program  = [System.IO.Path]::Combine($ToolsLocation, "Kotlin", "bin", "kotlinc.bat ")
 
 		if ($Build) {
