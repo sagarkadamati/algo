@@ -85,9 +85,11 @@ function kt() {
 			if ($Clean -match '\*') {
 				Write-Host "Cleaning All Tasks"
 				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "*") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "*") -ErrorAction Ignore
 			}
 			else {
 				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
 			}
 			return
 		}
