@@ -81,4 +81,4 @@ New-Alias -Name proj -Value Projects
 New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
-Export-ModuleMember -Function Update-Paths, Workspace, Projects, Tools, Scripts, Env -Alias proj, tls, work
+Export-ModuleMember -Function Update-Paths, Workspace, Projects, Tools, Scripts, Env -Alias Proj, tls, work
