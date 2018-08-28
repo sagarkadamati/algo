@@ -1,13 +1,3 @@
-import java.io.File
+import FileManager.MyFile
 
-class MyDir(val path: String ?= null) {
-	init {
-		if (path != null) {
-			File("./").walkTopDown().forEach {
-				println(it)
-			}		
-		}
-	}
-}
-
-MyDir("./")
+MyFile("./")

@@ -46,15 +46,23 @@ function kt() {
 			}
 
 			foreach ($Task in $Tasks) {
+				$Program  = "kotlinc "
 				Write-Host -NoNewLine "Building $Task ... "
 				$KTFiles = $(Get-ChildItem -Recurse -File -Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task)).FullName | Select-String -Pattern ".kt$"
 				foreach($KTFile in $KTFiles) {
 					$Program += " '$KTFile'"
 				}
-				
-				$Program += " -include-runtime"
-				$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Task.jar")
-				
+
+				if (Test-Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task | Join-Path -Child "Main.kt")) {
+					$Program += " -include-runtime"
+					$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Task.jar")
+				}
+				else {
+					$Program += " -d " + $(Join-Path $BasePath "Lib" | Join-Path -Child "$Task.jar")
+				}
+
+				$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+
 				Invoke-Expression $Program
 				Write-Host "done"
 			}
@@ -86,6 +94,7 @@ function kt() {
 
 		$Program += "-script "
 		$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
+		$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
 
 		# Write-Host "Running Script $Program"
 		Invoke-Expression $Program
