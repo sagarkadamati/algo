@@ -31,8 +31,8 @@ function kt() {
 
 	process
 	{
+		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
-		$Program  = [System.IO.Path]::Combine($ToolsLocation, "Kotlin", "bin", "kotlinc.bat ")
 
 		if(![string]::IsNullOrWhiteSpace($Build)) {
 			# Write-Host "Building: $Build $All $Clean"
@@ -53,7 +53,7 @@ function kt() {
 				}
 				
 				$Program += " -include-runtime"
-				$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Build.jar")
+				$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Task.jar")
 				
 				Invoke-Expression $Program
 				Write-Host "done"
@@ -64,7 +64,7 @@ function kt() {
 		if(![string]::IsNullOrWhiteSpace($Run)) {
 			# Write-Host "Running"
 
-			$Program  = [System.IO.Path]::Combine($ToolsLocation, "Kotlin", "bin", "kotlin.bat ")
+			$Program  = "kotlin "
 			$Program += $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
 
 			Invoke-Expression $Program
@@ -84,7 +84,7 @@ function kt() {
 			return
 		}
 
-		$Program += " -script "
+		$Program += "-script "
 		$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
 
 		# Write-Host "Running Script $Program"
