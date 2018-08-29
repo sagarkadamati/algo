@@ -23,9 +23,9 @@ function AutoCompleteTest() {
 
 function kt() {
 	param(
-		[String]$Script,
-		[String]$Build,
 		[String]$Run,
+		[String]$Build,
+		[String]$Script,
 		[String]$Clean
 	)
 
@@ -69,16 +69,6 @@ function kt() {
 			return
 		}
 
-		if(![string]::IsNullOrWhiteSpace($Run)) {
-			# Write-Host "Running"
-
-			$Program  = "kotlin "
-			$Program += $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
-
-			Invoke-Expression $Program
-			return
-		}
-
 		if(![string]::IsNullOrWhiteSpace($Clean)) {
 			# Write-Host "Cleaning"
 
@@ -94,11 +84,30 @@ function kt() {
 			return
 		}
 
-		$Program += "-script "
-		$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
-		$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+		if(![string]::IsNullOrWhiteSpace($Script)) {
+			$Program += "-script "
+			$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
+			$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
 
-		# Write-Host "Running Script $Program"
+			# Write-Host "Running Script $Program"
+			Invoke-Expression $Program
+		}
+
+		if(![string]::IsNullOrWhiteSpace($Run)) {
+			# Write-Host "Running"
+
+			$Program  = "kotlin "
+			$Program += " -classpath '" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
+			$Program += "' MainKt"
+
+			$Program
+			Invoke-Expression $Program
+			return
+		}
+
+		$Program  = "kotlinc-jvm "
+		$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
 		Invoke-Expression $Program
 	}
 }
@@ -110,14 +119,6 @@ Register-ArgumentCompleter -CommandName kt -ScriptBlock {
 		$Projects = (Get-ChildItem -Directory -Path $([IO.Path]::Combine($ToolsLocation, "Env", "Kotlin", "Projects")) | Select-Object -ExpandProperty Name) -replace ".jar",""
 		foreach ($Project in $Projects) {
 			New-Object System.Management.Automation.CompletionResult($Project)
-		}
-		return
-	}
-
-	if (($parameterName -like "*-Run*") -or ($parameterName -like "*-r*")) {
-		$Runables = (Get-ChildItem -File -Path $([IO.Path]::Combine($ToolsLocation, "Env", "Kotlin", "Run")) | Select-Object -ExpandProperty Name) -replace ".jar",""
-		foreach ($Runable in $Runables) {
-			New-Object System.Management.Automation.CompletionResult($Runable)
 		}
 		return
 	}
@@ -135,10 +136,21 @@ Register-ArgumentCompleter -CommandName kt -ScriptBlock {
 		return
 	}
 
-	$Scripts = (Get-ChildItem -File -Path $([IO.Path]::Combine($ToolsLocation, "Env", "Kotlin", "Scripts")) | Select-Object -ExpandProperty Name) -replace ".kts",""
-	foreach ($Script in $Scripts) {
-		New-Object System.Management.Automation.CompletionResult($Script)
+	if (($parameterName -like "*-Script*") -or ($parameterName -like "*-s*")) {
+		$Scripts = (Get-ChildItem -File -Path $([IO.Path]::Combine($ToolsLocation, "Env", "Kotlin", "Scripts")) | Select-Object -ExpandProperty Name) -replace ".kts",""
+		foreach ($Script in $Scripts) {
+			New-Object System.Management.Automation.CompletionResult($Script)
+		}
+		return
 	}
+
+	# if (($parameterName -like "*-Run*") -or ($parameterName -like "*-r*")) {
+		$Runables = (Get-ChildItem -File -Path $([IO.Path]::Combine($ToolsLocation, "Env", "Kotlin", "Run")) | Select-Object -ExpandProperty Name) -replace ".jar",""
+		foreach ($Runable in $Runables) {
+			New-Object System.Management.Automation.CompletionResult($Runable)
+		}
+		return
+	# }
 }
 
 Register-ArgumentCompleter -CommandName Proj -ScriptBlock {
