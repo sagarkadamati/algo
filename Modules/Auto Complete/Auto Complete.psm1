@@ -91,6 +91,7 @@ function kt() {
 
 			# Write-Host "Running Script $Program"
 			Invoke-Expression $Program
+			return
 		}
 
 		if(![string]::IsNullOrWhiteSpace($Run)) {
@@ -101,7 +102,6 @@ function kt() {
 			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
 			$Program += "' MainKt"
 
-			$Program
 			Invoke-Expression $Program
 			return
 		}

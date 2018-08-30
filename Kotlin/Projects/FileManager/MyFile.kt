@@ -1,17 +1,12 @@
 package FileManager
 
-import java.io.File
-
 class MyFile(val path: String ?= null) {
+	private var name = ""
+
 	init {
-		if (path != null) {
-			File("./").walkTopDown().forEach {
-				println(it)
-			}		
-		}
 	}
 
-	// fun setPath(path: String) {
-		
-	// }
+	fun rename(new: String) {
+		this.name = new
+	}
 }

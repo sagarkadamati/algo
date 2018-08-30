@@ -1,3 +1,5 @@
-import FileManager.MyFile
+import FileManager.*
 
-MyFile("./")
+var path = Path(".")
+// path.getFiles(path.RECURSIVE)
+path.getFiles()
