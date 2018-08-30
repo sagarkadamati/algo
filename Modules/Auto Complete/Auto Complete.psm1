@@ -34,6 +34,19 @@ function kt() {
 		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
 
+		if(![string]::IsNullOrWhiteSpace($Run)) {
+			# Write-Host "Running"
+
+			$Program  = "kotlin "
+			$Program += " -classpath '" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
+			$Program += "' MainKt"
+			$Program += " '$Build' '$Script' '$Clean' $args"
+
+			Invoke-Expression $Program
+			return
+		}
+
 		if(![string]::IsNullOrWhiteSpace($Build)) {
 			# Write-Host "Building: $Build $All $Clean"
 
@@ -90,18 +103,6 @@ function kt() {
 			$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
 
 			# Write-Host "Running Script $Program"
-			Invoke-Expression $Program
-			return
-		}
-
-		if(![string]::IsNullOrWhiteSpace($Run)) {
-			# Write-Host "Running"
-
-			$Program  = "kotlin "
-			$Program += " -classpath '" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
-			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
-			$Program += "' MainKt"
-
 			Invoke-Expression $Program
 			return
 		}

@@ -1,8 +1,13 @@
+package FileManager
+
 import java.io.File
 
-class Path(str: String) {
+class MyPath(str: String) {
 	private var path: String = ""
-	public val RECURSIVE: Boolean = true
+
+	companian object {
+		public val RECURSIVE: Boolean = true
+	}
 
 	init {
 		set(str)
@@ -29,16 +34,20 @@ class Path(str: String) {
 	}
 
 	fun getFiles(recursive: Boolean = false) {
-		var dir = File(this.path).walkTopDown()
 		if (!recursive) {
-			dir.maxDepth(1).forEach {
+			File(this.path)
+			.walkTopDown()
+			.maxDepth(1)
+			.forEach {
 				println(it)
 			}
-			return
 		}
-
-		dir.forEach {
-			println(it)
+		else {
+			File(this.path)
+			.walkTopDown()
+			.forEach {
+				println(it)
+			}
 		}
 	}
 }
