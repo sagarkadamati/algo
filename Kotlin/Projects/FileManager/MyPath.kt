@@ -5,7 +5,7 @@ import java.io.File
 class MyPath(str: String) {
 	private var path: String = ""
 
-	companian object {
+	companion object {
 		public val RECURSIVE: Boolean = true
 	}
 

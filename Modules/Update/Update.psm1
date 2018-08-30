@@ -2,14 +2,6 @@ function download($URI) {
 	Invoke-WebRequest -Uri "$URI" -OutFile $($URI | Split-Path -Leaf)
 }
 
-function Update-Tools {
-	download "https://dl.google.com/go/go1.10.3.linux-386.tar.gz"	
-
-	download "https://github.com/JetBrains/kotlin/releases/download/v1.2.51/kotlin-compiler-1.2.51.zip"
-	download "https://dl.google.com/go/go1.10.3.windows-amd64.zip"
-	download "https://www.python.org/ftp/python/3.7.0/python-3.7.0-embed-amd64.zip"
-}
-
 function Get-OS {
 	if ($([System.Environment]::OSVersion.Platform) -Like "Win32NT") {
 		Write-Output "windows"
@@ -84,6 +76,53 @@ function Update-KotlinTools {
 		}
 	}
 	popd
+}
+
+function Update-Git{
+	if ($(OS) -Like "windows") {
+		$request = Invoke-WebRequest -UseBasicParsing -Uri https://github.com/git-for-windows/git/releases
+		$URL = ($request.Links | Where-Object href -Like "*windows*64-bit.zip" | Where-Object href -NotLike "*busybox*.zip").href
+		if ($($URL.Count) -ne 1) {
+			$URL = $URL[0]
+		}
+		$DownloadFile = $URL | Split-Path -Leaf
+
+		pushd .
+		$DownloadPath = $(Join-Path $ToolsLocation "download")
+		New-Item -Type Directory $DownloadPath -Force -ErrorAction Ignore | Out-Null
+		Set-Location $DownloadPath
+
+		$GitRoot = $(Join-Path $ToolsLocation "Git")
+		if (!(Test-Path $DownloadFile)) {
+			Invoke-WebRequest -Uri $("https://github.com" + $URL) -OutFile $DownloadFile
+
+			Remove-Item -Recurse $GitRoot -ErrorAction Ignore
+			Unzip $(Join-Path $DownloadPath $DownloadFile) $GitRoot
+		}
+		popd
+	}
+}
+
+function Update-VsCode
+{
+
+}
+
+function Update-Python
+{
+
+}
+
+function Update-Tools {
+	Update-KotlinTools
+	# Update-Git
+	Update-VsCode
+	Update-Python
+
+	# download "https://www.python.org/ftp/python/3.7.0/python-3.7.0-embed-amd64.zip"
+
+	# download "https://dl.google.com/go/go1.10.3.linux-386.tar.gz"	
+	# download "https://dl.google.com/go/go1.10.3.windows-amd64.zip"
 }
 
 function Update-Env {
