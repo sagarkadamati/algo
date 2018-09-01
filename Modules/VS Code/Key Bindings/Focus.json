@@ -1,6 +1,12 @@
 	{
 		"key": "ctrl+shift+l",
 		"command": "workbench.action.focusSideBar",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+l",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "!editorTextFocus"
 	},
 	{
 		"key": "ctrl+shift+h",

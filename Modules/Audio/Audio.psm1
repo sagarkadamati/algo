@@ -164,7 +164,12 @@ function Get-RemoteFile($URL, $FileName) {
 		$FileName = $(Split-Path $URL -Leaf)
 	}
 
-	Invoke-WebRequest -UseBasicParsing -Uri $URL -OutFile $FileName
+	try {
+		Invoke-WebRequest -UseBasicParsing -Uri $URL -OutFile $FileName
+	}
+	catch {
+		Write-Host "Missing: $URL"
+	}
 }
 
 function Get-DasamaSkandam {
@@ -216,10 +221,54 @@ function Get-Capalized($String) {
 	$TextInfo.ToTitleCase($String)
 }
 
+function Get-FixedFileName($tmp, $main, $sub) {
+	$FileName = Split-Path $tmp -Leaf
+	$FileName = $FileName -replace "MP3", "mp3"
+	$FileName = StringSplitCaps $FileName
+
+	if ($FileName -like "*_*") {
+		$FileName = $FileName -replace $($main + "_"), ""
+		$FileName = $FileName -replace $($main + ""), ""
+		$FileName = $FileName -replace $($sub + "_"), ""
+		$FileName = $FileName -replace $($sub + ""), ""
+		$FileName = $FileName -replace "_", ","
+	}
+
+	$FileName = $FileName -replace "by", ""
+	$FileName = $FileName -replace "sri", ""
+	$FileName = $FileName -replace "chalapathi", ""
+	$FileName = $FileName -replace "rao", ""
+
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+
+	$FileName = $FileName -replace " \.", "."
+	
+	$FileName = $FileName -replace "01 Bhagavatam10.mp3", "01 Introduction.mp3"
+	$FileName = $FileName -replace "26 Bhagavatam01.mp3", "26 Songs.mp3"
+	$FileName = $FileName -replace "27 Bhagavatam02.mp3", "27 Songs.mp3"
+	$FileName = $FileName -replace "28 Bhagavatam03.mp3", "28 Songs.mp3"
+
+	$FileName.Trim()
+}
+
+function Get-AlternateName($FileName) {
+	switch ($FileName) {
+		"Sanskrit Bharatam" { "Maha Bharatam" }
+		"Brahmasutras" { "Brahma Sutras" }
+		"Gita" { "Bhagavad Geeta" }
+		"Prakaranas" { "Prakaranalu" }
+		Default { $FileName }
+	}
+}
+
 function Get-SriChalapathiRaoAudio {
 	$Vedanta = ([IO.Path]::Combine($HOME, "Music", "Vedanta", "Sri Chalapathi Rao"))
 	New-Item -Type Directory -Force $Vedanta | Out-Null
 
+	[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
 	$response = Invoke-WebRequest -UseBasicParsing -Uri http://www.srichalapathirao.com/discourses
 	$links = ($response.Links | Where-Object href -Like "*subject=*").href
 
@@ -228,12 +277,15 @@ function Get-SriChalapathiRaoAudio {
 		$Group     = Get-Capalized $(([regex]::Match($Category, '([a-z]|[A-Z]|[0-9])*_')).Value -replace "_", "")
 
 		$Subject    = (([regex]::Match($link, '(subject=)(.)*')).Value -replace "subject=", "") -replace "Amp;", ""
-		$MainFolder = Get-Capalized $Subject
+		$MainFolder = $($(Get-Capalized $Subject) -replace "\.", " ") -replace "  ", " "
 
 		if ($Subject -like "*:*") {
-			$MainFolder = Get-Capalized $(([regex]::Match($Subject, '(.)*:')).Value -replace ":", "").Trim()
-			$SubFolder  = Get-Capalized $(([regex]::Match($Subject, ':(.)*')).Value -replace ":", "").Trim()
+			$MainFolder = $($(Get-Capalized $(([regex]::Match($Subject, '(.)*:')).Value -replace ":", "").Trim()) -replace "\.", " ") -replace "  ", " "
+			$SubFolder  = $($(Get-Capalized $(([regex]::Match($Subject, ':(.)*')).Value -replace ":", "").Trim()) -replace "\.", " ") -replace "  ", " "
 		}
+
+		$Group = (Get-AlternateName $Group).Trim()
+		$MainFolder = (Get-AlternateName $MainFolder).Trim()
 
 		Set-Location $Vedanta
 		New-Item -Type Directory -Force $Group  | Out-Null
@@ -241,26 +293,26 @@ function Get-SriChalapathiRaoAudio {
 
 		New-Item -Type Directory -Force $MainFolder | Out-Null
 		Set-Location $MainFolder
-		Write-Host -NoNewline "Downloading $MainFolder"
+		Write-Host -NoNewline "Downloading $Group : $MainFolder"
 
 		if ($Subject -like "*:*") {
 			New-Item -Type Directory -Force $SubFolder | Out-Null
 			Set-Location $SubFolder
 			Write-Host -NoNewline " : $SubFolder"
 		}
-		Write-Host " : $("http://www.srichalapathirao.com" + $link)"
+		Write-Host ""
 
-		$request = Invoke-WebRequest -UseBasicParsing -Uri $("http://www.srichalapathirao.com" + $link)
+		$request = Invoke-WebRequest -UseBasicParsing -Uri "$("http://www.srichalapathirao.com" + $link)"
 		$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
 		foreach ($URL in $URLS) {
-			$File = $(Split-Path $URL -Leaf)
-			$FileName = $(StringSplitCaps $($File -replace "MP3", "mp3"))
+			$FileName = Get-FixedFileName $URL.Line $MainFolder $SubFolder
 	
 			if (!$(Test-Path $FileName)) {
 				Get-RemoteFile $URL.Line $FileName
 			}
 		}
 	}
+	Set-Location $Vedanta
 }
 
 function Get-Vedanta {
