@@ -1,5 +1,5 @@
 function Get-MovieURLs($URLLink) {
-	$Response = Invoke-WebRequest -Uri $URLLink
+	$Response = Invoke-WebRequest -UseBasicParsing -Uri $URLLink
 
 	$Urls = ($Response.Links | Where-Object {$_.href -like "*flac*download.html"}).href | Get-Unique
 
@@ -7,7 +7,7 @@ function Get-MovieURLs($URLLink) {
 }
 
 function Get-PageCount($Page) {
-	$Response = Invoke-WebRequest -Uri $Page
+	$Response = Invoke-WebRequest -UseBasicParsing -Uri $Page
 	$Pages  = $Response.Links | Where-Object {$_.href -like "*page*"}
 
 	$Count = $Pages[-1].innerText
@@ -46,7 +46,7 @@ function Update-ID3($AudioFile, $Artist) {
 		else
 		{
 			if (Test-Path "cover.*")
-			{				
+			{
 				$COVER = Get-ChildItem -Name -File -Filter "cover.*" -Path .
 			}
 		}
@@ -94,7 +94,7 @@ function Update-ID3Files {
 }
 
 function Get-Parvam($URL) {
-	$response = Invoke-WebRequest -Uri $URL
+	$response = Invoke-WebRequest -UseBasicParsing -Uri $URL
 	$Links = ($response.Links).href | Select-String -Pattern "mp3$" | Get-Unique
 
 	foreach ($link in $Links) {
@@ -120,9 +120,9 @@ function Get-Parvam($URL) {
 
 			$NewFileName = $(StringSplitCaps $($Track + " " + $Title))
 
-			New-Item -Type Directory -Force $Parvam
+			New-Item -Type Directory -Force $Parvam | Out-Null
 
-			# Write-Output "Invoke-WebRequest -Uri $link -OutFile $(Join-Path $Parvam $NewFileName)"
+			# Write-Output "Invoke-WebRequest -UseBasicParsing -Uri $link -OutFile $(Join-Path $Parvam $NewFileName)"
 			$FileName = $(Join-Path $Parvam $NewFileName)
 			if (!$(Test-Path $FileName)) {
 				Get-RemoteFile $link.Line $FileName
@@ -132,7 +132,7 @@ function Get-Parvam($URL) {
 }
 
 function Get-Bharatam {
-	New-Item -Type Directory "Maha Bharatam"
+	New-Item -Type Directory "Maha Bharatam" | Out-Null
 	Set-Location "Maha Bharatam"
 
 	$BASEURL = "http://www.srichalapathirao.com/discourses?category=mahabharatam_"
@@ -153,7 +153,7 @@ function Get-Bharatam {
 	Update-ID3Files "Sri Chalapathi Rao"
 	if (Test-Path "cover.jpg")
 	{
-		Remove-Item "cover.jpg"
+		Remove-Item "cover.jpg" -ErrorAction Ignore
 	}
 
 	Set-Location ..
@@ -164,14 +164,14 @@ function Get-RemoteFile($URL, $FileName) {
 		$FileName = $(Split-Path $URL -Leaf)
 	}
 
-	Invoke-WebRequest -Uri $URL -OutFile $FileName
+	Invoke-WebRequest -UseBasicParsing -Uri $URL -OutFile $FileName
 }
 
 function Get-DasamaSkandam {
-	New-Item -Type Directory -Force "Dasama Skandam"
+	New-Item -Type Directory -Force "Dasama Skandam" | Out-Null
 	Set-Location "Dasama Skandam"
 
-	$request = Invoke-WebRequest -Uri "http://www.srichalapathirao.com/discourses?category=bhakti_dasama"
+	$request = Invoke-WebRequest -UseBasicParsing -Uri "http://www.srichalapathirao.com/discourses?category=bhakti_dasama"
 	$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
 
 	foreach ($URL in $URLS) {
@@ -192,7 +192,7 @@ function Get-DasamaSkandam {
 }
 
 function Get-Bhagavatam {
-	New-Item -Type Directory -Force "Bhagavatam"
+	New-Item -Type Directory -Force "Bhagavatam" | Out-Null
 	Set-Location "Bhagavatam"
 
 	Get-DasamaSkandam
@@ -201,16 +201,74 @@ function Get-Bhagavatam {
 	Update-ID3Files "Sri Chalapathi Rao"
 	if (Test-Path "cover.jpg")
 	{
-		Remove-Item "cover.jpg"
+		Remove-Item "cover.jpg" -ErrorAction Ignore
 	}
 
 	Set-Location ..
 }
 
+function Get-BhagavadGeeta {
+
+}
+
+function Get-Capalized($String) {
+	$TextInfo = (Get-Culture).TextInfo
+	$TextInfo.ToTitleCase($String)
+}
+
+function Get-SriChalapathiRaoAudio {
+	$Vedanta = ([IO.Path]::Combine($HOME, "Music", "Vedanta", "Sri Chalapathi Rao"))
+	New-Item -Type Directory -Force $Vedanta | Out-Null
+
+	$response = Invoke-WebRequest -UseBasicParsing -Uri http://www.srichalapathirao.com/discourses
+	$links = ($response.Links | Where-Object href -Like "*subject=*").href
+
+	foreach ($link in $links) {
+		$Category  = ([regex]::Match($link, '(category=)([a-z]|[A-Z]|[0-9])*(_)([a-z]|[A-Z]|[0-9])*')).Value -replace "category=", ""
+		$Group     = Get-Capalized $(([regex]::Match($Category, '([a-z]|[A-Z]|[0-9])*_')).Value -replace "_", "")
+
+		$Subject    = (([regex]::Match($link, '(subject=)(.)*')).Value -replace "subject=", "") -replace "Amp;", ""
+		$MainFolder = Get-Capalized $Subject
+
+		if ($Subject -like "*:*") {
+			$MainFolder = Get-Capalized $(([regex]::Match($Subject, '(.)*:')).Value -replace ":", "").Trim()
+			$SubFolder  = Get-Capalized $(([regex]::Match($Subject, ':(.)*')).Value -replace ":", "").Trim()
+		}
+
+		Set-Location $Vedanta
+		New-Item -Type Directory -Force $Group  | Out-Null
+		Set-Location $Group
+
+		New-Item -Type Directory -Force $MainFolder | Out-Null
+		Set-Location $MainFolder
+		Write-Host -NoNewline "Downloading $MainFolder"
+
+		if ($Subject -like "*:*") {
+			New-Item -Type Directory -Force $SubFolder | Out-Null
+			Set-Location $SubFolder
+			Write-Host -NoNewline " : $SubFolder"
+		}
+		Write-Host " : $("http://www.srichalapathirao.com" + $link)"
+
+		$request = Invoke-WebRequest -UseBasicParsing -Uri $("http://www.srichalapathirao.com" + $link)
+		$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
+		foreach ($URL in $URLS) {
+			$File = $(Split-Path $URL -Leaf)
+			$FileName = $(StringSplitCaps $($File -replace "MP3", "mp3"))
+	
+			if (!$(Test-Path $FileName)) {
+				Get-RemoteFile $URL.Line $FileName
+			}
+		}
+	}
+}
+
 function Get-Vedanta {
-	New-Item -Type Directory -Force "Vedanta"
-	Set-Location "Vedanta"
+	$Vedanta = ([IO.Path]::Combine($HOME, "Music", "Vedanta"))
+	New-Item -Type Directory -Force $Vedanta | Out-Null
+	Set-Location $Vedanta
 
 	Get-Bharatam
 	Get-Bhagavatam
+	Get-BhagavadGeeta
 }
