@@ -362,3 +362,19 @@ function Get-Vedanta {
 	Get-Bhagavatam
 	Get-BhagavadGeeta
 }
+
+function AutoCropVideos {
+	$Videos = (Get-ChildItem -File -Filter "*.mp4").Name
+	$PYCrop = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyCrop.py"))
+
+	New-Item -Type Directory -Force out | Out-Null
+
+	foreach ($Video in $Videos) {
+		$Crop = python $PYCrop $Video
+		Write-Host "$Video : $Crop"
+		ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+	}
+}
+
+# old = crop=472:256:84:64
+# new = crop=472:272:84:44
