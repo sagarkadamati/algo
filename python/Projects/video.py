@@ -37,8 +37,8 @@ while(cap.isOpened()):
 
             # print(cap.get(cv2.CAP_PROP_FOURCC))
             # out = cv2.VideoWriter('tmp.mp4', cap.get(cv2.CAP_PROP_FOURCC), cap.get(cv2.CAP_PROP_FPS), (w, h))
-            # out = cv2.VideoWriter('tmp.mp4', cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (w, h))
-            out = cv2.VideoWriter('tmp.mp4', cv2.VideoWriter_fourcc('A','V','C','1'), cap.get(cv2.CAP_PROP_FPS), (w, h))
+            out = cv2.VideoWriter('tmp.mp4', cv2.VideoWriter_fourcc(*'mp4v'), cap.get(cv2.CAP_PROP_FPS), (w, h))
+            # out = cv2.VideoWriter('tmp.mp4', cv2.VideoWriter_fourcc('A','V','C','1'), cap.get(cv2.CAP_PROP_FPS), (w, h))
     else:
         crop = frame[y:y+h, x:x+w]
         out.write(crop)

@@ -17,6 +17,8 @@ function Update-Paths {
 	$KOTLINPATH       += $PS
 	$KOTLINPATH       += [IO.Path]::Combine($ToolsLocation, "Kotlin", "kotlin-native", "bin")
 
+	$WIN_FFMPEG        = [IO.Path]::Combine($ToolsLocation, "Env", "Tools", "ffmpeg", "bin")
+
 	## Set Paths
 	$MYPATH            = $ScriptsLocation              + $PS
 	$MYPATH           += $GITPATH                      + $PS
@@ -26,6 +28,10 @@ function Update-Paths {
 	$MYPATH           += $(Join-Path $GOROOT    "bin") + $PS
 	$MYPATH           += $(Join-Path $GOPATH    "bin") + $PS
 	$MYPATH           += $(Join-Path $JAVA_HOME "bin") + $PS
+
+	if ($([System.Environment]::OSVersion.Platform) -Like "Win32NT") {
+		$MYPATH           += $WIN_FFMPEG                   + $PS
+	}
 
 	$env:PATH          = $MYPATH + $env:PATH
 
