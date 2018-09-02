@@ -221,6 +221,39 @@ function Get-Capalized($String) {
 	$TextInfo.ToTitleCase($String)
 }
 
+function Get-OldFixedFileName($tmp, $main, $sub) {
+	$FileName = Split-Path $tmp -Leaf
+	$FileName = $FileName -replace "MP3", "mp3"
+	$FileName = StringSplitCaps $FileName
+
+	if ($FileName -like "*_*") {
+		$FileName = $FileName -replace $($main + "_"), ""
+		$FileName = $FileName -replace $($main + ""), ""
+		$FileName = $FileName -replace $($sub + "_"), ""
+		$FileName = $FileName -replace $($sub + ""), ""
+		$FileName = $FileName -replace "_ ", ","
+	}
+
+	$FileName = $FileName -replace "by", ""
+	$FileName = $FileName -replace "sri", ""
+	$FileName = $FileName -replace "chalapathi", ""
+	$FileName = $FileName -replace "rao", ""
+
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", ""
+
+	$FileName = $FileName -replace " \.", "."
+	
+	$FileName = $FileName -replace "01 Bhagavatam10.mp3", "01 Introduction.mp3"
+	$FileName = $FileName -replace "26 Bhagavatam01.mp3", "26 Songs.mp3"
+	$FileName = $FileName -replace "27 Bhagavatam02.mp3", "27 Songs.mp3"
+	$FileName = $FileName -replace "28 Bhagavatam03.mp3", "28 Songs.mp3"
+
+	$FileName.Trim()
+}
+
 function Get-FixedFileName($tmp, $main, $sub) {
 	$FileName = Split-Path $tmp -Leaf
 	$FileName = $FileName -replace "MP3", "mp3"
@@ -231,7 +264,7 @@ function Get-FixedFileName($tmp, $main, $sub) {
 		$FileName = $FileName -replace $($main + ""), ""
 		$FileName = $FileName -replace $($sub + "_"), ""
 		$FileName = $FileName -replace $($sub + ""), ""
-		$FileName = $FileName -replace "_", ","
+		$FileName = $FileName -replace "_ ", ", "
 	}
 
 	$FileName = $FileName -replace "by", ""
@@ -305,8 +338,13 @@ function Get-SriChalapathiRaoAudio {
 		$request = Invoke-WebRequest -UseBasicParsing -Uri "$("http://www.srichalapathirao.com" + $link)"
 		$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
 		foreach ($URL in $URLS) {
+			$OldFileName = Get-OldFixedFileName $URL.Line $MainFolder $SubFolder
 			$FileName = Get-FixedFileName $URL.Line $MainFolder $SubFolder
-	
+
+			if ($(Test-Path $OldFileName)) {
+				Move-Item $OldFileName $FileName
+			}
+
 			if (!$(Test-Path $FileName)) {
 				Get-RemoteFile $URL.Line $FileName
 			}
