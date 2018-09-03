@@ -370,9 +370,11 @@ function AutoCropVideos {
 	New-Item -Type Directory -Force out | Out-Null
 
 	foreach ($Video in $Videos) {
-		$Crop = python $PYCrop $Video
-		Write-Host "$Video : $Crop"
-		ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+		if (!$(Test-Path $(Join-Path "out" "$Video"))) {
+			$Crop = python $PYCrop $Video
+			Write-Host "$Video : $Crop"
+			ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+		}
 	}
 }
 
