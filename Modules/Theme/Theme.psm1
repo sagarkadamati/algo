@@ -96,7 +96,7 @@ function STheme($Time) {
 	else {
 		# Host UI
 		$Host.UI.RawUI.BackgroundColor                 = 'White'
-		$Host.UI.RawUI.ForegroundColor                 = 'Cyan'
+		$Host.UI.RawUI.ForegroundColor                 = 'DarkGreen'
 
 		# Host Foreground
 		$Host.PrivateData.ErrorForegroundColor         = 'Red'
