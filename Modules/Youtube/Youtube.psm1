@@ -78,6 +78,7 @@ function Youtube {
 
 	process {
 		$VideoUrls = YoutubeGetURLs($URL)
+		[array]::Reverse($VideoUrls)
 		ForEach ($video in $VideoUrls) {
 			Get-YoutubeVideoInfo $video
 			$Streams = Get-YoutubeParseVideoInfo
@@ -89,11 +90,18 @@ function Youtube {
 			else
 			{
 				if ($Index) {
-					invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $streams[0]["filename"]
+					if (!(Test-Path $streams[0]["filename"])) {
+						$streams[0]["filename"]
+						invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $streams[0]["filename"]
+					}
 				}
 				else {
-					invoke-WebRequest -Uri $streams[0]["url"] -OutFile $streams[0]["filename"]
+					if (!(Test-Path $streams[0]["filename"])) {
+						$streams[0]["filename"]
+						invoke-WebRequest -Uri $streams[0]["url"] -OutFile $streams[0]["filename"]
+					}
 				}
+				# $Streams
 			}
 		}
 
@@ -103,4 +111,10 @@ function Youtube {
 	}
 }
 
-Export-ModuleMember -Function Youtube
+function Get-Sanskrit {
+	Set-Location $(Join-Path $HOME "Music" | Join-Path -Child "Vedanta" | Join-Path -Child "TTDSanskrit")
+	Youtube -Index 2 -URL https://www.youtube.com/playlist?list=PLjhrDIztP9pdqFGSh6fXKaotQ9IIGomdm
+	# Youtube https://www.youtube.com/playlist?list=PLjhrDIztP9pdqFGSh6fXKaotQ9IIGomdm
+}
+
+Export-ModuleMember -Function Youtube, Get-Sanskrit

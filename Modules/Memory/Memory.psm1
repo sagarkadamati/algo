@@ -4,6 +4,16 @@ function ReplaceFileNames($ostr, $nstr) {
 		$newFile = $file.Replace($ostr, $nstr)
 		if ($file -notlike $newFile) {
 			Write-Host $file "->" $newFile
+			Move-Item  -literalpath $file $newFile -Force
+		}
+	}
+}
+
+function PrependFileNames($pstr) {
+	foreach ($file in $(Get-ChildItem).Name) {
+		$newFile = $pstr + $file
+		if ($file -notlike $newFile) {
+			Write-Host $file "->" $newFile
 			Move-Item $file $newFile -Force
 		}
 	}

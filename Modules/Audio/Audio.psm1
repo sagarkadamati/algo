@@ -36,8 +36,12 @@ function Update-ID3($AudioFile, $Artist) {
 		$File  = (Get-ChildItem $AudioFile)
 		$Title = ($File.BaseName -split $([regex]::Match($File.BaseName, '(^[0-9]*[ ]*)').Groups[0].Value))[1]
 		$Album = ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
-		$Genre = ($File.Directory).Name
+		$Genre = "$Album`: $($($File.Directory).Name)"
 		$Track = ($File.BaseName -split " ")[0]
+
+		$Album = "Bhagavatam Samhita: "
+		$Album += ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
+		$Genre = "$Album"
 
 		if (Test-Path $(Join-Path $(($File.Directory).Name) "cover.*"))
 		{
@@ -226,6 +230,15 @@ function Get-OldFixedFileName($tmp, $main, $sub) {
 	$FileName = $FileName -replace "MP3", "mp3"
 	$FileName = StringSplitCaps $FileName
 
+	$FileName = $FileName -replace "Adi Parvam_", ""
+	$FileName = $FileName -replace "Virata Parvam_", ""
+	$FileName = $FileName -replace "Sabha Parvam_", ""
+	$FileName = $FileName -replace "Vana Parvam_", ""
+	$FileName = $FileName -replace "Virata Parvam_", ""
+	$FileName = $FileName -replace "Udyoga Parvam_", ""
+	$FileName = $FileName -replace "Bheeshma Parvam_", ""
+	$FileName = $FileName -replace "Maha Bharatam", ""
+
 	if ($FileName -like "*_*") {
 		$FileName = $FileName -replace $($main + "_"), ""
 		$FileName = $FileName -replace $($main + ""), ""
@@ -245,7 +258,7 @@ function Get-OldFixedFileName($tmp, $main, $sub) {
 	$FileName = $FileName -replace "  ", ""
 
 	$FileName = $FileName -replace " \.", "."
-	
+
 	$FileName = $FileName -replace "01 Bhagavatam10.mp3", "01 Introduction.mp3"
 	$FileName = $FileName -replace "26 Bhagavatam01.mp3", "26 Songs.mp3"
 	$FileName = $FileName -replace "27 Bhagavatam02.mp3", "27 Songs.mp3"
@@ -258,6 +271,16 @@ function Get-FixedFileName($tmp, $main, $sub) {
 	$FileName = Split-Path $tmp -Leaf
 	$FileName = $FileName -replace "MP3", "mp3"
 	$FileName = StringSplitCaps $FileName
+
+	$FileName = $FileName -replace "Adi Parvam_", ""
+	$FileName = $FileName -replace "Virata Parvam_", ""
+	$FileName = $FileName -replace "Sabha Parvam_", ""
+	$FileName = $FileName -replace "Vana Parvam_", ""
+	$FileName = $FileName -replace "Virata Parvam_", ""
+	$FileName = $FileName -replace "Udyoga Parvam_", ""
+	$FileName = $FileName -replace "Bheeshma Parvam_", ""
+	$FileName = $FileName -replace "Maha Bharatam", ""
+	$FileName = $FileName -replace " LO ", ""
 
 	if ($FileName -like "*_*") {
 		$FileName = $FileName -replace $($main + "_"), ""
@@ -272,13 +295,13 @@ function Get-FixedFileName($tmp, $main, $sub) {
 	$FileName = $FileName -replace "chalapathi", ""
 	$FileName = $FileName -replace "rao", ""
 
-	$FileName = $FileName -replace "  ", ""
-	$FileName = $FileName -replace "  ", ""
-	$FileName = $FileName -replace "  ", ""
-	$FileName = $FileName -replace "  ", ""
+	$FileName = $FileName -replace "  ", " "
+	$FileName = $FileName -replace "  ", " "
+	$FileName = $FileName -replace "  ", " "
+	$FileName = $FileName -replace "  ", " "
 
 	$FileName = $FileName -replace " \.", "."
-	
+
 	$FileName = $FileName -replace "01 Bhagavatam10.mp3", "01 Introduction.mp3"
 	$FileName = $FileName -replace "26 Bhagavatam01.mp3", "26 Songs.mp3"
 	$FileName = $FileName -replace "27 Bhagavatam02.mp3", "27 Songs.mp3"
@@ -338,14 +361,15 @@ function Get-SriChalapathiRaoAudio {
 		$request = Invoke-WebRequest -UseBasicParsing -Uri "$("http://www.srichalapathirao.com" + $link)"
 		$URLS = ($request.Links).href | Select-String "mp3" | Get-Unique
 		foreach ($URL in $URLS) {
-			$OldFileName = Get-OldFixedFileName $URL.Line $MainFolder $SubFolder
 			$FileName = Get-FixedFileName $URL.Line $MainFolder $SubFolder
 
+			$OldFileName = Get-OldFixedFileName $URL.Line $MainFolder $SubFolder
 			if ($(Test-Path $OldFileName)) {
-				Move-Item $OldFileName $FileName
+				Move-Item -Force $OldFileName $FileName
 			}
 
 			if (!$(Test-Path $FileName)) {
+				# Write-Host "$OldFileName $FileName"
 				Get-RemoteFile $URL.Line $FileName
 			}
 		}
@@ -363,20 +387,204 @@ function Get-Vedanta {
 	Get-BhagavadGeeta
 }
 
-function AutoCropVideos {
-	$Videos = (Get-ChildItem -File -Filter "*.mp4").Name
+function CreateDirectory($dir) {
+	New-Item -ItemType Directory -Force -Path $dir | Out-Null
+}
+
+function AutoCropVideos($Encoding) {
 	$PYCrop = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyCrop.py"))
+	$Files = Get-FileNames -Recursive "mp4"
 
-	New-Item -Type Directory -Force out | Out-Null
+	$VideoCodec     = "hevc"
+	$PixelFormat    = "yuv420p"
+	$StartTime      = "00:00:00"
+	$EndTime        = ""
+	$AspectRatio    = "4:3"
 
-	foreach ($Video in $Videos) {
-		if (!$(Test-Path $(Join-Path "out" "$Video"))) {
-			$Crop = python $PYCrop $Video
-			Write-Host "$Video : $Crop"
-			ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+	if (($Encoding -Like "hevc") -or ($Encoding -Like "h264")) {
+		$VideoCodec = $Encoding
+	}
+
+	foreach($File in $Files) {
+		CreateDirectory $(Join-Path "out" $($File -replace $(Split-Path $File -Leaf), ""))
+
+		if (($File -notlike "*out*") -and ($File -notlike "tmp.mp4")) {
+			if (!$(Test-Path $(Join-Path "out" $File))) {
+				$Crop = python $PYCrop $File
+				$VideoFilter    = "$Crop"
+
+				# $Fno = [Int]($(Split-Path $File -Leaf)).split(' ')[0]
+
+				Write-Host "$File : $Crop"
+				if ($Encoding -Like "copy") {
+					if ($EndTime -Like "*:*:*") {
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -c copy tmp.mp4
+					}
+					else {
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -c copy tmp.mp4
+					}
+				}
+				else {
+					if ($EndTime -Like "*:*:*") {
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf 23 -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy tmp.mp4
+					}
+					else {
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -crf 23 -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy tmp.mp4
+					}
+				}
+
+				Move-Item tmp.mp4 $(Join-Path "out" "$File")
+			}
 		}
 	}
 }
 
+	# foreach ($Video in $Videos) {
+	# 	$FileName = $Video.FullName
+	# 	CreateDirectory $(Join-Path "out" $((Get-ChildItem $FileName).Directory).Name))
+
+	# 	if (!$(Test-Path $(Join-Path "out" "$Video"))) {
+	# 		$Crop = python $PYCrop $Video
+	# 		Write-Host "$Video.Name : $Crop"
+
+	# 		$VideoFilter = "$Crop"
+	# 		# $VideoFilter = "$Crop, scale=512:288"
+	# 		# $VideoFilter = "$Crop, scale=640:360"
+
+	# 		$VideoCodec = "hevc"
+
+	# 		# $PixelFormat  = "yuv420p10le"
+	# 		$PixelFormat  = "yuv420p"
+
+	# 		$Fno = [Int]($Video).split(' ')[0]
+	# 		if ($Fno -le 107) {
+	# 			$StartTime = "00:01:08"
+	# 			$EndTime = ""
+	# 		}
+	# 		else {
+	# 			$StartTime = "00:00:05"
+	# 			$EndTime = ""
+	# 		}
+
+	# 		ffmpeg -y -v error -stats -i $Video.Name -ss $StartTime -crf 23 -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video.Name")
+
+	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -y -v error -stats -i $Video -ss $StartTime -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -y -v error -stats -i $Video -ss $StartTime -b:v 400k -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -crf 0 -c:a copy $($(Join-Path "out" "$Video") -replace "DAT", "mp4")
+
+	# 		# ffmpeg -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=1 -an -f mp4 NUL
+	# 		# ffmpeg -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=2 -c:a copy $(Join-Path "out" "$Video")
+
+	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+
+	# 		# ffmpeg -i input \
+	# 		# 	-c:v libx265 -pix_fmt yuv420p \
+	# 		# 	-x265-params crf=28:keyint=240:min-keyint=20 \
+	# 		# 	-preset:v slow \
+	# 		# 	-c:a libfdk_aac -vbr 4 \
+	# 		# 	output.mp4
+
+	# 		# ffmpeg -i '.\Part 1.DAT' -c:v libx265 -pix_fmt yuv420p -x265-params crf=28:keyint=240:min-keyint=20 -preset:v slow -c:a copy -vbr 4 '.\out\Part 1.mp4'
+	# 	}
+	# }
+
 # old = crop=472:256:84:64
 # new = crop=472:272:84:44
+
+function FilterFolders {
+	$CURDIR = Get-Location
+	$Folders = (Get-ChildItem -Directory).FullName
+
+	foreach ($Folder in $Folders)
+	{
+		Set-Location $Folder
+
+		# Write-Host $Folder
+		# ReplaceFileNames "(" " ("
+		ReplaceFileNames "  " " "
+
+		Set-Location $CURDIR
+	}
+
+	# $Folders = (Get-ChildItem -Directory).FullName
+
+	# foreach ($Folder in $Folders) {
+	# 	# Write-Host $Folder
+
+	# 	if (Test-Path $(Join-Path $Folder "*.flac")) {
+	# 		$Album = $Folder
+	# 	}
+	# 	else {
+	# 		$Album = Join-Path $Folder "*"
+	# 	}
+
+	# 	Write-Host "$Album" "..\NewFlac"
+	# 	Move-Item "$Album" "..\NewFlac"
+	# }
+}
+
+function FixMoolam {
+	$CURDIR = Get-Location
+	$Folders = (Get-ChildItem -Directory).FullName
+
+	foreach ($Folder in $Folders)
+	{
+		Set-Location $Folder
+
+		# Write-Host $Folder
+		# ReplaceFileNames "(" " ("
+		# ReplaceFileNames "BH-samhita-" ""
+		# ReplaceFileNames "-" " "
+		# ReplaceFileNames "Adhuayam" "Adhyayam"
+
+		# ReplaceFileNames "01 Adhyayam " ""
+		# ReplaceFileNames "02 Adhyayam " ""
+		# ReplaceFileNames "03 Adhyayam " ""
+		# ReplaceFileNames "04 Adhyayam " ""
+		# ReplaceFileNames "05 Adhyayam " ""
+		# ReplaceFileNames "06 Adhyayam " ""
+		# ReplaceFileNames "07 Adhyayam " ""
+		# ReplaceFileNames "08 Adhyayam " ""
+		# ReplaceFileNames "09 Adhyayam " ""
+		# ReplaceFileNames "10 Adhyayam " ""
+		# ReplaceFileNames "11 Adhyayam " ""
+		# ReplaceFileNames "12 Adhyayam " ""
+
+		# ReplaceFileNames ".mp3" " Adhyayam.mp3"
+
+		# ReplaceFileNames "Skandamu01" "titles.txt"
+		# ReplaceFileNames "Skandamu02" "titles.txt"
+		# ReplaceFileNames "Skandamu03" "titles.txt"
+		# ReplaceFileNames "Skandamu04" "titles.txt"
+		# ReplaceFileNames "Skandamu05" "titles.txt"
+		# ReplaceFileNames "Skandamu06" "titles.txt"
+		# ReplaceFileNames "Skandamu07" "titles.txt"
+		# ReplaceFileNames "Skandamu08" "titles.txt"
+		# ReplaceFileNames "Skandamu09" "titles.txt"
+		# ReplaceFileNames "Skandamu10" "titles.txt"
+		# ReplaceFileNames "Skandamu11" "titles.txt"
+		# ReplaceFileNames "Skandamu12" "titles.txt"
+
+		# ReplaceFileNames "titles.txt.txt" "titles.txt"
+
+		# cp ../cover.jpg .
+
+		# $MP3Files = (Get-ChildItem -File -Filter "*mp3*").Name
+		# $Titles = Get-Content titles.txt
+
+		# foreach ($MP3File in $MP3Files) {
+		# 	$Chapter = $MP3File.split(' ')[0]
+		# 	$NewFile = $Chapter + " " + $Titles[$($([Int]$Chapter) - 1)] + ".mp3"
+		# 	$NewFile = $NewFile -replace ":", " -"
+		# 	# $Chapter
+		# 	ReplaceFileNames $MP3File $NewFile
+
+		# }
+
+		# Update-ID3Files "Mrs. Manda Kulkarni"
+		rm titles.txt
+
+		Set-Location $CURDIR
+	}
+}
