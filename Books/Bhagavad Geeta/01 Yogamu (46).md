@@ -1,9 +1,13 @@
 Observing the Armies on the Battlefield of Kurukṣetra
+
 TEXT 1
+
 धृतराष्ट्र उवाच ।
 धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः
 मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय ॥ १.१ ॥
+
 Synonyms
+
 dhṛtarāṣṭraḥ uvāca — King Dhṛtarāṣṭra said; dharma-kṣetre — in the place of pilgrimage; kuru-kṣetre — in the place named Kurukṣetra; samavetāḥ — assembled; yuyutsavaḥ — desiring to fight; māmakāḥ — my party (sons); pāṇḍavāḥ — the sons of Pāṇḍu; ca — and; eva — certainly; kim — what; akurvata — did they do; sañjaya — O Sañjaya.
 
 TEXT 2

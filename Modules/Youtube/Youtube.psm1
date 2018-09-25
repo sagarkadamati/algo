@@ -61,6 +61,9 @@ function Get-YoutubeParseVideoInfo {
 }
 
 function YoutubeGetURLs($youtubeURL) {
+	# $VideoUrls = $($(invoke-WebRequest -uri $youtubeURL).Links | Where-Object {$_.HREF -like "/watch*"} | Where-Object innerText -notmatch ".[0-9]:[0-9]." | Where-Object {$_.innerText.Length -gt 3} | Select-Object innerText,@{Name="URL";Expression={'http://www.youtube.com' + $_.href}} | Where-Object innerText -notlike "*Play all*").URL
+	# return $VideoUrls
+
 	if ($youtubeURL -like "*list=*") {
 		$VideoUrls = $($(invoke-WebRequest -uri $youtubeURL).Links | Where-Object {$_.HREF -like "/watch*"} | Where-Object innerText -notmatch ".[0-9]:[0-9]." | Where-Object {$_.innerText.Length -gt 3} | Select-Object innerText,@{Name="URL";Expression={'http://www.youtube.com' + $_.href}} | Where-Object innerText -notlike "*Play all*").URL
 
@@ -91,14 +94,14 @@ function Youtube {
 			{
 				if ($Index) {
 					if (!(Test-Path $streams[0]["filename"])) {
-						$streams[0]["filename"]
-						invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $streams[0]["filename"]
+						$streams[$Index]["filename"]
+						invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $($streams[$Index]["filename"] + $streams[$Index]["sig"])
 					}
 				}
 				else {
 					if (!(Test-Path $streams[0]["filename"])) {
 						$streams[0]["filename"]
-						invoke-WebRequest -Uri $streams[0]["url"] -OutFile $streams[0]["filename"]
+						invoke-WebRequest -Uri $streams[0]["url"] -OutFile $($streams[$Index]["filename"] + $streams[$Index]["sig"])
 					}
 				}
 				# $Streams
