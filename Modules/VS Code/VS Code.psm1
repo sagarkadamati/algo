@@ -27,7 +27,7 @@ function Get-VSCodePathed {
 }
 
 function Update-VSCode {
-	Get-VSKeys > ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "keybindings.json"))
+	Get-VSKeys
 	Get-VSSettings > ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "settings.json"))
 	# Get-VSTheme
 

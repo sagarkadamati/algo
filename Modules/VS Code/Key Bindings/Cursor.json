@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+f",
 		"command": "cursorRight",
@@ -141,4 +142,5 @@
 		"key": "ctrl+alt+d",
 		"command": "deleteWordRight",
 		"when": "textInputFocus"
-	},
+	}
+]

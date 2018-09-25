@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+; ctrl+;",
 		"command": "closeFindWidget",
@@ -12,4 +13,5 @@
 		"key": "ctrl+; ctrl+;",
 		"command": "workbench.action.closeQuickOpen",
 		"when": "inQuickOpen"
-	},
+	}
+]

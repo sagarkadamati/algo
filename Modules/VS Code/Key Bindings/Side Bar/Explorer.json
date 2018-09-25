@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+; n",
 		"command": "explorer.newFile",
@@ -87,4 +88,5 @@
 		"key": "ctrl+n",
 		"command": "list.focusFirst",
 		"when": "inputFocus && searchViewletVisible && !editorTextFocus"
-	},
+	}
+]

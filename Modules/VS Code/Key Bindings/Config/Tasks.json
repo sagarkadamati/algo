@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+shift+c",
 		"command": "workbench.action.tasks.runTask",
@@ -7,4 +8,5 @@
 		"key": "ctrl+shift+r",
 		"command": "workbench.action.tasks.runTask",
 		"args": "run"
-	},
+	}
+]

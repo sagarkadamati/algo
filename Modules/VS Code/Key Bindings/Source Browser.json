@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+; ctrl+s",
 		"command": "C_Cpp.SwitchHeaderSource",
@@ -47,4 +48,5 @@
 		"key": "ctrl+; shift+d",
 		"command": "C_Cpp.PeekDeclaration",
 		"when": "editorTextFocus && editorLangId == 'c'"
-	},
+	}
+]

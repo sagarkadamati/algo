@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+; f",
 		"command": "actions.find",
@@ -80,3 +81,19 @@
 		"key": "ctrl+; shift+r",
 		"command": "workbench.action.files.revert"
 	},
+	{
+		"key": "ctrl+shift+l",
+		"command": "breadcrumbs.focusNext",
+		"when": "breadcrumbsActive && breadcrumbsVisible"
+	},
+	{
+		"key": "ctrl+shift+h",
+		"command": "breadcrumbs.focusPrevious",
+		"when": "breadcrumbsActive && breadcrumbsVisible"
+	},
+	{
+		"key": "ctrl+oem_1 ctrl+oem_1",
+		"command": "breadcrumbs.selectEditor",
+		"when": "breadcrumbsActive && breadcrumbsVisible"
+	}
+]

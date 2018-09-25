@@ -1,3 +1,4 @@
+[
 	{
 		"key": "ctrl+shift+n",
 		"command": "workbench.action.terminal.focusNext",
@@ -7,4 +8,5 @@
 		"key": "ctrl+shift+p",
 		"command": "workbench.action.terminal.focusPrevious",
 		"when": "terminalFocus"
-	},
+	}
+]
