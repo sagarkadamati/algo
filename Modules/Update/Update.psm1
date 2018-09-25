@@ -103,11 +103,6 @@ function Update-Git{
 	}
 }
 
-function Update-VsCode
-{
-
-}
-
 function Update-Python
 {
 
@@ -116,7 +111,7 @@ function Update-Python
 function Update-Tools {
 	Update-KotlinTools
 	# Update-Git
-	Update-VsCode
+	# Update-VSCode
 	Update-Python
 
 	# download "https://www.python.org/ftp/python/3.7.0/python-3.7.0-embed-amd64.zip"
