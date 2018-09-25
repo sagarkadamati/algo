@@ -32,6 +32,8 @@ function Update-VSCode {
 	# Get-VSTheme
 
 	Get-VSCodePathed
+
+	Copy-Item -Force -Recurse ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "my-editor")) ([IO.Path]::Combine($HOME, ".vscode", "extensions"))
 }
 
 Export-ModuleMember -Function Update-VSCode
