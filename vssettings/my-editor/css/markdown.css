@@ -1,0 +1,3 @@
+.editor-actions .actions-container > .action-item > .action-label.icon:not(.textdiff-editor-action) {
+    display: none !important;
+}

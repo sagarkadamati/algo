@@ -1,0 +1,41 @@
+{
+	"name": "my-extension",
+	"version": "1.0.0",
+	"displayName": "VS Code Extension",
+	"description": "This extension updates VS Code as per my taste",
+	"publisher": "vscode",
+	"engines": {
+		"vscode": "*"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"label": "Bright Time",
+				"uiTheme": "vs",
+				"path": "./themes/MyThemeBright.json"
+			},
+			{
+				"label": "Day Time",
+				"uiTheme": "vs",
+				"path": "./themes/MyThemeDay.json"
+			},
+			{
+				"label": "Night Time",
+				"uiTheme": "vs-dark",
+				"path": "./themes/MyThemeNight.json"
+			}
+		],
+		"iconThemes": [
+			{
+				"id": "file-icons",
+				"label": "My Icons",
+				"path": "./icons/file-icons-icon-theme.json"
+			},
+			{
+				"id": "file-icons-colourless",
+				"label": "My Icons (Colourless)",
+				"path": "./icons/file-icons-colourless-icon-theme.json"
+			}
+		]
+	}
+}
