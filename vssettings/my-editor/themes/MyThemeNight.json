@@ -742,8 +742,8 @@
 		// Workbench: Title
 		"titleBar.activeBackground": "#002b36",
 		"titleBar.activeForeground": "#93a1a1",
-		// "titleBar.inactiveBackground": "",
-		// "titleBar.inactiveForeground": "",
+		"titleBar.inactiveBackground": "#002b36",
+		"titleBar.inactiveForeground": "#93a1a1",
 
 		// Workbench: Editors
 		"editorGroup.border": "#002b36",
