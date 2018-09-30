@@ -396,25 +396,32 @@ function AutoCropVideos($Encoding) {
 	$Files = Get-FileNames -Recursive "mp4"
 
 	$VideoCodec     = "hevc"
+	$OUT            = "HEVC"
 	$PixelFormat    = "yuv420p"
 	$StartTime      = "00:00:00"
 	$EndTime        = ""
-	$AspectRatio    = "4:3"
+	$AspectRatio    = "16:9"
+	$CRF            = 23
 
-	if (($Encoding -Like "hevc") -or ($Encoding -Like "h264")) {
+	if ($Encoding -Like "h264") {
 		$VideoCodec = $Encoding
+		$OUT        = "H.264"
+		$CRF        = 18
 	}
 
+	CreateDirectory $OUT
+	$TMPFile = $(Join-Path $OUT "tmp.mp4")
 	foreach($File in $Files) {
-		CreateDirectory $(Join-Path "out" $($File -replace $(Split-Path $File -Leaf), ""))
+		CreateDirectory $(Join-Path $OUT $($File -replace $(Split-Path $File -Leaf), ""))
 
-		if (($File -notlike "*out*") -and ($File -notlike "tmp.mp4")) {
+		if (($File -notlike "*HEVC*") -and ($File -notlike "*H.264*")) {
 			if (!$(Test-Path $(Join-Path "out" $File))) {
 				$Crop = python $PYCrop $File
 				$VideoFilter    = "$Crop"
 
 				# $Fno = [Int]($(Split-Path $File -Leaf)).split(' ')[0]
 
+				$TMPFile = $(Join-Path $OUT "$File")
 				Write-Host "$File : $Crop"
 				if ($Encoding -Like "copy") {
 					if ($EndTime -Like "*:*:*") {
@@ -426,14 +433,14 @@ function AutoCropVideos($Encoding) {
 				}
 				else {
 					if ($EndTime -Like "*:*:*") {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf 23 -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy tmp.mp4
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf $CRF -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $TMPFile
 					}
 					else {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -crf 23 -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy tmp.mp4
+						ffmpeg -y -v error -stats -i $File -ss $StartTime -crf $CRF -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $TMPFile
 					}
 				}
 
-				Move-Item tmp.mp4 $(Join-Path "out" "$File")
+				# Move-Item -Force $TMPFile $(Join-Path $OUT "$File")
 			}
 		}
 	}

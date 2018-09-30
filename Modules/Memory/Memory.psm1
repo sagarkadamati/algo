@@ -82,3 +82,17 @@ function Get-Json {
 function StringSplitCaps($Str) {
 	return ($Str.substring(0,1).toupper() + $Str.substring(1) -creplace '[A-Z]', ' $&').Trim();
 }
+
+function TrimFileName {
+	foreach ($file in $(Get-ChildItem).Name) {
+		$Fields = $file -split " "
+		$newFile = $Fields[0]
+		$newFile += " "
+		$newFile += $Fields[1]
+		$newFile += ".mp4"
+		if ($file -notlike $newFile) {
+			Write-Host $file "->" $newFile
+			Move-Item $file $newFile -Force
+		}
+	}
+}
