@@ -452,8 +452,7 @@ function TrimVideos {
 		foreach ($TrimData in $TrimVideos) {
 			$DataLine  = $TrimData.Split('|')
 			$VideoFile = ($DataLine[0]).Trim()
-			$Mode      = ($DataLine[1]).Trim()
-			$VTimes    = ($DataLine[2]).Split(',')
+			$VTimes    = ($DataLine[1]).Split(',')
 			$OUT       = (Join-Path "out" $($VideoFile -replace ".mp4", ""))
 			$Count     = 0
 			$Digits    = 5
@@ -466,43 +465,46 @@ function TrimVideos {
 				if ($TCount -ge 10) { continue } else { break }
 			}
 
-			Write-Host $Digits $VTimes.Length
-
 			CreateDirectory $OUT
 			foreach($VTime in $VTimes) {
 				$TrimTime  = $VTime.Split('-')
-				$StartTime = ($TrimTime[0] + "").Trim()
-				$EndTime   = ($TrimTime[1] + "").Trim()
+				$StartTime = "00:00:00"
+				$EndTime   = ($TrimTime[0] + "").Trim()
 
-				$OUTFile   = Join-Path $OUT $($([String]++$Count + ".mp4") | % PadLeft $Digits '0')
+				foreach($NewEndTime in $TrimTime[1..$TrimTime.Length]) {
+					$StartTime = $EndTime
+					$EndTime   = ($NewEndTime + "").Trim()
 
-				switch -Wildcard ($StartTime) {
-					'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
-					'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $StartTime = "0" + $StartTime }
-					'[0-9][0-9]:[0-9][0-9]'            { $StartTime = "00:" + $StartTime }
-					'[0-9]:[0-9][0-9]'                 { $StartTime = "00:0" + $StartTime }
-					'[0-9][0-9]'                       { $StartTime = "00:00:" + $StartTime }
-					'[0-9]'                            { $StartTime = "00:00:0" + $StartTime }
-					default                            { $StartTime = "00:00:00"}
-				}
+					switch -Wildcard ($StartTime) {
+						'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
+						'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $StartTime = "0" + $StartTime }
+						'[0-9][0-9]:[0-9][0-9]'            { $StartTime = "00:" + $StartTime }
+						'[0-9]:[0-9][0-9]'                 { $StartTime = "00:0" + $StartTime }
+						'[0-9][0-9]'                       { $StartTime = "00:00:" + $StartTime }
+						'[0-9]'                            { $StartTime = "00:00:0" + $StartTime }
+						default                            { $StartTime = "00:00:00"}
+					}
 
-				switch -Wildcard ($EndTime) {
-					'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
-					'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $EndTime = "0" + $EndTime }
-					'[0-9][0-9]:[0-9][0-9]'            { $EndTime = "00:" + $EndTime }
-					'[0-9]:[0-9][0-9]'                 { $EndTime = "00:0" + $EndTime }
-					'[0-9][0-9]'                       { $EndTime = "00:00:" + $EndTime }
-					'[0-9]'                            { $EndTime = "00:00:0" + $EndTime }
-					default                            { }
-				}
+					switch -Wildcard ($EndTime) {
+						'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
+						'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $EndTime = "0" + $EndTime }
+						'[0-9][0-9]:[0-9][0-9]'            { $EndTime = "00:" + $EndTime }
+						'[0-9]:[0-9][0-9]'                 { $EndTime = "00:0" + $EndTime }
+						'[0-9][0-9]'                       { $EndTime = "00:00:" + $EndTime }
+						'[0-9]'                            { $EndTime = "00:00:0" + $EndTime }
+						default                            { }
+					}
 
-				if ($EndTime -Like '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') {
-					# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
-					ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile
-				}
-				else {
-					# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
-					ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -c copy $OUTFile
+					$OUTFile   = Join-Path $OUT $($([String]++$Count + ".mp4") | % PadLeft $Digits '0')
+
+					if ($EndTime -Like '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') {
+						# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+						ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile
+					}
+					else {
+						# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+						ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -c copy $OUTFile
+					}
 				}
 			}
 		}
