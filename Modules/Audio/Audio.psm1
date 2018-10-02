@@ -457,7 +457,7 @@ function TrimVideos {
 			$Count     = 0
 			$Digits    = 5
 
-			$TCount    = $VTimes.Length
+			$TCount    = $VTimes.Split('-').Length
 			while($TCount -ne 0) {
 				$TCount = [Math]::Abs($TCount / 10)
 				$Digits++
