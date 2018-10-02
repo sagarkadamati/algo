@@ -446,6 +446,69 @@ function AutoCropVideos($Encoding) {
 	}
 }
 
+function TrimVideos {
+	if (Test-Path "trim.txt") {
+		$TrimVideos = Get-Content -Encoding UTF8 .\trim.txt
+		foreach ($TrimData in $TrimVideos) {
+			$DataLine  = $TrimData.Split('|')
+			$VideoFile = ($DataLine[0]).Trim()
+			$Mode      = ($DataLine[1]).Trim()
+			$VTimes    = ($DataLine[2]).Split(',')
+			$OUT       = (Join-Path "out" $($VideoFile -replace ".mp4", ""))
+			$Count     = 0
+			$Digits    = 5
+
+			$TCount    = $VTimes.Length
+			while($TCount -ne 0) {
+				$TCount = [Math]::Abs($TCount / 10)
+				$Digits++
+
+				if ($TCount -ge 10) { continue } else { break }
+			}
+
+			Write-Host $Digits $VTimes.Length
+
+			CreateDirectory $OUT
+			foreach($VTime in $VTimes) {
+				$TrimTime  = $VTime.Split('-')
+				$StartTime = ($TrimTime[0] + "").Trim()
+				$EndTime   = ($TrimTime[1] + "").Trim()
+
+				$OUTFile   = Join-Path $OUT $($([String]++$Count + ".mp4") | % PadLeft $Digits '0')
+
+				switch -Wildcard ($StartTime) {
+					'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
+					'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $StartTime = "0" + $StartTime }
+					'[0-9][0-9]:[0-9][0-9]'            { $StartTime = "00:" + $StartTime }
+					'[0-9]:[0-9][0-9]'                 { $StartTime = "00:0" + $StartTime }
+					'[0-9][0-9]'                       { $StartTime = "00:00:" + $StartTime }
+					'[0-9]'                            { $StartTime = "00:00:0" + $StartTime }
+					default                            { $StartTime = "00:00:00"}
+				}
+
+				switch -Wildcard ($EndTime) {
+					'[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' { }
+					'[0-9][0-9]:[0-9][0-9]:[0-9]'      { $EndTime = "0" + $EndTime }
+					'[0-9][0-9]:[0-9][0-9]'            { $EndTime = "00:" + $EndTime }
+					'[0-9]:[0-9][0-9]'                 { $EndTime = "00:0" + $EndTime }
+					'[0-9][0-9]'                       { $EndTime = "00:00:" + $EndTime }
+					'[0-9]'                            { $EndTime = "00:00:0" + $EndTime }
+					default                            { }
+				}
+
+				if ($EndTime -Like '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') {
+					# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+					ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile
+				}
+				else {
+					# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+					ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -c copy $OUTFile
+				}
+			}
+		}
+	}
+}
+
 	# foreach ($Video in $Videos) {
 	# 	$FileName = $Video.FullName
 	# 	CreateDirectory $(Join-Path "out" $((Get-ChildItem $FileName).Directory).Name))
