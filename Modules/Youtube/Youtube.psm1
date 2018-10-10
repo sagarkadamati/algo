@@ -80,8 +80,9 @@ function Youtube {
 	)
 
 	process {
+		$NOS = 1
 		$VideoUrls = YoutubeGetURLs($URL)
-		[array]::Reverse($VideoUrls)
+		# [array]::Reverse($VideoUrls)
 		ForEach ($video in $VideoUrls) {
 			Get-YoutubeVideoInfo $video
 			$Streams = Get-YoutubeParseVideoInfo
@@ -92,20 +93,25 @@ function Youtube {
 			}
 			else
 			{
+				$OUTFILE = "$NOS "
 				if ($Index) {
-					if (!(Test-Path $streams[0]["filename"])) {
-						$streams[$Index]["filename"]
-						invoke-WebRequest -Uri $streams[$Index]["url"] -OutFile $($streams[$Index]["filename"] + $streams[$Index]["sig"])
+					$OUTFILE += $streams[$Index]["filename"]
+					if (!(Test-Path $OUTFILE)) {
+						$OUTFILE
+						invoke-WebRequest -Uri $($streams[$Index]["url"] + $streams[$Index]["sig"]) -OutFile $OUTFILE
 					}
 				}
 				else {
-					if (!(Test-Path $streams[0]["filename"])) {
-						$streams[0]["filename"]
-						invoke-WebRequest -Uri $streams[0]["url"] -OutFile $($streams[$Index]["filename"] + $streams[$Index]["sig"])
+					$OUTFILE += $streams[0]["filename"]
+					if (!(Test-Path $OUTFILE)) {
+						$OUTFILE
+						invoke-WebRequest -Uri $($streams[0]["url"] + $streams[$Index]["sig"]) -OutFile $OUTFILE
 					}
 				}
 				# $Streams
 			}
+
+			$NOS++
 		}
 
 		if(Test-Path .\videoinfo.txt) {

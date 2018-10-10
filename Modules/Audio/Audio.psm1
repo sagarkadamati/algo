@@ -415,7 +415,7 @@ function AutoCropVideos($Encoding) {
 		CreateDirectory $(Join-Path $OUT $($File -replace $(Split-Path $File -Leaf), ""))
 
 		if (($File -notlike "*HEVC*") -and ($File -notlike "*H.264*")) {
-			if (!$(Test-Path $(Join-Path "out" $File))) {
+			if (!$(Test-Path $(Join-Path $OUT $File))) {
 				$Crop = python $PYCrop $File
 				$VideoFilter    = "$Crop"
 
