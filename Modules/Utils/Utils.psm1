@@ -75,4 +75,35 @@ function Get-Repos {
 	git clone https://github.com/SimpleMobileTools/simplemobiletools.github.io
 }
 
-Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files
+function Get-PadZeros($NOS, $Count) {
+
+}
+
+function ReverseFileNos {
+	$NOS = 0
+	$Files = Get-ChildItem -File
+	[array]::Reverse($Files)
+
+	$Count     = 0
+	$Digits    = 1
+
+	$TCount    = $Files.Count
+	while($TCount -ne 0) {
+		$TCount = [Math]::Abs($TCount / 10)
+		$Digits++
+
+		if ($TCount -ge 10) { continue } else { break }
+	}
+
+	foreach ($File in $Files) {
+		$Title = ($File -split $([regex]::Match($File.BaseName, '(^[0-9]*[ ]*)').Groups[0].Value))[1]
+		$NOS++
+
+		$NewTitle = ([String]$NOS) | % PadLeft $Digits '0'
+		$NewTitle += " $Title"
+
+		Move-Item -Force $File $NewTitle
+	}
+}
+
+Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, ReverseFileNos
