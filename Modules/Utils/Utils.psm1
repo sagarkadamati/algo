@@ -106,4 +106,53 @@ function ReverseFileNos {
 	}
 }
 
-Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, ReverseFileNos
+function Get-Mp4FromTS {
+	## https://superuser.com/questions/692990/use-ffmpeg-copy-codec-to-combine-ts-files-into-a-single-mp4
+
+	## Under windows:
+	# copy /b segment1_0_av.ts+segment2_0_av.ts+segment3_0_av.ts all.ts
+	# ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
+
+	## Under GNU/Linux, using bash:
+	# cat segment1_0_av.ts segment2_0_av.ts segment3_0_av.ts > all.ts
+	# ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
+
+	$DLoc = Join-Path $WorkspaceLocation "Host Star\in.startv.hotstar\files\downloads"
+	$Folders = Get-ChildItem -Directory -LiteralPath $DLoc
+	foreach ($Folder in $Folders) {
+		Set-Location $(Join-Path $DLoc $Folder)
+		$ChunkCount = (Get-ChildItem -Directory).Count
+
+		$Count = 0
+
+		$AllChunks = ""
+		Remove-Item -ErrorAction Ignore -Force list.txt
+		while ($Count -lt $ChunkCount) {
+			$Chunk = Join-Path "ts$Count" "chunk.ts"
+			$Count++
+
+			$Chunk
+			"file '$Chunk'" >> list.txt
+
+		# 	$AllChunks += $Chunk
+
+		# 	if ($Count -lt $ChunkCount) {
+		# 		$AllChunks += "+"
+		# 	}
+		}
+		# $AllChunks
+		# cmd /c copy.exe $AllChunks all.ts
+		ffmpeg -f concat -i list.txt -c copy all.ts
+		ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
+
+	}
+	ffmpeg  -allowed_extensions ALL -i .\1000099544-local_v1.m3u8 -c copy output.mp4
+
+	$LocalM3U8  = Get-ChildItem -File -Filter "*local*.m3u8"
+	$RemoteM3U8 = Get-ChildItem -File -Filter "*sub*.m3u8"
+
+	$CryptFile = ((Get-Content $RemoteM3U8 | Select-String URI).Line -split 'URI=')[1]
+	Invoke-WebRequest -Uri $CryptFile -OutFile crypt.key
+}
+
+Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, ReverseFileNos, Get-Mp4FromTS

@@ -9,6 +9,7 @@ function isVSCodeNotPatched ($File) {
 
 function Get-VSCodePathed {
 	$VSCodeIndexHTML = [IO.Path]::Combine($ToolsLocation, "VS Code", "resources", "app", "out", "vs", "workbench", "electron-browser", "bootstrap", "index.html")
+	$VSCodeIndexHTML = [IO.Path]::Combine($ToolsLocation, "VS Code", "resources", "app", "out", "vs", "code", "electron-browser", "workbench", "workbench.html")
 	$VSCodeMainJS    = [IO.Path]::Combine($ToolsLocation, "VS Code", "resources", "app", "out", "vs", "workbench", "workbench.main.js")
 	$CustomCCS       = [IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "css", "noEditorActionButtons.css")
 	$RemoveSTR       = [regex]::Escape('+" "+t.NLS_UNSUPPORTED')
