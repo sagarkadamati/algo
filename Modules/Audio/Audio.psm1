@@ -39,7 +39,7 @@ function Update-ID3($AudioFile, $Artist) {
 		$Genre = "$Album`: $($($File.Directory).Name)"
 		$Track = ($File.BaseName -split " ")[0]
 
-		$Album = "Bhagavatam Samhita: "
+		# $Album = "Bhagavatam Samhita: "
 		$Album += ((Get-Location).Path -split [regex]::Escape([IO.Path]::DirectorySeparatorChar))[-1]
 		$Genre = "$Album"
 
