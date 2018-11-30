@@ -832,7 +832,7 @@
 
 		// Workbench: Terminal
 		"terminal.background": "#F5F5F5",
-		"terminal.foreground": "#657b83",
+		"terminal.foreground": "#333333",
 
 		"terminal.ansiBlack": "#073642",
 		"terminal.ansiRed": "#dc322f",
