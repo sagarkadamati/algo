@@ -391,22 +391,28 @@ function CreateDirectory($dir) {
 	New-Item -ItemType Directory -Force -Path $dir | Out-Null
 }
 
-function AutoCropVideos($Encoding) {
+function AutoCropVideos($Encoding, [Switch]$Aspect, [Switch]$NoCRF) {
 	$PYCrop = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyCrop.py"))
-	$Files = Get-FileNames -Recursive "mp4"
+	$Files  = Get-FileNames -Recursive ".mp4$|.mkv$|.avi$" | Select-String  -NotMatch "^HEVC|^H.264"
+
+	$PixelFormat    = "yuv420p"
+	$AspectRatio    = "16:9"
+	$StartTime      = "00:00:00"
+	$EndTime        = ""
 
 	$VideoCodec     = "hevc"
 	$OUT            = "HEVC"
-	$PixelFormat    = "yuv420p"
-	$StartTime      = "00:00:00"
-	$EndTime        = ""
-	$AspectRatio    = "16:9"
 	$CRF            = 23
 
 	if ($Encoding -Like "h264") {
 		$VideoCodec = $Encoding
 		$OUT        = "H.264"
 		$CRF        = 18
+	}
+	else {
+		$VideoCodec = "hevc"
+		$OUT        = "HEVC"
+		$CRF        = 23
 	}
 
 	CreateDirectory $OUT
@@ -421,30 +427,77 @@ function AutoCropVideos($Encoding) {
 
 				# $Fno = [Int]($(Split-Path $File -Leaf)).split(' ')[0]
 
-				$TMPFile = $(Join-Path $OUT "$File")
+				$TMPFile = Join-Path $OUT $(($File -replace ".mkv",".mp4") -replace ".avi",".mp4")
 				Write-Host "$File : $Crop"
-				if ($Encoding -Like "copy") {
-					if ($EndTime -Like "*:*:*") {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -c copy tmp.mp4
+				if (!$(Test-Path $TMPFile)) {
+					if ($Encoding -Like "copy") {
+						if ($EndTime -Like "*:*:*") {
+							ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -c copy $TMPFile
+						}
+						else {
+							ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -c copy $TMPFile
+						}
 					}
 					else {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -c copy tmp.mp4
-					}
-				}
-				else {
-					if ($EndTime -Like "*:*:*") {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf $CRF -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $TMPFile
-					}
-					else {
-						ffmpeg -y -v error -stats -i $File -ss $StartTime -crf $CRF -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $TMPFile
-					}
-				}
+						if ($EndTime -Like "*:*:*") {
+							# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf $CRF -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $TMPFile
+							# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -crf $CRF $TMPFile
 
-				# Move-Item -Force $TMPFile $(Join-Path $OUT "$File")
+							# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -crf $CRF -maxrate 1M -bufsize 2M -c:v "$VideoCodec" -c:a copy -x265-params pass=1 -an -f mp4 NUL
+							# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -crf $CRF -maxrate 1M -bufsize 2M -c:v "$VideoCodec" -c:a copy -x265-params pass=2 -f mp4 $TMPFile
+
+							if ($NoCRF) {
+								if ($Aspect) {
+									# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -an -f mp4 NUL
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -q:v 0 -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+								else {
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -q:v 0 -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+							}
+							else {
+								if ($Aspect) {
+									# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -an -f mp4 NUL
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+								else {
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -to $EndTime -filter:v "$VideoFilter" -crf $CRF -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+							}
+						}
+						else {
+							if ($NoCRF) {
+								if ($Aspect) {
+									# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -an -f mp4 NUL
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -q:v 0 -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+								else {
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -q:v 0 -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+							}
+							else {
+								if ($Aspect) {
+									# ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -an -f mp4 NUL
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -aspect $AspectRatio -strict -2 -crf $CRF -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+								else {
+									ffmpeg -hide_banner -y -v error -stats -i $File -ss $StartTime -filter:v "$VideoFilter" -crf $CRF -c:v "$VideoCodec" -c:a copy -f mp4 $TMPFile
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 }
+
+# x265 [info]: tools: rd=3 psy-rd=2.00 rskip signhide tmvp strong-intra-smoothing
+# x265 [info]: tools: deblock sao
+
+# x265 [info]: tools: rd=4 psy-rd=2.00 rskip signhide tmvp strong-intra-smoothing
+# x265 [info]: tools: deblock sao
+# x265 [info]: tools: rect limit-modes rdoq=2 psy-rdoq=1.00
 
 function TrimVideos {
 	if (Test-Path "trim.txt") {
@@ -453,9 +506,10 @@ function TrimVideos {
 			$DataLine  = $TrimData.Split('|')
 			$VideoFile = ($DataLine[0]).Trim()
 			$VTimes    = ($DataLine[1]).Split(',')
-			$OUT       = (Join-Path "out" $($VideoFile -replace ".mp4", ""))
+			$CName     = $DataLine[2]
+			$OUT       = (Join-Path "HEVC" $($VideoFile -replace ".mp4", ""))
 			$Count     = 0
-			$Digits    = 5
+			$Digits    = 1
 
 			$TCount    = $VTimes.Split('-').Length
 			while($TCount -ne 0) {
@@ -465,7 +519,6 @@ function TrimVideos {
 				if ($TCount -ge 10) { continue } else { break }
 			}
 
-			CreateDirectory $OUT
 			foreach($VTime in $VTimes) {
 				$TrimTime  = $VTime.Split('-')
 				$StartTime = "00:00:00"
@@ -495,15 +548,26 @@ function TrimVideos {
 						default                            { }
 					}
 
-					$OUTFile   = Join-Path $OUT $($([String]++$Count + ".mp4") | % PadLeft $Digits '0')
-
-					if ($EndTime -Like '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') {
-						# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
-						ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile
+					$OUTFile   = $($([String]++$Count) | % PadLeft $Digits '0')
+					if ($CName) {
+						$OUTFile += " " + ($CName).Trim()
 					}
-					else {
-						# Write-Host "ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
-						ffmpeg -y -v error -stats -i $VideoFile -ss $StartTime -c copy $OUTFile
+					$OUTFile  += ".mp4"
+					$OUTFile   = ($(Split-Path -Leaf $VideoFile) -replace ".mp4","") + " " + $OUTFile
+					$OUTFile   = Join-Path $OUT $OUTFile
+
+					CreateDirectory $OUT
+					if (!$(Test-Path $OUTFile)) {
+						if ($EndTime -Like '[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') {
+							# Write-Host "ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+							# ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile
+							ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -crf 23 -c:v hevc -c:a copy $OUTFile
+						}
+						else {
+							# Write-Host "ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -to $EndTime -c copy $OUTFile"
+							# ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -c copy $OUTFile
+							ffmpeg -hide_banner -y -v error -stats -i $VideoFile -ss $StartTime -crf 23 -c:v hevc -c:a copy $OUTFile
+						}
 					}
 				}
 			}
@@ -538,26 +602,26 @@ function TrimVideos {
 	# 			$EndTime = ""
 	# 		}
 
-	# 		ffmpeg -y -v error -stats -i $Video.Name -ss $StartTime -crf 23 -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video.Name")
+	# 		ffmpeg -hide_banner -y -v error -stats -i $Video.Name -ss $StartTime -crf 23 -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video.Name")
 
-	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -c:a copy $(Join-Path "out" "$Video")
-	# 		# ffmpeg -y -v error -stats -i $Video -ss $StartTime -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video")
-	# 		# ffmpeg -y -v error -stats -i $Video -ss $StartTime -b:v 400k -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $(Join-Path "out" "$Video")
-	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -crf 0 -c:a copy $($(Join-Path "out" "$Video") -replace "DAT", "mp4")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -ss $StartTime -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -preset:v veryslow -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -ss $StartTime -b:v 400k -filter:v "$VideoFilter" -aspect 16:9 -strict -2 -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -filter:v "$VideoFilter" -c:v "$VideoCodec" -pix_fmt "$PixelFormat" -crf 0 -c:a copy $($(Join-Path "out" "$Video") -replace "DAT", "mp4")
 
-	# 		# ffmpeg -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=1 -an -f mp4 NUL
-	# 		# ffmpeg -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=2 -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=1 -an -f mp4 NUL
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -pix_fmt "$PixelFormat" -crf 22 -filter:v "$VideoFilter" -c:v "$VideoCodec" -x265-params pass=2 -c:a copy $(Join-Path "out" "$Video")
 
-	# 		# ffmpeg -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
+	# 		# ffmpeg -hide_banner -y -v error -stats -i $Video -filter:v "$Crop, scale=512:288" -c:a copy $(Join-Path "out" "$Video")
 
-	# 		# ffmpeg -i input \
+	# 		# ffmpeg -hide_banner -i input \
 	# 		# 	-c:v libx265 -pix_fmt yuv420p \
 	# 		# 	-x265-params crf=28:keyint=240:min-keyint=20 \
 	# 		# 	-preset:v slow \
 	# 		# 	-c:a libfdk_aac -vbr 4 \
 	# 		# 	output.mp4
 
-	# 		# ffmpeg -i '.\Part 1.DAT' -c:v libx265 -pix_fmt yuv420p -x265-params crf=28:keyint=240:min-keyint=20 -preset:v slow -c:a copy -vbr 4 '.\out\Part 1.mp4'
+	# 		# ffmpeg -hide_banner -i '.\Part 1.DAT' -c:v libx265 -pix_fmt yuv420p -x265-params crf=28:keyint=240:min-keyint=20 -preset:v slow -c:a copy -vbr 4 '.\out\Part 1.mp4'
 	# 	}
 	# }
 

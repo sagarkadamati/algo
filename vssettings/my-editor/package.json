@@ -20,6 +20,11 @@
 				"path": "./themes/MyThemeDay.json"
 			},
 			{
+				"label": "Nice Day Time",
+				"uiTheme": "vs",
+				"path": "./themes/MyThemeNiceDay.json"
+			},
+			{
 				"label": "Night Time",
 				"uiTheme": "vs-dark",
 				"path": "./themes/MyThemeNight.json"

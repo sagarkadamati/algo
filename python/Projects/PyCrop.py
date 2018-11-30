@@ -12,7 +12,7 @@ while(cap.isOpened()):
     count += 1
     
     ret, frame = cap.read()
-    if (count < 1000):
+    if (count < 2000):
         try:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             _, thresh = cv2.threshold(gray,10,255,cv2.THRESH_BINARY)
