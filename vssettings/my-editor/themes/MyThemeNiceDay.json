@@ -3,7 +3,7 @@
 	"tokenColors": [
 		{
 			"settings": {
-				"foreground": "#4A4A4A"
+				"foreground": "#333333"
 			}
 		},
 		{
@@ -683,19 +683,19 @@
 
 		// Editor
 		"editor.background": "#F5F5F5",
-		"editor.foreground": "#4A4A4A",
+		"editor.foreground": "#333333",
 		"editor.lineHighlightBackground": "#F5F5F5",
-		"editor.selectionBackground": "#eee8d5",
-		"editor.selectionHighlightBackground": "#0000FF0F",
-		"editor.inactiveSelectionBackground": "#0000FF0F",
+		"editor.selectionBackground": "#F2F2F2",
+		"editor.selectionHighlightBackground": "#0000FF08",
+		"editor.inactiveSelectionBackground": "#0000FF",
 		"editor.lineHighlightBorder": "#F5F5F5",
 		"editor.findMatchBackground": "#0000FF0F",
 		"editor.findMatchHighlightBackground": "#0000FF0F",
 		"editor.findRangeHighlightBackground": "#0000FF0F",
 		// "editor.hoverHighlightBackground": "",
 		// "editor.rangeHighlightBackground": "",
-		// "editor.wordHighlightBackground": "",
-		// "editor.wordHighlightStrongBackground": "",
+		"editor.wordHighlightBackground": "#0F0F0F",
+		"editor.wordHighlightStrongBackground": "#0F0F0F",
 
 		"editorWidget.border": "#eee8d5",
 		"editorWidget.background": "#F5F5F5",
