@@ -21,7 +21,6 @@
 		"command": "workbench.action.toggleCenteredLayout",
 		"when": "editorTextFocus"
 	},
-
     {
 		"key": "alt+o",
 		"command": "markdown.showPreview",
@@ -31,12 +30,20 @@
 		"key": "ctrl+; ctrl+w",
 		"command": "editor.action.toggleRenderWhitespace"
 	},
+    {
+        "key":  "ctrl+h",
+		"command":  "workbench.action.moveEditorToLeftGroup"
+    },
+    {
+        "key":  "ctrl+l",
+		"command":  "workbench.action.moveEditorToRightGroup"
+	},
 	{
-		"key": "ctrl+h",
+		"key": "ctrl+; ctrl+h",
 		"command": "workbench.action.focusFirstEditorGroup"
 	},
 	{
-		"key": "ctrl+l",
+		"key": "ctrl+; ctrl+l",
 		"command": "workbench.action.focusSecondEditorGroup"
 	},
 	{

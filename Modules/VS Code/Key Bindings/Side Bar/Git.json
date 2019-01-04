@@ -81,11 +81,6 @@
 		"when": "gitlens:enabled"
 	},
 	{
-		"key": "ctrl+g /",
-		"command": "gitlens.showCommitSearch",
-		"when": "gitlens:enabled"
-	},
-	{
 		"key": "ctrl+g h",
 		"command": "gitlens.showQuickFileHistory",
 		"when": "gitlens:enabled"
@@ -114,5 +109,35 @@
 		"key": "ctrl+g shift+w",
 		"command": "gitlens.diffWithWorking",
 		"when": "editorTextFocus && gitlens:activeIsTracked"
+	},
+    {
+        "key":  "ctrl+g /",
+        "command":  "gitlens.views.search:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+	{
+        "key":  "ctrl+g c",
+        "command":  "gitlens.views.compare:gitlens.focus",
+        "when":  "gitlens:enabled"
+	},
+    {
+		"key":  "ctrl+g f",
+        "command":  "gitlens.views.fileHistory:gitlens.focus",
+        "when":  "gitlens:enabled"
+	},
+    {
+		"key":  "ctrl+g r",
+        "command":  "gitlens.views.repositories:gitlens.focus",
+        "when":  "gitlens:enabled"
+	},
+    {
+		"key":  "ctrl+g shift+r",
+        "command":  "gitlens.views.repositories.refresh",
+        "when":  "gitlens:enabled"
+	},
+	{
+		"key":  "ctrl+g shift+c",
+		"command":  "gitlens.views.compare:gitlens.focus",
+		"when":  "gitlens:enabled"
 	}
 ]
