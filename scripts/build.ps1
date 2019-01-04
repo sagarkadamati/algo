@@ -3,7 +3,7 @@ param(
 	[String]$FileName
 )
 
-$env:PSModulePath = "C:\Users\Sagar\Workspace\Tools\Env\Modules;$env:PSModulePath"
+$env:PSModulePath = "~\Workspace\Tools\Env\Modules;$env:PSModulePath"
 SetupEnv
 
 if ($FileName -match "Kotlin/Projects/*") {
