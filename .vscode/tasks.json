@@ -1,23 +1,40 @@
 {
-	"command": "powershell",
-	"args": [
-		"-ExecutionPolicy",
-		"Unrestricted",
-		"-NoProfile",
-		"-File",
-		"${cwd}/scripts/build.ps1",
-		"-FileName",
-		"${relativeFile}"
-	],
-	"taskSelector": "-task ",
-	"showOutput": "always",
-	"echoCommand": false,
+	"version": "2.0.0",
 	"tasks": [
 		{
-			"taskName": "Build",
-			"showOutput": "always",
+			"taskName": "build",
 			"isBuildCommand": true,
+			"showOutput": "always",
+			"echoCommand": false,
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Unrestricted",
+				"-NoProfile",
+				"-File",
+				"${cwd}/scripts/build.ps1",
+				"-Build",
+				"-FileName",
+				"${relativeFile}"
+			],
+			"problemMatcher": []
+		},
+		{
+			"taskName": "run",
+			"isBuildCommand": true,
+			"showOutput": "always",
+			"echoCommand": false,
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Unrestricted",
+				"-NoProfile",
+				"-File",
+				"${cwd}/scripts/build.ps1",
+				"-FileName",
+				"${relativeFile}"
+			],
 			"problemMatcher": []
 		}
 	]
-}
+},
