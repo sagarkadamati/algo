@@ -1,0 +1,23 @@
+{
+	"command": "powershell",
+	"args": [
+		"-ExecutionPolicy",
+		"Unrestricted",
+		"-NoProfile",
+		"-File",
+		"${cwd}/scripts/build.ps1",
+		"-FileName",
+		"${relativeFile}"
+	],
+	"taskSelector": "-task ",
+	"showOutput": "always",
+	"echoCommand": false,
+	"tasks": [
+		{
+			"taskName": "Build",
+			"showOutput": "always",
+			"isBuildCommand": true,
+			"problemMatcher": []
+		}
+	]
+}
