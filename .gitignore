@@ -53,6 +53,10 @@ dkms.conf
 
 *bin*
 
-vssettings/
-Kotlin/Lib/
-Kotlin/Run/
+vssettings/*
+Kotlin/Lib/*
+Kotlin/Run/*
+
+vssettings\*
+Kotlin\Lib\*
+Kotlin\Run\*
