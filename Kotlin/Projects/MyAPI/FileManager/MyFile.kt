@@ -1,4 +1,4 @@
-package FileManager
+package MyAPI.FileManager
 
 class MyFile(val path: String ?= null) {
 	private var name = ""

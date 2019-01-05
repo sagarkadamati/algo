@@ -1,5 +1,5 @@
-import FileManager.MyFile
-import FileManager.MyPath
+import MyAPI.FileManager.MyFile
+import MyAPI.FileManager.MyPath
 
 fun main(args: Array<String>) {
 	var path = MyPath(".")
