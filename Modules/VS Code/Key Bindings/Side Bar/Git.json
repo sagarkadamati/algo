@@ -139,5 +139,10 @@
 		"key":  "ctrl+g shift+c",
 		"command":  "gitlens.views.compare:gitlens.focus",
 		"when":  "gitlens:enabled"
+	},
+	{
+        "key":  "ctrl+g ctrl+shift+c",
+        "command":  "git.cleanAll",
+        "when":  "editorTextFocus"
 	}
 ]
