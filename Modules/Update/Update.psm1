@@ -22,21 +22,28 @@ function Unzip
 function Update-KotlinTools {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-	$request = Invoke-WebRequest -UseBasicParsing -Uri https://github.com/JetBrains/kotlin/releases
-
+	$request = Invoke-WebRequest -UseBasicParsing -Uri https://github.com/JetBrains/kotlin/releases/latest
 	$KotlinURL = ($request.Links | Where-Object href -Like "*kotlin-compiler-*.zip").href
 	if ($($KotlinURL.Count) -ne 1) {
-		$KotlinURL = $KotlinURL[0]
+		foreach ($Kurl in $KotlinURL) {
+			if ($Kurl -Like "*/kotlin-compiler-*") {
+				$KotlinURL = $Kurl
+				$Kotlin = $KotlinURL | Split-Path -Leaf
+				break
+			}
+			# if ($Kurl -Like $("*/kotlin-native-$(Get-OS)*")) {
+			# 	$NativeURL = $Kurl
+			# 	$KotlinNative = $NativeURL | Split-Path -Leaf
+			# }
+		}
 	}
-	$Kotlin = $KotlinURL | Split-Path -Leaf
-
+	
 	$request = Invoke-WebRequest -UseBasicParsing -Uri https://github.com/JetBrains/kotlin-native/releases
-
 	$NativeURL = ($request.Links | Where-Object href -Like "*kotlin-native-$(Get-OS)*.zip").href
 	if ($($NativeURL.Count) -ne 1) {
 		$NativeURL = $NativeURL[0]
+		$KotlinNative = $NativeURL | Split-Path -Leaf
 	}
-	$KotlinNative = $NativeURL | Split-Path -Leaf
 
 	# Write-Host $KotlinURL
 	# Write-Host $NativeURL
