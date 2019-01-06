@@ -1,7 +1,13 @@
 {
-	"workbench.startupEditor": "NewBuffer",
-	"workbench.colorTheme": "Night Time",
-	"workbench.statusBar.visible": false,
+	"git.path": "",
+	"python.pythonPath": "",
+	"markdown.styles": [
+		""
+	],
+
+	"workbench.startupEditor": "none",
+	"workbench.colorTheme": "Day Time",
+	"workbench.statusBar.visible": true,
 	"workbench.sideBar.location": "right",
 	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
@@ -10,15 +16,16 @@
 	"workbench.editor.labelFormat": "short",
 	"workbench.iconTheme": "file-icons-colourless",
 
-	"window.title": "Coder",
-	"window.menuBarVisibility": "hidden",
+	"window.title": "${dirty}Coder",
+	"window.titleBarStyle": "custom",
+	"window.menuBarVisibility": "toggle",
 	"window.enableMenuBarMnemonics": false,
-	"window.zoomLevel": 1.5,
+	"window.zoomLevel": 1,
 
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": true,
 
-	"editor.renderWhitespace": "all",
+	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
 	"editor.lineNumbers": "off",
@@ -32,6 +39,9 @@
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	"editor.largeFileOptimizations": false,
+
+	"breadcrumbs.enabled": true,
+	"breadcrumbs.symbolPath": "off",
 
 	"explorer.openEditors.visible": 0,
 	"explorer.confirmDragAndDrop": false,
@@ -50,14 +60,14 @@
 	"powershell.integratedConsole.showOnStartup": false,
 	"powershell.startAutomatically": false,
 
-	"git.path": "C:\\Users\\Sagar\\Workspace\\Tools\\Git\\bin\\git.exe",
 	"git.autofetch": true,
 	"git.autorefresh": true,
-
+	
 	"gitlens.codeLens.enabled": false,
 	"gitlens.blame.highlight.enabled": false,
-	"gitlens.gitExplorer.files.layout": "auto",
-	"gitlens.historyExplorer.enabled": false,
+	"gitlens.views.repositories.files.layout": "auto",
+	"gitlens.views.fileHistory.enabled": false,
+	"gitlens.views.lineHistory.enabled": false,
 	"gitlens.advanced.messages": {
 		"suppressCommitHasNoPreviousCommitWarning": false,
 		"suppressCommitNotFoundWarning": false,
@@ -68,27 +78,38 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
-
+	
+	"python.jediEnabled": false,
+	
+	"markdown.preview.breaks": true,
+	
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/.DS_Store": true,
-
+		
 		"**/bin/**": true
 	},
 	"search.exclude": {
 		"**/node_modules": true,
 		"**/bower_components": true,
-
+		
 		"**/bin/**": true
 	},
 	"files.watcherExclude": {
 		"**/.git/objects/**": true,
 		"**/.git/subtree-cache/**": true,
 		"**/node_modules/**": true,
-
+		
 		"**/bin/**": true
-	}
+	},
+	
+	"jira-plugin.baseUrl": "",
+	"jira-plugin.username": "",
+	"jira-plugin.workingProject": "",
+	"jira-plugin.workingIssueStatues": "In progress",
+	"jira-plugin.enableWorkingIssue": true,
+	"jira-plugin.trackingTimeMode": "always"
 }
