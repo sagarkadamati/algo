@@ -34,6 +34,7 @@ function Get-VSKeys {
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Extensions.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Git.json") | ConvertFrom-Json
+	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Jira.json") | ConvertFrom-Json
 
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Quick Open.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json

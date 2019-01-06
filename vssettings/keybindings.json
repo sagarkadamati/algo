@@ -65,6 +65,10 @@
         "command":  "-workbench.action.output.toggleOutput"
     },
     {
+        "key":  "ctrl+j",
+        "command":  "-workbench.action.togglePanel"
+    },
+    {
         "key":  "ctrl+shift+l",
         "command":  "workbench.action.focusSideBar",
         "when":  "editorTextFocus"
@@ -265,10 +269,18 @@
     },
     {
         "key":  "ctrl+h",
-        "command":  "workbench.action.focusFirstEditorGroup"
+        "command":  "workbench.action.moveEditorToLeftGroup"
     },
     {
         "key":  "ctrl+l",
+        "command":  "workbench.action.moveEditorToRightGroup"
+    },
+    {
+        "key":  "ctrl+; ctrl+h",
+        "command":  "workbench.action.focusFirstEditorGroup"
+    },
+    {
+        "key":  "ctrl+; ctrl+l",
         "command":  "workbench.action.focusSecondEditorGroup"
     },
     {
@@ -672,11 +684,6 @@
         "when":  "gitlens:enabled"
     },
     {
-        "key":  "ctrl+g /",
-        "command":  "gitlens.showCommitSearch",
-        "when":  "gitlens:enabled"
-    },
-    {
         "key":  "ctrl+g h",
         "command":  "gitlens.showQuickFileHistory",
         "when":  "gitlens:enabled"
@@ -705,6 +712,81 @@
         "key":  "ctrl+g shift+w",
         "command":  "gitlens.diffWithWorking",
         "when":  "editorTextFocus \u0026\u0026 gitlens:activeIsTracked"
+    },
+    {
+        "key":  "ctrl+g /",
+        "command":  "gitlens.views.search:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g c",
+        "command":  "gitlens.views.compare:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g f",
+        "command":  "gitlens.views.fileHistory:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g r",
+        "command":  "gitlens.views.repositories:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g shift+r",
+        "command":  "gitlens.views.repositories.refresh",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g shift+c",
+        "command":  "gitlens.views.compare:gitlens.focus",
+        "when":  "gitlens:enabled"
+    },
+    {
+        "key":  "ctrl+g ctrl+shift+c",
+        "command":  "git.cleanAll",
+        "when":  "editorTextFocus"
+    },
+    {
+        "key":  "ctrl+j i",
+        "command":  "jira-plugin.setWorkingIssueCommand"
+    },
+    {
+        "key":  "ctrl+j shift+i",
+        "command":  "jira-plugin.insertWorkingIssueComment"
+    },
+    {
+        "key":  "ctrl+j p",
+        "command":  "jira-plugin.setWorkingProjectCommand"
+    },
+    {
+        "key":  "ctrl+j c",
+        "command":  "jira-plugin.issueAddCommentCommand"
+    },
+    {
+        "key":  "ctrl+j oem_2",
+        "command":  "jira-plugin.favouritesFilters"
+    },
+    {
+        "key":  "ctrl+j a",
+        "command":  "jira-plugin.changeIssueAssigneeCommand"
+    },
+    {
+        "key":  "ctrl+j s",
+        "command":  "jira-plugin.changeIssueStatusCommand"
+    },
+    {
+        "key":  "ctrl+j r",
+        "command":  "jira-plugin.refresh"
+    },
+    {
+        "key":  "ctrl+j l",
+        "command":  "jira-plugin.issueAddWorklogCommand"
+    },
+    {
+        "key":  "ctrl+j o",
+        "command":  "jira-plugin.openIssueCommand"
     },
     {
         "key":  "ctrl+n",
