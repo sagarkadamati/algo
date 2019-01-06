@@ -12,8 +12,8 @@
 		"command": "git.pull"
 	},
 	{
-		"key": "ctrl+g shift+p",
-		"command": "git.push"
+		"key":  "ctrl+g p",
+		"command":  "gitlens.pullRepositories"
 	},
 	{
 		"key": "ctrl+g s",
