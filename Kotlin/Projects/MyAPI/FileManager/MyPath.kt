@@ -1,6 +1,6 @@
 package MyAPI.FileManager
 
-import kotlin.io
+import kotlin.io.*
 
 class MyPath(str: String) {
 	private var path: String = ""

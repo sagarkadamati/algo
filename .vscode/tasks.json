@@ -2,10 +2,16 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"taskName": "build",
-			"isBuildCommand": true,
-			"showOutput": "always",
-			"echoCommand": false,
+			"label": "build",
+			"group": "build",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+			},
 			"command": "powershell",
 			"args": [
 				"-ExecutionPolicy",
@@ -17,13 +23,39 @@
 				"-FileName",
 				"${relativeFile}"
 			],
-			"problemMatcher": []
+			"problemMatcher": {
+				"owner": "kotlin",
+				"fileLocation": "relative",
+				"pattern": [
+					{
+						"regexp": "^(.*):(\\d+):(\\d+):\\s+(info|warning|error):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"message": 5
+					},
+					{
+						// "regexp": "^\\s+(\\d+):(\\d+)\\s+(error|warning|info)\\s+(.*)\\s\\s+(.*)$",
+						// "regexp": "^\\s+(.*)\\s\\s+(.*)$",
+						// "regexp": "^([^\\s].*)$",
+						"regexp": "\\s+(.*)$",
+						"code": 1
+					}
+				]
+			}
 		},
 		{
-			"taskName": "run",
-			"isBuildCommand": true,
-			"showOutput": "always",
-			"echoCommand": false,
+			"label": "run",
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false,
+			},
 			"command": "powershell",
 			"args": [
 				"-ExecutionPolicy",
@@ -37,4 +69,4 @@
 			"problemMatcher": []
 		}
 	]
-},
+}

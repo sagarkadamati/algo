@@ -5,6 +5,7 @@ param(
 
 $env:PSModulePath = "~\Workspace\Tools\Env\Modules;$env:PSModulePath"
 SetupEnv
+env
 
 if ($FileName -match "Kotlin/Projects/*") {
 	$Project = $(($FileName -replace "Kotlin/Projects/", "") -split '/')[0]
