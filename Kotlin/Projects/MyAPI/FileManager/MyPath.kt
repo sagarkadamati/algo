@@ -1,6 +1,6 @@
 package MyAPI.FileManager
 
-import kotlin.io.*
+import java.io.File
 
 class MyPath(str: String) {
 	private var path: String = ""
@@ -35,7 +35,7 @@ class MyPath(str: String) {
 
 	fun getFiles(recursive: Boolean = false) {
 		if (!recursive) {
-			FileTreeWalk()
+			File(this.path)
 			.walkTopDown()
 			.maxDepth(1)
 			.forEach {
@@ -43,7 +43,7 @@ class MyPath(str: String) {
 			}
 		}
 		else {
-			FileTreeWalk()
+			File(this.path)
 			.walkTopDown()
 			.forEach {
 				println(it)

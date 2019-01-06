@@ -67,5 +67,10 @@
 	{
 		"key": "ctrl+j",
 		"command": "-workbench.action.togglePanel"
+	},
+	{
+		"key": "ctrl+w",
+		"command": "-workbench.action.closeWindow",
+		"when": "!editorIsOpen && !multipleEditorGroups"
 	}
 ]

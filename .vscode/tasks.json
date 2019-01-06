@@ -6,11 +6,11 @@
 			"group": "build",
 			"presentation": {
 				"echo": false,
+				"panel": "shared",
 				"reveal": "always",
 				"focus": true,
-				"panel": "shared",
+				"clear": true,
 				"showReuseMessage": true,
-				"clear": false,
 			},
 			"command": "powershell",
 			"args": [

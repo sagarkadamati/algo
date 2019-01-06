@@ -6,21 +6,17 @@
 	],
 
 	"workbench.startupEditor": "none",
-	"workbench.colorTheme": "Day Time",
-	"workbench.statusBar.visible": true,
+	"workbench.colorTheme": "Night Time",
 	"workbench.sideBar.location": "right",
-	"workbench.activityBar.visible": false,
 	"workbench.editor.showTabs": false,
 	"workbench.editor.showIcons": true,
 	"workbench.editor.tabCloseButton": "off",
 	"workbench.editor.labelFormat": "short",
 	"workbench.iconTheme": "file-icons-colourless",
 
-	"window.title": "${dirty}Coder",
+	"window.title": "${dirty} Coder",
 	"window.titleBarStyle": "custom",
 	"window.menuBarVisibility": "toggle",
-	"window.enableMenuBarMnemonics": false,
-	"window.zoomLevel": 1,
 
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": true,
@@ -28,7 +24,7 @@
 	"editor.renderWhitespace": "none",
 	"editor.minimap.enabled": false,
 	"editor.minimap.showSlider": "mouseover",
-	"editor.lineNumbers": "off",
+	"editor.lineNumbers": "interval",
 	"editor.cursorBlinking": "solid",
 	"editor.cursorStyle": "line",
 	"editor.overviewRulerBorder": false,
@@ -40,10 +36,10 @@
 	"editor.detectIndentation": false,
 	"editor.largeFileOptimizations": false,
 
-	"breadcrumbs.enabled": true,
 	"breadcrumbs.symbolPath": "off",
+	"breadcrumbs.enabled": true,
 
-	"explorer.openEditors.visible": 0,
+	"explorer.openEditors.visible": 10,
 	"explorer.confirmDragAndDrop": false,
 
 	"telemetry.enableTelemetry": false,
@@ -54,15 +50,12 @@
 	"markdown.preview.linkify": true,
 	"markdown.preview.doubleClickToSwitchToEditor": true,
 
-	"terminal.integrated.cursorStyle": "underline",
-	"terminal.integrated.cursorBlinking": false,
-
 	"powershell.integratedConsole.showOnStartup": false,
 	"powershell.startAutomatically": false,
 
 	"git.autofetch": true,
 	"git.autorefresh": true,
-	
+
 	"gitlens.codeLens.enabled": false,
 	"gitlens.blame.highlight.enabled": false,
 	"gitlens.views.repositories.files.layout": "auto",
@@ -78,33 +71,28 @@
 		"suppressResultsExplorerNotice": true,
 		"suppressShowKeyBindingsNotice": true
 	},
-	
-	"python.jediEnabled": false,
-	
+
+	"workbench.enableExperiments": false,
+	"workbench.activityBar.visible": false,
+	"workbench.statusBar.feedback.visible": false,
+	"workbench.tips.enabled": false,
+	"workbench.statusBar.visible": false,
+	"window.enableMenuBarMnemonics": false,
+	"window.zoomLevel": 1,
+	"window.newWindowDimensions": "inherit",
+	"window.openFoldersInNewWindow": "off",
+	"search.collapseResults": "alwaysCollapse",
+	"search.followSymlinks": false,
+	"search.location": "panel",
+	"scm.diffDecorationsGutterWidth": 2,
+	"extensions.ignoreRecommendations": true,
+	"terminal.external.windowsExec": "C:\\Windows\\System32\\powershell.exe",
+	"terminal.integrated.copyOnSelection": true,
+	"terminal.integrated.cursorStyle": "underline",
+	"terminal.integrated.scrollback": 10000,
+	"problems.autoReveal": false,
+
 	"markdown.preview.breaks": true,
-	
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/CVS": true,
-		"**/.DS_Store": true,
-		
-		"**/bin/**": true
-	},
-	"search.exclude": {
-		"**/node_modules": true,
-		"**/bower_components": true,
-		
-		"**/bin/**": true
-	},
-	"files.watcherExclude": {
-		"**/.git/objects/**": true,
-		"**/.git/subtree-cache/**": true,
-		"**/node_modules/**": true,
-		
-		"**/bin/**": true
-	},
 	
 	"jira-plugin.baseUrl": "",
 	"jira-plugin.username": "",

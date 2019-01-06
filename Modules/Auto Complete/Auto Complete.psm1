@@ -22,18 +22,18 @@ function AutoCompleteTest() {
 }
 
 function kt() {
-	param(
+	param (
 		[String]$Run,
 		[String]$Build,
 		[String]$Script,
 		[String]$Clean
 	)
 
-	process
+		process
 	{
 		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
-
+			
 		if(![string]::IsNullOrWhiteSpace($Run)) {
 			# Write-Host "Running"
 
@@ -58,9 +58,12 @@ function kt() {
 				$Tasks = $Build
 			}
 
+			CreateDirectory $(Join-Path $BasePath "Lib")
+			CreateDirectory $(Join-Path $BasePath "Run")
+
 			foreach ($Task in $Tasks) {
 				$Program  = "kotlinc "
-				Write-Host -NoNewLine "Building $Task ... "
+				Write-Host "Building $Task ... "
 				$KTFiles = $(Get-ChildItem -Recurse -File -Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task)).FullName | Select-String -Pattern ".kt$"
 				foreach($KTFile in $KTFiles) {
 					$Program += " '$KTFile'"
