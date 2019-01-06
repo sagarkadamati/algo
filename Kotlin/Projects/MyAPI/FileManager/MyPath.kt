@@ -35,7 +35,7 @@ class MyPath(str: String) {
 
 	fun getFiles(recursive: Boolean = false) {
 		if (!recursive) {
-			File(this.path)
+			FileTreeWalk()
 			.walkTopDown()
 			.maxDepth(1)
 			.forEach {
@@ -43,7 +43,7 @@ class MyPath(str: String) {
 			}
 		}
 		else {
-			File(this.path)
+			FileTreeWalk()
 			.walkTopDown()
 			.forEach {
 				println(it)
