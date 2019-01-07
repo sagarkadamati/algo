@@ -99,5 +99,8 @@
 	"jira-plugin.workingProject": "",
 	"jira-plugin.workingIssueStatues": "In progress",
 	"jira-plugin.enableWorkingIssue": true,
-	"jira-plugin.trackingTimeMode": "always"
+	"jira-plugin.trackingTimeMode": "always",
+
+	"C_Cpp.intelliSenseEngineFallback": "Disabled",
+	"C_Cpp.intelliSenseEngine": "Tag Parser"
 }
