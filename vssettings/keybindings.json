@@ -69,6 +69,11 @@
         "command":  "-workbench.action.togglePanel"
     },
     {
+        "key":  "ctrl+w",
+        "command":  "-workbench.action.closeWindow",
+        "when":  "!editorIsOpen \u0026\u0026 !multipleEditorGroups"
+    },
+    {
         "key":  "ctrl+shift+l",
         "command":  "workbench.action.focusSideBar",
         "when":  "editorTextFocus"
@@ -470,6 +475,16 @@
         "args":  "run"
     },
     {
+        "key":  "ctrl+p",
+        "command":  "problems.action.focusProblemsFromFilter",
+        "when":  "problemsFilterFocus"
+    },
+    {
+        "key":  "ctrl+down",
+        "command":  "-problems.action.focusProblemsFromFilter",
+        "when":  "problemsFilterFocus"
+    },
+    {
         "key":  "ctrl+shift+n",
         "command":  "workbench.action.terminal.focusNext",
         "when":  "terminalFocus"
@@ -615,8 +630,8 @@
         "command":  "git.pull"
     },
     {
-        "key":  "ctrl+g shift+p",
-        "command":  "git.push"
+        "key":  "ctrl+g p",
+        "command":  "gitlens.pullRepositories"
     },
     {
         "key":  "ctrl+g s",

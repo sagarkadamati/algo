@@ -8,5 +8,5 @@
 		"key": "ctrl+down",
 		"command": "-problems.action.focusProblemsFromFilter",
 		"when": "problemsFilterFocus"
-	},
+	}
 ]
