@@ -117,42 +117,91 @@ function Get-Mp4FromTS {
 	# cat segment1_0_av.ts segment2_0_av.ts segment3_0_av.ts > all.ts
 	# ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
 
-	$DLoc = Join-Path $WorkspaceLocation "Host Star\in.startv.hotstar\files\downloads"
-	$Folders = Get-ChildItem -Directory -LiteralPath $DLoc
+	# $DLoc = Join-Path $WorkspaceLocation "Host Star\in.startv.hotstar\files\downloads"
+	# $Folders = Get-ChildItem -Directory -LiteralPath $DLoc
+
+	# $Folders = Get-ChildItem -Directory
+	# foreach ($Folder in $Folders) {
+	# 	Set-Location $(Join-Path $DLoc $Folder)
+	# 	$ChunkCount = (Get-ChildItem -Directory).Count
+
+	# 	$Count = 0
+
+	# 	$AllChunks = ""
+	# 	Remove-Item -ErrorAction Ignore -Force list.txt
+	# 	while ($Count -lt $ChunkCount) {
+	# 		$Chunk = Join-Path "ts$Count" "chunk.ts"
+	# 		$Count++
+
+	# 		$Chunk
+	# 		"file '$Chunk'" >> list.txt
+
+	# 	# 	$AllChunks += $Chunk
+
+	# 	# 	if ($Count -lt $ChunkCount) {
+	# 	# 		$AllChunks += "+"
+	# 	# 	}
+	# 	}
+	# 	# $AllChunks
+	# 	# cmd /c copy.exe $AllChunks all.ts
+	# 	ffmpeg -f concat -i list.txt -c copy all.ts
+	# 	ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
+	# }
+	# ffmpeg  -allowed_extensions ALL -i *local*.m3u8 -c copy video.mp4
+
+	$Folders = Get-ChildItem -Directory
 	foreach ($Folder in $Folders) {
-		Set-Location $(Join-Path $DLoc $Folder)
-		$ChunkCount = (Get-ChildItem -Directory).Count
+		$CurrentLoc = Get-Location
+		Set-Location "$Folder"
 
-		$Count = 0
+		if (!(Test-Path "video.mp4")) {
+			$LocalM3U8  = Get-ChildItem -File -Filter "*local*.m3u8"
+			$RemoteM3U8 = Get-ChildItem -File -Filter "*sub*.m3u8"
 
-		$AllChunks = ""
-		Remove-Item -ErrorAction Ignore -Force list.txt
-		while ($Count -lt $ChunkCount) {
-			$Chunk = Join-Path "ts$Count" "chunk.ts"
-			$Count++
+			if (!(Test-Path "crypt.key")) {
+				$CryptFile = ((Get-Content $RemoteM3U8 | Select-String URI).Line -split 'URI="')[1] -replace """$"
 
-			$Chunk
-			"file '$Chunk'" >> list.txt
+				Write-Host Downloading... $CryptFile
+				Invoke-WebRequest -Uri $CryptFile -OutFile crypt.key
+			}
 
-		# 	$AllChunks += $Chunk
+			((Get-Content $LocalM3U8) -replace "http://localhost:\d+/storage/emulated/0/Android/data/in.startv.hotstar/files/downloads/\d+/","") -replace "http://localhost:\d+/data/user/0/in.startv.hotstar/app_downloads/\d+/ts0/","" | Set-Content data.m3u8
 
-		# 	if ($Count -lt $ChunkCount) {
-		# 		$AllChunks += "+"
-		# 	}
+			ffmpeg  -allowed_extensions ALL -i data.m3u8 -c copy video.mp4
 		}
-		# $AllChunks
-		# cmd /c copy.exe $AllChunks all.ts
-		ffmpeg -f concat -i list.txt -c copy all.ts
-		ffmpeg -i all.ts -acodec copy -vcodec copy all.mp4
 
+		Set-Location $CurrentLoc
 	}
-	ffmpeg  -allowed_extensions ALL -i .\1000099544-local_v1.m3u8 -c copy output.mp4
+}
 
-	$LocalM3U8  = Get-ChildItem -File -Filter "*local*.m3u8"
-	$RemoteM3U8 = Get-ChildItem -File -Filter "*sub*.m3u8"
+function Sync-HSKeys {
+	$SLoc = "${$WorkspaceLocation}\Host Star\downloads"
+	$MLoc = "This PC\Galaxy A6+\Phone\Android\data\in.startv.hotstar\files\downloads"
 
-	$CryptFile = ((Get-Content $RemoteM3U8 | Select-String URI).Line -split 'URI=')[1]
-	Invoke-WebRequest -Uri $CryptFile -OutFile crypt.key
+
+	$Folders = Get-ChildItem -Directory
+	foreach ($Folder in $Folders) {
+		$CurrentLoc = Get-Location
+		Set-Location "$Folder"
+
+		if (!(Test-Path "video.mp4")) {
+			$LocalM3U8  = Get-ChildItem -File -Filter "*local*.m3u8"
+			$RemoteM3U8 = Get-ChildItem -File -Filter "*sub*.m3u8"
+
+			if (!(Test-Path "crypt.key")) {
+				$CryptFile = ((Get-Content $RemoteM3U8 | Select-String URI).Line -split 'URI="')[1] -replace """$"
+
+				Write-Host Downloading... $CryptFile
+				Invoke-WebRequest -Uri $CryptFile -OutFile crypt.key
+			}
+
+			((Get-Content $LocalM3U8) -replace "http://localhost:\d+/storage/emulated/0/Android/data/in.startv.hotstar/files/downloads/\d+/","") -replace "http://localhost:\d+/data/user/0/in.startv.hotstar/app_downloads/\d+/ts0/","" | Set-Content data.m3u8
+
+			ffmpeg  -allowed_extensions ALL -i data.m3u8 -c copy video.mp4
+		}
+
+		Set-Location $CurrentLoc
+	}
 }
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, ReverseFileNos, Get-Mp4FromTS

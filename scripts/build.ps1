@@ -11,6 +11,9 @@ if ($FileName -match "Kotlin/Projects/*") {
 	$Project = $(($FileName -replace "Kotlin/Projects/", "") -split '/')[0]
 	if ($Build) {
 		kt -Build $Project
+		if (Test-Path "Kotlin/Run/${Project}.jar") {
+			kt $Project
+		}
 	}
 	else {
 		kt $Project
