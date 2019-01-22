@@ -29,7 +29,7 @@ function Setup {
 
 	## PATHS
 	$GITPATH    = $(Join-Path $Tools "Git"     | Join-Path -ChildPath "bin")
-	$VSCODEPATH = $(Join-Path $Tools "VS Code" | Join-Path -ChildPath "bin")
+	$VSCODEPATH = $(Join-Path $Tools "VSCode" | Join-Path -ChildPath "bin")
 
 	$KOTLINPATH = $(Join-Path $Tools "Kotlinc" | Join-Path -ChildPath "bin")
 	$PYTHONPATH = $(Join-Path $Tools "Python"  | Join-Path -ChildPath "bin")

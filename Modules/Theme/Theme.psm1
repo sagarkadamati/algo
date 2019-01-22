@@ -189,14 +189,14 @@ function STheme($Time) {
 			$PSReadLineOptions = @{
 				BellStyle = "None"
 				Colors = @{
-					"Command"            = "#FF00FF"
-					"ContinuationPrompt" = "#FF00FF"
-					"Operator"           = "#00FF00"
-					"Parameter"          = "#00FF00"
-					"Error"              = "#FF0000"
+					# "Command"            = "#FF00FF"
+					# "ContinuationPrompt" = "#FF00FF"
+					# "Operator"           = "#00FF00"
+					# "Parameter"          = "#00FF00"
+					# "Error"              = "#FF0000"
 
-					"Selection"          = "#FFFFFF"
-					"DefaultToken"       = "#FFFFFF"
+					# "Selection"          = "#FFFFFF"
+					# "DefaultToken"       = "#FFFFFF"
 
 					# "Emphasis"           = "#FFFFFF"
 					# "Keyword"            = "#FFFFFF"
@@ -206,6 +206,36 @@ function STheme($Time) {
 					# "Type"               = "#FFFFFF"
 					# "Variable"           = "#FFFFFF"
 					# "Comment"            = "#FFFFFF"
+
+					# Foreground
+					"Command"                      = [ConsoleColor]::Yellow
+					"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
+					"DefaultToken"                 = [ConsoleColor]::DarkYellow
+					"Emphasis"                     = [ConsoleColor]::Cyan
+					"Error"                        = [ConsoleColor]::Red
+					"Keyword"                      = [ConsoleColor]::Green
+					"Member"                       = [ConsoleColor]::DarkGreen
+					"Number"                       = [ConsoleColor]::DarkGreen
+					"Operator"                     = [ConsoleColor]::DarkCyan
+					"Parameter"                    = [ConsoleColor]::DarkCyan
+					"String"                       = [ConsoleColor]::Blue
+					"Type"                         = [ConsoleColor]::DarkBlue
+					"Variable"                     = [ConsoleColor]::Green
+
+					# Background
+					"CommandBackground"            = [ConsoleColor]::White
+					"ContinuationPromptBackground" = [ConsoleColor]::White
+					"DefaultTokenBackground"       = [ConsoleColor]::White
+					"EmphasisBackground"           = [ConsoleColor]::White
+					"ErrorBackground"              = [ConsoleColor]::White
+					"KeywordBackground"            = [ConsoleColor]::White
+					"MemberBackground"             = [ConsoleColor]::White
+					"NumberBackground"             = [ConsoleColor]::White
+					"OperatorBackground"           = [ConsoleColor]::White
+					"ParameterBackground"          = [ConsoleColor]::White
+					"StringBackground"             = [ConsoleColor]::White
+					"TypeBackground"               = [ConsoleColor]::White
+					"VariableBackground"           = [ConsoleColor]::White
 				}
 			}
 			Set-PSReadLineOption @PSReadLineOptions
@@ -226,20 +256,15 @@ function DayTheme {
 }
 
 function Update-Theme {
-	# if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
-	# 	if ($Host.UI.RawUI.BackgroundColor -match "White")
-	# 	{
-	# 		STheme "Day"
-	# 	}
-	# 	else
-	# 	{
-	# 		STheme "Night"
-	# 	}
-	# }
-	# else
-	# {
-		DayTheme
-	# }
+	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+		if ($Host.UI.RawUI.BackgroundColor -match "White") {
+			STheme "Day"
+		} else {
+			STheme "Night"
+		}
+	} else {
+		STheme "Day"
+	}
 }
 
 Export-ModuleMember -Function Update-Theme, NightTheme, DayTheme

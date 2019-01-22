@@ -12,7 +12,7 @@ function Update-Paths {
 
 	$PYTHONPATH        = [IO.Path]::Combine($ToolsLocation, "Python")
 	$GITPATH           = [IO.Path]::Combine($ToolsLocation, "Git",     "bin")
-	$VSCODEPATH        = [IO.Path]::Combine($ToolsLocation, "VS Code", "bin")
+	$VSCODEPATH        = [IO.Path]::Combine($ToolsLocation, "VSCode", "bin")
 	$KOTLINPATH        = [IO.Path]::Combine($ToolsLocation, "Kotlin", "kotlinc" , "bin")
 	$KOTLINPATH       += $PS
 	$KOTLINPATH       += [IO.Path]::Combine($ToolsLocation, "Kotlin", "kotlin-native", "bin")

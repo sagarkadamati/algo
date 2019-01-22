@@ -6,8 +6,8 @@ function UpdateLink {
 	$link.Save()
 
 	$obj = New-Object -ComObject WScript.Shell
-	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VS Code.lnk"))
-	$link.TargetPath = [io.path]::combine("$Tools", "VS Code", "Code.exe")
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VSCode.lnk"))
+	$link.TargetPath = [io.path]::combine("$Tools", "VSCode", "Code.exe")
 	$link.Arguments = "-r"
 	$link.Hotkey = "Alt+Ctrl+E"
 	$link.Save()
