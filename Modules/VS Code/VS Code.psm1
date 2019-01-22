@@ -29,8 +29,8 @@ function Get-VSCodePathed {
 
 function Update-VSCode {
 	Get-VSKeys
-	Get-VSSettings > ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "settings.json"))
-	# Get-VSTheme
+	Get-VSSettings
+	Get-VSTheme
 
 	Get-VSCodePathed
 

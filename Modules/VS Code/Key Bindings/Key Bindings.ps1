@@ -40,7 +40,5 @@ function Get-VSKeys {
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Suggest Widget.json") | ConvertFrom-Json
 
-	# Write-Output "["
 	$jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "keybindings.json"))
-	# Write-Output "]"
 }
