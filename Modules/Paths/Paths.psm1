@@ -8,7 +8,7 @@ function Update-Paths {
 
 	$Global:GOROOT     = [IO.Path]::Combine($ToolsLocation,    "Go")
 	$Global:GOPATH     = [IO.Path]::Combine($ProjectsLocation, "algos",   "go")
-	$Global:JAVA_HOME  = [IO.Path]::Combine($ToolsLocation,    "Android", "Android Studio", "jre")
+	$Global:JAVA_HOME  = [IO.Path]::Combine($ToolsLocation,    "Android", "Studio", "jre")
 
 	$PYTHONPATH        = [IO.Path]::Combine($ToolsLocation, "Python")
 	$GITPATH           = [IO.Path]::Combine($ToolsLocation, "Git",     "bin")
