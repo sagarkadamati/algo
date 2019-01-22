@@ -33,7 +33,10 @@ function kt() {
 	{
 		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
-			
+
+		CreateDirectory $(Join-Path $BasePath "Lib")
+		CreateDirectory $(Join-Path $BasePath "Run")
+
 		if(![string]::IsNullOrWhiteSpace($Run)) {
 			# Write-Host "Running"
 
