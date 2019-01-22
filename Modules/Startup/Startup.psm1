@@ -27,6 +27,7 @@ function Prompt {
 
 function SetupEnv {
 	Install-KeyHandlers
+	Register-AutoComplete
 	Update-Theme
 	Update-Paths
 }

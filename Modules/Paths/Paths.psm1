@@ -43,35 +43,41 @@ function Workspace() {
 }
 
 function Projects() {
-	[OutputType([System.IO.FileInfo])]
-	[CmdletBinding()]
-
-	param()
-
-	DynamicParam
-	{
-		$ParamAttrib = New-Object System.Management.Automation.ParameterAttribute
-		# $ParamAttrib.Mandatory = $true
-		$ParamAttrib.ParameterSetName = '__AllParameterSets'
-
-		$AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
-		$AttribColl.Add($ParamAttrib)
-		$configurationProjects = Get-ChildItem -Directory -Path $ProjectsLocation | Select-Object -ExpandProperty Name
-		$AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationProjects)))
-
-		$RuntimeParam    = New-Object System.Management.Automation.RuntimeDefinedParameter('Name', [string], $AttribColl)
-
-		$RuntimeParamDic = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-		$RuntimeParamDic.Add('Name', $RuntimeParam)
-
-		return  $RuntimeParamDic
-	}
-
-	process
-	{
-		Set-Location $(Join-Path $ProjectsLocation $($PSBoundParameters.Name + ""))
-	}
+	param(
+		[String]$Project
+	)
+	Set-Location $(Join-Path $ProjectsLocation $Project)
 }
+# function Projects() {
+# 	[OutputType([System.IO.FileInfo])]
+# 	[CmdletBinding()]
+
+# 	param()
+
+# 	DynamicParam
+# 	{
+# 		$ParamAttrib = New-Object System.Management.Automation.ParameterAttribute
+# 		# $ParamAttrib.Mandatory = $true
+# 		$ParamAttrib.ParameterSetName = '__AllParameterSets'
+
+# 		$AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
+# 		$AttribColl.Add($ParamAttrib)
+# 		$configurationProjects = Get-ChildItem -Directory -Path $ProjectsLocation | Select-Object -ExpandProperty Name
+# 		$AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationProjects)))
+
+# 		$RuntimeParam    = New-Object System.Management.Automation.RuntimeDefinedParameter('Name', [string], $AttribColl)
+
+# 		$RuntimeParamDic = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+# 		$RuntimeParamDic.Add('Name', $RuntimeParam)
+
+# 		return  $RuntimeParamDic
+# 	}
+
+# 	process
+# 	{
+# 		Set-Location $(Join-Path $ProjectsLocation $($PSBoundParameters.Name + ""))
+# 	}
+# }
 
 function Tools($tool) {
 	Set-Location $(Join-Path $ToolsLocation $($tool + ""))
