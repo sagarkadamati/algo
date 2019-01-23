@@ -99,14 +99,14 @@ function STheme($Time) {
 	$Host.PrivateData.WarningBackgroundColor       = $ScreenBackgroundColor
 	$Host.PrivateData.DebugBackgroundColor         = $ScreenBackgroundColor
 	$Host.PrivateData.VerboseBackgroundColor       = $ScreenBackgroundColor
-	$Host.PrivateData.ProgressBackgroundColor      = $PopUpTextColor
+	$Host.PrivateData.ProgressBackgroundColor      = $PopUpBackgroundColor
 
 	# Host Foreground
 	$Host.PrivateData.ErrorForegroundColor         = [ConsoleColor]::DarkBlue  # RED
 	$Host.PrivateData.WarningForegroundColor       = [ConsoleColor]::DarkGreen # GREEN
 	$Host.PrivateData.DebugForegroundColor         = [ConsoleColor]::Red
 	$Host.PrivateData.VerboseForegroundColor       = [ConsoleColor]::Blue
-	$Host.PrivateData.ProgressForegroundColor      = [ConsoleColor]::DarkRed
+	$Host.PrivateData.ProgressForegroundColor      = $PopUpTextColor
 
 	# Check for PSReadline
 	if (Get-Module -ListAvailable -Name "PSReadline") {
