@@ -1,68 +1,74 @@
+# $ColorBlack		= "#002b36" # base03
+# $ColorDarkBlue	= "#073642" # base02
+# $ColorDarkGreen	= "#586e75" # base01
+# $ColorDarkCyan	= "#657b83" # base00
+# $ColorDarkRed		= "#839496" # base0
+# $ColorDarkMagenta	= "#93a1a1" # base1
+# $ColorDarkYellow	= "#eee8d5" # base2
+# $ColorGray		= "#fdf6e3" # base3
+# $ColorDarkGray	= "#b58900" # yellow
+# $ColorBlue		= "#cb4b16" # orange
+# $ColorGreen		= "#dc322f" # red
+# $ColorCyan		= "#d33682" # magenta
+# $ColorRed			= "#6c71c4" # violet
+# $ColorMagenta		= "#268bd2" # blue
+# $ColorYellow		= "#2aa198" # cyan
+# $ColorWhite		= "#859900" # green
+
 function LTheme($Time) {
+
+	# Palette
+	$ColorBlack			= "#073642" # base02
+	$ColorDarkBlue		= "#dc322f" # red
+	$ColorDarkGreen		= "#859900" # green
+	$ColorDarkCyan		= "#b58900" # yellow
+	$ColorDarkRed		= "#268bd2" # blue
+	$ColorDarkMagenta	= "#d33682" # magenta
+	$ColorDarkYellow	= "#2aa198" # cyan
+	$ColorGray			= "#eee8d5" # base2
+	$ColorDarkGray		= "#002b36" # base03
+	$ColorBlue			= "#cb4b16" # orange
+	$ColorGreen			= "#586e75" # base01
+	$ColorCyan			= "#657b83" # base00
+	$ColorRed			= "#839496" # base0
+	$ColorMagenta		= "#6c71c4" # violet
+	$ColorYellow		= "#93a1a1" # base1
+	$ColorWhite			= "#fdf6e3" # base3
+	
 	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
 		## Set Common Colors In The Link
 		$lnk = & "${PSScriptRoot}\GetLink.ps1" "${Home}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
 
-		# [ConsoleColor]::Black -> base03: #002b36;
-		$lnk.ConsoleColors[0]  = "#002b36"
-
-		# [ConsoleColor]::DarkBlue -> base02: #073642;
-		$lnk.ConsoleColors[1]  = "#073642"
-
-		# [ConsoleColor]::DarkGreen -> base01: #586e75;
-		$lnk.ConsoleColors[2]  = "#586e75"
-
-		# [ConsoleColor]::DarkCyan -> base00: #657b83;
-		$lnk.ConsoleColors[3]  = "#657b83"
-
-		# [ConsoleColor]::DarkRed -> base0: #839496;
-		$lnk.ConsoleColors[4]  = "#839496"
-
-		# [ConsoleColor]::DarkMagenta -> base1: #93a1a1;
-		$lnk.ConsoleColors[5]  = "#93a1a1"
-
-		# [ConsoleColor]::DarkYellow -> base2: #eee8d5;
-		$lnk.ConsoleColors[6]  = "#eee8d5"
-
-		# [ConsoleColor]::Gray -> base3: #fdf6e3;
-		$lnk.ConsoleColors[7]  = "#fdf6e3"
-
-		# [ConsoleColor]::DarkGray -> yellow: #b58900;
-		$lnk.ConsoleColors[8]  = "#b58900"
-
-		# [ConsoleColor]::Blue -> orange: #cb4b16;
-		$lnk.ConsoleColors[9]  = "#cb4b16"
-
-		# [ConsoleColor]::Green -> red: #dc322f;
-		$lnk.ConsoleColors[10] = "#dc322f"
-
-		# [ConsoleColor]::Cyan -> magenta: #d33682;
-		$lnk.ConsoleColors[11] = "#d33682"
-
-		# [ConsoleColor]::Red -> violet: #6c71c4;
-		$lnk.ConsoleColors[12] = "#6c71c4"
-
-		# [ConsoleColor]::Magenta -> blue: #268bd2;
-		$lnk.ConsoleColors[13] = "#268bd2"
-
-		# [ConsoleColor]::Yellow -> cyan: #2aa198;
-		$lnk.ConsoleColors[14] = "#2aa198"
-
-		# [ConsoleColor]::White -> green: #859900;
-		$lnk.ConsoleColors[15] = "#859900"
+		# Set Palette
+		$lnk.ConsoleColors[0]  = $ColorBlack		# base02
+		$lnk.ConsoleColors[1]  = $ColorDarkBlue		# red
+		$lnk.ConsoleColors[2]  = $ColorDarkGreen	# green
+		$lnk.ConsoleColors[3]  = $ColorDarkCyan		# yellow
+		$lnk.ConsoleColors[4]  = $ColorDarkRed		# blue
+		$lnk.ConsoleColors[5]  = $ColorDarkMagenta	# magenta
+		$lnk.ConsoleColors[6]  = $ColorDarkYellow	# cyan
+		$lnk.ConsoleColors[7]  = $ColorGray			# base2
+		$lnk.ConsoleColors[8]  = $ColorDarkGray		# base03
+		$lnk.ConsoleColors[9]  = $ColorBlue			# orange
+		$lnk.ConsoleColors[10] = $ColorGreen		# base01
+		$lnk.ConsoleColors[11] = $ColorCyan			# base00
+		$lnk.ConsoleColors[12] = $ColorRed			# base0
+		$lnk.ConsoleColors[13] = $ColorMagenta		# violet
+		$lnk.ConsoleColors[14] = $ColorYellow		# base1
+		$lnk.ConsoleColors[15] = $ColorWhite		# base3
 
 		# Set Light/Dark Theme-Specific Colors
 		if ($Time -match "Night") {
-			$lnk.ScreenBackgroundColor = 0x0
-			$lnk.ScreenTextColor       = 0x5
-			$lnk.PopUpBackgroundColor  = 0x1
-			$lnk.PopUpTextColor        = 0x4
+			$lnk.PopUpBackgroundColor  = 0x0 # index in palette
+			$lnk.ScreenBackgroundColor = 0x8
+			$lnk.PopUpTextColor        = 0xC
+			$lnk.ScreenTextColor       = 0xE
 		}
 		else {
-			$lnk.ScreenBackgroundColor = 0x7
-			$lnk.ScreenTextColor       = 0x2
-			$lnk.PopUpBackgroundColor  = 0x6
-			$lnk.PopUpTextColor        = 0x3
+			$lnk.PopUpBackgroundColor  = 0x7
+			$lnk.ScreenBackgroundColor = 0xF
+			$lnk.PopUpTextColor        = 0xB
+			$lnk.ScreenTextColor       = 0xA
 		}
 		$lnk.Save()
 	}
@@ -72,156 +78,73 @@ function STheme($Time) {
 	# [Enum]::GetValues([System.ConsoleColor])
 
 	if ($Time -match "Night") {
-		# Host UI
-		$Host.UI.RawUI.BackgroundColor                 = [ConsoleColor]::Black
-		$Host.UI.RawUI.ForegroundColor                 = [ConsoleColor]::DarkMagenta
-
-		# Host Background
-		$Host.PrivateData.ErrorBackgroundColor         = [ConsoleColor]::Black
-		$Host.PrivateData.WarningBackgroundColor       = [ConsoleColor]::Black
-		$Host.PrivateData.DebugBackgroundColor         = [ConsoleColor]::Black
-		$Host.PrivateData.VerboseBackgroundColor       = [ConsoleColor]::Black
-		$Host.PrivateData.ProgressBackgroundColor      = [ConsoleColor]::DarkBlue
-
-		# Host Foreground
-		$Host.PrivateData.ErrorForegroundColor         = [ConsoleColor]::Green # RED
-		$Host.PrivateData.WarningForegroundColor       = [ConsoleColor]::White # GREEN
-		$Host.PrivateData.DebugForegroundColor         = [ConsoleColor]::Green 
-		$Host.PrivateData.VerboseForegroundColor       = [ConsoleColor]::Blue
-		$Host.PrivateData.ProgressForegroundColor      = [ConsoleColor]::DarkRed
-
-		# Check for PSReadline
-		if (Get-Module -ListAvailable -Name "PSReadline") {
-			$PSReadLineOptions = @{
-				BellStyle = "None"
-				Colors = @{
-					# "Command"            = "#FF00FF"
-					# "ContinuationPrompt" = "#FF00FF"
-					# "Operator"           = "#00FF00"
-					# "Parameter"          = "#00FF00"
-					# "Error"              = "#FF0000"
-
-					# "Selection"          = "#FFFFFF"
-					# "DefaultToken"       = "#FFFFFF"
-
-					# "Emphasis"           = "#FFFFFF"
-					# "Keyword"            = "#FFFFFF"
-					# "Member"             = "#FFFFFF"
-					# "Number"             = "#FFFFFF"
-					# "String"             = "#FFFFFF"
-					# "Type"               = "#FFFFFF"
-					# "Variable"           = "#FFFFFF"
-					# "Comment"            = "#FFFFFF"
-
-					# Background
-					"CommandBackground"            = [ConsoleColor]::Black
-					"ContinuationPromptBackground" = [ConsoleColor]::Black
-					"DefaultTokenBackground"       = [ConsoleColor]::Black
-					"EmphasisBackground"           = [ConsoleColor]::Black
-					"ErrorBackground"              = [ConsoleColor]::Black
-					"KeywordBackground"            = [ConsoleColor]::Black
-					"MemberBackground"             = [ConsoleColor]::Black
-					"NumberBackground"             = [ConsoleColor]::Black
-					"OperatorBackground"           = [ConsoleColor]::Black
-					"ParameterBackground"          = [ConsoleColor]::Black
-					"StringBackground"             = [ConsoleColor]::Black
-					"TypeBackground"               = [ConsoleColor]::Black
-					"VariableBackground"           = [ConsoleColor]::Black
-
-					# Foreground
-					"Command"                      = [ConsoleColor]::Yellow
-					"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
-					"DefaultToken"                 = [ConsoleColor]::DarkYellow
-					"Emphasis"                     = [ConsoleColor]::Cyan
-					"Error"                        = [ConsoleColor]::Red
-					"Keyword"                      = [ConsoleColor]::Green
-					"Member"                       = [ConsoleColor]::DarkGreen
-					"Number"                       = [ConsoleColor]::DarkGreen
-					"Operator"                     = [ConsoleColor]::DarkCyan
-					"Parameter"                    = [ConsoleColor]::DarkCyan
-					"String"                       = [ConsoleColor]::Blue
-					"Type"                         = [ConsoleColor]::DarkBlue
-					"Variable"                     = [ConsoleColor]::Green
-				}
-			}
-			Set-PSReadLineOption @PSReadLineOptions
-		}
+		$ScreenBackgroundColor		= [ConsoleColor]::DarkGray
+		$ScreenTextColor			= [ConsoleColor]::Yellow
+		$PopUpBackgroundColor		= [ConsoleColor]::Black
+		$PopUpTextColor				= [ConsoleColor]::Red
 	}
 	else {
-		# Host UI
-		$Host.UI.RawUI.BackgroundColor                 = [ConsoleColor]::Gray
-		$Host.UI.RawUI.ForegroundColor                 = [ConsoleColor]::DarkGreen
+		$ScreenBackgroundColor		= [ConsoleColor]::White
+		$ScreenTextColor			= [ConsoleColor]::Green
+		$PopUpBackgroundColor		= [ConsoleColor]::Gray
+		$PopUpTextColor				= [ConsoleColor]::Cyan
+	}
 
-		# Host Background
-		$Host.PrivateData.ErrorBackgroundColor         = [ConsoleColor]::Gray
-		$Host.PrivateData.WarningBackgroundColor       = [ConsoleColor]::Gray
-		$Host.PrivateData.DebugBackgroundColor         = [ConsoleColor]::Gray
-		$Host.PrivateData.VerboseBackgroundColor       = [ConsoleColor]::Gray
-		$Host.PrivateData.ProgressBackgroundColor      = [ConsoleColor]::Cyan
+	# Host UI
+	$Host.UI.RawUI.BackgroundColor                 = $ScreenBackgroundColor
+	$Host.UI.RawUI.ForegroundColor                 = $ScreenTextColor
 
-		# Host Foreground
-		$Host.PrivateData.ErrorForegroundColor         = [ConsoleColor]::Red
-		$Host.PrivateData.WarningForegroundColor       = [ConsoleColor]::Yellow
-		$Host.PrivateData.DebugForegroundColor         = [ConsoleColor]::Green
-		$Host.PrivateData.VerboseForegroundColor       = [ConsoleColor]::Blue
-		$Host.PrivateData.ProgressForegroundColor      = [ConsoleColor]::Gray
+	# Host Background
+	$Host.PrivateData.ErrorBackgroundColor         = $ScreenBackgroundColor
+	$Host.PrivateData.WarningBackgroundColor       = $ScreenBackgroundColor
+	$Host.PrivateData.DebugBackgroundColor         = $ScreenBackgroundColor
+	$Host.PrivateData.VerboseBackgroundColor       = $ScreenBackgroundColor
+	$Host.PrivateData.ProgressBackgroundColor      = $PopUpTextColor
 
-		# Check for PSReadline
-		if (Get-Module -ListAvailable -Name "PSReadline") {
-			$PSReadLineOptions = @{
-				BellStyle = "None"
-				Colors = @{
-					# "Command"            = "#FF00FF"
-					# "ContinuationPrompt" = "#FF00FF"
-					# "Operator"           = "#00FF00"
-					# "Parameter"          = "#00FF00"
-					# "Error"              = "#FF0000"
+	# Host Foreground
+	$Host.PrivateData.ErrorForegroundColor         = [ConsoleColor]::DarkBlue  # RED
+	$Host.PrivateData.WarningForegroundColor       = [ConsoleColor]::DarkGreen # GREEN
+	$Host.PrivateData.DebugForegroundColor         = [ConsoleColor]::Red
+	$Host.PrivateData.VerboseForegroundColor       = [ConsoleColor]::Blue
+	$Host.PrivateData.ProgressForegroundColor      = [ConsoleColor]::DarkRed
 
-					# "Selection"          = "#FFFFFF"
-					# "DefaultToken"       = "#FFFFFF"
+	# Check for PSReadline
+	if (Get-Module -ListAvailable -Name "PSReadline") {
+		$PSReadLineOptions = @{
+			BellStyle = "None"
+			Colors = @{
+				# Background
+				"CommandBackground"            = $ScreenBackgroundColor
+				"ContinuationPromptBackground" = $ScreenBackgroundColor
+				"DefaultTokenBackground"       = $ScreenBackgroundColor
+				"EmphasisBackground"           = $ScreenBackgroundColor
+				"ErrorBackground"              = $ScreenBackgroundColor
+				"KeywordBackground"            = $ScreenBackgroundColor
+				"MemberBackground"             = $ScreenBackgroundColor
+				"NumberBackground"             = $ScreenBackgroundColor
+				"OperatorBackground"           = $ScreenBackgroundColor
+				"ParameterBackground"          = $ScreenBackgroundColor
+				"StringBackground"             = $ScreenBackgroundColor
+				"TypeBackground"               = $ScreenBackgroundColor
+				"VariableBackground"           = $ScreenBackgroundColor
 
-					# "Emphasis"           = "#FFFFFF"
-					# "Keyword"            = "#FFFFFF"
-					# "Member"             = "#FFFFFF"
-					# "Number"             = "#FFFFFF"
-					# "String"             = "#FFFFFF"
-					# "Type"               = "#FFFFFF"
-					# "Variable"           = "#FFFFFF"
-					# "Comment"            = "#FFFFFF"
-
-					# Foreground
-					"Command"                      = [ConsoleColor]::Yellow
-					"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
-					"DefaultToken"                 = [ConsoleColor]::DarkYellow
-					"Emphasis"                     = [ConsoleColor]::Cyan
-					"Error"                        = [ConsoleColor]::Red
-					"Keyword"                      = [ConsoleColor]::Green
-					"Member"                       = [ConsoleColor]::DarkGreen
-					"Number"                       = [ConsoleColor]::DarkGreen
-					"Operator"                     = [ConsoleColor]::DarkCyan
-					"Parameter"                    = [ConsoleColor]::DarkCyan
-					"String"                       = [ConsoleColor]::Blue
-					"Type"                         = [ConsoleColor]::DarkBlue
-					"Variable"                     = [ConsoleColor]::Green
-
-					# Background
-					"CommandBackground"            = [ConsoleColor]::Gray
-					"ContinuationPromptBackground" = [ConsoleColor]::Gray
-					"DefaultTokenBackground"       = [ConsoleColor]::Gray
-					"EmphasisBackground"           = [ConsoleColor]::Gray
-					"ErrorBackground"              = [ConsoleColor]::Gray
-					"KeywordBackground"            = [ConsoleColor]::Gray
-					"MemberBackground"             = [ConsoleColor]::Gray
-					"NumberBackground"             = [ConsoleColor]::Gray
-					"OperatorBackground"           = [ConsoleColor]::Gray
-					"ParameterBackground"          = [ConsoleColor]::Gray
-					"StringBackground"             = [ConsoleColor]::Gray
-					"TypeBackground"               = [ConsoleColor]::Gray
-					"VariableBackground"           = [ConsoleColor]::Gray
-				}
+				# Foreground
+				"Command"                      = [ConsoleColor]::Yellow
+				"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
+				"DefaultToken"                 = [ConsoleColor]::DarkYellow
+				"Emphasis"                     = [ConsoleColor]::Cyan
+				"Error"                        = [ConsoleColor]::Red
+				"Keyword"                      = [ConsoleColor]::Green
+				"Member"                       = [ConsoleColor]::DarkGreen
+				"Number"                       = [ConsoleColor]::DarkGreen
+				"Operator"                     = [ConsoleColor]::DarkCyan
+				"Parameter"                    = [ConsoleColor]::DarkCyan
+				"String"                       = [ConsoleColor]::Blue
+				"Type"                         = [ConsoleColor]::DarkBlue
+				"Variable"                     = [ConsoleColor]::Green
 			}
-			Set-PSReadLineOption @PSReadLineOptions
 		}
+		Set-PSReadLineOption @PSReadLineOptions
 	}
 }
 
@@ -239,7 +162,7 @@ function DayTheme {
 
 function Update-Theme {
 	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
-		if ($Host.UI.RawUI.BackgroundColor -match [ConsoleColor]::Gray) {
+		if (($Host.UI.RawUI.BackgroundColor -match [ConsoleColor]::White)) {
 			STheme "Day"
 		} else {
 			STheme "Night"
