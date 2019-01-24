@@ -465,7 +465,7 @@
         "when":  "inKeybindings \u0026\u0026 inKeybindingsSearch"
     },
     {
-        "key":  "ctrl+shift+c",
+        "key":  "F5",
         "command":  "workbench.action.tasks.runTask",
         "args":  "build"
     },
@@ -761,6 +761,11 @@
     {
         "key":  "ctrl+g ctrl+shift+c",
         "command":  "git.cleanAll",
+        "when":  "editorTextFocus"
+    },
+    {
+        "key":  "ctrl+g ctrl+v",
+        "command":  "gitlens.showCommitInView",
         "when":  "editorTextFocus"
     },
     {

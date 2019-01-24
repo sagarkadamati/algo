@@ -204,4 +204,153 @@ function Sync-HSKeys {
 	}
 }
 
-Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, ReverseFileNos, Get-Mp4FromTS
+function kt() {
+	param (
+		[String]$Run,
+		[String]$Build,
+		[String]$Script,
+		[String]$Clean
+	)
+
+		process
+	{
+		$Program  = "kotlinc "
+		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
+
+		CreateDirectory $(Join-Path $BasePath "Lib")
+		CreateDirectory $(Join-Path $BasePath "Run")
+
+		if(![string]::IsNullOrWhiteSpace($Run)) {
+			# Write-Host "Running"
+
+			$Program  = "kotlin "
+			$Program += " -classpath '" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
+			$Program += "' MainKt"
+			$Program += " '$Build' '$Script' '$Clean' $args"
+
+			Invoke-Expression $Program
+			return
+		}
+
+		if(![string]::IsNullOrWhiteSpace($Build)) {
+			# Write-Host "Building: $Build $All $Clean"
+
+			if ($Build -match '\*') {
+				$Tasks = (Get-ChildItem -Directory -Path $(Join-Path $BasePath "Projects")).Name
+				# $Tasks
+			}
+			else {
+				$Tasks = $Build
+			}
+
+			CreateDirectory $(Join-Path $BasePath "Lib")
+			CreateDirectory $(Join-Path $BasePath "Run")
+
+			foreach ($Task in $Tasks) {
+				$Program  = "kotlinc "
+				Write-Host "Building $Task ... "
+				$KTFiles = $(Get-ChildItem -Recurse -File -Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task)).FullName | Select-String -Pattern ".kt$"
+				foreach($KTFile in $KTFiles) {
+					$Program += " '$KTFile'"
+				}
+
+				if (Test-Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task | Join-Path -Child "Main.kt")) {
+					$Program += " -include-runtime"
+					$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Task.jar")
+				}
+				else {
+					$Program += " -d " + $(Join-Path $BasePath "Lib" | Join-Path -Child "$Task.jar")
+				}
+
+				$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+
+				Invoke-Expression $Program
+				Write-Host "done"
+			}
+			return
+		}
+
+		if(![string]::IsNullOrWhiteSpace($Clean)) {
+			# Write-Host "Cleaning"
+
+			if ($Clean -match '\*') {
+				Write-Host "Cleaning All Tasks"
+				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "*") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "*") -ErrorAction Ignore
+			}
+			else {
+				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
+			}
+			return
+		}
+
+		if(![string]::IsNullOrWhiteSpace($Script)) {
+			$Program += "-script "
+			$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
+			$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+
+			# Write-Host "Running Script $Program"
+			Invoke-Expression $Program
+			return
+		}
+
+		$Program  = "kotlinc-jvm "
+		$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+		Invoke-Expression $Program
+	}
+}
+
+function Projects() {
+	[OutputType([System.IO.FileInfo])]
+	[CmdletBinding()]
+
+	param()
+
+	DynamicParam
+	{
+		$ParamAttrib = New-Object System.Management.Automation.ParameterAttribute
+		# $ParamAttrib.Mandatory = $true
+		$ParamAttrib.ParameterSetName = '__AllParameterSets'
+
+		$AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
+		$AttribColl.Add($ParamAttrib)
+		$configurationProjects = Get-ChildItem -Directory -Path $ProjectsLocation | Select-Object -ExpandProperty Name
+		$AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationProjects)))
+
+		$RuntimeParam    = New-Object System.Management.Automation.RuntimeDefinedParameter('Name', [string], $AttribColl)
+
+		$RuntimeParamDic = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+		$RuntimeParamDic.Add('Name', $RuntimeParam)
+
+		return  $RuntimeParamDic
+	}
+
+	process
+	{
+		Set-Location $(Join-Path $ProjectsLocation $($PSBoundParameters.Name + ""))
+	}
+}
+
+function Tools($tool) {
+	Set-Location $(Join-Path $ToolsLocation $($tool + ""))
+}
+
+function Env {
+	Set-Location $(Join-Path $ToolsLocation "Env")
+}
+
+function Modules($module) {
+	Set-Location $(Join-Path $ModulesLocation $($module + ""))
+}
+
+function Workspace() {
+	Set-Location $WorkspaceLocation
+}
+
+New-Alias -Name proj -Value Projects
+New-Alias -Name tls  -Value Tools
+New-Alias -Name work -Value Workspace
+
+Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work

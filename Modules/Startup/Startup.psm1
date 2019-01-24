@@ -1,3 +1,7 @@
+. "$PSScriptRoot\Key Handlers.ps1"
+. "$PSScriptRoot\Auto Complete.ps1"
+. "$PSScriptRoot\Paths.ps1"
+
 function Prompt {
 	$TEMP = $(Get-Date -UFormat "%H:%M") + " "
 
@@ -26,13 +30,12 @@ function Prompt {
 }
 
 function SetupEnv {
+	Update-Paths
+
 	Install-KeyHandlers
 	Register-AutoComplete
+
 	Update-Theme
-	Update-Paths
 }
 
 Export-ModuleMember -Function SetupEnv, Prompt
-
-# New-Alias -Name gf -Value Get-Foo
-# Export-ModuleMember -Function Get-Foo, New-Bar, ... -Alias gf, ...
