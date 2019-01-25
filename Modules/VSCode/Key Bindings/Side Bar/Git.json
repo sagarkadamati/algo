@@ -51,11 +51,6 @@
 		"when": "editorFocus"
 	},
 	{
-		"key": "ctrl+g b",
-		"command": "gitlens.toggleFileBlame",
-		"when": "editorTextFocus && gitlens:activeIsBlameable"
-	},
-	{
 		"key": "ctrl+g i",
 		"command": "gitlens.showQuickCommitFileDetails",
 		"when": "editorTextFocus && gitlens:enabled"
@@ -144,5 +139,16 @@
         "key":  "ctrl+g ctrl+shift+c",
         "command":  "git.cleanAll",
         "when":  "editorTextFocus"
+	},
+
+	{
+		"key": "ctrl+g b",
+		"command": "gitlens.toggleFileBlame",
+		"when": "editorTextFocus && gitlens:activeIsBlameable"
+	},
+	{
+        "key":  "ctrl+g ctrl+v",
+        "command":  "gitlens.showCommitInView",
+        "when":  "editorTextFocus && gitlens:enabled"
 	}
 ]

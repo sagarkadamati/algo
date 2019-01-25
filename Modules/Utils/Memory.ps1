@@ -96,3 +96,5 @@ function TrimFileName {
 		}
 	}
 }
+
+Export-Module Get-Json

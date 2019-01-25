@@ -1,3 +1,5 @@
+. ([IO.Path]::Combine($PSScriptRoot, "Memory.ps1"))
+
 Function Get-MP3MetaData {
 	[CmdletBinding()]
 	[Alias()]
@@ -354,3 +356,4 @@ New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
+Export-ModuleMember -Function Get-Json
