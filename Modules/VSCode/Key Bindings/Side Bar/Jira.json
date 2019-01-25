@@ -1,0 +1,42 @@
+[
+	{
+		"key": "ctrl+j i",
+		"command": "jira-plugin.setWorkingIssueCommand"
+	},
+	{
+		"key": "ctrl+j shift+i",
+		"command": "jira-plugin.insertWorkingIssueComment"
+	},
+	{
+		"key": "ctrl+j p",
+		"command": "jira-plugin.setWorkingProjectCommand"
+	},
+	{
+		"key": "ctrl+j c",
+		"command": "jira-plugin.issueAddCommentCommand"
+	},
+	{
+		"key": "ctrl+j oem_2",
+		"command": "jira-plugin.favouritesFilters"
+	},
+	{
+		"key": "ctrl+j a",
+		"command": "jira-plugin.changeIssueAssigneeCommand"
+	},
+	{
+		"key": "ctrl+j s",
+		"command": "jira-plugin.changeIssueStatusCommand"
+	},
+	{
+		"key": "ctrl+j r",
+		"command": "jira-plugin.refresh"
+	},
+	{
+		"key": "ctrl+j l",
+		"command": "jira-plugin.issueAddWorklogCommand"
+	},
+	{
+		"key": "ctrl+j o",
+		"command": "jira-plugin.openIssueCommand"
+	}
+]

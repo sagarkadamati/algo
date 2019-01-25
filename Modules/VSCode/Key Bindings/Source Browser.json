@@ -1,0 +1,52 @@
+[
+	{
+		"key": "ctrl+; ctrl+s",
+		"command": "C_Cpp.SwitchHeaderSource",
+		"when": "editorTextFocus && editorLangId == 'cpp'"
+	},
+	{
+		"key": "ctrl+; ctrl+s",
+		"command": "C_Cpp.SwitchHeaderSource",
+		"when": "editorTextFocus && editorLangId == 'c'"
+	},
+	{
+		"key": "ctrl+; g",
+		"command": "workbench.action.gotoLine",
+		"when": "editorFocus"
+	},
+	{
+		"key": "ctrl+; /",
+		"command": "workbench.action.gotoSymbol",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+; i",
+		"command": "editor.action.goToDeclaration",
+		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "ctrl+; shift+i",
+		"command": "editor.action.goToImplementation",
+		"when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "ctrl+; d",
+		"command": "C_Cpp.GoToDeclaration",
+		"when": "editorTextFocus && editorLangId == 'cpp'"
+	},
+	{
+		"key": "ctrl+; d",
+		"command": "C_Cpp.GoToDeclaration",
+		"when": "editorTextFocus && editorLangId == 'c'"
+	},
+	{
+		"key": "ctrl+; shift+d",
+		"command": "C_Cpp.PeekDeclaration",
+		"when": "editorTextFocus && editorLangId == 'cpp'"
+	},
+	{
+		"key": "ctrl+; shift+d",
+		"command": "C_Cpp.PeekDeclaration",
+		"when": "editorTextFocus && editorLangId == 'c'"
+	}
+]

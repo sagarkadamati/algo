@@ -1,0 +1,12 @@
+[	
+	{
+		"key": "ctrl+p",
+		"command": "problems.action.focusProblemsFromFilter",
+		"when": "problemsFilterFocus"
+	},
+	{
+		"key": "ctrl+down",
+		"command": "-problems.action.focusProblemsFromFilter",
+		"when": "problemsFilterFocus"
+	}
+]

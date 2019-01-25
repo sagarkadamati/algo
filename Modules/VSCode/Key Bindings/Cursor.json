@@ -1,0 +1,146 @@
+[
+	{
+		"key": "ctrl+f",
+		"command": "cursorRight",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "cursorLeft",
+		"when": "textInputFocus"
+    },
+	{
+		"key": "ctrl+n",
+		"command": "cursorDown",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "cursorUp",
+		"when": "textInputFocus"
+	},
+    
+
+    {
+		"key": "ctrl+alt+f",
+		"command": "cursorWordStartRight",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+alt+b",
+		"command": "cursorWordStartLeft",
+		"when": "textInputFocus"
+	},
+    {
+		"key": "ctrl+alt+n",
+		"command": "cursorPageDown",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+alt+p",
+		"command": "cursorPageUp",
+		"when": "textInputFocus"
+	},
+
+    {
+		"key": "ctrl+e",
+		"command": "cursorLineEnd",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+a",
+		"command": "cursorLineStart",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "cursorHome",
+		"when": "textInputFocus"
+	},
+
+    {
+		"key": "ctrl+; ctrl+e",
+		"command": "cursorBottom",
+		"when": "textInputFocus"
+	},
+    {
+        "key": "ctrl+; ctrl+b",
+        "command": "cursorTop",
+        "when": "textInputFocus"
+    },
+
+    {
+		"key": "ctrl+shift+f",
+		"command": "cursorRightSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+b",
+		"command": "cursorLeftSelect",
+		"when": "textInputFocus"
+	},
+	{
+        "key": "ctrl+shift+n",
+		"command": "cursorDownSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+p",
+		"command": "cursorUpSelect",
+		"when": "textInputFocus"
+	},
+
+    {
+		"key": "ctrl+shift+alt+f",
+		"command": "cursorWordStartRightSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+alt+b",
+		"command": "cursorWordStartLeftSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+alt+n",
+		"command": "cursorPageDownSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+alt+p",
+		"command": "cursorPageUpSelect",
+		"when": "textInputFocus"
+	},
+
+    {
+        "key": "ctrl+shift+e",
+        "command": "cursorEndSelect",
+        "when": "textInputFocus"
+    },
+	{
+		"key": "ctrl+shift+a",
+		"command": "cursorHomeSelect",
+		"when": "textInputFocus"
+    },
+
+	{
+		"key": "ctrl+shift+; ctrl+shift+e",
+		"command": "cursorBottomSelect",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+shift+; ctrl+shift+b",
+		"command": "cursorTopSelect",
+		"when": "textInputFocus"
+    },
+
+    {
+		"key": "ctrl+d",
+		"command": "deleteRight",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "ctrl+alt+d",
+		"command": "deleteWordRight",
+		"when": "textInputFocus"
+	}
+]

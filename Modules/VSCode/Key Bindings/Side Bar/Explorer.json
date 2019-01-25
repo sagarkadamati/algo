@@ -1,0 +1,92 @@
+[
+	{
+		"key": "ctrl+; n",
+		"command": "explorer.newFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+n",
+		"command": "explorer.newFolder",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "filesExplorer.copy",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+v",
+		"command": "filesExplorer.paste",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; d",
+		"command": "deleteFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; c",
+		"command": "workbench.files.action.collapseExplorerFolders",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "ctrl+; r",
+		"command": "workbench.files.action.refreshFilesExplorer",
+		"when": "explorerViewletFocus"
+    },
+	{
+		"key": "ctrl+n",
+		"command": "list.focusDown",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "list.focusUp",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+alt+n",
+		"command": "list.focusPageDown",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+alt+p",
+		"command": "list.focusPageUp",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "list.collapse",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "list.toggleExpand",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+e",
+		"command": "list.focusLast",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+; ctrl+b",
+		"command": "list.focusFirst",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+; m",
+		"command": "workbench.action.joinTwoGroups",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.action.openNextRecentlyUsedEditor",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+n",
+		"command": "list.focusFirst",
+		"when": "inputFocus && searchViewletVisible && !editorTextFocus"
+	}
+]

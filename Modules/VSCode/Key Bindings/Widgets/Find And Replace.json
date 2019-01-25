@@ -1,0 +1,22 @@
+[
+	{
+		"key": "alt+f",
+		"command": "actions.find",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+r",
+		"command": "editor.action.startFindReplaceAction",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ralt+f",
+		"command": "actions.find",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ralt+r",
+		"command": "editor.action.startFindReplaceAction",
+		"when": "editorTextFocus"
+	}
+]
