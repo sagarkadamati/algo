@@ -34,7 +34,7 @@ function LTheme($Time) {
 	$ColorMagenta		= "#6c71c4" # violet
 	$ColorYellow		= "#93a1a1" # base1
 	$ColorWhite			= "#fdf6e3" # base3
-	
+
 	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
 		## Set Common Colors In The Link
 		$lnk = & "${PSScriptRoot}\GetLink.ps1" "${Home}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk"
@@ -110,41 +110,77 @@ function STheme($Time) {
 
 	# Check for PSReadline
 	if (Get-Module -ListAvailable -Name "PSReadline") {
-		$PSReadLineOptions = @{
-			BellStyle = "None"
-			Colors = @{
-				# Background
-				"CommandBackground"            = $ScreenBackgroundColor
-				"ContinuationPromptBackground" = $ScreenBackgroundColor
-				"DefaultTokenBackground"       = $ScreenBackgroundColor
-				"EmphasisBackground"           = $ScreenBackgroundColor
-				"ErrorBackground"              = $ScreenBackgroundColor
-				"KeywordBackground"            = $ScreenBackgroundColor
-				"MemberBackground"             = $ScreenBackgroundColor
-				"NumberBackground"             = $ScreenBackgroundColor
-				"OperatorBackground"           = $ScreenBackgroundColor
-				"ParameterBackground"          = $ScreenBackgroundColor
-				"StringBackground"             = $ScreenBackgroundColor
-				"TypeBackground"               = $ScreenBackgroundColor
-				"VariableBackground"           = $ScreenBackgroundColor
+		try {
+			$PSReadLineOptions = @{
+				BellStyle = "None"
+				Colors = @{
+					# Background
+					"CommandBackground"            = $ScreenBackgroundColor
+					"ContinuationPromptBackground" = $ScreenBackgroundColor
+					"DefaultTokenBackground"       = $ScreenBackgroundColor
+					"EmphasisBackground"           = $ScreenBackgroundColor
+					"ErrorBackground"              = $ScreenBackgroundColor
+					"KeywordBackground"            = $ScreenBackgroundColor
+					"MemberBackground"             = $ScreenBackgroundColor
+					"NumberBackground"             = $ScreenBackgroundColor
+					"OperatorBackground"           = $ScreenBackgroundColor
+					"ParameterBackground"          = $ScreenBackgroundColor
+					"StringBackground"             = $ScreenBackgroundColor
+					"TypeBackground"               = $ScreenBackgroundColor
+					"VariableBackground"           = $ScreenBackgroundColor
 
-				# Foreground
-				"Command"                      = [ConsoleColor]::Yellow
-				"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
-				"DefaultToken"                 = [ConsoleColor]::DarkYellow
-				"Emphasis"                     = [ConsoleColor]::Cyan
-				"Error"                        = [ConsoleColor]::Red
-				"Keyword"                      = [ConsoleColor]::Green
-				"Member"                       = [ConsoleColor]::DarkGreen
-				"Number"                       = [ConsoleColor]::DarkGreen
-				"Operator"                     = [ConsoleColor]::DarkCyan
-				"Parameter"                    = [ConsoleColor]::DarkCyan
-				"String"                       = [ConsoleColor]::Blue
-				"Type"                         = [ConsoleColor]::DarkBlue
-				"Variable"                     = [ConsoleColor]::Green
+					# Foreground
+					"Command"                      = [ConsoleColor]::Yellow
+					"ContinuationPrompt"           = [ConsoleColor]::DarkYellow
+					"DefaultToken"                 = [ConsoleColor]::DarkYellow
+					"Emphasis"                     = [ConsoleColor]::Cyan
+					"Error"                        = [ConsoleColor]::Red
+					"Keyword"                      = [ConsoleColor]::Green
+					"Member"                       = [ConsoleColor]::DarkGreen
+					"Number"                       = [ConsoleColor]::DarkGreen
+					"Operator"                     = [ConsoleColor]::DarkCyan
+					"Parameter"                    = [ConsoleColor]::DarkCyan
+					"String"                       = [ConsoleColor]::Blue
+					"Type"                         = [ConsoleColor]::DarkBlue
+					"Variable"                     = [ConsoleColor]::Green
+				}
 			}
+			Set-PSReadLineOption @PSReadLineOptions
+		} catch {
+			$options = Get-PSReadlineOption
+
+			$options.BellStyle = "None"
+
+			# Background
+			$options.CommandBackgroundColor            = $ScreenBackgroundColor
+			$options.ContinuationPromptBackgroundColor = $ScreenBackgroundColor
+			$options.DefaultTokenBackgroundColor       = $ScreenBackgroundColor
+			$options.EmphasisBackgroundColor           = $ScreenBackgroundColor
+			$options.ErrorBackgroundColor              = $ScreenBackgroundColor
+			$options.KeywordBackgroundColor            = $ScreenBackgroundColor
+			$options.MemberBackgroundColor             = $ScreenBackgroundColor
+			$options.NumberBackgroundColor             = $ScreenBackgroundColor
+			$options.OperatorBackgroundColor           = $ScreenBackgroundColor
+			$options.ParameterBackgroundColor          = $ScreenBackgroundColor
+			$options.StringBackgroundColor             = $ScreenBackgroundColor
+			$options.TypeBackgroundColor               = $ScreenBackgroundColor
+			$options.VariableBackgroundColor           = $ScreenBackgroundColor
+
+			# Foreground
+			$options.CommandForegroundColor            = [ConsoleColor]::Yellow
+			$options.ContinuationPromptForegroundColor = [ConsoleColor]::DarkYellow
+			$options.DefaultTokenForegroundColor       = [ConsoleColor]::DarkYellow
+			$options.EmphasisForegroundColor           = [ConsoleColor]::Cyan
+			$options.ErrorForegroundColor              = [ConsoleColor]::Red
+			$options.KeywordForegroundColor            = [ConsoleColor]::Green
+			$options.MemberForegroundColor             = [ConsoleColor]::DarkGreen
+			$options.NumberForegroundColor             = [ConsoleColor]::DarkGreen
+			$options.OperatorForegroundColor           = [ConsoleColor]::DarkCyan
+			$options.ParameterForegroundColor          = [ConsoleColor]::DarkCyan
+			$options.StringForegroundColor             = [ConsoleColor]::Blue
+			$options.TypeForegroundColor               = [ConsoleColor]::DarkBlue
+			$options.VariableForegroundColor           = [ConsoleColor]::Green
 		}
-		Set-PSReadLineOption @PSReadLineOptions
 	}
 }
 
