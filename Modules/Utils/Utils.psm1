@@ -1,5 +1,33 @@
 . ([IO.Path]::Combine($PSScriptRoot, "Memory.ps1"))
 
+function CreateDirectory($dir) {
+	New-Item -ItemType Directory -Force -Path $dir | Out-Null
+}
+
+function UpdateLink {
+	$obj = New-Object -ComObject WScript.Shell
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Windows PowerShell", "Windows PowerShell.lnk"))
+	$link.Hotkey = "Alt+Ctrl+T"
+	$link.Save()
+
+	$obj = New-Object -ComObject WScript.Shell
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VSCode.lnk"))
+	$link.TargetPath = [io.path]::combine("$Tools", "VSCode", "Code.exe")
+	$link.Arguments = "-r"
+	$link.Hotkey = "Alt+Ctrl+E"
+	$link.Save()
+
+	# $info = @{}
+	# $info.Hotkey = $link.Hotkey
+	# $info.TargetPath = $link.TargetPath
+	# $info.LinkPath = $link.FullName
+	# $info.Arguments = $link.Arguments
+	# $info.Target = try {Split-Path $info.TargetPath -Leaf } catch { 'n/a'}
+	# $info.Link = try { Split-Path $info.LinkPath -Leaf } catch { 'n/a'}
+	# $info.WindowStyle = $link.WindowStyle
+	# $info.IconLocation = $link.IconLocation
+}
+
 Function Get-MP3MetaData {
 	[CmdletBinding()]
 	[Alias()]
@@ -356,4 +384,4 @@ New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
-Export-ModuleMember -Function Get-Json
+Export-ModuleMember -Function Get-Json, CreateDirectory

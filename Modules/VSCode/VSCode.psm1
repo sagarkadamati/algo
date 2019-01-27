@@ -34,6 +34,15 @@ function Update-VSCode {
 
 	Get-VSCodePathed
 
+	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+		$obj = New-Object -ComObject WScript.Shell
+		$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VSCode.lnk"))
+		$link.TargetPath = [io.path]::combine("$ToolsLocation", "VSCode", "Code.exe")
+		$link.Arguments = "-r"
+		$link.Hotkey = "Alt+Ctrl+E"
+		$link.Save()
+	}
+
 	Copy-Item -Force -Recurse ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "my-editor")) ([IO.Path]::Combine($HOME, ".vscode", "extensions"))
 }
 

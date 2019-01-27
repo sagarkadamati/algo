@@ -1,7 +1,3 @@
-function CreateDirectory($dir) {
-	New-Item -ItemType Directory -Force -Path $dir | Out-Null
-}
-
 function AutoCropVideos($Encoding, [Switch]$Aspect, [Switch]$NoCRF) {
 	$PYCrop = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyCrop.py"))
 	$Files  = Get-FileNames -Recursive ".mp4$|.mkv$|.avi$" | Select-String  -NotMatch "^HEVC|^H.264"
