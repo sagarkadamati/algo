@@ -71,12 +71,13 @@ function LTheme($Time) {
 			$lnk.ScreenTextColor       = 0xA
 		}
 		$lnk.Save()
-	}
 
-	$obj = New-Object -ComObject WScript.Shell
-	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Windows PowerShell", "Windows PowerShell.lnk"))
-	$link.Hotkey = "Alt+Ctrl+T"
-	$link.Save()
+		# Update Powershell HotKey
+		$obj = New-Object -ComObject WScript.Shell
+		$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Windows PowerShell", "Windows PowerShell.lnk"))
+		$link.Hotkey = "Alt+Ctrl+T"
+		$link.Save()
+	}
 }
 
 function STheme($Time) {
