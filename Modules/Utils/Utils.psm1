@@ -246,6 +246,7 @@ function kt() {
 	{
 		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
+		$SQLITEDB = (Get-ChildItem $([IO.Path]::Combine($ToolsLocation, "Android", "Studio", "lib", "sqlite-jdbc-*.jar"))).Name
 
 		CreateDirectory $(Join-Path $BasePath "Lib")
 		CreateDirectory $(Join-Path $BasePath "Run")
@@ -253,12 +254,14 @@ function kt() {
 		if(![string]::IsNullOrWhiteSpace($Run)) {
 			# Write-Host "Running"
 
-			$Program  = "kotlin "
-			$Program += " -classpath '" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
-			$Program += "' -classpath '" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
+			$Program  = "java "
+			$Program += " -classpath '" + [IO.Path]::Combine($ToolsLocation, "Android", "Studio", "lib", $SQLITEDB)
+			$Program += ";" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+			$Program += ";" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
 			$Program += "' MainKt"
-			$Program += " '$Build' '$Script' '$Clean' $args"
+			# $Program += " '$Build' '$Script' '$Clean' $args"
 
+			# Write-Host $Program
 			Invoke-Expression $Program
 			return
 		}
@@ -384,4 +387,4 @@ New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
-Export-ModuleMember -Function Get-Json, CreateDirectory
+Export-ModuleMember -Function Get-Json, CreateDirectory, Get-FileNames

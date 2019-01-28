@@ -2,7 +2,7 @@ package MyAPI.FileManager
 
 import java.io.File
 
-class MyFile(str: String) {
+class MyFile() {
 	enum class Type {
 		DIRECTORY,
 		TEXT,
@@ -13,31 +13,32 @@ class MyFile(str: String) {
 	}
 
 	companion object {
-		public val RECURSIVE: Boolean = true
+		private var myFile: File = File("/")
 	}
 
-	private var myFile: File = File("/")
-
-	val path: String get() = this.myFile.absolutePath
-	val name: String get() = this.myFile.nameWithoutExtension
-	val fullName: String get() = this.myFile.name
-
-	init {
-		setLocation(str)
-	}
-
-	fun setLocation(str: String) {
-		myFile = File(str)
-	}
-
-	fun type(): Type {
-		// var ext = myFile.extension
-
-		if (myFile.isDirectory) {
-			return Type.DIRECTORY
-		} else {
-			return Type.UNKNOWN
+	val name: String get() = myFile.nameWithoutExtension
+	val fullName: String get() = myFile.name
+	var location: String
+		get() = myFile.absolutePath
+		set(newLocation: String) {
+			myFile = File(File(newLocation).absolutePath)
 		}
+	val type: String get() = myFile.extension
+	val size: Long get() = myFile.length()
+	val modifiedOn: Long get() = myFile.lastModified()
+
+	constructor (str: String): this() {
+		location = str
+	}
+
+	private fun iType(): String {
+		return myFile.extension
+
+		// if (myFile.isDirectory) {
+		// 	return Type.DIRECTORY
+		// } else {
+		// 	return Type.UNKNOWN
+		// }
 	}
 
 	infix fun move(newName: String) {
@@ -45,14 +46,14 @@ class MyFile(str: String) {
 			myFile = File(newName)
 	}
 
-	infix fun goTo(name: String) {
+	infix fun goto(name: String) {
 		if (myFile.isDirectory()) {
 			myFile = File(myFile.getAbsolutePath() + "/${name}")
 		}
 	}
 
 	fun goBack() {
-		var f = this.path.split("[/|\\\\]".toRegex())
+		var f = location.split("[/|\\\\]".toRegex())
 		if (f.count() > 1) {
 			if (!f[1].isNullOrEmpty()) {
 				myFile = myFile.getParentFile()
@@ -60,44 +61,47 @@ class MyFile(str: String) {
 		}
 	}
 
-	fun modifiedOn(): Long {
-		return myFile.lastModified()
-	}
-
-	fun size(): Long {
-		return myFile.length()
-	}
-
 	fun freeSpace(): Long {
 		return myFile.getFreeSpace()
 	}
 
-	fun list(recursive: Boolean = false): FileTreeWalk {
-		if (myFile.isDirectory) {
-			if (!recursive) {
-				return myFile.walkTopDown().maxDepth(1)
-			}
-			else {
-				return myFile.walkTopDown()
-			}
-		} else {
-			return File(myFile.path)
-		}
+	fun list(value: Int = Int.MAX_VALUE): Sequence<File> {
+		return myFile.walkTopDown().maxDepth(value)
 	}
 
-	fun ls(recursive: Boolean = false) {
-		list(recursive).forEach {
+	fun listAudios(value: Int = Int.MAX_VALUE): Sequence<File> {
+		return myFile.walkTopDown().maxDepth(value).filter { it.isFile && it.extension.equals("mp3", ignoreCase = true) }
+	}
+
+	fun listVideos(value: Int = Int.MAX_VALUE): Sequence<File> {
+		return myFile.walkTopDown().maxDepth(value).filter { it.isFile && it.extension.equals("mp4", ignoreCase = true) }
+	}
+
+	fun listImages(value: Int = Int.MAX_VALUE): Sequence<File> {
+		return myFile.walkTopDown().maxDepth(value).filter { it.isFile && it.extension.equals("jpg", ignoreCase = true) }
+	}
+
+	fun ls() {
+		list(1).forEach {
 			println(it)
 		}
 	}
 
 	override fun toString(): String {
-		return "Name: ${this.fullName}"
+		return "${fullName}"
 	}
 
-	fun content() {
+    // fun getTitle() { path.getFileSongTitle() }
 
-	}
+    // fun getGenre() { path.getFileGenre() }
+
+    // fun getAlbum() { path.getFileAlbum() }
+
+    // fun getArtist() { path.getFileArtist() }
+
+    // fun getDuration() { path.getDuration() }
+
+    // fun getResolution() { path.getResolution() }
 }
 	// he file denoted by this abstract pathname.
 	// boolean canExecute()			: Tests whether the applicat
@@ -244,125 +248,3 @@ class MyFile(str: String) {
 
 //     fun getPublicUri(context: Context) = context.getDocumentFile(path)?.uri ?: ""
 // }
-
-
-
-	// // Tests whether the application can execute the file denoted by this abstract pathname.
-	// fun boolean canExecute() {
-	// }
-
-	// // Tests whether the application can read the file denoted by this abstract pathname.
-	// fun boolean canRead() {
-	// }
-
-	// // Tests whether the application can modify the file denoted by this abstract pathname.
-	// fun boolean canWrite() {
-	// }
-
-	// // Compares two abstract pathnames lexicographically.
-	// fun int compareTo(File pathname) {
-	// }
-
-	// // Atomically creates a new, empty file named by this abstract pathname .
-	// fun boolean createNewFile() {
-	// }
-
-	// // Creates an empty file in the default temporary-file directory.
-	// fun static File createTempFile(String prefix, String suffix) {
-	// }
-
-	// // Deletes the file or directory denoted by this abstract pathname.
-	// fun boolean delete() {
-	// }
-
-	// // Tests this abstract pathname for equality with the given object.
-	// fun boolean equals(Object obj) {
-	// }
-
-	// // Tests whether the file or directory denoted by this abstract pathname exists.
-	// fun boolean exists() {
-	// }
-
-	// // Returns the absolute pathname string of this abstract pathname.
-	// fun String getAbsolutePath() {
-	// }
-
-	// // Returns the number of unallocated bytes in the partition .
-	// fun long getFreeSpace() {
-	// }
-
-	// // Returns the name of the file or directory denoted by this abstract pathname.
-	// fun String getName() {
-	// }
-
-	// // Returns the pathname string of this abstract pathname’s parent.
-	// fun String getParent() {
-	// }
-
-	// // Returns the abstract pathname of this abstract pathname’s parent.
-	// fun File getParentFile() {
-	// }
-
-	// // Converts this abstract pathname into a pathname string.
-	// fun String getPath() {
-	// }
-
-	// // Tests whether the file denoted by this pathname is a directory.
-	// fun boolean isDirectory() {
-	// }
-
-	// // Tests whether the file denoted by this abstract pathname is a normal file.
-	// fun boolean isFile() {
-	// }
-
-	// // Tests whether the file named by this abstract pathname is a hidden file.
-	// fun boolean isHidden() {
-	// }
-
-	// // urns the length of the file denoted by this abstract pathname.
-	// fun long length() {
-	// }
-
-	// // eturns an array of strings naming the files and directories in the directory .
-	// fun String[] list() {
-	// }
-
-	// // Returns an array of abstract pathnames denoting the files in the directory.
-	// fun File[] listFiles() {
-	// }
-
-	// // reates the directory named by this abstract pathname.
-	// fun boolean mkdir() {
-	// }
-
-	// // Renames the file denoted by this abstract pathname.
-	// fun boolean renameTo(File dest) {
-	// }
-
-	// // A convenience method to set the owner’s execute permission.
-	// fun boolean setExecutable(boolean executable) {
-	// }
-
-	// // A convenience method to set the owner’s read permission.
-	// fun boolean setReadable(boolean readable) {
-	// }
-
-	// // Sets the owner’s or everybody’s read permission.
-	// fun boolean setReadable(boolean readable, boolean ownerOnly) {
-	// }
-
-	// // Marks the file or directory named so that only read operations are allowed.
-	// fun boolean setReadOnly() {
-	// }
-
-	// // A convenience method to set the owner’s write permission.
-	// fun boolean setWritable(boolean writable) {
-	// }
-
-	// // Returns the pathname string of this abstract pathname.
-	// fun String toString() {
-	// }
-
-	// // Constructs a file URI that represents this abstract pathname.
-	// fun URI toURI() {
-	// }
