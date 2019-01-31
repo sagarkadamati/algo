@@ -1,5 +1,6 @@
-import MyAPI.FileManager.MyDB
+import MyAPI.JDBC.MyDB
 
 fun main(args: Array<String>) {
-	var md = MyDB()
+	var md = MyDB("test.db")
+	md.close()
 }
