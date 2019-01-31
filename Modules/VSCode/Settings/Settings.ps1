@@ -15,6 +15,18 @@ function Get-VSSettings {
 		$jsondata.'workbench.colorTheme' = "Day Time"
 	}
 
+	if (Test-Path (Join-Path $HOME "vscode" | Join-Path -ChildPath "settings.json")) {
+		$overridejson  = Get-json (Join-Path $HOME "vscode" | Join-Path -ChildPath "settings.json")
+		$fields = ($overridejson | Get-Member -MemberType Properties | Select-Object Name).Name
+		foreach ($field in $fields) {
+			try {
+				$jsondata."$field" = $overridejson."$field"
+			} catch {
+				$overridejson | Add-Member -Name "$field" -value $overridejson."$field" -MemberType NoteProperty
+			}
+		}		
+	}
+
 	# $jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "settings.json"))
 	$jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($env:APPDATA, "Code", "User", "settings.json"))
 }
