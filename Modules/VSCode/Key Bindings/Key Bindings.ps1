@@ -1,17 +1,4 @@
 function Get-VSKeys {
-	# $jsondata  = Get-json $(Join-Path $PSScriptRoot "DeRegister.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Cancel.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Cursor.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "DeRegister.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Editor.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Explorer.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Git.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "List.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Search.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Settings.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "Tasks.json")
-	# $jsondata += Get-json $(Join-Path $PSScriptRoot "UI.json")
-
 	$jsondata  = Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "De Register.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Focus.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Cancel.json") | ConvertFrom-Json
@@ -40,6 +27,5 @@ function Get-VSKeys {
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Suggest Widget.json") | ConvertFrom-Json
 
-	# $jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "keybindings.json"))
 	$jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($env:APPDATA, "Code", "User", "keybindings.json"))
 }

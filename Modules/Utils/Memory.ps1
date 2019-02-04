@@ -70,15 +70,6 @@ function Get-Matches {
 	}
 }
 
-function Get-Json {
-	param(
-		[String]$File
-	)
-	process {
-		Get-Content $File | ConvertFrom-Json
-	}
-}
-
 function StringSplitCaps($Str) {
 	return ($Str.substring(0,1).toupper() + $Str.substring(1) -creplace '[A-Z]', ' $&').Trim();
 }
@@ -96,5 +87,3 @@ function TrimFileName {
 		}
 	}
 }
-
-Export-Module Get-Json

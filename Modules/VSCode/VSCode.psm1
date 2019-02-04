@@ -2,6 +2,15 @@
 . ([IO.Path]::Combine($PSScriptRoot, "Settings", "Settings.ps1"))
 . ([IO.Path]::Combine($PSScriptRoot, "Theme", "Theme.ps1"))
 
+function Get-Json {
+	param(
+		[String]$File
+	)
+	process {
+		Get-Content $File | ConvertFrom-Json
+	}
+}
+
 function isVSCodeNotPatched ($File) {
 	$isPatched = Get-Content $VSCodeIndexHTML | Select-String -SimpleMatch $CustomCCSLink
 	return $(($isPatched).Line -like "")

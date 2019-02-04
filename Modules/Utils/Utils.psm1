@@ -244,31 +244,42 @@ function kt() {
 
 		process
 	{
-		$Program  = "kotlinc "
 		$BasePath = [System.IO.Path]::Combine($ToolsLocation, "Env", "Kotlin")
+		CreateDirectory $(Join-Path $BasePath "Exes" | Join-Path -Child "lib")
+		CreateDirectory $(Join-Path $BasePath "Exes" | Join-Path -Child "bin")
+				
 		$SQLITEDB = (Get-ChildItem $([IO.Path]::Combine($ToolsLocation, "Android", "Studio", "lib", "sqlite-jdbc-*.jar"))).Name
+		$Program  = "kotlinc "
 
-		CreateDirectory $(Join-Path $BasePath "Lib")
-		CreateDirectory $(Join-Path $BasePath "Run")
+		if(![string]::IsNullOrWhiteSpace($Clean)) {
+			# Write-Host "Cleaning"
+
+			if ($Clean -match '\*') {
+				Write-Host "Cleaning All Tasks"
+				Remove-Item -Force $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "*") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*") -ErrorAction Ignore
+			}
+			else {
+				Remove-Item -Force $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
+				Remove-Item -Force $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
+			}
+			return
+		}
 
 		if(![string]::IsNullOrWhiteSpace($Run)) {
 			# Write-Host "Running"
 
 			$Program  = "java "
 			$Program += " -classpath '" + [IO.Path]::Combine($ToolsLocation, "Android", "Studio", "lib", $SQLITEDB)
-			$Program += ";" + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
-			$Program += ";" + $(Join-Path $BasePath "Run" | Join-Path -Child "$Run.jar")
-			$Program += "' MainKt"
-			# $Program += " '$Build' '$Script' '$Clean' $args"
+			$Program += ";" + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
+			$Program += ";" + $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "$Run.jar")
+			$Program += "' MainKt $args"
 
-			# Write-Host $Program
 			Invoke-Expression $Program
 			return
 		}
 
 		if(![string]::IsNullOrWhiteSpace($Build)) {
-			# Write-Host "Building: $Build $All $Clean"
-
 			if ($Build -match '\*') {
 				$Tasks = (Get-ChildItem -Directory -Path $(Join-Path $BasePath "Projects")).Name
 				# $Tasks
@@ -277,11 +288,7 @@ function kt() {
 				$Tasks = $Build
 			}
 
-			CreateDirectory $(Join-Path $BasePath "Lib")
-			CreateDirectory $(Join-Path $BasePath "Run")
-
 			foreach ($Task in $Tasks) {
-				$Program  = "kotlinc "
 				Write-Host "Building $Task ... "
 				$KTFiles = $(Get-ChildItem -Recurse -File -Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task)).FullName | Select-String -Pattern ".kt$"
 				foreach($KTFile in $KTFiles) {
@@ -290,13 +297,13 @@ function kt() {
 
 				if (Test-Path $(Join-Path $BasePath "Projects" | Join-Path -Child $Task | Join-Path -Child "Main.kt")) {
 					$Program += " -include-runtime"
-					$Program += " -d " + $(Join-Path $BasePath "Run" | Join-Path -Child "$Task.jar")
+					$Program += " -d " + $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "$Task.jar")
 				}
 				else {
-					$Program += " -d " + $(Join-Path $BasePath "Lib" | Join-Path -Child "$Task.jar")
+					$Program += " -d " + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "$Task.jar")
 				}
 
-				$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+				$Program += " -classpath " + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
 
 				Invoke-Expression $Program
 				Write-Host "done"
@@ -304,33 +311,17 @@ function kt() {
 			return
 		}
 
-		if(![string]::IsNullOrWhiteSpace($Clean)) {
-			# Write-Host "Cleaning"
-
-			if ($Clean -match '\*') {
-				Write-Host "Cleaning All Tasks"
-				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "*") -ErrorAction Ignore
-				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "*") -ErrorAction Ignore
-			}
-			else {
-				Remove-Item -Force $(Join-Path $BasePath "Run" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
-				Remove-Item -Force $(Join-Path $BasePath "Lib" | Join-Path -Child "$Clean.jar") -ErrorAction Ignore
-			}
-			return
-		}
-
 		if(![string]::IsNullOrWhiteSpace($Script)) {
-			$Program += "-script "
+			$Program += " -script "
 			$Program += $(Join-Path $BasePath "Scripts" | Join-Path -Child "$Script.kts")
-			$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+			$Program += " -classpath " + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
 
 			# Write-Host "Running Script $Program"
 			Invoke-Expression $Program
 			return
 		}
 
-		$Program  = "kotlinc-jvm "
-		$Program += " -classpath " + $(Join-Path $BasePath "Lib" | Join-Path -Child "*")
+		$Program += " -classpath " + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
 		Invoke-Expression $Program
 	}
 }
@@ -387,4 +378,4 @@ New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
-Export-ModuleMember -Function Get-Json, CreateDirectory, Get-FileNames
+Export-ModuleMember -Function CreateDirectory, Get-FileNames

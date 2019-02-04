@@ -34,6 +34,9 @@ function Update-Paths {
 	}
 
 	$env:PATH          = $MYPATH + $env:PATH
+	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+		$env:APPDATA       = $(Join-Path $HOME ".config")
+	}
 
 	Set-Location $WorkspaceLocation
 }

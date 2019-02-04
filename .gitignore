@@ -54,8 +54,7 @@ dkms.conf
 *bin*
 
 vssettings/*
-Kotlin/Lib/*
-Kotlin/Run/*
+Kotlin/Exes/*
 
 vssettings\*
 Kotlin\Lib\*

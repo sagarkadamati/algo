@@ -24,9 +24,8 @@ function Get-VSSettings {
 			} catch {
 				$overridejson | Add-Member -Name "$field" -value $overridejson."$field" -MemberType NoteProperty
 			}
-		}		
+		}
 	}
 
-	# $jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($ToolsLocation, "Env", "vssettings", "settings.json"))
 	$jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($env:APPDATA, "Code", "User", "settings.json"))
 }
