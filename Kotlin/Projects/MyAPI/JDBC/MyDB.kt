@@ -18,6 +18,10 @@ class MyDB(db: String) {
 	private var statement: Statement ?= null
 	private var resultSet: ResultSet ?= null
 
+	var tables: ArrayList<String> = ArrayList<String>()
+
+	private var row = HashMap<String, Any>()
+
 	private var Error = ERROR.SUCCESS
 	private var iTable: String = ""
 	var debug = false
@@ -33,9 +37,20 @@ class MyDB(db: String) {
 			conn = DriverManager.getConnection("jdbc:sqlite:${db}")
 			statement = conn!!.createStatement()
 
-			// var meta: DatabaseMetaData = conn.getMetaData()
-			// println("The driver name is " + meta.getDriverName())
-			// println("A new database has been created.")
+			loadTables()
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			println(e)
+		}
+	}
+
+	private fun loadTables() {
+		try {
+			val sql = "Select name From sqlite_master where type='table' order by name"
+			resultSet = statement!!.executeQuery(sql)
+			while (resultSet!!.next()) {
+					tables.add(resultSet!!.getString(1))
+			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			println(e)
@@ -52,7 +67,7 @@ class MyDB(db: String) {
 
 		try {
 			statement!!.execute(sql)
-			iTable = table;
+			iTable = table
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			println(e)
@@ -63,7 +78,7 @@ class MyDB(db: String) {
 		// CREATE TABLE IF NOT EXISTS materials (
 		//  id integer PRIMARY KEY,
 		//  description text NOT NULL
-		// );
+		// )
 		//
 		// CREATE TABLE IF NOT EXISTS inventory (
 		//  warehouse_id integer,
@@ -72,28 +87,61 @@ class MyDB(db: String) {
 		//  PRIMARY KEY (warehouse_id, material_id),
 		//  FOREIGN KEY (warehouse_id) REFERENCES warehouses (id),
 		//  FOREIGN KEY (material_id) REFERENCES materials (id)
-		// );
+		// )
 	}
 
-	operator fun plusAssign(hm: HashMap<String, Any>) {
+	operator fun plus(hm: HashMap<String, Any>) {
 		if (hm["id"] == 0)
-			add(hm)
+			addRow(hm)
 		else
-			update(hm)
+			updateRow(hm)
 	}
 
-	operator fun minusAssign(hm: HashMap<String, Any>) {
+	operator fun minus(hm: HashMap<String, Any>) {
+		dropRow(hm)
+	}
+
+	operator fun plus(column: String) {
+		addColumn(column)
+	}
+
+	operator fun minus(column: String) {
+		dropColumn(column)
+	}
+
+	fun addColumn(column: String) {
 		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement("DELETE FROM ${iTable} WHERE id = ?")
-			pstmt.setInt(1, hm["id"] as Int)
-			pstmt.executeUpdate()
+			val sql = "ALTER TABLE ${iTable} ADD COLUMN ${column}"
+			statement!!.executeQuery(sql)
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			println(e)
 		}
 	}
 
-	fun add(hm: HashMap<String, Any>) {
+	fun dropColumn(column: String) {
+		var size = row.size
+
+		try {
+			var sql = "CREATE TABLE ${iTable}_backup AS SELECT "
+			for(key in row.keys) {
+				size--
+				if (key == "id" || key == column) continue
+
+				sql += key + if (size > 1) ", " else ""
+			}
+			sql += " FROM ${iTable}"
+
+			statement!!.executeQuery(sql)
+			statement!!.executeQuery("DROP TABLE ${iTable}")
+			statement!!.executeQuery("ALTER TABLE ${iTable}_backup RENAME TO ${iTable}")
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			println(e)
+		}
+	}
+
+	fun addRow(hm: HashMap<String, Any>) {
 		var size   = hm.size
 		var fields = "INSERT INTO ${iTable} ( "
 		var values = " VALUES ( "
@@ -134,7 +182,18 @@ class MyDB(db: String) {
 		}
 	}
 
-	fun update(hm: HashMap<String, Any>) {
+	fun dropRow(hm: HashMap<String, Any>) {
+		try {
+			var pstmt: PreparedStatement = conn!!.prepareStatement("DELETE FROM ${iTable} WHERE id = ?")
+			pstmt.setInt(1, hm["id"] as Int)
+			pstmt.executeUpdate()
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			println(e)
+		}
+	}
+
+	fun updateRow(hm: HashMap<String, Any>) {
 		var sql = "UPDATE ${iTable} SET "
 		for(key in hm.keys) {
 			if (key != "id") {
@@ -164,6 +223,16 @@ class MyDB(db: String) {
 			}
 			pstmt.setInt(index, hm["id"] as Int)
 			pstmt.executeUpdate()
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			println(e)
+		}
+	}
+
+	fun dropTable() {
+		try {
+			val sql = "DROP TABLE ${iTable}"
+			statement!!.executeQuery(sql)
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			println(e)
@@ -209,7 +278,7 @@ class MyDB(db: String) {
 			println("Row: ${rowOut}")
 		}
 
-		return hm;
+		return hm
 	}
 
 	fun insert(name: String, capacity: Double) {
