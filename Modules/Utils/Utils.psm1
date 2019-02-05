@@ -1,5 +1,7 @@
 . ([IO.Path]::Combine($PSScriptRoot, "Memory.ps1"))
 
+$PS = [IO.Path]::PathSeparator
+
 function CreateDirectory($dir) {
 	New-Item -ItemType Directory -Force -Path $dir | Out-Null
 }
@@ -271,8 +273,8 @@ function kt() {
 
 			$Program  = "java "
 			$Program += " -classpath '" + [IO.Path]::Combine($ToolsLocation, "Android", "Studio", "lib", $SQLITEDB)
-			$Program += ";" + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
-			$Program += ";" + $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "$Run.jar")
+			$Program += $PS + $(Join-Path $BasePath "Exes" | Join-Path -Child "lib" | Join-Path -Child "*")
+			$Program += $PS + $(Join-Path $BasePath "Exes" | Join-Path -Child "bin" | Join-Path -Child "$Run.jar")
 			$Program += "' MainKt $args"
 
 			Invoke-Expression $Program
