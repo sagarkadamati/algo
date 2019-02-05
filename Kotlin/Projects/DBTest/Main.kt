@@ -2,19 +2,36 @@ import MyAPI.JDBC.MyDB
 
 fun main(args: Array<String>) {
 	var db = MyDB("test.db")
+	db.debug = true
+
+	var tuple = HashMap<String, Any>()
+	tuple["id"] = 1
+	tuple["name"] = "this is modified"
+
 	println(db.tables)
-	db.fields = "name TEXT"
 	db.table = "Test"
+	db + "name TEXT"
+	db + "name TEXT"
+	db - "name"
+	db + "name TEXT"
 
-	var data = HashMap<String, Any>()
-	data["id"] = 10
-	data["name"] = "hello"
-	db + data
-	data = db.query(data)
+	db + tuple
 
-	data["name"] = "test"
-	// db.debug = true
-	db.update(data)
-	data = db.query(data)
-	println("ID : " + data["id"] + ", Name = " + data["name"])
+	var table = db.getTable("Test")
+	table.forEach {
+		row -> row.forEach {
+			column -> println(column)
+		}
+	}
+	// println(table[0]["id"])
+
+	// tuple = db.query(tuple)
+
+	// tuple["name"] = "test"
+	// db.update(tuple)
+	// tuple = db.query(tuple)
+	// println("ID : " + tuple["id"] + ", Name = " + tuple["name"])
+
+	// db - "ramu"
+	// db.dropTable()
 }

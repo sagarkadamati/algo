@@ -7,6 +7,8 @@ import java.sql.Statement
 import java.sql.DatabaseMetaData
 import java.sql.SQLException
 import java.sql.PreparedStatement
+import java.sql.Types
+import java.sql.ResultSetMetaData
 
 class MyDB(db: String) {
 	enum class ERROR {
@@ -40,7 +42,7 @@ class MyDB(db: String) {
 			loadTables()
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
@@ -53,7 +55,7 @@ class MyDB(db: String) {
 			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
@@ -70,23 +72,23 @@ class MyDB(db: String) {
 			iTable = table
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 
 		// // Simple queries
 		//
 		// CREATE TABLE IF NOT EXISTS materials (
-		//  id integer PRIMARY KEY,
-		//  description text NOT NULL
+		//id integer PRIMARY KEY,
+		//description text NOT NULL
 		// )
 		//
 		// CREATE TABLE IF NOT EXISTS inventory (
-		//  warehouse_id integer,
-		//  material_id integer,
-		//  qty real,
-		//  PRIMARY KEY (warehouse_id, material_id),
-		//  FOREIGN KEY (warehouse_id) REFERENCES warehouses (id),
-		//  FOREIGN KEY (material_id) REFERENCES materials (id)
+		//warehouse_id integer,
+		//material_id integer,
+		//qty real,
+		//PRIMARY KEY (warehouse_id, material_id),
+		//FOREIGN KEY (warehouse_id) REFERENCES warehouses (id),
+		//FOREIGN KEY (material_id) REFERENCES materials (id)
 		// )
 	}
 
@@ -111,38 +113,61 @@ class MyDB(db: String) {
 
 	fun addColumn(column: String) {
 		try {
-			val sql = "ALTER TABLE ${iTable} ADD COLUMN ${column}"
-			statement!!.executeQuery(sql)
+			var sql = "PRAGMA table_info ( ${iTable} )"
+			val cName = column.split(" ")[0]
+			var found = false
+	
+			if (debug) println(sql)
+
+			resultSet = statement!!.executeQuery(sql)
+			while (resultSet!!.next()) {
+				// ID = 1, Column Name, Column Type, ... etc
+				if (resultSet!!.getString(2) == cName) {
+					found = true
+				}
+			}
+			if (!found) {
+				sql = "ALTER TABLE ${iTable} ADD COLUMN ${column}"
+				statement!!.execute(sql)
+			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
 	fun dropColumn(column: String) {
-		var size = row.size
-
 		try {
-			var sql = "CREATE TABLE ${iTable}_backup AS SELECT "
-			for(key in row.keys) {
-				size--
-				if (key == "id" || key == column) continue
+			var sql = "PRAGMA table_info ( ${iTable} )"
+			if (debug) println(sql)
 
-				sql += key + if (size > 1) ", " else ""
+			resultSet = statement!!.executeQuery(sql)
+
+			sql = "CREATE TABLE ${iTable}_backup AS SELECT id"
+			while (resultSet!!.next()) {
+				var key = resultSet!!.getString(2)
+
+				println(key)
+				// ID = 1, Column Name, Column Type, ... etc
+				// FIXME: id:1
+				if (key == column || key == "id" || key == "id:1") continue
+
+				sql += ", ${key}"
 			}
 			sql += " FROM ${iTable}"
 
-			statement!!.executeQuery(sql)
-			statement!!.executeQuery("DROP TABLE ${iTable}")
-			statement!!.executeQuery("ALTER TABLE ${iTable}_backup RENAME TO ${iTable}")
+			if (debug) println(sql)
+			statement!!.execute(sql)
+			statement!!.execute("DROP TABLE ${iTable}")
+			statement!!.execute("ALTER TABLE ${iTable}_backup RENAME TO ${iTable}")
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
 	fun addRow(hm: HashMap<String, Any>) {
-		var size   = hm.size
+		var size = hm.size
 		var fields = "INSERT INTO ${iTable} ( "
 		var values = " VALUES ( "
 
@@ -165,20 +190,20 @@ class MyDB(db: String) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Short  -> pstmt.setShort(index++,  item)
-						is Int    -> pstmt.setInt(index++,    item)
-						is Long   -> pstmt.setLong(index++,   item)
-						is Float  -> pstmt.setFloat(index++,  item)
+						is Short -> pstmt.setShort(index++,item)
+						is Int -> pstmt.setInt(index++,item)
+						is Long -> pstmt.setLong(index++, item)
+						is Float -> pstmt.setFloat(index++,item)
 						is Double -> pstmt.setDouble(index++, item)
 						is String -> pstmt.setString(index++, item)
-						else      -> println("Type Not found to insert into db")
+						else -> println("Type Not found to insert into db")
 					}
 				}
 			}
 			pstmt.executeUpdate()
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
@@ -186,10 +211,10 @@ class MyDB(db: String) {
 		try {
 			var pstmt: PreparedStatement = conn!!.prepareStatement("DELETE FROM ${iTable} WHERE id = ?")
 			pstmt.setInt(1, hm["id"] as Int)
-			pstmt.executeUpdate()
+			pstmt.execute()
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
@@ -211,35 +236,37 @@ class MyDB(db: String) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Short  -> pstmt.setShort(index++,  item)
-						is Int    -> pstmt.setInt(index++,    item)
-						is Long   -> pstmt.setLong(index++,   item)
-						is Float  -> pstmt.setFloat(index++,  item)
+						is Short -> pstmt.setShort(index++,item)
+						is Int -> pstmt.setInt(index++,item)
+						is Long -> pstmt.setLong(index++, item)
+						is Float -> pstmt.setFloat(index++,item)
 						is Double -> pstmt.setDouble(index++, item)
 						is String -> pstmt.setString(index++, item)
-						else      -> println("Type Not found to insert into db")
+						else -> println("Type Not found to insert into db")
 					}
 				}
 			}
 			pstmt.setInt(index, hm["id"] as Int)
-			pstmt.executeUpdate()
+			pstmt.execute()
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
 	fun dropTable() {
 		try {
-			val sql = "DROP TABLE ${iTable}"
-			statement!!.executeQuery(sql)
+			val sql = "DROP TABLE IF EXISTS ${iTable}"
+			statement!!.execute(sql)
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 	}
 
-	fun query(hm: HashMap<String, Any>): HashMap<String, Any> {
+	fun query(hm: HashMap<String, Any>): ArrayList<HashMap<String, Any>> {
+		var hmList = ArrayList<HashMap<String, Any>>()
+
 		var sql = "SELECT id"
 		for(key in hm.keys) {
 			if (key != "id") {
@@ -252,22 +279,25 @@ class MyDB(db: String) {
 
 		try {
 			resultSet = statement!!.executeQuery(sql)
-            // while (resultSet.next()) {
-				for(key in hm.keys) {
-					when(hm[key]) {
-						is Short  -> hm[key] = resultSet!!.getShort(key)
-						is Int    -> hm[key] = resultSet!!.getInt(key)
-						is Long   -> hm[key] = resultSet!!.getLong(key)
-						is Float  -> hm[key] = resultSet!!.getFloat(key)
-						is Double -> hm[key] = resultSet!!.getDouble(key)
-						is String -> hm[key] = resultSet!!.getString(key)
-						else      -> println("Type Not found to insert into db")
+			while (resultSet!!.next()) {
+				var hmColumn = HashMap<String, Any>()
+				var md: ResultSetMetaData = resultSet!!.getMetaData()
+				for (index in  1..md.getColumnCount()) {
+					var cName = md.getColumnName(index)
+					var cType  = md.getColumnType(index)
+
+					hmColumn[cName] = when(cType) {
+						Types.INTEGER -> resultSet!!.getInt(index)
+						Types.FLOAT -> resultSet!!.getFloat(index)
+						Types.DOUBLE -> resultSet!!.getDouble(index)
+						else -> resultSet!!.getString(index)
 					}
 				}
-			// }
+				hmList.add(hmColumn)
+			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
 
 		if (debug) {
@@ -278,70 +308,44 @@ class MyDB(db: String) {
 			println("Row: ${rowOut}")
 		}
 
-		return hm
+		return hmList
 	}
 
-	fun insert(name: String, capacity: Double) {
-		var sql: String = "INSERT INTO ${iTable} (name, capacity) VALUES(?,?)"
+	fun getTable(lTable: String): ArrayList<HashMap<String, Any>> {
+		var hmList = ArrayList<HashMap<String, Any>>()
 
 		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement(sql)
+			resultSet = statement!!.executeQuery("SELECT * FROM ${lTable}")
+			while (resultSet!!.next()) {
+				var hmColumn = HashMap<String, Any>()
+				var md: ResultSetMetaData = resultSet!!.getMetaData()
+				for (index in  1..md.getColumnCount()) {
+					var cName = md.getColumnName(index)
+					var cType  = md.getColumnType(index)
 
-			pstmt.setString(1, name)
-			pstmt.setDouble(2, capacity)
-			pstmt.executeUpdate()
+					hmColumn[cName] = when(cType) {
+						Types.INTEGER -> resultSet!!.getInt(index)
+						Types.FLOAT -> resultSet!!.getFloat(index)
+						Types.DOUBLE -> resultSet!!.getDouble(index)
+						else -> resultSet!!.getString(index)
+					}
+				}
+				hmList.add(hmColumn)
+			}
+			iTable = lTable
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
-			println(e)
+			e.printStackTrace()
 		}
-	}
 
-	fun update(id: Int, name: String, capacity: Double) {
-		var sql: String = "UPDATE ${iTable} SET name = ? , capacity = ? WHERE id = ?"
-
-		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement(sql)
-
-			// set the corresponding param
-			pstmt.setString(1, name)
-			pstmt.setDouble(2, capacity)
-			pstmt.setInt(3, id)
-
-			// update
-			pstmt.executeUpdate()
-		} catch (e: SQLException) {
-			Error = ERROR.ERROR
-			println(e)
-		}
-	}
-
-	fun deleteRow(id: Int) {
-		var sql: String = "DELETE FROM ${iTable} WHERE id = ?"
-
-		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement(sql)
-
-			// set the corresponding param
-			pstmt.setInt(1, id)
-			// execute the delete statement
-			pstmt.executeUpdate()
-
-		} catch (e: SQLException) {
-			Error = ERROR.ERROR
-			println(e)
-		}
+		return hmList
 	}
 
 	protected fun finalize() {
 		try	{
-			if (resultSet != null)
-				resultSet!!.close()
-
-			if (statement != null)
-				statement!!.close()
-
-			if (conn != null)
-				conn!!.close()
+			if (resultSet != null)	resultSet!!.close()
+			if (statement != null)	statement!!.close()
+			if (conn != null) conn!!.close()
 		} catch (e: Exception) {
 			Error = ERROR.ERROR
 			e.printStackTrace()
