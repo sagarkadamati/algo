@@ -12,6 +12,7 @@ function Update-Paths {
 
 	$PYTHONPATH        = [IO.Path]::Combine($ToolsLocation, "Python")
 	$GITPATH           = [IO.Path]::Combine($ToolsLocation, "Git",     "bin")
+	$GITPATH          += $PS + [IO.Path]::Combine($ToolsLocation, "Git", "usr", "bin")
 	$VSCODEPATH        = [IO.Path]::Combine($ToolsLocation, "VSCode", "bin")
 	$KOTLINPATH        = [IO.Path]::Combine($ToolsLocation, "Kotlin", "kotlinc" , "bin")
 	$KOTLINPATH       += $PS
@@ -34,7 +35,7 @@ function Update-Paths {
 	}
 
 	$env:PATH          = $MYPATH + $env:PATH
-	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
+	if ([System.Environment]::OSVersion.Platform -NotLike "Win32NT") {
 		$env:APPDATA       = $(Join-Path $HOME ".config")
 	}
 
