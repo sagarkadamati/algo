@@ -13,7 +13,7 @@ function UpdateLink {
 	$link.Save()
 
 	$obj = New-Object -ComObject WScript.Shell
-	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "VSCode.lnk"))
+	$link = $obj.CreateShortcut([io.path]::combine($env:APPDATA, "Microsoft", "Windows", "Start M:Eenu", "Programs", "VSCode.lnk"))
 	$link.TargetPath = [io.path]::combine("$Tools", "VSCode", "Code.exe")
 	$link.Arguments = "-r"
 	$link.Hotkey = "Alt+Ctrl+E"
@@ -375,9 +375,23 @@ function Workspace() {
 	Set-Location $WorkspaceLocation
 }
 
+function PowerSettings() {
+	$PowerPlan = (powercfg /getactivescheme).split(" ")[3]
+	$PowerPlanSubElement = (powercfg /query $PowerPlan | Select-String "Subgroup GUID") -replace " Subgroup GUID: ", ""
+
+	$PowerPlanSubElement
+
+	# AC Values
+	# powercfg -setacvalueindex SCHEME_BALANCED SUB_PROCESSOR PROCTHROTTLEMAX 80
+
+	# DC Values
+	powercfg /setdcvalueindex $PowerPlan SUB_PROCESSOR PROCTHROTTLEMAX 80
+	powercfg /setactive $PowerPlan
+}
+
 New-Alias -Name proj -Value Projects
 New-Alias -Name tls  -Value Tools
 New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
-Export-ModuleMember -Function CreateDirectory, Get-FileNames
+Export-ModuleMember -Function CreateDirectory, Get-FileNames, PowerSettings
