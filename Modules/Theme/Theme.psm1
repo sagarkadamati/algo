@@ -203,14 +203,15 @@ function DayTheme {
 }
 
 function Update-Theme {
+	$TIME = "Day"
 	if ([System.Environment]::OSVersion.Platform -eq "Win32NT") {
-		if (($Host.UI.RawUI.BackgroundColor -match [ConsoleColor]::White)) {
-			STheme "Day"
-		} else {
-			STheme "Night"
+		if (($Host.UI.RawUI.BackgroundColor -match [ConsoleColor]::DarkGray)) {
+			$TIME = "Night"
 		}
-	} else {
-		STheme "Day"
+	}
+
+	if (($Host.UI.RawUI.BackgroundColor -NotMatch [ConsoleColor]::Black)) {
+		STheme $TIME
 	}
 }
 
