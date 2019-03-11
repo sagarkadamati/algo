@@ -10,6 +10,17 @@ import java.sql.PreparedStatement
 import java.sql.Types
 import java.sql.ResultSetMetaData
 
+import java.sql.Date
+import java.sql.Time
+import java.sql.Timestamp
+import java.sql.Clob
+import java.sql.Blob
+import java.sql.Array
+import java.sql.Ref
+import java.sql.Struct
+
+import java.math.BigDecimal
+
 class MyDB(db: String) {
 	enum class ERROR {
 		SUCCESS,
@@ -120,7 +131,7 @@ class MyDB(db: String) {
 			var sql = "PRAGMA table_info ( ${iTable} )"
 			val cName = column.split(" ")[0]
 			var found = false
-	
+
 			if (debug) println(sql)
 
 			resultSet = statement!!.executeQuery(sql)
@@ -240,13 +251,25 @@ class MyDB(db: String) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Short -> pstmt.setShort(index++,item)
-						is Int -> pstmt.setInt(index++,item)
-						is Long -> pstmt.setLong(index++, item)
-						is Float -> pstmt.setFloat(index++,item)
-						is Double -> pstmt.setDouble(index++, item)
-						is String -> pstmt.setString(index++, item)
-						else -> println("Type Not found to insert into db")
+						is Boolean		->   pstmt.setBoolean(index++, item)
+						is Short		->   pstmt.setShort(index++, item)
+						is Byte			->   pstmt.setByte(index++, item)
+						// is Bytes		->   pstmt.setBytes(index++, item)
+						is Int			->   pstmt.setInt(index++, item)
+						is Long			->   pstmt.setLong(index++, item)
+						is Float		->   pstmt.setFloat(index++, item)
+						is Double		->   pstmt.setDouble(index++, item)
+						is String		->   pstmt.setString(index++, item)
+
+						is BigDecimal	->   pstmt.setBigDecimal(index++, item)
+						is Date			->   pstmt.setDate(index++, item)
+						is Time			->   pstmt.setTime(index++, item)
+						is Timestamp	->   pstmt.setTimestamp(index++, item)
+						is Clob			->   pstmt.setClob(index++, item)
+						is Blob			->   pstmt.setBlob(index++, item)
+						is Ref			->   pstmt.setRef(index++, item)
+
+						else			-> println("Type Not found to insert into db")
 					}
 				}
 			}
@@ -291,9 +314,39 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						Types.INTEGER -> resultSet!!.getInt(index)
-						Types.FLOAT -> resultSet!!.getFloat(index)
-						Types.DOUBLE -> resultSet!!.getDouble(index)
+						// Types.ARRAY			-> resultSet!!.getARRAY(index)
+						// Types.STRUCT		-> resultSet!!.getStruct(index)
+
+						Types.VARCHAR		-> resultSet!!.getString(index)
+						Types.CHAR			-> resultSet!!.getString(index)
+						Types.LONGVARCHAR	-> resultSet!!.getString(index)
+
+						Types.BIT			-> resultSet!!.getBoolean(index)
+						Types.NUMERIC		-> resultSet!!.getBigDecimal(index)
+
+						Types.TINYINT		-> resultSet!!.getByte(index)
+						Types.SMALLINT		-> resultSet!!.getShort(index)
+						Types.INTEGER		-> resultSet!!.getInt(index)
+						Types.BIGINT		-> resultSet!!.getLong(index)
+
+						Types.REAL			-> resultSet!!.getFloat(index)
+						Types.FLOAT			-> resultSet!!.getFloat(index)
+						Types.DOUBLE		-> resultSet!!.getDouble(index)
+
+						Types.VARBINARY		-> resultSet!!.getBytes(index)
+						Types.BINARY		-> resultSet!!.getBytes(index)
+
+						Types.DATE			-> resultSet!!.getDate(index)
+
+						Types.TIME			-> resultSet!!.getTime(index)
+						Types.TIMESTAMP		-> resultSet!!.getTimestamp(index)
+
+						Types.CLOB			-> resultSet!!.getClob(index)
+
+						Types.BLOB			-> resultSet!!.getBlob(index)
+
+						Types.REF			-> resultSet!!.getRef(index)
+
 						else -> resultSet!!.getString(index)
 					}
 				}
@@ -315,6 +368,31 @@ class MyDB(db: String) {
 		return hmList
 	}
 
+	// ## SQL			JDBC/Java					setXXX					updateXXX
+	// #####################################################################################
+	// # VARCHAR		java.lang.String			setString				updateString
+	// # CHAR			java.lang.String			setString				updateString
+	// # LONGVARCHAR	java.lang.String			setString				updateString
+	// # BIT			boolean						setBoolean				updateBoolean
+	// # NUMERIC		java.math.BigDecimal		setBigDecimal			updateBigDecimal
+	// # TINYINT		byte						setByte					updateByte
+	// # SMALLINT		short						setShort				updateShort
+	// # INTEGER		int							setInt					updateInt
+	// # BIGINT			long						setLong					updateLong
+	// # REAL			float						setFloat				updateFloat
+	// # FLOAT			float						setFloat				updateFloat
+	// # DOUBLE			double						setDouble				updateDouble
+	// # VARBINARY		byte[ ]						setBytes				updateBytes
+	// # BINARY			byte[ ]						setBytes				updateBytes
+	// # DATE			java.sql.Date				setDate					updateDate
+	// # TIME			java.sql.Time				setTime					updateTime
+	// # TIMESTAMP		java.sql.Timestamp			setTimestamp			updateTimestamp
+	// # CLOB			java.sql.Clob				setClob					updateClob
+	// # BLOB			java.sql.Blob				setBlob					updateBlob
+	// # ARRAY			java.sql.Array				setARRAY				updateARRAY
+	// # REF			java.sql.Ref				SetRef					updateRef
+	// # STRUCT			java.sql.Struct				SetStruct				updateStruct
+
 	fun getTable(lTable: String): ArrayList<HashMap<String, Any>> {
 		var hmList = ArrayList<HashMap<String, Any>>()
 
@@ -328,9 +406,39 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						Types.INTEGER -> resultSet!!.getInt(index)
-						Types.FLOAT -> resultSet!!.getFloat(index)
-						Types.DOUBLE -> resultSet!!.getDouble(index)
+						// Types.ARRAY			-> resultSet!!.getARRAY(index)
+						// Types.STRUCT		-> resultSet!!.getStruct(index)
+
+						Types.VARCHAR		-> resultSet!!.getString(index)
+						Types.CHAR			-> resultSet!!.getString(index)
+						Types.LONGVARCHAR	-> resultSet!!.getString(index)
+
+						Types.BIT			-> resultSet!!.getBoolean(index)
+						Types.NUMERIC		-> resultSet!!.getBigDecimal(index)
+
+						Types.TINYINT		-> resultSet!!.getByte(index)
+						Types.SMALLINT		-> resultSet!!.getShort(index)
+						Types.INTEGER		-> resultSet!!.getInt(index)
+						Types.BIGINT		-> resultSet!!.getLong(index)
+
+						Types.REAL			-> resultSet!!.getFloat(index)
+						Types.FLOAT			-> resultSet!!.getFloat(index)
+						Types.DOUBLE		-> resultSet!!.getDouble(index)
+
+						Types.VARBINARY		-> resultSet!!.getBytes(index)
+						Types.BINARY		-> resultSet!!.getBytes(index)
+
+						Types.DATE			-> resultSet!!.getDate(index)
+
+						Types.TIME			-> resultSet!!.getTime(index)
+						Types.TIMESTAMP		-> resultSet!!.getTimestamp(index)
+
+						Types.CLOB			-> resultSet!!.getClob(index)
+
+						Types.BLOB			-> resultSet!!.getBlob(index)
+
+						Types.REF			-> resultSet!!.getRef(index)
+
 						else -> resultSet!!.getString(index)
 					}
 				}
