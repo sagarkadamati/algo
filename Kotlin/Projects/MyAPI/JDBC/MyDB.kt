@@ -37,7 +37,7 @@ class MyDB(db: String) {
 
 	private var Error = ERROR.SUCCESS
 	private var iTable: String = ""
-	var debug = false
+	private var debug = false
 
 	var fields: String = ""
 	var table: String get() = iTable
@@ -132,7 +132,7 @@ class MyDB(db: String) {
 			val cName = column.split(" ")[0]
 			var found = false
 
-			if (debug) println(sql)
+			dbg_msg(sql)
 
 			resultSet = statement!!.executeQuery(sql)
 			while (resultSet!!.next()) {
@@ -154,7 +154,7 @@ class MyDB(db: String) {
 	fun dropColumn(column: String) {
 		try {
 			var sql = "PRAGMA table_info ( ${iTable} )"
-			if (debug) println(sql)
+			dbg_msg(sql)
 
 			resultSet = statement!!.executeQuery(sql)
 
@@ -171,7 +171,7 @@ class MyDB(db: String) {
 			}
 			sql += " FROM ${iTable}"
 
-			if (debug) println(sql)
+			dbg_msg(sql)
 			statement!!.execute(sql)
 			statement!!.execute("DROP TABLE ${iTable}")
 			statement!!.execute("ALTER TABLE ${iTable}_backup RENAME TO ${iTable}")
@@ -197,8 +197,7 @@ class MyDB(db: String) {
 		values += " )"
 
 		try {
-			if (debug)
-				println(fields + values + size)
+			dbg_msg(fields + values + size)
 			var pstmt: PreparedStatement = conn!!.prepareStatement(fields + values)
 			var index = 1
 			for(key in hm.keys) {
@@ -211,7 +210,7 @@ class MyDB(db: String) {
 						is Float -> pstmt.setFloat(index++,item)
 						is Double -> pstmt.setDouble(index++, item)
 						is String -> pstmt.setString(index++, item)
-						else -> println("Type Not found to insert into db")
+						else -> dbg_msg("Type Not found to insert into db")
 					}
 				}
 			}
@@ -241,8 +240,7 @@ class MyDB(db: String) {
 			}
 		}
 		sql += "WHERE id = ?"
-		if (debug)
-			println(sql)
+		dbg_msg(sql)
 
 		try {
 			var pstmt: PreparedStatement = conn!!.prepareStatement(sql)
@@ -251,25 +249,25 @@ class MyDB(db: String) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Boolean		->   pstmt.setBoolean(index++, item)
-						is Short		->   pstmt.setShort(index++, item)
-						is Byte			->   pstmt.setByte(index++, item)
-						// is Bytes		->   pstmt.setBytes(index++, item)
-						is Int			->   pstmt.setInt(index++, item)
-						is Long			->   pstmt.setLong(index++, item)
-						is Float		->   pstmt.setFloat(index++, item)
-						is Double		->   pstmt.setDouble(index++, item)
-						is String		->   pstmt.setString(index++, item)
+						is Boolean		-> pstmt.setBoolean(index++, item)
+						is Short		-> pstmt.setShort(index++, item)
+						is Byte			-> pstmt.setByte(index++, item)
+						// is Bytes		-> pstmt.setBytes(index++, item)
+						is Int			-> pstmt.setInt(index++, item)
+						is Long			-> pstmt.setLong(index++, item)
+						is Float		-> pstmt.setFloat(index++, item)
+						is Double		-> pstmt.setDouble(index++, item)
+						is String		-> pstmt.setString(index++, item)
 
-						is BigDecimal	->   pstmt.setBigDecimal(index++, item)
-						is Date			->   pstmt.setDate(index++, item)
-						is Time			->   pstmt.setTime(index++, item)
-						is Timestamp	->   pstmt.setTimestamp(index++, item)
-						is Clob			->   pstmt.setClob(index++, item)
-						is Blob			->   pstmt.setBlob(index++, item)
-						is Ref			->   pstmt.setRef(index++, item)
+						is BigDecimal	-> pstmt.setBigDecimal(index++, item)
+						is Date			-> pstmt.setDate(index++, item)
+						is Time			-> pstmt.setTime(index++, item)
+						is Timestamp	-> pstmt.setTimestamp(index++, item)
+						is Clob			-> pstmt.setClob(index++, item)
+						is Blob			-> pstmt.setBlob(index++, item)
+						is Ref			-> pstmt.setRef(index++, item)
 
-						else			-> println("Type Not found to insert into db")
+						else			-> dbg_msg("Type Not found to insert into db")
 					}
 				}
 			}
@@ -301,8 +299,7 @@ class MyDB(db: String) {
 			}
 		}
 		sql += " FROM ${iTable}"
-		if (debug)
-			println(sql)
+		dbg_msg(sql)
 
 		try {
 			resultSet = statement!!.executeQuery(sql)
@@ -314,7 +311,7 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						// Types.ARRAY			-> resultSet!!.getARRAY(index)
+						// Types.ARRAY		-> resultSet!!.getARRAY(index)
 						// Types.STRUCT		-> resultSet!!.getStruct(index)
 
 						Types.VARCHAR		-> resultSet!!.getString(index)
@@ -347,7 +344,7 @@ class MyDB(db: String) {
 
 						Types.REF			-> resultSet!!.getRef(index)
 
-						else -> resultSet!!.getString(index)
+						else				-> dbg_msg("Type Not found to read from db")
 					}
 				}
 				hmList.add(hmColumn)
@@ -362,7 +359,7 @@ class MyDB(db: String) {
 			for(key in hm.keys) {
 				rowOut += "${hm[key]}, "
 			}
-			println("Row: ${rowOut}")
+			dbg_msg("Row: ${rowOut}")
 		}
 
 		return hmList
@@ -406,9 +403,6 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						// Types.ARRAY			-> resultSet!!.getARRAY(index)
-						// Types.STRUCT		-> resultSet!!.getStruct(index)
-
 						Types.VARCHAR		-> resultSet!!.getString(index)
 						Types.CHAR			-> resultSet!!.getString(index)
 						Types.LONGVARCHAR	-> resultSet!!.getString(index)
@@ -439,7 +433,7 @@ class MyDB(db: String) {
 
 						Types.REF			-> resultSet!!.getRef(index)
 
-						else -> resultSet!!.getString(index)
+						else				-> dbg_msg("Type Not found to read from db")
 					}
 				}
 				hmList.add(hmColumn)
@@ -462,5 +456,18 @@ class MyDB(db: String) {
 			Error = ERROR.ERROR
 			e.printStackTrace()
 		}
+	}
+
+	fun dbg_msg(msg: String) {
+		if (debug)
+			println(msg)
+	}
+
+	fun enableDBG() {
+		debug = true
+	}
+
+	fun disableDBG() {
+		debug = false
 	}
 }
