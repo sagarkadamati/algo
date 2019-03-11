@@ -395,3 +395,4 @@ New-Alias -Name work -Value Workspace
 
 Export-ModuleMember -Function Get-MP3MetaData, Get-Repos, Update-Files, Get-Mp4FromTS, ReverseFileNos, kt, Update-Paths, Workspace, Projects, Tools, Modules, Env -Alias Proj, tls, work
 Export-ModuleMember -Function CreateDirectory, Get-FileNames, PowerSettings
+Export-ModuleMember -Function ReplaceFileNames, PrependFileNames, TrimFileName, StringSplitCaps

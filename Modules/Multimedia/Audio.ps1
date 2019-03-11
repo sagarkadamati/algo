@@ -321,7 +321,8 @@ function Get-AlternateName($FileName) {
 }
 
 function Get-SriChalapathiRaoAudio {
-	$Vedanta = ([IO.Path]::Combine($HOME, "Music", "Vedanta", "Sri Chalapathi Rao"))
+	# $Vedanta = ([IO.Path]::Combine($HOME, "Music", "Vedanta", "Sri Chalapathi Rao"))
+	$Vedanta = ([IO.Path]::Combine("D:\Vedanta", "Sri Chalapathi Rao"))
 	New-Item -Type Directory -Force $Vedanta | Out-Null
 
 	[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"

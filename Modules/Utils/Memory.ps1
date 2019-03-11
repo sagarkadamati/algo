@@ -1,10 +1,42 @@
 
-function ReplaceFileNames($ostr, $nstr) {
-	foreach ($file in $(Get-ChildItem).Name) {
-		$newFile = $file.Replace($ostr, $nstr)
-		if ($file -notlike $newFile) {
-			Write-Host $file "->" $newFile
-			Move-Item  -literalpath $file $newFile -Force
+function ReplaceFileNames {
+	param(
+		[String]$FindStr,
+		[String]$ReplaceWith,
+		[String]$Delimiter,
+		[Int]$Field
+	)
+
+	process {
+		$Field--
+
+		# Write-Host "$FindStr : $ReplaceWith : $Delimiter : $Field"
+		foreach ($file in $(Get-ChildItem).Name) {
+			if ($Field -ge 0) {
+				if($Delimiter -like "") {
+					$Delimiter = " "
+				}
+
+				$fields = $file -split $Delimiter
+				if ($FindStr -like "") {
+					$fields[$Field] = $ReplaceWith
+				} else {
+					if ($fields[$Field] -notlike "") {
+						$fields[$Field] = ($fields[$Field]).Replace($FindStr, $ReplaceWith)
+					}
+				}
+
+				$newFile = $fields -join $Delimiter
+			} else {
+				$newFile = $file.Replace($FindStr, $ReplaceWith)
+			}
+
+			if ($file -notlike $newFile) {
+				if (($file -notlike "") -and ($newFile -notlike "")) {
+					Write-Host $file "->" $newFile
+					Move-Item  -literalpath $file $newFile -Force
+				}
+			}
 		}
 	}
 }
