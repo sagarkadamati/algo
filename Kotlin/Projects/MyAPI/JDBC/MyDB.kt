@@ -249,23 +249,24 @@ class MyDB(db: String) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Boolean		-> pstmt.setBoolean(index++, item)
-						is Short		-> pstmt.setShort(index++, item)
-						is Byte			-> pstmt.setByte(index++, item)
-						// is Bytes		-> pstmt.setBytes(index++, item)
-						is Int			-> pstmt.setInt(index++, item)
-						is Long			-> pstmt.setLong(index++, item)
-						is Float		-> pstmt.setFloat(index++, item)
-						is Double		-> pstmt.setDouble(index++, item)
-						is String		-> pstmt.setString(index++, item)
+						is Boolean		-> pstmt.setBoolean(index++,	item)
+						is Short		-> pstmt.setShort(index++,		item)
+						is Int			-> pstmt.setInt(index++,		item)
+						is Long			-> pstmt.setLong(index++,		item)
+						is Float		-> pstmt.setFloat(index++,		item)
+						is Double		-> pstmt.setDouble(index++,		item)
+						is String		-> pstmt.setString(index++,		item)
 
-						is BigDecimal	-> pstmt.setBigDecimal(index++, item)
-						is Date			-> pstmt.setDate(index++, item)
-						is Time			-> pstmt.setTime(index++, item)
-						is Timestamp	-> pstmt.setTimestamp(index++, item)
-						is Clob			-> pstmt.setClob(index++, item)
-						is Blob			-> pstmt.setBlob(index++, item)
-						is Ref			-> pstmt.setRef(index++, item)
+						is Byte			-> pstmt.setByte(index++,		item)
+						// is Bytes		-> pstmt.setBytes(index++,		item)
+
+						is BigDecimal	-> pstmt.setBigDecimal(index++,	item)
+						is Date			-> pstmt.setDate(index++,		item)
+						is Time			-> pstmt.setTime(index++,		item)
+						is Timestamp	-> pstmt.setTimestamp(index++,	item)
+						is Clob			-> pstmt.setClob(index++,		item)
+						is Blob			-> pstmt.setBlob(index++,		item)
+						is Ref			-> pstmt.setRef(index++,		item)
 
 						else			-> dbg_msg("Type Not found to insert into db")
 					}
@@ -311,9 +312,6 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						// Types.ARRAY		-> resultSet!!.getARRAY(index)
-						// Types.STRUCT		-> resultSet!!.getStruct(index)
-
 						Types.VARCHAR		-> resultSet!!.getString(index)
 						Types.CHAR			-> resultSet!!.getString(index)
 						Types.LONGVARCHAR	-> resultSet!!.getString(index)
@@ -365,6 +363,34 @@ class MyDB(db: String) {
 		return hmList
 	}
 
+	fun classFromType(type: Int): String {
+		return when(type) {
+			Types.ARRAY			-> "ARRAY"
+			Types.STRUCT		-> "Struct"
+			Types.VARCHAR		-> "String"
+			Types.CHAR			-> "String"
+			Types.LONGVARCHAR	-> "String"
+			Types.BIT			-> "Boolean"
+			Types.NUMERIC		-> "BigDecimal"
+			Types.TINYINT		-> "Byte"
+			Types.SMALLINT		-> "Short"
+			Types.INTEGER		-> "Int"
+			Types.BIGINT		-> "Long"
+			Types.REAL			-> "Float"
+			Types.FLOAT			-> "Float"
+			Types.DOUBLE		-> "Double"
+			Types.VARBINARY		-> "Bytes"
+			Types.BINARY		-> "Bytes"
+			Types.DATE			-> "Date"
+			Types.TIME			-> "Time"
+			Types.TIMESTAMP		-> "Timestamp"
+			Types.CLOB			-> "Clob"
+			Types.BLOB			-> "Blob"
+			Types.REF			-> "Ref"
+			else				-> ""
+		}
+	}
+
 	// ## SQL			JDBC/Java					setXXX					updateXXX
 	// #####################################################################################
 	// # VARCHAR		java.lang.String			setString				updateString
@@ -403,6 +429,9 @@ class MyDB(db: String) {
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
+						// Types.ARRAY		-> resultSet!!.getARRAY(index)
+						// Types.STRUCT		-> resultSet!!.getStruct(index)
+
 						Types.VARCHAR		-> resultSet!!.getString(index)
 						Types.CHAR			-> resultSet!!.getString(index)
 						Types.LONGVARCHAR	-> resultSet!!.getString(index)

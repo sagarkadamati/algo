@@ -2,7 +2,7 @@ import MyAPI.JDBC.MyDB
 
 fun main(args: Array<String>) {
 	var db = MyDB("test.db")
-	db.debug = true
+	db.enableDBG()
 
 	var tuple = HashMap<String, Any>()
 	tuple["id"] = 1
