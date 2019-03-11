@@ -111,6 +111,10 @@ class MyDB(db: String) {
 		dropColumn(column)
 	}
 
+	operator fun get(lTable: String): ArrayList<HashMap<String, Any>> {
+		return getTable(lTable)
+	}
+
 	fun addColumn(column: String) {
 		try {
 			var sql = "PRAGMA table_info ( ${iTable} )"

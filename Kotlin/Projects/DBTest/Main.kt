@@ -17,10 +17,11 @@ fun main(args: Array<String>) {
 
 	db + tuple
 
-	var table = db.getTable("Test")
+	var table = db["Test"]
 	table.forEach {
 		row -> row.forEach {
-			column -> println(column)
+			column ->
+			println(column)
 		}
 	}
 	// println(table[0]["id"])
