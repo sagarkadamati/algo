@@ -21,34 +21,31 @@ import java.sql.Struct
 
 import java.math.BigDecimal
 
+import MyAPI.JDBC.MyTable
+
 class MyDB(db: String) {
 	enum class ERROR {
 		SUCCESS,
 		ERROR
 	}
 
-	private var conn: Connection ?= null
-	private var statement: Statement ?= null
-	private var resultSet: ResultSet ?= null
+	private lateinit var connection: Connection
+	private lateinit var statement: Statement
+	private lateinit var resultSet: ResultSet
 
-	var tables: ArrayList<String> = ArrayList<String>()
+	public var tables: ArrayList<String> = ArrayList<String>()
 
 	private var row = HashMap<String, Any>()
 
 	private var Error = ERROR.SUCCESS
-	private var iTable: String = ""
 	private var debug = false
 
 	var fields: String = ""
-	var table: String get() = iTable
-		set(tName: String) {
-			loadTable(tName)
-		}
 
 	init {
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:${db}")
-			statement = conn!!.createStatement()
+			connection = DriverManager.getConnection("jdbc:sqlite:${db}")
+			statement = connection.createStatement()
 
 			loadTables()
 		} catch (e: SQLException) {
@@ -58,11 +55,12 @@ class MyDB(db: String) {
 	}
 
 	private fun loadTables() {
+		dbg_msg("loadTables")
 		try {
 			val sql = "Select name From sqlite_master where type='table' order by name"
-			resultSet = statement!!.executeQuery(sql)
-			while (resultSet!!.next()) {
-					tables.add(resultSet!!.getString(1))
+			resultSet = statement.executeQuery(sql)
+			while (resultSet.next()) {
+					tables.add(resultSet.getString(1))
 			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
@@ -70,17 +68,14 @@ class MyDB(db: String) {
 		}
 	}
 
-	fun loadTable(table: String) {
-		create(table)
-	}
-
-	fun create(table: String) {
-		var sql: String = "CREATE TABLE IF NOT EXISTS ${table} ( id integer PRIMARY KEY "
-		sql += if (fields.trim().isNotEmpty()) ", ${fields} )" else " )"
-
+	fun createTable(lTable: String) {
+		dbg_msg("create")
 		try {
-			statement!!.execute(sql)
-			iTable = table
+			var sql: String = "CREATE TABLE IF NOT EXISTS ${lTable} ( id INTEGER PRIMARY KEY NOT NULL "
+			sql += if (fields.trim().isNotEmpty()) ", ${fields} )" else " )"
+			statement.execute(sql)
+
+			tables.add(lTable)
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			e.printStackTrace()
@@ -103,47 +98,190 @@ class MyDB(db: String) {
 		// )
 	}
 
-	operator fun plus(hm: HashMap<String, Any>) {
-		if (hm["id"] == 0)
-			addRow(hm)
-		else
-			updateRow(hm)
-	}
+	// ## SQL			JDBC/Java					setXXX					updateXXX
+	// #####################################################################################
+	// # VARCHAR		java.lang.String			setString				updateString
+	// # CHAR			java.lang.String			setString				updateString
+	// # LONGVARCHAR	java.lang.String			setString				updateString
+	// # BIT			boolean						setBoolean				updateBoolean
+	// # NUMERIC		java.math.BigDecimal		setBigDecimal			updateBigDecimal
+	// # TINYINT		byte						setByte					updateByte
+	// # SMALLINT		short						setShort				updateShort
+	// # INTEGER		int							setInt					updateInt
+	// # BIGINT			long						setLong					updateLong
+	// # REAL			float						setFloat				updateFloat
+	// # FLOAT			float						setFloat				updateFloat
+	// # DOUBLE			double						setDouble				updateDouble
+	// # VARBINARY		byte[ ]						setBytes				updateBytes
+	// # BINARY			byte[ ]						setBytes				updateBytes
+	// # DATE			java.sql.Date				setDate					updateDate
+	// # TIME			java.sql.Time				setTime					updateTime
+	// # TIMESTAMP		java.sql.Timestamp			setTimestamp			updateTimestamp
+	// # CLOB			java.sql.Clob				setClob					updateClob
+	// # BLOB			java.sql.Blob				setBlob					updateBlob
+	// # ARRAY			java.sql.Array				setARRAY				updateARRAY
+	// # REF			java.sql.Ref				SetRef					updateRef
+	// # STRUCT			java.sql.Struct				SetStruct				updateStruct
 
-	operator fun minus(hm: HashMap<String, Any>) {
-		dropRow(hm)
-	}
+	operator fun get(lTable: String): MyTable {
+		dbg_msg("getTable")
 
-	operator fun plus(column: String) {
-		addColumn(column)
-	}
+		// if (!(tables.contains(lTable)))
+		createTable(lTable)
 
-	operator fun minus(column: String) {
-		dropColumn(column)
-	}
-
-	operator fun get(lTable: String): ArrayList<HashMap<String, Any>> {
-		return getTable(lTable)
-	}
-
-	fun addColumn(column: String) {
+		var hmList = ArrayList<HashMap<String, Any>>()
 		try {
-			var sql = "PRAGMA table_info ( ${iTable} )"
+			resultSet = statement.executeQuery("SELECT * FROM ${lTable}")
+			while (resultSet.next()) {
+				var hmColumn = HashMap<String, Any>()
+				var md: ResultSetMetaData = resultSet.getMetaData()
+				for (index in  1..md.getColumnCount()) {
+					var cName = md.getColumnName(index)
+					var cType  = md.getColumnType(index)
+
+					hmColumn[cName] = when(cType) {
+						// Types.ARRAY		-> resultSet.getARRAY(index)
+						// Types.STRUCT		-> resultSet.getStruct(index)
+
+						Types.VARCHAR		-> resultSet.getString(index)
+						Types.CHAR			-> resultSet.getString(index)
+						Types.LONGVARCHAR	-> resultSet.getString(index)
+
+						Types.BIT			-> resultSet.getBoolean(index)
+						Types.NUMERIC		-> resultSet.getBigDecimal(index)
+
+						Types.TINYINT		-> resultSet.getByte(index)
+						Types.SMALLINT		-> resultSet.getShort(index)
+						Types.INTEGER		-> resultSet.getInt(index)
+						Types.BIGINT		-> resultSet.getLong(index)
+
+						Types.REAL			-> resultSet.getFloat(index)
+						Types.FLOAT			-> resultSet.getFloat(index)
+						Types.DOUBLE		-> resultSet.getDouble(index)
+
+						Types.VARBINARY		-> resultSet.getBytes(index)
+						Types.BINARY		-> resultSet.getBytes(index)
+
+						Types.DATE			-> resultSet.getDate(index)
+
+						Types.TIME			-> resultSet.getTime(index)
+						Types.TIMESTAMP		-> resultSet.getTimestamp(index)
+
+						Types.CLOB			-> resultSet.getClob(index)
+
+						Types.BLOB			-> resultSet.getBlob(index)
+
+						Types.REF			-> resultSet.getRef(index)
+
+						else				-> dbg_msg("Type Not found to read from db")
+					}
+				}
+				hmList.add(hmColumn)
+			}
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			e.printStackTrace()
+		}
+
+		return MyTable(this, lTable, hmList)
+	}
+
+	fun updateMyTable(lTable: String, mTable: MyTable) {
+		dbg_msg("updateMyTable")
+
+		var hmList = ArrayList<HashMap<String, Any>>()
+		try {
+			resultSet = statement.executeQuery("SELECT * FROM ${lTable}")
+			while (resultSet.next()) {
+				var hmColumn = HashMap<String, Any>()
+				var md: ResultSetMetaData = resultSet.getMetaData()
+				for (index in  1..md.getColumnCount()) {
+					var cName = md.getColumnName(index)
+					var cType  = md.getColumnType(index)
+
+					hmColumn[cName] = when(cType) {
+						Types.VARCHAR		-> resultSet.getString(index)
+						Types.CHAR			-> resultSet.getString(index)
+						Types.LONGVARCHAR	-> resultSet.getString(index)
+
+						Types.BIT			-> resultSet.getBoolean(index)
+						Types.NUMERIC		-> resultSet.getBigDecimal(index)
+
+						Types.TINYINT		-> resultSet.getByte(index)
+						Types.SMALLINT		-> resultSet.getShort(index)
+						Types.INTEGER		-> resultSet.getInt(index)
+						Types.BIGINT		-> resultSet.getLong(index)
+
+						Types.REAL			-> resultSet.getFloat(index)
+						Types.FLOAT			-> resultSet.getFloat(index)
+						Types.DOUBLE		-> resultSet.getDouble(index)
+
+						Types.VARBINARY		-> resultSet.getBytes(index)
+						Types.BINARY		-> resultSet.getBytes(index)
+
+						Types.DATE			-> resultSet.getDate(index)
+
+						Types.TIME			-> resultSet.getTime(index)
+						Types.TIMESTAMP		-> resultSet.getTimestamp(index)
+
+						Types.CLOB			-> resultSet.getClob(index)
+
+						Types.BLOB			-> resultSet.getBlob(index)
+
+						Types.REF			-> resultSet.getRef(index)
+
+						else				-> dbg_msg("Type Not found to read from db")
+					}
+				}
+				hmList.add(hmColumn)
+			}
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			e.printStackTrace()
+		}
+
+		mTable.setTableData(hmList)
+	}
+
+	fun addColumn(lTable: String, column: String, default: Any) {
+		dbg_msg("addColumn")
+
+		var type = when(default) {
+			is Boolean		-> " BIT"
+			is Byte			-> " TINYINT"
+			is Short		-> " SMALLINT"
+			is Int			-> " INTEGER"
+			is Long			-> " BIGINT"
+			is Float		-> " FLOAT"
+			is Double		-> " DOUBLE"
+			// is Bytes		-> " "
+			is BigDecimal	-> " NUMERIC"
+			is Date			-> " DATE"
+			is Time			-> " TIME"
+			is Timestamp	-> " TIMESTAMP"
+			is Clob			-> " CLOB"
+			is Blob			-> " BLOB"
+			is Ref			-> " REF"
+			else			-> " TEXT"
+		}
+
+		try {
+			var sql = "PRAGMA table_info ( ${lTable} )"
 			val cName = column.split(" ")[0]
 			var found = false
 
 			dbg_msg(sql)
 
-			resultSet = statement!!.executeQuery(sql)
-			while (resultSet!!.next()) {
+			resultSet = statement.executeQuery(sql)
+			while (resultSet.next()) {
 				// ID = 1, Column Name, Column Type, ... etc
-				if (resultSet!!.getString(2) == cName) {
+				if (resultSet.getString(2) == cName) {
 					found = true
 				}
 			}
 			if (!found) {
-				sql = "ALTER TABLE ${iTable} ADD COLUMN ${column}"
-				statement!!.execute(sql)
+				sql = "ALTER TABLE ${lTable} ADD COLUMN ${column} NOT NULL DEFAULT ${type}"
+				statement.execute(sql)
 			}
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
@@ -151,39 +289,41 @@ class MyDB(db: String) {
 		}
 	}
 
-	fun dropColumn(column: String) {
+	fun dropColumn(lTable: String, column: String) {
+		dbg_msg("dropColumn")
 		try {
-			var sql = "PRAGMA table_info ( ${iTable} )"
+			var sql = "PRAGMA table_info ( ${lTable} )"
 			dbg_msg(sql)
 
-			resultSet = statement!!.executeQuery(sql)
+			resultSet = statement.executeQuery(sql)
 
-			sql = "CREATE TABLE ${iTable}_backup AS SELECT id"
-			while (resultSet!!.next()) {
-				var key = resultSet!!.getString(2)
+			sql = "CREATE TABLE ${lTable}_backup AS SELECT id"
+			while (resultSet.next()) {
+				var key = resultSet.getString(2)
 
-				println(key)
+				dbg_msg(key)
 				// ID = 1, Column Name, Column Type, ... etc
 				// FIXME: id:1
 				if (key == column || key == "id" || key == "id:1") continue
 
 				sql += ", ${key}"
 			}
-			sql += " FROM ${iTable}"
+			sql += " FROM ${lTable}"
 
 			dbg_msg(sql)
-			statement!!.execute(sql)
-			statement!!.execute("DROP TABLE ${iTable}")
-			statement!!.execute("ALTER TABLE ${iTable}_backup RENAME TO ${iTable}")
+			statement.execute(sql)
+			statement.execute("DROP TABLE ${lTable}")
+			statement.execute("ALTER TABLE ${lTable}_backup RENAME TO ${lTable}")
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			e.printStackTrace()
 		}
 	}
 
-	fun addRow(hm: HashMap<String, Any>) {
+	fun addRow(lTable: String, hm: HashMap<String, Any>) {
+		dbg_msg("addRow")
 		var size = hm.size
-		var fields = "INSERT INTO ${iTable} ( "
+		var fields = "INSERT INTO ${lTable} ( "
 		var values = " VALUES ( "
 
 		for(key in hm.keys) {
@@ -198,19 +338,32 @@ class MyDB(db: String) {
 
 		try {
 			dbg_msg(fields + values + size)
-			var pstmt: PreparedStatement = conn!!.prepareStatement(fields + values)
+			var pstmt: PreparedStatement = connection.prepareStatement(fields + values)
 			var index = 1
 			for(key in hm.keys) {
 				if (key != "id") {
 					val item = hm[key]
 					when(item) {
-						is Short -> pstmt.setShort(index++,item)
-						is Int -> pstmt.setInt(index++,item)
-						is Long -> pstmt.setLong(index++, item)
-						is Float -> pstmt.setFloat(index++,item)
-						is Double -> pstmt.setDouble(index++, item)
-						is String -> pstmt.setString(index++, item)
-						else -> dbg_msg("Type Not found to insert into db")
+						is Boolean		-> pstmt.setBoolean(index++,	item)
+						is Short		-> pstmt.setShort(index++,		item)
+						is Int			-> pstmt.setInt(index++,		item)
+						is Long			-> pstmt.setLong(index++,		item)
+						is Float		-> pstmt.setFloat(index++,		item)
+						is Double		-> pstmt.setDouble(index++,		item)
+						is String		-> pstmt.setString(index++,		item)
+
+						is Byte			-> pstmt.setByte(index++,		item)
+						// is Bytes		-> pstmt.setBytes(index++,		item)
+
+						is BigDecimal	-> pstmt.setBigDecimal(index++,	item)
+						is Date			-> pstmt.setDate(index++,		item)
+						is Time			-> pstmt.setTime(index++,		item)
+						is Timestamp	-> pstmt.setTimestamp(index++,	item)
+						is Clob			-> pstmt.setClob(index++,		item)
+						is Blob			-> pstmt.setBlob(index++,		item)
+						is Ref			-> pstmt.setRef(index++,		item)
+
+						else			-> dbg_msg("Type Not found to insert into db")
 					}
 				}
 			}
@@ -221,19 +374,9 @@ class MyDB(db: String) {
 		}
 	}
 
-	fun dropRow(hm: HashMap<String, Any>) {
-		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement("DELETE FROM ${iTable} WHERE id = ?")
-			pstmt.setInt(1, hm["id"] as Int)
-			pstmt.execute()
-		} catch (e: SQLException) {
-			Error = ERROR.ERROR
-			e.printStackTrace()
-		}
-	}
-
-	fun updateRow(hm: HashMap<String, Any>) {
-		var sql = "UPDATE ${iTable} SET "
+	fun updateRow(lTable: String, hm: HashMap<String, Any>) {
+		dbg_msg("updateRow")
+		var sql = "UPDATE ${lTable} SET "
 		for(key in hm.keys) {
 			if (key != "id") {
 				sql += "${key} = ? "
@@ -243,7 +386,7 @@ class MyDB(db: String) {
 		dbg_msg(sql)
 
 		try {
-			var pstmt: PreparedStatement = conn!!.prepareStatement(sql)
+			var pstmt: PreparedStatement = connection.prepareStatement(sql)
 			var index = 1
 			for(key in hm.keys) {
 				if (key != "id") {
@@ -280,17 +423,61 @@ class MyDB(db: String) {
 		}
 	}
 
-	fun dropTable() {
+	fun dropRow(lTable: String, lId: Int) {
+		dbg_msg("dropRow")
+		var sql = "DELETE FROM ${lTable} WHERE id = ?"
+		dbg_msg(sql)
 		try {
-			val sql = "DROP TABLE IF EXISTS ${iTable}"
-			statement!!.execute(sql)
+			var pstmt: PreparedStatement = connection.prepareStatement(sql)
+			pstmt.setInt(1, lId)
+			pstmt.execute()
 		} catch (e: SQLException) {
 			Error = ERROR.ERROR
 			e.printStackTrace()
 		}
 	}
 
-	fun query(hm: HashMap<String, Any>): ArrayList<HashMap<String, Any>> {
+	fun dropTable(lTable: String) {
+		dbg_msg("dropTable")
+		try {
+			val sql = "DROP TABLE IF EXISTS ${lTable}"
+			statement.execute(sql)
+			loadTables()
+		} catch (e: SQLException) {
+			Error = ERROR.ERROR
+			e.printStackTrace()
+		}
+	}
+
+	fun dbg_msg(msg: String) {
+		if (debug)
+			println("MyDB: " + msg)
+	}
+
+	fun enableDBG() {
+		dbg_msg("enableDBG")
+		debug = true
+	}
+
+	fun disableDBG() {
+		dbg_msg("disableDBG")
+		debug = false
+	}
+
+	protected fun finalize() {
+		dbg_msg("finalize")
+		try	{
+			resultSet.close()
+			statement.close()
+			connection.close()
+		} catch (e: Exception) {
+			Error = ERROR.ERROR
+			e.printStackTrace()
+		}
+	}
+
+	fun query(lTable: String, hm: HashMap<String, Any>): ArrayList<HashMap<String, Any>> {
+		dbg_msg("query")
 		var hmList = ArrayList<HashMap<String, Any>>()
 
 		var sql = "SELECT id"
@@ -299,48 +486,48 @@ class MyDB(db: String) {
 				sql += ", " + key
 			}
 		}
-		sql += " FROM ${iTable}"
+		sql += " FROM ${lTable}"
 		dbg_msg(sql)
 
 		try {
-			resultSet = statement!!.executeQuery(sql)
-			while (resultSet!!.next()) {
+			resultSet = statement.executeQuery(sql)
+			while (resultSet.next()) {
 				var hmColumn = HashMap<String, Any>()
-				var md: ResultSetMetaData = resultSet!!.getMetaData()
+				var md: ResultSetMetaData = resultSet.getMetaData()
 				for (index in  1..md.getColumnCount()) {
 					var cName = md.getColumnName(index)
 					var cType  = md.getColumnType(index)
 
 					hmColumn[cName] = when(cType) {
-						Types.VARCHAR		-> resultSet!!.getString(index)
-						Types.CHAR			-> resultSet!!.getString(index)
-						Types.LONGVARCHAR	-> resultSet!!.getString(index)
+						Types.VARCHAR		-> resultSet.getString(index)
+						Types.CHAR			-> resultSet.getString(index)
+						Types.LONGVARCHAR	-> resultSet.getString(index)
 
-						Types.BIT			-> resultSet!!.getBoolean(index)
-						Types.NUMERIC		-> resultSet!!.getBigDecimal(index)
+						Types.BIT			-> resultSet.getBoolean(index)
+						Types.NUMERIC		-> resultSet.getBigDecimal(index)
 
-						Types.TINYINT		-> resultSet!!.getByte(index)
-						Types.SMALLINT		-> resultSet!!.getShort(index)
-						Types.INTEGER		-> resultSet!!.getInt(index)
-						Types.BIGINT		-> resultSet!!.getLong(index)
+						Types.TINYINT		-> resultSet.getByte(index)
+						Types.SMALLINT		-> resultSet.getShort(index)
+						Types.INTEGER		-> resultSet.getInt(index)
+						Types.BIGINT		-> resultSet.getLong(index)
 
-						Types.REAL			-> resultSet!!.getFloat(index)
-						Types.FLOAT			-> resultSet!!.getFloat(index)
-						Types.DOUBLE		-> resultSet!!.getDouble(index)
+						Types.REAL			-> resultSet.getFloat(index)
+						Types.FLOAT			-> resultSet.getFloat(index)
+						Types.DOUBLE		-> resultSet.getDouble(index)
 
-						Types.VARBINARY		-> resultSet!!.getBytes(index)
-						Types.BINARY		-> resultSet!!.getBytes(index)
+						Types.VARBINARY		-> resultSet.getBytes(index)
+						Types.BINARY		-> resultSet.getBytes(index)
 
-						Types.DATE			-> resultSet!!.getDate(index)
+						Types.DATE			-> resultSet.getDate(index)
 
-						Types.TIME			-> resultSet!!.getTime(index)
-						Types.TIMESTAMP		-> resultSet!!.getTimestamp(index)
+						Types.TIME			-> resultSet.getTime(index)
+						Types.TIMESTAMP		-> resultSet.getTimestamp(index)
 
-						Types.CLOB			-> resultSet!!.getClob(index)
+						Types.CLOB			-> resultSet.getClob(index)
 
-						Types.BLOB			-> resultSet!!.getBlob(index)
+						Types.BLOB			-> resultSet.getBlob(index)
 
-						Types.REF			-> resultSet!!.getRef(index)
+						Types.REF			-> resultSet.getRef(index)
 
 						else				-> dbg_msg("Type Not found to read from db")
 					}
@@ -364,6 +551,7 @@ class MyDB(db: String) {
 	}
 
 	fun classFromType(type: Int): String {
+		dbg_msg("classFromType")
 		return when(type) {
 			Types.ARRAY			-> "ARRAY"
 			Types.STRUCT		-> "Struct"
@@ -391,112 +579,6 @@ class MyDB(db: String) {
 		}
 	}
 
-	// ## SQL			JDBC/Java					setXXX					updateXXX
-	// #####################################################################################
-	// # VARCHAR		java.lang.String			setString				updateString
-	// # CHAR			java.lang.String			setString				updateString
-	// # LONGVARCHAR	java.lang.String			setString				updateString
-	// # BIT			boolean						setBoolean				updateBoolean
-	// # NUMERIC		java.math.BigDecimal		setBigDecimal			updateBigDecimal
-	// # TINYINT		byte						setByte					updateByte
-	// # SMALLINT		short						setShort				updateShort
-	// # INTEGER		int							setInt					updateInt
-	// # BIGINT			long						setLong					updateLong
-	// # REAL			float						setFloat				updateFloat
-	// # FLOAT			float						setFloat				updateFloat
-	// # DOUBLE			double						setDouble				updateDouble
-	// # VARBINARY		byte[ ]						setBytes				updateBytes
-	// # BINARY			byte[ ]						setBytes				updateBytes
-	// # DATE			java.sql.Date				setDate					updateDate
-	// # TIME			java.sql.Time				setTime					updateTime
-	// # TIMESTAMP		java.sql.Timestamp			setTimestamp			updateTimestamp
-	// # CLOB			java.sql.Clob				setClob					updateClob
-	// # BLOB			java.sql.Blob				setBlob					updateBlob
-	// # ARRAY			java.sql.Array				setARRAY				updateARRAY
-	// # REF			java.sql.Ref				SetRef					updateRef
-	// # STRUCT			java.sql.Struct				SetStruct				updateStruct
-
-	fun getTable(lTable: String): ArrayList<HashMap<String, Any>> {
-		var hmList = ArrayList<HashMap<String, Any>>()
-
-		try {
-			resultSet = statement!!.executeQuery("SELECT * FROM ${lTable}")
-			while (resultSet!!.next()) {
-				var hmColumn = HashMap<String, Any>()
-				var md: ResultSetMetaData = resultSet!!.getMetaData()
-				for (index in  1..md.getColumnCount()) {
-					var cName = md.getColumnName(index)
-					var cType  = md.getColumnType(index)
-
-					hmColumn[cName] = when(cType) {
-						// Types.ARRAY		-> resultSet!!.getARRAY(index)
-						// Types.STRUCT		-> resultSet!!.getStruct(index)
-
-						Types.VARCHAR		-> resultSet!!.getString(index)
-						Types.CHAR			-> resultSet!!.getString(index)
-						Types.LONGVARCHAR	-> resultSet!!.getString(index)
-
-						Types.BIT			-> resultSet!!.getBoolean(index)
-						Types.NUMERIC		-> resultSet!!.getBigDecimal(index)
-
-						Types.TINYINT		-> resultSet!!.getByte(index)
-						Types.SMALLINT		-> resultSet!!.getShort(index)
-						Types.INTEGER		-> resultSet!!.getInt(index)
-						Types.BIGINT		-> resultSet!!.getLong(index)
-
-						Types.REAL			-> resultSet!!.getFloat(index)
-						Types.FLOAT			-> resultSet!!.getFloat(index)
-						Types.DOUBLE		-> resultSet!!.getDouble(index)
-
-						Types.VARBINARY		-> resultSet!!.getBytes(index)
-						Types.BINARY		-> resultSet!!.getBytes(index)
-
-						Types.DATE			-> resultSet!!.getDate(index)
-
-						Types.TIME			-> resultSet!!.getTime(index)
-						Types.TIMESTAMP		-> resultSet!!.getTimestamp(index)
-
-						Types.CLOB			-> resultSet!!.getClob(index)
-
-						Types.BLOB			-> resultSet!!.getBlob(index)
-
-						Types.REF			-> resultSet!!.getRef(index)
-
-						else				-> dbg_msg("Type Not found to read from db")
-					}
-				}
-				hmList.add(hmColumn)
-			}
-			iTable = lTable
-		} catch (e: SQLException) {
-			Error = ERROR.ERROR
-			e.printStackTrace()
-		}
-
-		return hmList
-	}
-
-	protected fun finalize() {
-		try	{
-			if (resultSet != null)	resultSet!!.close()
-			if (statement != null)	statement!!.close()
-			if (conn != null) conn!!.close()
-		} catch (e: Exception) {
-			Error = ERROR.ERROR
-			e.printStackTrace()
-		}
-	}
-
-	fun dbg_msg(msg: String) {
-		if (debug)
-			println(msg)
-	}
-
-	fun enableDBG() {
-		debug = true
-	}
-
-	fun disableDBG() {
-		debug = false
+	fun drop() {
 	}
 }

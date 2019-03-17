@@ -9,6 +9,7 @@ SetupEnv
 cd $ToolsLocation\Env
 
 if ($FileName -match "Kotlin/Projects/*") {
+	echo $FileName
 	$Project = $(($FileName -replace "Kotlin/Projects/", "") -split '/')[0]
 	if ($Build) {
 		kt -Build $Project

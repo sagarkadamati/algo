@@ -6,7 +6,7 @@
 	],
 
 	"workbench.startupEditor": "none",
-	"workbench.colorTheme": "Night Time",
+	"workbench.colorTheme": "Day Time",
 	"workbench.sideBar.location": "right",
 	"workbench.editor.showTabs": false,
 	"workbench.editor.showIcons": true,
@@ -37,7 +37,7 @@
 	"editor.largeFileOptimizations": false,
 
 	"breadcrumbs.symbolPath": "off",
-	"breadcrumbs.enabled": true,
+	"breadcrumbs.enabled": false,
 
 	"explorer.openEditors.visible": 10,
 	"explorer.confirmDragAndDrop": false,

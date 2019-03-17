@@ -48,5 +48,9 @@
 		"key": "ctrl+; /",
 		"command": "workbench.action.gotoSymbol",
 		"when": "webviewEditorFocus"
+	},
+	{
+		"key": "alt+enter",
+		"command": "workbench.action.toggleFullScreen"
 	}
 ]

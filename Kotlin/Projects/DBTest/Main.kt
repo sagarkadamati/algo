@@ -1,38 +1,68 @@
 import MyAPI.JDBC.MyDB
+import MyAPI.JDBC.MyTable
 
 fun main(args: Array<String>) {
+	var tuple = HashMap<String, Any>()
 	var db = MyDB("test.db")
 	db.enableDBG()
+	println(db.tables)
 
-	var tuple = HashMap<String, Any>()
-	tuple["id"] = 1
-	tuple["name"] = "this is modified"
+	var test = db["Test"]
 
 	println(db.tables)
-	db.table = "Test"
-	db + "name TEXT"
-	db + "name TEXT"
-	db - "name"
-	db + "name TEXT"
 
-	db + tuple
+	println("Size: " + test.size)
+	test.addColumn("Name", "")
 
-	var table = db["Test"]
-	table.forEach {
-		row -> row.forEach {
-			column ->
-			println(column)
-		}
+	// tuple["id"] = 0
+	tuple["name"] = "Row 1"
+	test.addRow(tuple)
+
+	tuple["name"] = "Row 2"
+	test.addRow(tuple)
+
+	tuple["name"] = "Row 3"
+	test.addRow(tuple)
+
+	tuple["name"] = "Row 4"
+	test.addRow(tuple)
+
+	tuple["name"] = "Row 5"
+	test.addRow(tuple)
+
+	test.addColumn("NewCol", "")
+
+	println("Size: " + test.size)
+
+	test[1]["NewCol"] = "New col updated Row 1"
+	test[2]["NewCol"] = "New col updated Row 2"
+	test[3]["NewCol"] = "New col updated Row 3"
+	test[4]["NewCol"] = "New col updated Row 4"
+	test[5]["NewCol"] = "New col updated Row 5"
+
+	println("Size: " + test.size)
+	for (i in 1..test.size) {
+		println("ID: " + test[i]["id"] + ", Name: " + test[i]["Name"] + ", NewCol: " + test[i]["NewCol"])
 	}
-	// println(table[0]["id"])
 
-	// tuple = db.query(tuple)
+	test.dropRow(3)
+	tuple["Name"] = "Row 6"
+	tuple["NewCol"] = "Row 6"
+	test.addRow(tuple)
 
-	// tuple["name"] = "test"
-	// db.update(tuple)
-	// tuple = db.query(tuple)
-	// println("ID : " + tuple["id"] + ", Name = " + tuple["name"])
+	test[2]["Name"] = "Hey, I'm get modified"
 
-	// db - "ramu"
-	// db.dropTable()
+	println("Size: " + test.size)
+	for (i in 1..test.size) {
+		println("ID: " + test[i]["id"] + ", Name: " + test[i]["Name"] + ", NewCol: " + test[i]["NewCol"])
+	}
+
+	test.dropColumn("Name")
+
+	println("Size: " + test.size)
+	for (i in 1..test.size) {
+		println("ID: " + test[i]["id"] + ", Name: " + test[i]["Name"] + ", NewCol: " + test[i]["NewCol"])
+	}
+
+	test.drop()
 }

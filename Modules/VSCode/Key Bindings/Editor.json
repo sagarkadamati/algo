@@ -31,19 +31,19 @@
 		"command": "editor.action.toggleRenderWhitespace"
 	},
     {
-        "key":  "ctrl+h",
+		"key":  "ctrl+; ctrl+h",
 		"command":  "workbench.action.moveEditorToLeftGroup"
     },
     {
-        "key":  "ctrl+l",
+		"key":  "ctrl+; ctrl+l",
 		"command":  "workbench.action.moveEditorToRightGroup"
 	},
 	{
-		"key": "ctrl+; ctrl+h",
+		"key": "ctrl+h",
 		"command": "workbench.action.focusFirstEditorGroup"
 	},
 	{
-		"key": "ctrl+; ctrl+l",
+		"key": "ctrl+l",
 		"command": "workbench.action.focusSecondEditorGroup"
 	},
 	{
@@ -71,14 +71,19 @@
 		"command": "workbench.action.quickOpen"
 	},
 	{
-		"key": "ctrl+shift+p",
-		"command": "editor.action.diffReview.prev",
-		"when": "isInDiffEditor"
+		"key": "ctrl+alt+p",
+		"command": "workbench.action.compareEditor.previousChange",
+		"when": "textCompareEditorVisible"
 	},
 	{
-		"key": "ctrl+shift+n",
-		"command": "editor.action.diffReview.next",
-		"when": "isInDiffEditor"
+		"key": "ctrl+alt+n",
+		"command": "workbench.action.compareEditor.nextChange",
+		"when": "textCompareEditorVisible"
+	},
+	{
+		"key": "ctrl+u",
+		"command": "git.revertSelectedRanges",
+		"when": "textCompareEditorVisible"
 	},
 	{
 		"key": "ctrl+shift+o",
@@ -102,5 +107,49 @@
 		"key": "ctrl+oem_1 ctrl+oem_1",
 		"command": "breadcrumbs.selectEditor",
 		"when": "breadcrumbsActive && breadcrumbsVisible"
+	},
+	{
+		"key": "ctrl+; b",
+		"command": "breadcrumbs.toggle"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.focusFirstEditorGroup",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.focusLastEditorGroup",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+[",
+		"command": "editor.action.jumpToBracket",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+shift+[",
+		"command": "editor.action.selectToBracket",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+f",
+		"command": "editor.fold",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+shift+f",
+		"command": "editor.foldRecursively",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+u",
+		"command": "editor.unfold",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+shift+u",
+		"command": "editor.unfoldRecursively",
+		"when": "editorTextFocus"
 	}
 ]

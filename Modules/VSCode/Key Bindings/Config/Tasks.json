@@ -2,11 +2,25 @@
 	{
 		"key": "ctrl+shift+c",
 		"command": "workbench.action.tasks.runTask",
-		"args": "build"
+		"args": "build",
+		"when": "isWindows"
+	},
+	{
+		"key": "ctrl+shift+c",
+		"command": "workbench.action.tasks.runTask",
+		"args": "buildlin",
+		"when": "isLinux"
 	},
 	{
 		"key": "ctrl+shift+r",
 		"command": "workbench.action.tasks.runTask",
-		"args": "run"
+		"args": "run",
+		"when": "isWindows"
+	},
+	{
+		"key": "ctrl+shift+r",
+		"command": "workbench.action.tasks.runTask",
+		"args": "runlin",
+		"when": "isLinux"
 	}
 ]

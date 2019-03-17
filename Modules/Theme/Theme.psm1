@@ -210,9 +210,7 @@ function Update-Theme {
 		}
 	}
 
-	if (($Host.UI.RawUI.BackgroundColor -NotMatch [ConsoleColor]::Black)) {
-		STheme $TIME
-	}
+	STheme $TIME
 }
 
 Export-ModuleMember -Function Update-Theme, NightTheme, DayTheme
