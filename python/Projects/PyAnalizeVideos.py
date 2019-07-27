@@ -29,11 +29,11 @@ collect_end = False
 # Create a VideoCapture object and read from input file
 cap = cv2.VideoCapture(video1_file)
 if (cap.isOpened() == True):
-	video1_skip = True
-	video1_skip_frames = 0
+	video1_fps    = cap.get(cv2.CAP_PROP_FPS)
 	video1_start  = "00:00:00.000"
 	video1_end    = "00:00:00.000"
-	video1_fps    = cap.get(cv2.CAP_PROP_FPS)
+	video1_skip   = True
+	video1_skip_frames = 0
 
 	# Display the resulting frames for video1
 	cv2.namedWindow("Video1", cv2.WINDOW_NORMAL)
@@ -45,11 +45,11 @@ else:
 if video2_file != "":
 	cap2 = cv2.VideoCapture(video2_file)
 	if (cap2.isOpened()== True):
-		video2_skip = True
-		video2_skip_frames = 0
-		video2_start = "00:00:00.000"
-		video2_end   = "00:00:00.000"
 		video2_fps    = cap2.get(cv2.CAP_PROP_FPS)
+		video2_start  = "00:00:00.000"
+		video2_end    = "00:00:00.000"
+		video2_skip   = True
+		video2_skip_frames = 0
 
 		# Display the resulting frames for video2
 		cv2.namedWindow("Video2", cv2.WINDOW_NORMAL)
@@ -85,7 +85,7 @@ while(cap.isOpened()):
 		ret, video1_frame = cap.read()
 		if ret == True:
 			video1_current_frame =  cap.get(cv2.CAP_PROP_POS_FRAMES) - 1
-			video1_timestamp = time.strftime('%H:%M:%S.', time.gmtime(int(video1_current_frame) / video1_fps)) + str((int(video1_current_frame) % video1_fps) * (1000 / video1_fps))[2:]
+			video1_timestamp = str(datetime.datetime.utcfromtimestamp((cap.get(cv2.CAP_PROP_POS_MSEC) - (1000 / video1_fps)) / 1000).strftime('%H:%M:%S.%f'))
 			cv2.setWindowTitle("Video1", "Video 1: " + video1_timestamp + " - " + str(int(video1_current_frame)) + "  [" + video1_start + ", " + video1_end + "]")
 			cv2.imshow("Video1", video1_frame)
 
@@ -99,7 +99,7 @@ while(cap.isOpened()):
 			ret, video2_frame = cap2.read()
 			if ret == True:
 				video2_current_frame =  cap2.get(cv2.CAP_PROP_POS_FRAMES) - 1
-				video2_timestamp = time.strftime('%H:%M:%S.', time.gmtime(int(video2_current_frame) / video2_fps)) + str((int(video2_current_frame) % video2_fps) * (1000 / video2_fps))[2:]
+				video2_timestamp = str(datetime.datetime.utcfromtimestamp((cap2.get(cv2.CAP_PROP_POS_MSEC) - (1000 / video2_fps)) / 1000).strftime('%H:%M:%S.%f'))
 				cv2.setWindowTitle("Video2", "Video 2: " + video2_timestamp + " - " + str(int(video2_current_frame)) + "  [" + video2_start + ", " + video2_end + "]")
 				cv2.imshow("Video2", video2_frame)
 
