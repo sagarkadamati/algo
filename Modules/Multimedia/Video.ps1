@@ -19,7 +19,7 @@ function AutoCropVideos($Encoding, [Switch]$Aspect, [Switch]$NoCRF) {
 	else {
 		$VideoCodec = "hevc"
 		$OUT        = "HEVC"
-		$CRF        = 23
+		$CRF        = 28
 	}
 
 	CreateDirectory $OUT
@@ -180,6 +180,37 @@ function TrimVideos {
 			}
 		}
 	}
+}
+
+function GenVideos {
+	if (Test-Path "videos_list.txt") {
+		$Videos = Get-Content -Encoding UTF8 videos_list.txt
+		foreach ($Video in $Videos) {
+			$DataLine          = $Video.Split('|')
+			$OUT_FILE          = $DataLine[0].Trim()
+			$Video1_FileName   = $DataLine[1].Trim()
+			$Video1_StartTime  = $DataLine[2].Trim()
+			$Video1_EndTime    = $DataLine[3].Trim()
+
+			CreateDirectory "out"
+			if (!$(Test-Path $OUT_File)) {
+				try {
+					$Video2_FileName   = $DataLine[4].Trim()
+					$Video2_StartTime  = $DataLine[5].Trim()
+					$Video2_EndTime    = $DataLine[6].Trim()
+
+					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest "$OUT_FILE"
+				} catch {
+					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest "$OUT_FILE"
+				}
+			}
+		}
+	}
+}
+
+function AnalizeVideos($video1, $video2, $out) {
+	$PYAnaylizeVideos = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyAnalizeVideos.py"))
+	python $PYAnaylizeVideos "$video1" "$video2" "$out"
 }
 
 	# foreach ($Video in $Videos) {

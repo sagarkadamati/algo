@@ -35,7 +35,8 @@ class MyDB(db: String) {
 
 	public var tables: ArrayList<String> = ArrayList<String>()
 
-	private var row = HashMap<String, Any>()
+	public var size: Int = 0
+		get() = tables.size
 
 	private var Error = ERROR.SUCCESS
 	private var debug = false

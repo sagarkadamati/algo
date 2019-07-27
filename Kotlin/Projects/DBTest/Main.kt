@@ -3,11 +3,10 @@ import MyAPI.JDBC.MyTable
 
 fun main(args: Array<String>) {
 	var tuple = HashMap<String, Any>()
-	var db = MyDB("test.db")
-	db.enableDBG()
-	println(db.tables)
-
+	var db = MyDB("../../test.db")
 	var test = db["Test"]
+
+	db.enableDBG()
 
 	println(db.tables)
 

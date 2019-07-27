@@ -14,10 +14,13 @@ while(cap.isOpened()):
     ret, frame = cap.read()
     if (count < 2000):
         try:
+            # print("Entered 1")
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             _, thresh = cv2.threshold(gray,10,255,cv2.THRESH_BINARY)
+            # print("Entered 2")
             
             img, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            # print("Entered 3")
             cnt = contours[0]
             tx, ty, tw, th = cv2.boundingRect(cnt)
             # print("Width: " + str(w) + ", Height: " + str(h))

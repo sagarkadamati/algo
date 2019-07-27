@@ -24,7 +24,7 @@ function Get-VSKeys {
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Side Bar" | Join-Path -ChildPath "Jira.json") | ConvertFrom-Json
 
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Quick Open.json") | ConvertFrom-Json
-	# $jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json
+	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Find And Replace.json") | ConvertFrom-Json
 	$jsondata += Get-Content -Encoding UTF8 $(Join-Path $PSScriptRoot "Widgets"  | Join-Path -ChildPath "Suggest Widget.json") | ConvertFrom-Json
 
 	$jsondata | ConvertTo-Json | Out-File -Encoding UTF8 ([IO.Path]::Combine($env:APPDATA, "Code", "User", "keybindings.json"))

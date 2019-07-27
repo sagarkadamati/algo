@@ -39,5 +39,5 @@ function Update-Paths {
 		$env:APPDATA       = $(Join-Path $HOME ".config")
 	}
 
-	Set-Location $WorkspaceLocation
+	# Set-Location $WorkspaceLocation
 }
