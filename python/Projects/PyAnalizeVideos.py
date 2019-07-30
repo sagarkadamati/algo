@@ -153,22 +153,22 @@ while(cap.isOpened()):
 	elif key == ord('<'):
 		video1_skip_frames = -125
 		video1_skip = True
-	elif key == ord('d'):
+	elif key == ord('n'):
 		video1_skip_frames = +1
 		video1_skip = True
 		video2_skip_frames = +1
 		video2_skip = True
-	elif key == ord('a'):
+	elif key == ord('p'):
 		video1_skip_frames = -1
 		video1_skip = True
 		video2_skip_frames = -1
 		video2_skip = True
-	elif key == ord('D'):
+	elif key == ord('N'):
 		video1_skip_frames = +125
 		video1_skip = True
 		video2_skip_frames = +125
 		video2_skip = True
-	elif key == ord('A'):
+	elif key == ord('P'):
 		video1_skip_frames = -125
 		video1_skip = True
 		video2_skip_frames = -125

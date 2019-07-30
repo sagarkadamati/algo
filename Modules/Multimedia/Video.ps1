@@ -230,9 +230,9 @@ function genv {
 						$Video2_StartTime  = $DataLine[5].Trim()
 						$Video2_EndTime    = $DataLine[6].Trim()
 
-						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc  -crf 0 -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest ".tmp/${BATCH_COUNT}.mp4"
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc  -crf 0 -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 ".tmp/${BATCH_COUNT}.mp4"
 					} catch {
-						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -crf 0 -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest ".tmp/${BATCH_COUNT}.mp4"
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -crf 0 -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" ".tmp/${BATCH_COUNT}.mp4"
 					}
 
 					Write-Output $BATCH_NAME > '.tmp/batchname.txt'
@@ -251,9 +251,9 @@ function genv {
 						$Video2_StartTime  = $DataLine[5].Trim()
 						$Video2_EndTime    = $DataLine[6].Trim()
 
-						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest "$OFILE"
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 "$OFILE"
 					} catch {
-						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest "$OFILE"
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" "$OFILE"
 					}
 				}
 
@@ -288,9 +288,9 @@ function GenVideos {
 					$Video2_StartTime  = $DataLine[5].Trim()
 					$Video2_EndTime    = $DataLine[6].Trim()
 
-					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest "$OUT_FILE"
+					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 "$OUT_FILE"
 				} catch {
-					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest "$OUT_FILE"
+					ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" "$OUT_FILE"
 				}
 			}
 		}
