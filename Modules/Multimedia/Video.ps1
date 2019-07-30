@@ -182,6 +182,95 @@ function TrimVideos {
 	}
 }
 
+function deleteEmpty($input) {
+	$input | ? { $_.trim() -ne "" }
+}
+
+function genv {
+	$OUT_INDEX = 1
+	$OFILE = ""
+
+	$Videos = (ls).BaseName | deleteEmpty
+	$count = $Videos.count
+	$BATCH_COUNT = 0
+
+	for ($Video = 0; $Video -lt $count; $Video = $Video + 1) {
+		$DataLine          = ($Videos[$Video]).Split('|')
+		$Video1_FileName   = $DataLine[1].Trim()
+		$Video1_StartTime  = $DataLine[2].Trim()
+		$Video1_EndTime    = $DataLine[3].Trim()
+
+		$DCOUNT = ($OUT_INDEX.ToString()).PadLeft($count.ToString().Length, '0')
+		$OFILE = Join-Path "Generated" "${DCOUNT} "
+		$OFILE += $DataLine[0].Trim()
+		$isBatch = 0
+
+		CreateDirectory "Generated"
+		if (!$(Test-Path $OFile)) {
+			if ($Video -lt ($count - 1)) {
+				if ($Videos[$Video] -Like $Videos[($Video + 1)] ) {
+					$isBatch = 1
+				}
+			}
+
+			if ($Video -gt 0) {
+				if ($Videos[$Video] -Like $Videos[($Video - 1)] ) {
+					$isBatch = 1
+				}
+			}
+
+			if ($isBatch -eq 1) {
+				CreateDirectory ".tmp"
+				# write-Host "Batch - ${BATCH_COUNT}"
+				$BATCH_NAME = '.tmp/batchname.txt'
+				if () {
+					Write-Output "file '.tmp/${BATCH_COUNT}.mp4'" >> .tmp/batch.txt
+					try {
+						$Video2_FileName   = $DataLine[4].Trim()
+						$Video2_StartTime  = $DataLine[5].Trim()
+						$Video2_EndTime    = $DataLine[6].Trim()
+
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc  -crf 0 -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest ".tmp/${BATCH_COUNT}.mp4"
+					} catch {
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -crf 0 -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest ".tmp/${BATCH_COUNT}.mp4"
+					}
+
+					Write-Output $BATCH_NAME > '.tmp/batchname.txt'
+					$BATCH_COUNT = $BATCH_COUNT + 1
+				}
+			} else {
+				if (Test-Path ".tmp") {
+					write-Host "Batch - ${OFILE}"
+					# cat .tmp/batch.txt
+					# ffmpeg -f concat -i ".tmp/batch.txt" -c copy "${OFILE}"
+					Remove-Item -Force -Recurse ".tmp"
+				} else {
+					write-Host "Single - ${OFILE}"
+					try {
+						$Video2_FileName   = $DataLine[4].Trim()
+						$Video2_StartTime  = $DataLine[5].Trim()
+						$Video2_EndTime    = $DataLine[6].Trim()
+
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -ss $Video2_StartTime -to $Video2_EndTime -i "$Video2_FileName" -c:v hevc -b:a 64k -map 0:0 -map 1:1 -metadata:s:a:0 title="Telugu" -metadata:s:a:1 title="Hindi" -map 0:1 -shortest "$OFILE"
+					} catch {
+						ffmpeg -hide_banner -y -v error -stats -ss $Video1_StartTime -to $Video1_EndTime -i "$Video1_FileName" -c:v hevc -b:a 64k -map 0:0 -map 0:1 -metadata:s:a:0 title="Telugu" -shortest "$OFILE"
+					}
+				}
+
+				$BATCH_COUNT = 0
+				$OUT_INDEX = $OUT_INDEX + 1
+			}
+		}
+
+		if (Test-Path ".tmp") {
+			$DCOUNT = ($OUT_INDEX.ToString()).PadLeft($count.ToString().Length, '0')
+			write-Host "Batch - ${OFILE}"
+			# ffmpeg -f concat -i ".tmp/batch.txt" -c copy "${OFILE}"
+			Remove-Item -Force -Recurse ".tmp"
+		}
+	}
+}
+
 function GenVideos {
 	if (Test-Path "videos_list.txt") {
 		$Videos = Get-Content -Encoding UTF8 videos_list.txt
