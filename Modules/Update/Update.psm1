@@ -112,7 +112,10 @@ function Update-Git{
 
 function Update-Python
 {
-
+	python -m pip install --upgrade pip
+	python -m pip install pyaudio
+	# python -m pip install opencv-python==3.4.2.16
+	python -m pip install opencv-python
 }
 
 function Update-Tools {

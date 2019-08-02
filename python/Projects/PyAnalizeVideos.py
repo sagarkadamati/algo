@@ -7,7 +7,7 @@ import sys
 import math
 import ntpath
 import numpy as np
-import playsound
+# import playsound
 
 video1_file = sys.argv[1]
 try:
@@ -17,7 +17,7 @@ except:
 try:
 	out_file = sys.argv[3]
 except IndexError:
-	out_file = "out/" + ntpath.basename(video1_file)
+	out_file = ntpath.basename(video1_file)
 
 # playsound.playsound('video2.mp3', True)
 
