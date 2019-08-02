@@ -1,10 +1,54 @@
-import os
-import scipy.io.wavfile as wav
+import pyaudio
+import wave
 
-FileName = '001 Prashasti.wav'
-data = wav.read(FileName)
+print (wave.__file__)
 
-print(data)
+# set desired values
+start = 7
+length = 25
+
+# open wave file
+wave_file = wave.open('first.wav', 'rb')
+
+# initialize audio
+py_audio = pyaudio.PyAudio()
+stream = py_audio.open(format=py_audio.get_format_from_width(wave_file.getsampwidth()),
+                       channels=wave_file.getnchannels(),
+                       rate=wave_file.getframerate(),
+                       output=True)
+
+# skip unwanted frames
+n_frames = int(start * wave_file.getframerate())
+wave_file.setpos(n_frames)
+
+# write desired frames to audio buffer
+n_frames = int(length * (wave_file.getframerate() / 25))
+frames = wave_file.readframes(n_frames)
+stream.write(frames)
+
+# close and terminate everything properly
+stream.close()
+py_audio.terminate()
+wave_file.close()
+
+
+
+
+
+
+
+
+
+
+
+
+# import os
+# import scipy.io.wavfile as wav
+
+# FileName = '001 Prashasti.wav'
+# data = wav.read(FileName)
+
+# print(data)
 
 
 

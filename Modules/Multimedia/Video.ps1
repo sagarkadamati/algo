@@ -199,6 +199,7 @@ function GenVideos([Switch]$SkipMerge) {
 		for ($id = 0; $id -lt $Count; $id = $id + 1) {
 			$DataLine          = ($Videos[$id]).Split('|')
 			$OutFileName       = $DataLine[0].Trim()
+			$OutFileName      += ".mp4"
 			$Video1_FileName   = $DataLine[1].Trim()
 			$Video1_StartTime  = $DataLine[2].Trim()
 			$Video1_EndTime    = $DataLine[3].Trim()
@@ -461,6 +462,10 @@ function GenVideos([Switch]$SkipMerge) {
 
 function AnalizeVideos($video1, $video2, $out) {
 	$PYAnaylizeVideos = $([IO.Path]::Combine($ToolsLocation, "Env", "python", "Projects", "PyAnalizeVideos.py"))
+	ffmpeg.exe -y -i "$video1" first.wav
+	try {
+		ffmpeg.exe -y -i "$video2" second.wav
+	} catch {}
 	python $PYAnaylizeVideos "$video1" "$video2" "$out"
 }
 

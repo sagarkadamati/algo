@@ -113,6 +113,10 @@ function Update-Git{
 function Update-Python
 {
 	python -m pip install --upgrade pip
+	python -m pip install numpy
+	python -m pip install scipy
+	python -m pip install pandas
+	python -m pip install wave
 	python -m pip install pyaudio
 	# python -m pip install opencv-python==3.4.2.16
 	python -m pip install opencv-python
