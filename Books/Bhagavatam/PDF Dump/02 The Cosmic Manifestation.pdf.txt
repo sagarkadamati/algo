@@ -1,0 +1,635 @@
+InfoBegin
+InfoKey: Creator
+InfoValue: TeX
+InfoBegin
+InfoKey: Title
+InfoValue: Skandamu02.pdf
+InfoBegin
+InfoKey: Producer
+InfoValue: Acrobat Distiller 11.0 (Windows)
+InfoBegin
+InfoKey: Author
+InfoValue: Sagar
+InfoBegin
+InfoKey: PTEX.Fullbanner
+InfoValue: This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) kpathsea version 6.1.0
+InfoBegin
+InfoKey: ModDate
+InfoValue: D:20140704223753+05'30'
+InfoBegin
+InfoKey: CreationDate
+InfoValue: D:20140704223753+05'30'
+PdfID0: 779c0e01ff59dcc170468d5cd77dcd3e
+PdfID1: 2bba05ce4bc56b49953cce1d27f967f8
+NumberOfPages: 111
+BookmarkBegin
+BookmarkTitle: Yoga Process (1-3)
+BookmarkLevel: 1
+BookmarkPageNumber: 1
+BookmarkBegin
+BookmarkTitle: 01: The First Step in God Realization
+BookmarkLevel: 2
+BookmarkPageNumber: 1
+BookmarkBegin
+BookmarkTitle: 02: The Lord in the Heart
+BookmarkLevel: 2
+BookmarkPageNumber: 10
+BookmarkBegin
+BookmarkTitle: 03: Pure Devotional Service: The Change in Heart
+BookmarkLevel: 2
+BookmarkPageNumber: 22
+BookmarkBegin
+BookmarkTitle: The Universal Form (4-7)
+BookmarkLevel: 1
+BookmarkPageNumber: 28
+BookmarkBegin
+BookmarkTitle: 04: The Process of Creation
+BookmarkLevel: 2
+BookmarkPageNumber: 28
+BookmarkBegin
+BookmarkTitle: 05: The Cause of All Causes
+BookmarkLevel: 2
+BookmarkPageNumber: 35
+BookmarkBegin
+BookmarkTitle: 06: Purusa-sukta Confirmed
+BookmarkLevel: 2
+BookmarkPageNumber: 48
+BookmarkBegin
+BookmarkTitle: 07: Scheduled Incarnations with Specific Functions
+BookmarkLevel: 2
+BookmarkPageNumber: 59
+BookmarkBegin
+BookmarkTitle: Creation (8-10)
+BookmarkLevel: 1
+BookmarkPageNumber: 74
+BookmarkBegin
+BookmarkTitle: 08: Questions by King Pariksit
+BookmarkLevel: 2
+BookmarkPageNumber: 74
+BookmarkBegin
+BookmarkTitle: 09: Answers by Citing the Lord's Version
+BookmarkLevel: 2
+BookmarkPageNumber: 81
+BookmarkBegin
+BookmarkTitle: 10: Bhagavatam Is the Answer to All Questions
+BookmarkLevel: 2
+BookmarkPageNumber: 101
+PageMediaBegin
+PageMediaNumber: 1
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 2
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 3
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 4
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 5
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 6
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 7
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 8
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 9
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 10
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 11
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 12
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 13
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 14
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 15
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 16
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 17
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 18
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 19
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 20
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 21
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 22
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 23
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 24
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 25
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 26
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 27
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 28
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 29
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 30
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 31
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 32
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 33
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 34
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 35
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 36
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 37
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 38
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 39
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 40
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 41
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 42
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 43
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 44
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 45
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 46
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 47
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 48
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 49
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 50
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 51
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 52
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 53
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 54
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 55
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 56
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 57
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 58
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 59
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 60
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 61
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 62
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 63
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 64
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 65
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 66
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 67
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 68
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 69
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 70
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 71
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 72
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 73
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 74
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 75
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 76
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 77
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 78
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 79
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 80
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 81
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 82
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 83
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 84
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 85
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 86
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 87
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 88
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 89
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 90
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 91
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 92
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 93
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 94
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 95
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 96
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 97
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 98
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 99
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 100
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 101
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 102
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 103
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 104
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 105
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 106
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 107
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 108
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 109
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 110
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageMediaBegin
+PageMediaNumber: 111
+PageMediaRotation: 0
+PageMediaRect: 0 0 595.22 842
+PageMediaDimensions: 595.22 842
+PageLabelBegin
+PageLabelNewIndex: 1
+PageLabelStart: 1
+PageLabelNumStyle: DecimalArabicNumerals
