@@ -3,7 +3,7 @@ InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Title
-InfoValue: Skandamu07.pdf
+InfoValue: The Science of God
 InfoBegin
 InfoKey: Producer
 InfoValue: Acrobat Distiller 11.0 (Windows)

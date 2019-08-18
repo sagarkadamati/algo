@@ -3,7 +3,7 @@ InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Title
-InfoValue: Skandamu06.pdf
+InfoValue: Prescribed Duties for Mankind
 InfoBegin
 InfoKey: Producer
 InfoValue: Acrobat Distiller 11.0 (Windows)

@@ -3,7 +3,7 @@ InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Title
-InfoValue: Skandamu03.pdf
+InfoValue: The Status Quo.pdf
 InfoBegin
 InfoKey: Producer
 InfoValue: Acrobat Distiller 11.0 (Windows)

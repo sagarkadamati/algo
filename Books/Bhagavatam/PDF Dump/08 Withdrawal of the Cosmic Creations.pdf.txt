@@ -3,7 +3,7 @@ InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Title
-InfoValue: Skandamu08.pdf
+InfoValue: Withdrawal of the Cosmic Creations
 InfoBegin
 InfoKey: Producer
 InfoValue: Acrobat Distiller 11.0 (Windows)

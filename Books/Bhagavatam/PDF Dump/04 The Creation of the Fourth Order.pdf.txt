@@ -3,7 +3,7 @@ InfoKey: Creator
 InfoValue: TeX
 InfoBegin
 InfoKey: Title
-InfoValue: Skandamu04.pdf
+InfoValue: The Creation of the Fourth Order
 InfoBegin
 InfoKey: Producer
 InfoValue: Acrobat Distiller 11.0 (Windows)

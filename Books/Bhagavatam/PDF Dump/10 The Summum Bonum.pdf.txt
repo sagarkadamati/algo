@@ -2,6 +2,9 @@ InfoBegin
 InfoKey: Creator
 InfoValue: pdftk 2.01 - www.pdftk.com
 InfoBegin
+InfoKey: Title
+InfoValue: The Summum Bonum
+InfoBegin
 InfoKey: Producer
 InfoValue: itext-paulo-155 (itextpdf.sf.net-lowagie.com)
 InfoBegin
