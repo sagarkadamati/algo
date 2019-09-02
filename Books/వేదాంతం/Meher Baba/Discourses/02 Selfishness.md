@@ -48,8 +48,6 @@ Open your heart by weeding out all desires and by harbouring only one longing-th
 
 Renunciation of desires does not mean asceticism or a merely negative attitude to life. Any such negation of life would make man inhuman. Divinity is not devoid of humanity. Spirituality must make man more human. It is a positive attitude of releasing all that is good and noble and beautiful in man. It also contributes to all that is gracious and lovely in the environment. It does not require the external renunciation of worldly activities or the avoiding of duties and responsibilities. It only requires that, while performing the worldly activities or discharging the responsibilities arising from the specific place and position of the individual, the inner spirit should remain free from the burden of desires. Perfection consists in remaining free from the entanglements of duality. Such freedom from entanglements is the most essential requirement of unhindered creativity. But this freedom cannot be attained by running away from life for fear of entanglement. This would mean denial of life. Perfection does not consist in shrinking from the dual expressions of nature. The attempt to escape from entanglement implies fear of life. But spirituality consists in meeting life adequately and fully without being overpowered by the opposites. It must assert its dominion over all illusions-however attractive or powerful. Without avoiding contact with the different forms of life, a perfect man functions with complete detachment in the midst of intense activity. 
 
-</br>
-
 ### <CENTER>TWELVE WAYS OF REALIZING ME</CENTER>
 
 1. LONGING
