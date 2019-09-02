@@ -1,7 +1,7 @@
 $Global:DirectorySperator = [IO.Path]::DirectorySeparatorChar
 
-Function Create-Directory($dir) {
-	if (!$(Test-Path Tools))
+function Create-Directory($dir) {
+	if (!$(Test-Path $dir))
 	{
 		New-Item -Type Directory $dir
 	}
