@@ -170,7 +170,7 @@ void setupAchulu() {
 	mapDeergalu("ీ", 0x201D);
 
 	mapAkshram("ఉ", 0xF1); // 241 ñ
-	mapDeergalu("ు", 0x54); //  84 T
+	mapDeergalu("ు", 0x54); //  84 T మ di u
 	mapDeergalu("ు", 0xDF); // 223 ß
 	mapDeergalu("ు", 0xEE); // 238 î
 	mapDeergalu("ు", 0xF3); // 243 ó
@@ -181,7 +181,7 @@ void setupAchulu() {
 	mapDeergalu("ూ", 0x4F); //  79 O // dough
 	mapDeergalu("ూ", 0x50); //  80 P
 	mapDeergalu("ూ", 0x53); //  83 S
-	mapDeergalu("ూ", 0xF7); // 247 ÷
+	mapDeergalu("ూ", 0xF7); // 247 ÷ // మ di dergam
 
 	// mapAkshram("ఋ", );
 	mapDeergalu("ృ", 0xE8); // 232 è
@@ -244,12 +244,12 @@ void setupAchulu() {
 void setupHallulu() {
 	mapAkshram("క",  0xF8); // 248 ø
 	mapVothulu("్క", 0xFF); // 255 ÿ
-	// mapAkshram("క",  0x2248); dough
-	mapAkshram("్ర",  0x2248);
+	mapAkshram("క",  0x2248);
+	// mapAkshram("్ర",  0x2248); dough
 
 	mapAkshram("ఖ", 0x4B); //  75 K
-	mapVothulu("్ఖ",  0xE2); // 226	â
 	mapAkshram("ఖ", 0x55); //  85 U
+	mapVothulu("్ఖ",  0xE2); // 226	â
 
 	mapAkshram("గ",  0x3E); //  62 >
 	mapVothulu("్గ",  0x5A); //  90	Z
@@ -302,10 +302,8 @@ void setupHallulu() {
 	mapAkshram("న", 0x71); // 113 q
 	mapVothulu("్న", 0xEF); // 239 ï	
 
-	mapAkshram("హ", 0x56); //  86 V
-	mapAkshram("ప", 0x6D); // 109 m
+	mapAkshram("వ", 0x6D); // 109 m
 	mapAkshram("ప", 0x7C); // 124 |
-	mapAkshram("ప", 0x79); // 121 y
 	mapVothulu("్ప", 0x0152);
 
 	// mapAkshram("ఫ", );
@@ -332,6 +330,7 @@ void setupHallulu() {
 
 	// mapAkshram("ఴ", );
 	mapAkshram("వ", 0x65); // 101 e
+	mapAkshram("వ", 0x79); // 121 y
 	mapVothulu("్వ", 0xAB); // 171  «
 
 	mapAkshram("శ",  0x58); //  88 X
@@ -346,7 +345,8 @@ void setupHallulu() {
 	mapAkshram("స", 0x6B); // 107 k
 	mapVothulu("్స", 0x2021);
 
-	// mapAkshram("హ", );
+	mapAkshram("హ", 0x56); //  86 V
+
 	mapVothulu("్హ", 0x03A9);
 }
 
@@ -541,38 +541,6 @@ class TeluguText {
 			return c;
 		}
 
-		bool isSkippable(unsigned short c) {
-	
-			if (Skip.find(c) != Skip.end()) {
-				return true;
-			}
-
-			if (text.size() > 0) {
-				string prev = text.back().second;
-				// if ( prev == string("య") || prev == string("మ") ) {
-				if ( prev == string("య") || prev == string("మ") ) {
-					if ( Vothulu[c] == string("ు") ) {
-						return true;
-					}
-				} else if ( prev == string("హ")  && Vothulu[c] == string("ా") ) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		bool isReplaceable(unsigned short c) {
-			if (text.size() > 0) {
-				string prev = text.back().second;
-				if ( prev == string("ె")  && Vothulu[c] == string("ై") ) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
 		pair<unsigned short, string> getCharPair(unsigned short c) {
 			if ( Aksharalu.find(c) != Aksharalu.end() ) {
 				return make_pair(c, Aksharalu[c]);
@@ -586,138 +554,218 @@ class TeluguText {
 			}
 		}
 
-		bool substitue(unsigned short c) {
+		bool isSkippable(unsigned short c) {
+	
+			if (Skip.find(c) != Skip.end()) {
+				return true;
+			}
+
 			if (text.size() > 0) {
 				string prev = text.back().second;
-				string current = getCharPair(c).second;
-
-				if ( prev == string("్") ) {
-					text.pop_back();
-					pair<unsigned short, string> deegram = text.back();
-					if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
+				// if ( prev == string("య") || prev == string("మ") ) {
+				// } else 
+				if ( c == 0x54 ) { // "ు"
+					// if ( Deergalu[c] == string("ు") ) {
+					if ( prev == string("మ") ) {
+						text.push_back(make_pair(c, "ు"));
+						return true;
+					} else if ( Aksharalu[text.back().first] == string("వ") ) {
 						text.pop_back();
+						text.push_back(make_pair(c, "మ"));
+						return true;
+					} else if ( Aksharalu[text.back().first] == string("య") ) {
+						text.pop_back();
+						text.push_back(make_pair(c, "య"));
+						return true;
 					}
+				} else if ( c == 0xF7 ) {
+					if ( Aksharalu[text.back().first] == string("వ") ) {
+						text.pop_back();
+						text.push_back(make_pair(c, "మ"));
+						text.push_back(make_pair(c, "ా"));
+						return true;
+					}
+				} else if ( prev == string("్") ) {
+					cout << endl << "entered"<< endl;
+					pair<unsigned short, string> ahrr = text.back();
+					text.pop_back();
 
-					if ( current == string("క") ) {
-						text.push_back(make_pair(c, "్క"));	
-						return true;
-					} else if ( current == string("ఖ") ) {
-						text.push_back(make_pair(c, "్ఖ"));
-						return true;
-					} else if ( current == string("గ") ) {
-						text.push_back(make_pair(c, "్గ"));
-						return true;
-					} else if ( current == string("ఘ") ) {
-						text.push_back(make_pair(c, "్ఘ"));
-						return true;
-					} else if ( current == string("ఙ") ) {
-						text.push_back(make_pair(c, "్ఙ"));
-						return true;
-					} else if ( current == string("చ") ) {
-						text.push_back(make_pair(c, "్చ"));
-						return true;
-					} else if ( current == string("ఛ") ) {
-						text.push_back(make_pair(c, "్ఛ"));
-						return true;
-					} else if ( current == string("జ") ) {
-						text.push_back(make_pair(c, "్జ"));
-						return true;
-					} else if ( current == string("జ") ) {
-						text.push_back(make_pair(c, "్జ"));
-						return true;
-					} else if ( current == string("ఝ") ) {
-						text.push_back(make_pair(c, "్ఝ"));
-						return true;
-					} else if ( current == string("ఞ") ) {
-						text.push_back(make_pair(c, "్ఞ"));
-						return true;
-					} else if ( current == string("ట") ) {
-						text.push_back(make_pair(c, "్ట"));
-						return true;
-					} else if ( current == string("ఠ") ) {
-						text.push_back(make_pair(c, "్ఠ"));
-						return true;
-					} else if ( current == string("డ") ) {
-						text.push_back(make_pair(c, "్డ"));
-						return true;
-					} else if ( current == string("ఢ") ) {
-						text.push_back(make_pair(c, "్ఢ"));
-						return true;
-					} else if ( current == string("ణ") ) {
-						text.push_back(make_pair(c, "్ణ"));
-						return true;
-					} else if ( current == string("త") ) {
-						text.push_back(make_pair(c, "్త"));
-						return true;
-					} else if ( current == string("థ") ) {
-						text.push_back(make_pair(c, "్థ"));
-						return true;
-					} else if ( current == string("ద") ) {
-						text.push_back(make_pair(c, "్ద"));
-						return true;
-					} else if ( current == string("ధ") ) {
-						text.push_back(make_pair(c, "్ధ"));
-						return true;
-					} else if ( current == string("న") ) {
-						text.push_back(make_pair(c, "్న"));
-						return true;
-					} else if ( current == string("ప") ) {
-						text.push_back(make_pair(c, "్ప"));
-						return true;
-					} else if ( current == string("ఫ") ) {
-						text.push_back(make_pair(c, "్ఫ"));
-						return true;
-					} else if ( current == string("బ") ) {
-						text.push_back(make_pair(c, "్బ"));
-						return true;
-					} else if ( current == string("భ") ) {
-						text.push_back(make_pair(c, "్భ"));
-						return true;
-					} else if ( current == string("మ") ) {
-						text.push_back(make_pair(c, "్మ"));
-						return true;
-					} else if ( current == string("య") ) {
-						text.push_back(make_pair(c, "్య"));
-						return true;
-					} else if ( current == string("ర") ) {
-						text.push_back(make_pair(c, "్ర"));
-						return true;
-					} else if ( current == string("ఱ") ) {
-						text.push_back(make_pair(c, "్ఱ"));
-						return true;
-					} else if ( current == string("ల") ) {
-						text.push_back(make_pair(c, "్ల"));
-						return true;
-					} else if ( current == string("ళ") ) {
-						text.push_back(make_pair(c, "్ళ"));
-						return true;
-					} else if ( current == string("ఴ") ) {
-						text.push_back(make_pair(c, "్ఴ"));
-						return true;
-					} else if ( current == string("వ") ) {
-						text.push_back(make_pair(c, "్వ"));
-						return true;
-					} else if ( current == string("శ") ) {
-						text.push_back(make_pair(c, "్శ"));
-						return true;
-					} else if ( current == string("ష") ) {
-						text.push_back(make_pair(c, "్ష"));
-						return true;
-					} else if ( current == string("స") ) {
-						text.push_back(make_pair(c, "్స"));
-						return true;
-					} else if ( current == string("హ") ) {
-						text.push_back(make_pair(c, "్హ"));
-						return true;
+					pair<unsigned short, string> deergram = text.back();
+					if ( Deergalu.find(deergram.first) != Deergalu.end() ) {
+						text.pop_back();
+
+						text.push_back(ahrr);
+						text.push_back(getCharPair(c));
+
+						text.push_back(deergram);
 					} else {
-						return false;
+						text.push_back(ahrr);
+						text.push_back(getCharPair(c));
 					}
 
-					if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
-						text.push_back(deegram);
+					return true;
+				} else if ( Vothulu.find(c) != Vothulu.end() ) {
+					pair<unsigned short, string> deergram = text.back();
+					if ( Deergalu.find(deergram.first) != Deergalu.end() ) {
+						text.pop_back();
+						text.push_back(getCharPair(c));
+						text.push_back(deergram);
+					} else {
+						text.push_back(getCharPair(c));
 					}
+
+					return true;
+				} else if ( prev == string("హ")  && Deergalu[c] == string("ా") ) {
+					return true;
 				}
 			}
+
+			return false;
+		}
+
+		bool isReplaceable(unsigned short c) {
+			if (text.size() > 0) {
+				string prev = text.back().second;
+				if ( prev == string("ె")  && Deergalu[c] == string("ై") ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		bool substitue(unsigned short c) {
+			// if (text.size() > 0) {
+			// 	string prev = text.back().second;
+			// 	string current = getCharPair(c).second;
+
+			// 	if ( prev == string("్") ) {
+			// 		text.pop_back();
+			// 		pair<unsigned short, string> deegram = text.back();
+			// 		if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
+			// 			text.pop_back();
+			// 		}
+
+			// 		if ( current == string("క") ) {
+			// 			text.push_back(make_pair(c, "్క"));	
+			// 			return true;
+			// 		} else if ( current == string("ఖ") ) {
+			// 			text.push_back(make_pair(c, "్ఖ"));
+			// 			return true;
+			// 		} else if ( current == string("గ") ) {
+			// 			text.push_back(make_pair(c, "్గ"));
+			// 			return true;
+			// 		} else if ( current == string("ఘ") ) {
+			// 			text.push_back(make_pair(c, "్ఘ"));
+			// 			return true;
+			// 		} else if ( current == string("ఙ") ) {
+			// 			text.push_back(make_pair(c, "్ఙ"));
+			// 			return true;
+			// 		} else if ( current == string("చ") ) {
+			// 			text.push_back(make_pair(c, "్చ"));
+			// 			return true;
+			// 		} else if ( current == string("ఛ") ) {
+			// 			text.push_back(make_pair(c, "్ఛ"));
+			// 			return true;
+			// 		} else if ( current == string("జ") ) {
+			// 			text.push_back(make_pair(c, "్జ"));
+			// 			return true;
+			// 		} else if ( current == string("జ") ) {
+			// 			text.push_back(make_pair(c, "్జ"));
+			// 			return true;
+			// 		} else if ( current == string("ఝ") ) {
+			// 			text.push_back(make_pair(c, "్ఝ"));
+			// 			return true;
+			// 		} else if ( current == string("ఞ") ) {
+			// 			text.push_back(make_pair(c, "్ఞ"));
+			// 			return true;
+			// 		} else if ( current == string("ట") ) {
+			// 			text.push_back(make_pair(c, "్ట"));
+			// 			return true;
+			// 		} else if ( current == string("ఠ") ) {
+			// 			text.push_back(make_pair(c, "్ఠ"));
+			// 			return true;
+			// 		} else if ( current == string("డ") ) {
+			// 			text.push_back(make_pair(c, "్డ"));
+			// 			return true;
+			// 		} else if ( current == string("ఢ") ) {
+			// 			text.push_back(make_pair(c, "్ఢ"));
+			// 			return true;
+			// 		} else if ( current == string("ణ") ) {
+			// 			text.push_back(make_pair(c, "్ణ"));
+			// 			return true;
+			// 		} else if ( current == string("త") ) {
+			// 			text.push_back(make_pair(c, "్త"));
+			// 			return true;
+			// 		} else if ( current == string("థ") ) {
+			// 			text.push_back(make_pair(c, "్థ"));
+			// 			return true;
+			// 		} else if ( current == string("ద") ) {
+			// 			text.push_back(make_pair(c, "్ద"));
+			// 			return true;
+			// 		} else if ( current == string("ధ") ) {
+			// 			text.push_back(make_pair(c, "్ధ"));
+			// 			return true;
+			// 		} else if ( current == string("న") ) {
+			// 			text.push_back(make_pair(c, "్న"));
+			// 			return true;
+			// 		} else if ( current == string("ప") ) {
+			// 			text.push_back(make_pair(c, "్ప"));
+			// 			return true;
+			// 		} else if ( current == string("ఫ") ) {
+			// 			text.push_back(make_pair(c, "్ఫ"));
+			// 			return true;
+			// 		} else if ( current == string("బ") ) {
+			// 			text.push_back(make_pair(c, "్బ"));
+			// 			return true;
+			// 		} else if ( current == string("భ") ) {
+			// 			text.push_back(make_pair(c, "్భ"));
+			// 			return true;
+			// 		} else if ( current == string("మ") ) {
+			// 			text.push_back(make_pair(c, "్మ"));
+			// 			return true;
+			// 		} else if ( current == string("య") ) {
+			// 			text.push_back(make_pair(c, "్య"));
+			// 			return true;
+			// 		} else if ( current == string("ర") ) {
+			// 			text.push_back(make_pair(c, "్ర"));
+			// 			return true;
+			// 		} else if ( current == string("ఱ") ) {
+			// 			text.push_back(make_pair(c, "్ఱ"));
+			// 			return true;
+			// 		} else if ( current == string("ల") ) {
+			// 			text.push_back(make_pair(c, "్ల"));
+			// 			return true;
+			// 		} else if ( current == string("ళ") ) {
+			// 			text.push_back(make_pair(c, "్ళ"));
+			// 			return true;
+			// 		} else if ( current == string("ఴ") ) {
+			// 			text.push_back(make_pair(c, "్ఴ"));
+			// 			return true;
+			// 		} else if ( current == string("వ") ) {
+			// 			text.push_back(make_pair(c, "్వ"));
+			// 			return true;
+			// 		} else if ( current == string("శ") ) {
+			// 			text.push_back(make_pair(c, "్శ"));
+			// 			return true;
+			// 		} else if ( current == string("ష") ) {
+			// 			text.push_back(make_pair(c, "్ష"));
+			// 			return true;
+			// 		} else if ( current == string("స") ) {
+			// 			text.push_back(make_pair(c, "్స"));
+			// 			return true;
+			// 		} else if ( current == string("హ") ) {
+			// 			text.push_back(make_pair(c, "్హ"));
+			// 			return true;
+			// 		} else {
+			// 			return false;
+			// 		}
+
+			// 		if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
+			// 			text.push_back(deegram);
+			// 		}
+			// 	}
+			// }
 
 			return false;
 		}
