@@ -519,7 +519,7 @@ void MyPDF::genMap(string outMap) {
     PdfFont* english = PDF.CreateFont( "Arial" );
     english->SetFontSize( 20.0 );
 
-    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", PdfEncodingFactory::GlobalIdentityEncodingInstance() );
+    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding() );
     teluguNoto->SetFontSize( 20.0 );
 
 	PDF.DeletePages(0, 1);
@@ -560,7 +560,8 @@ void MyPDF::genMap(string outMap) {
 		// }
 		// PdfString pdfStr((const char*)tStr, 1);
 
-		PdfString pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(c->second, telugu).GetBuffer());
+		PdfString pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>(c->second.c_str()));
+		// PdfString pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(c->second, telugu).GetBuffer());
 		painter.SetFont( telugu );
 		painter.DrawText( 60, pos, pdfStr );
 
