@@ -519,7 +519,7 @@ void MyPDF::genMap(string outMap) {
     PdfFont* english = PDF.CreateFont( "Arial" );
     english->SetFontSize( 20.0 );
 
-    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding() );
+    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding( 0, 0xffff, true ) );
     teluguNoto->SetFontSize( 20.0 );
 
 	PDF.DeletePages(0, 1);
@@ -544,29 +544,9 @@ void MyPDF::genMap(string outMap) {
 			painter.SetPage( page );
 		}
 
-		// const pdf_utf16be utf16be[3] = { 0xFE, 0xFF, c->first };
-		// PdfString pdfStr((const pdf_utf16be *)utf16be, 3);
-
-		// PdfString pdfStr = PdfString(c->second);
-		// PdfString pdfStr(string(c->first));
-
-		// PdfString pdfStr = PdfString(c->second, PdfEncodingFactory::GlobalIdentityEncodingInstance);
-		// PdfString pdfStr = PdfString(c->second, telugu->GetEncoding());
-		// string s = c->second;
-		// pdf_utf8 tStr[4] = {0, 0, 0, 0};
-		// for (int i = 0; i < 4; i++) {
-		// 	if (i < s.length())
-		// 		tStr[i] = s[i];
-		// }
-		// PdfString pdfStr((const char*)tStr, 1);
-
 		PdfString pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>(c->second.c_str()));
-		// PdfString pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(c->second, telugu).GetBuffer());
 		painter.SetFont( telugu );
 		painter.DrawText( 60, pos, pdfStr );
-
-		// pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(pdfStr, telugu).GetBuffer());
-		// painter.DrawText( 60, pos, pdfStr );
 
 		painter.SetFont( english );
 		painter.DrawText( 120, pos, PdfString(string(strmake() << " -> " << hex << c->first)) );
@@ -585,13 +565,20 @@ void MyPDF::genMap(string outMap) {
 		// std::wcout << "Wide string: " << &wstr[0] << '\n'
         //        << "The length, including '\\0': " << wstr.size() << '\n';
 
-		painter.SetFont( teluguNoto );
-		pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>(teluguText.getChar(c->first).c_str()));
-		painter.DrawText( 240, pos, pdfStr );
+
+		// pdfStr = PdfString(teluguText.getChar(c->first).c_str());
+		// pdfStr = PdfString("శి");
+		// const pdf_utf8 utf8Text = "శి";
+		// pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>("「PoDoFo」శి"));
 		// painter.DrawText( 240, pos, PdfString( &wstr[0], wstr.size()) );
 		// pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(string(" -> " + teluguText.getChar(c->first)), teluguNoto).GetBuffer());
 
-		pos -= 60;
+		pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>("「PoDoFo」శి"));
+
+		painter.SetFont( teluguNoto );
+		painter.DrawText( 240, pos, pdfStr );
+
+		pos -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
 	}
 
 
