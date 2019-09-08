@@ -14,40 +14,41 @@
 using namespace std;
 using namespace PoDoFo;
 
-map<unsigned int, string> Aksharalu;
+map<unsigned int, string> Achulu;
 map<unsigned int, string> Vothulu;
 map<unsigned int, string> Deergalu;
+map<unsigned int, string> Aksharalu;
 map<unsigned int, string> Skip;
 map<unsigned int, int> Missing;
 map<string, string> MissingCmds;
 
 ofstream outdata("data.txt");
 
-// 0C00 - ఀ -      0C10 - ఐ -        0C20 - ఠ -        0C30 - ర -      
-// 0C01 - ఁ -                        0C21 - డ -        0C31 - ఱ -      
-// 0C02 - ం -    0C12 -  ఒ - 2c7     0C22 - ఢ -        0C32 - ల - 5c     
-// 0C03 - ః -     0C13 - ఓ - 7a      0C23 - ణ - 44     0C33 - ళ - 5b     
-// 0C04 - ఄ -     0C14 - ఔ -         0C24 - త -        0C34 - ఴ -      
-// 0C05 - అ - 6e  0C15 - క - f8      0C25 - థ -        0C35 - వ - 65     
-// 0C06 - ఆ - c4  0C16 - ఖ - 4b,55   0C26 - ద - 3c     0C36 - శ -      
-// 0C07 - ఇ - c7  0C17 - గ - 3e      0C27 - ధ - 394    0C37 - ష - 63     
-// 0C08 - ఈ - e1  0C18 - ఘ - c8      0C28 - న - 71     0C38 - స -      
-// 0C09 - ఉ - f1  0C19 - ఙ -                           0C39 - హ -        
-// 0C0A - ఊ - 7d  0C1A - చ - 23      0C2A - ప -                        
-// 0C0B - ఋ -    0C1B - ఛ  -         0C2B - ఫ -                        
-// 0C0C - ఌ -     0C1C - జ - 43      0C2C - బ - e3                       
-//                0C1D - ఝ -         0C2D - భ -        
-// 0C0E - ఎ - 62  0C1E - ఞ - 201e    0C2E - మ -        
-// 0C0F - ఏ - 40  0C1F - ట - 66    0C2F - య - 6a (u missing)       
+// 0C00 - ఀ -      0C10 - ఐ -        0C20 - ఠ -        0C30 - ర -
+// 0C01 - ఁ -                        0C21 - డ -        0C31 - ఱ -
+// 0C02 - ం -    0C12 -  ఒ - 2c7     0C22 - ఢ -        0C32 - ల - 5c
+// 0C03 - ః -     0C13 - ఓ - 7a      0C23 - ణ - 44     0C33 - ళ - 5b
+// 0C04 - ఄ -     0C14 - ఔ -         0C24 - త -        0C34 - ఴ -
+// 0C05 - అ - 6e  0C15 - క - f8      0C25 - థ -        0C35 - వ - 65
+// 0C06 - ఆ - c4  0C16 - ఖ - 4b,55   0C26 - ద - 3c     0C36 - శ -
+// 0C07 - ఇ - c7  0C17 - గ - 3e      0C27 - ధ - 394    0C37 - ష - 63
+// 0C08 - ఈ - e1  0C18 - ఘ - c8      0C28 - న - 71     0C38 - స -
+// 0C09 - ఉ - f1  0C19 - ఙ -                           0C39 - హ -
+// 0C0A - ఊ - 7d  0C1A - చ - 23      0C2A - ప -
+// 0C0B - ఋ -    0C1B - ఛ  -         0C2B - ఫ -
+// 0C0C - ఌ -     0C1C - జ - 43      0C2C - బ - e3
+//                0C1D - ఝ -         0C2D - భ -
+// 0C0E - ఎ - 62  0C1E - ఞ - 201e    0C2E - మ -
+// 0C0F - ఏ - 40  0C1F - ట - 66    0C2F - య - 6a (u missing)
 
-// 0C3D - ఽ -      
-// 0C3E - ా - d5     
-// 0C3F - ి - e6     
+// 0C3D - ఽ -
+// 0C3E - ా - d5
+// 0C3F - ి - e6
 // 0C40 - ీ - fb                    0C60 - ౠ
 // 0C41 - ు - df                  0C61 - ౡ
 // 0C42 - ూ - 4c                  0C62 - ౢ
 // 0C43 - ృ -                   0C63 - ౣ
-// 0C44 - ౄ - 
+// 0C44 - ౄ -
 //                 0C55 - ౕ
 // 0C46 - ె - d3   0C56 - ౖ        0C66 - ౦
 // 0C47 - ే - d2                   0C67 - ౧
@@ -59,6 +60,10 @@ ofstream outdata("data.txt");
 // 0C4D - ్ - 74                   0C6D - ౭        0C7D - ౽
 //                                 0C6E - ౮        0C7E - ౾
 //                                 0C6F - ౯        0C7F - ౿
+
+void mapAchulu(string ch, unsigned int index) {
+	Achulu[index] = ch;
+}
 
 void mapAkshram(string ch, unsigned int index) {
 	Aksharalu[index] = ch;
@@ -110,26 +115,26 @@ void setupOther() {
 	mapAkshram("ళీ", 0x221E);
 
 	// == Numbers ==
-	// mapAkshram("౦", "");
-	// mapAkshram("౧", "");
-	// mapAkshram("౨", "");
-	// mapAkshram("౩", "");
-	// mapAkshram("౪", "");
-	// mapAkshram("౫", "");
-	// mapAkshram("౬", "");
-	// mapAkshram("౭", "");
-	// mapAkshram("౮", "");
-	// mapAkshram("౯", "");
+	// mapAchulu("౦", "");
+	// mapAchulu("౧", "");
+	// mapAchulu("౨", "");
+	// mapAchulu("౩", "");
+	// mapAchulu("౪", "");
+	// mapAchulu("౫", "");
+	// mapAchulu("౬", "");
+	// mapAchulu("౭", "");
+	// mapAchulu("౮", "");
+	// mapAchulu("౯", "");
 
 	// == Teledu ==
-	// mapAkshram("౸", );
-	// mapAkshram("౹", );
-	// mapAkshram("౺", );
-	// mapAkshram("౻", );
-	// mapAkshram("౼", );
-	// mapAkshram("౽", );
-	// mapAkshram("౾", );
-	// mapAkshram("౿", );
+	// mapAchulu("౸", );
+	// mapAchulu("౹", );
+	// mapAchulu("౺", );
+	// mapAchulu("౻", );
+	// mapAchulu("౼", );
+	// mapAchulu("౽", );
+	// mapAchulu("౾", );
+	// mapAchulu("౿", );
 
 	// == Vothulu ==
 	// mapAkshram("ౘ", );
@@ -139,7 +144,7 @@ void setupOther() {
 }
 
 void setupAchulu() {
-	mapAkshram("అ", 0x6E); // 110 n
+	mapAchulu("అ", 0x6E); // 110 n
 	mapSkip("", 0xA1);
 	mapSkip("", 0xA3);
 	mapSkip("", 0xAF);
@@ -150,7 +155,7 @@ void setupAchulu() {
 	mapSkip("", 0xFC);
 	mapSkip("", 0x2211);
 
-	mapAkshram("ఆ", 0xC4); // 196 Ä
+	mapAchulu("ఆ", 0xC4); // 196 Ä
 	mapDeergalu("ా",  0xB1); // 177 ±
 	mapDeergalu("ా",  0xCA); // 202 Ê
 	mapDeergalu("ా",  0xD5); // 213 Õ
@@ -159,64 +164,65 @@ void setupAchulu() {
 	mapDeergalu("ా",  0xEB); // 235 ë
 	mapDeergalu("ా",  0x2264);
 
-	mapAkshram("ఇ", 0xC7); // 199 Ç
+	mapAchulu("ఇ", 0xC7); // 199 Ç
 	mapDeergalu("ి", 0xE6); // 230 æ
 	mapDeergalu("ి", 0xE7); // 231 ç
 	mapDeergalu("ి", 0xCF); // 207 Ï
 
-	mapAkshram("ఈ", 0xE1); // 225 á
+	mapAchulu("ఈ", 0xE1); // 225 á
 	mapDeergalu("ీ", 0xB0); // 176 °
 	mapDeergalu("ీ", 0xFB); // 251 û
 	mapDeergalu("ీ", 0x201D);
 
-	mapAkshram("ఉ", 0xF1); // 241 ñ
+	mapAchulu("ఉ", 0xF1); // 241 ñ
 	mapDeergalu("ు", 0x54); //  84 T మ di u
 	mapDeergalu("ు", 0xDF); // 223 ß
 	mapDeergalu("ు", 0xEE); // 238 î
 	mapDeergalu("ు", 0xF3); // 243 ó
 	mapDeergalu("ు", 0x2044);
 
-	mapAkshram("ఊ", 0x7D); // 125 }
+	mapAchulu("ఊ", 0x7D); // 125 }
 	mapDeergalu("ూ", 0x4C); //  76 L
 	mapDeergalu("ూ", 0x4F); //  79 O // dough
 	mapDeergalu("ూ", 0x50); //  80 P
 	mapDeergalu("ూ", 0x53); //  83 S
 	mapDeergalu("ూ", 0xF7); // 247 ÷ // మ di dergam
 
-	// mapAkshram("ఋ", );
+	// mapAchulu("ఋ", );
 	mapDeergalu("ృ", 0xE8); // 232 è
-	// mapAkshram("ఌ", );
+	// mapAchulu("ఌ", );
 	// mapDeergalu("ౄ", );
 
-	mapAkshram("ఎ", 0x62); //  98 b
+	// mapAchulu("ఎ", );
 	mapDeergalu("ె", 0xAC); // 172 ¬
 	mapDeergalu("ె", 0xCB); // 203 Ë
 	mapDeergalu("ె", 0xD3); // 211 Ó
 	mapDeergalu("ె", 0xF4); // 244 ô
 	mapDeergalu("ె", 0x2026);
 
-	mapAkshram("ఏ", 0x40); //  64 @
+	mapAchulu("ఏ", 0x40); //  64 @
 	mapDeergalu("ే", 0xD2); // 210 Ò
 	mapDeergalu("ే", 0xF9); // 249 ù
 	mapDeergalu("ే", 0x03C0);
 	mapDeergalu("ే", 0x201A);
 	mapDeergalu("ే", 0x02DA);
 
-	mapAkshram("ఐ", 0x25CA);
+	mapAchulu("ఐ", 0x25CA);
 	mapDeergalu("ై", 0x2019); // is part of two chars
+	mapDeergalu("ై", 0x2206);
 
-	mapAkshram("ఒ", 0x02c7);
+	mapAchulu("ఒ", 0x02c7);
 	mapVothulu("ొ", 0x3D); //  61 =
 	mapVothulu("ొ", 0xA7); // 167 §
 	mapVothulu("ొ", 0x131);
 
-	mapAkshram("ఓ", 0x7A); // 122 z
+	mapAchulu("ఓ", 0x7A); // 122 z
 	mapDeergalu("ొ", 0xC0); // 192 À
 	mapDeergalu("ో", 0x02DB);
 	mapDeergalu("ో", 0x2218); // dough
 	mapDeergalu("ో", 0x221A);
 
-	// mapAkshram("ఔ", );
+	// mapAchulu("ఔ", );
 	mapDeergalu("ౌ",  0xC2); // 194 Â
 	mapDeergalu("ౌ",  0xD6); // 214 Ö
 	mapDeergalu("ౌ",  0xDA); // 218 Ú
@@ -242,111 +248,111 @@ void setupAchulu() {
 }
 
 void setupHallulu() {
-	mapAkshram("క",  0xF8); // 248 ø
+	mapAchulu("క",  0xF8); // 248 ø
 	mapVothulu("్క", 0xFF); // 255 ÿ
-	mapAkshram("క",  0x2248);
-	// mapAkshram("్ర",  0x2248); dough
+	mapAchulu("క",  0x2248);
+	// mapAchulu("్ర",  0x2248); dough
 
-	mapAkshram("ఖ", 0x4B); //  75 K
-	mapAkshram("ఖ", 0x55); //  85 U
+	mapAchulu("ఖ", 0x4B); //  75 K
+	mapAchulu("ఖ", 0x55); //  85 U
 	mapVothulu("్ఖ",  0xE2); // 226	â
 
-	mapAkshram("గ",  0x3E); //  62 >
+	mapAchulu("గ",  0x3E); //  62 >
 	mapVothulu("్గ",  0x5A); //  90	Z
 
-	// mapAkshram("ఘ", );
+	// mapAchulu("ఘ", );
 	mapVothulu("్ఘ", 0xC8); // 200 È
-	
-	// mapAkshram("ఙ", );
 
-	mapAkshram("చ", 0x23); //  35 #
+	// mapAchulu("ఙ", );
+
+	mapAchulu("చ", 0x23); //  35 #
 	mapVothulu("్చ", 0xC3); // 195 Ã
 
-	// mapAkshram("ఛ", );
-	mapAkshram("జ", 0x43); //  67 C
+	// mapAchulu("ఛ", );
+	mapAchulu("జ", 0x43); //  67 C
 	mapVothulu("్జ",  0xAE); // 174 ®
-	mapAkshram("జ", 0xBB); // 187 »
-	// mapAkshram("ఝ", );
-	// mapAkshram("ఞ", );
+	mapAchulu("జ", 0xBB); // 187 »
+	// mapAchulu("ఝ", );
+	// mapAchulu("ఞ", );
 	mapVothulu("్ఞ", 0x201E);
 
-	mapAkshram("ట", 0x66); // 102 f
-	mapAkshram("ట", 0x7B); // 123 {	
-	mapAkshram("ట", 0x2265);
+	mapAchulu("ట", 0x66); // 102 f
+	mapAchulu("ట", 0x7B); // 123 {
+	mapAchulu("ట", 0x2265);
 	mapVothulu("్ట",  0xBA); // 186 º
 
-	// mapAkshram("ఠ", );
+	// mapAchulu("ఠ", );
 	mapVothulu("్ఠ", 0x02DC);
 
-	mapAkshram("డ", 0x26); //  38 &
+	mapAchulu("డ", 0x26); //  38 &
 	mapVothulu("్డ",  0xB6); // 182 ¶
 
-	// mapAkshram("ఢ", );
-	mapAkshram("ణ", 0x44); //  68 D
+	// mapAchulu("ఢ", );
+	mapAchulu("ణ", 0x44); //  68 D
 	mapVothulu("్ణ",  0xED); // 237 í
 
-	mapAkshram("త", 0x84); // 132 „
-	mapAkshram("త", 0x2018);
+	mapAchulu("త", 0x84); // 132 „
+	mapAchulu("త", 0x2018);
 	mapVothulu("్త",  0xD4); // 212 Ô
 
-	// mapAkshram("థ", );
+	// mapAchulu("థ", );
 	mapVothulu("్థ",  0xFA); // 250 ú
 
-	mapAkshram("ద",  0x3C); //  60 <
+	mapAchulu("ద",  0x3C); //  60 <
 	mapVothulu("్ద", 0x203A);
 
-	// mapAkshram("ధ", );
+	// mapAchulu("ధ", );
 	mapVothulu("్ధ", 0x0394);
 
-	mapAkshram("న", 0x48); //  72 H
-	mapAkshram("న", 0x71); // 113 q
-	mapVothulu("్న", 0xEF); // 239 ï	
+	mapAchulu("న", 0x48); //  72 H
+	mapAchulu("న", 0x71); // 113 q
+	mapVothulu("్న", 0xEF); // 239 ï
 
-	mapAkshram("వ", 0x6D); // 109 m
-	mapAkshram("ప", 0x7C); // 124 |
+	mapAchulu("వ", 0x6D); // 109 m
+	mapAchulu("ప", 0x7C); // 124 |
+	mapAchulu("ప", 0x62); //  98 b ఎ
 	mapVothulu("్ప", 0x0152);
 
-	// mapAkshram("ఫ", );
-	mapAkshram("బ", 0x75); // 117 u
-	mapAkshram("బ", 0xE3); // 227 ã
+	// mapAchulu("ఫ", );
+	mapAchulu("బ", 0x75); // 117 u
+	mapAchulu("బ", 0xE3); // 227 ã
 	mapVothulu("్బ", 0x201C);
-	// mapAkshram("భ", );
-	// mapAkshram("మ", );
+	// mapAchulu("భ", );
+	// mapAchulu("మ", );
 	mapVothulu("్మ", 0xE0); // 224 à
 
-	mapAkshram("య", 0x6A); // 106 j
+	mapAchulu("య", 0x6A); // 106 j
 	mapVothulu("్య",  0xB4); // 180 ´
 
-	mapAkshram("ర", 0x73); // 115 s
+	mapAchulu("ర", 0x73); // 115 s
 	mapVothulu("్ర", 0xC5); // 197 Å
 
-	// mapAkshram("ఱ", );
-	mapAkshram("ల", 0x5C); //  92 \ (for comments)
-	mapAkshram("ల", 0x2DD);
+	// mapAchulu("ఱ", );
+	mapAchulu("ల", 0x5C); //  92 \ (for comments)
+	mapAchulu("ల", 0x2DD);
 	mapVothulu("్ల",  0xA2); // 162	¢
 
-	mapAkshram("ళ",  0x5B); //  91 [ // dough	
-	mapAkshram("ళ",  0xFB01);
+	mapAchulu("ళ",  0x5B); //  91 [ // dough
+	mapAchulu("ళ",  0xFB01);
 
-	// mapAkshram("ఴ", );
-	mapAkshram("వ", 0x65); // 101 e
-	mapAkshram("వ", 0x79); // 121 y
+	// mapAchulu("ఴ", );
+	mapAchulu("వ", 0x65); // 101 e
+	mapAchulu("వ", 0x79); // 121 y
 	mapVothulu("్వ", 0xAB); // 171  «
 
-	mapAkshram("శ",  0x58); //  88 X
+	mapAchulu("శ",  0x58); //  88 X
 	mapVothulu("్శ", 0xD9); // 217  Ù
 
-	mapAkshram("ష", 0x63); //  99 c
-	mapAkshram("ష", 0xB8); // 184  ¸
-	mapAkshram("ష", 0x77); // 119 w
+	mapAchulu("ష", 0x63); //  99 c
+	mapAchulu("ష", 0xB8); // 184  ¸
+	mapAchulu("ష", 0x77); // 119 w
 	mapVothulu("్ష",  0xE5); // 229 å
 
-	mapAkshram("స", 0x64); // 100 d
-	mapAkshram("స", 0x6B); // 107 k
+	mapAchulu("స", 0x64); // 100 d
+	mapAchulu("స", 0x6B); // 107 k
 	mapVothulu("్స", 0x2021);
 
-	mapAkshram("హ", 0x56); //  86 V
-
+	mapAchulu("హ", 0x56); //  86 V
 	mapVothulu("్హ", 0x03A9);
 }
 
@@ -387,7 +393,7 @@ void setupFontLUT() {
 	// map("",  24); //  24	(0x18) ^X
 	// map("",  25); //  25	(0x19) ^Y
 	// map("",  26); //  26	(0x1a) ^Z
-	// map("",  27); //  27	(0x1b) ^[	
+	// map("",  27); //  27	(0x1b) ^[
 	// map("",  28); //  28	(0x1c) ^\ (for commenting)
 	// map("",  29); //  29	(0x1d) ^]
 	// map("",  30); //  30	(0x1e) ^^
@@ -474,35 +480,35 @@ void setupFontLUT() {
 	// map("", 253); // 253	(0xfd) ý
 	// map("", 254); // 254	(0xfe) þ
 
-	mapAkshram(" ", 0x20); //  32 <space>
-	mapAkshram(" ", 0x7F); // 127 <space>
-	mapAkshram(" ", 0xA0); // 160 <space>
-	mapAkshram("!", 0x21); //  33 !
-	mapAkshram(",", 0x2C); //  44 ,
-	mapAkshram(".", 0x2E); //  46 .
-	mapAkshram("(", 0x28); //  40 (	
-	mapAkshram(")", 0x29); //  41 )
-	mapAkshram("0", 0x30); //  48 0
-	mapAkshram("1", 0x31); //  49 1
-	mapAkshram("2", 0x32); //  50 2
-	mapAkshram("3", 0x33); //  51 3
-	mapAkshram("4", 0x34); //  52 4
-	mapAkshram("5", 0x35); //  53 5
-	mapAkshram("6", 0x36); //  54 6
-	mapAkshram("7", 0x37); //  55 7
-	mapAkshram("8", 0x38); //  56 8
-	mapAkshram("9", 0x39); //  57 9
-	mapAkshram(":", 0x3A); //  58 :
-	mapAkshram("?", 0x3F); //  63 ?
-	mapAkshram("-", 0x60); //  96 `
-	mapAkshram(".", 0xA4); // 164 ¤
+	mapAchulu(" ", 0x20); //  32 <space>
+	mapAchulu(" ", 0x7F); // 127 <space>
+	mapAchulu(" ", 0xA0); // 160 <space>
+	mapAchulu("!", 0x21); //  33 !
+	mapAchulu(",", 0x2C); //  44 ,
+	mapAchulu(".", 0x2E); //  46 .
+	mapAchulu("(", 0x28); //  40 (
+	mapAchulu(")", 0x29); //  41 )
+	mapAchulu("0", 0x30); //  48 0
+	mapAchulu("1", 0x31); //  49 1
+	mapAchulu("2", 0x32); //  50 2
+	mapAchulu("3", 0x33); //  51 3
+	mapAchulu("4", 0x34); //  52 4
+	mapAchulu("5", 0x35); //  53 5
+	mapAchulu("6", 0x36); //  54 6
+	mapAchulu("7", 0x37); //  55 7
+	mapAchulu("8", 0x38); //  56 8
+	mapAchulu("9", 0x39); //  57 9
+	mapAchulu(":", 0x3A); //  58 :
+	mapAchulu("?", 0x3F); //  63 ?
+	mapAchulu("-", 0x60); //  96 `
+	mapAchulu(".", 0xA4); // 164 ¤
 	mapSkip(".", 0xDB); // 219 Û
-	mapAkshram(".", 0xF2); // 242 ò
-	mapAkshram(".", 0x192);
-	mapAkshram("|", 0x02C6);
-	mapAkshram(":", 0x220F);
-	mapAkshram(",", 0x3BC);
-	// mapAkshram("", 0xAA); // 170 ª opposit to comma
+	mapAchulu(".", 0xF2); // 242 ò
+	mapAchulu(".", 0x192);
+	mapAchulu("|", 0x02C6);
+	mapAchulu(":", 0x220F);
+	mapAchulu(",", 0x3BC);
+	// mapAchulu("", 0xAA); // 170 ª opposit to comma
 
 	setupAchulu();
 	setupHallulu();
@@ -542,12 +548,14 @@ class TeluguText {
 		}
 
 		pair<unsigned short, string> getCharPair(unsigned short c) {
-			if ( Aksharalu.find(c) != Aksharalu.end() ) {
-				return make_pair(c, Aksharalu[c]);
+			if ( Achulu.find(c) != Achulu.end() ) {
+				return make_pair(c, Achulu[c]);
 			} else if ( Vothulu.find(c) != Vothulu.end() ) {
 				return make_pair(c, Vothulu[c]);
 			} else if ( Deergalu.find(c) != Deergalu.end() ) {
 				return make_pair(c, Deergalu[c]);
+			} else if ( Aksharalu.find(c) != Aksharalu.end() ) {
+				return make_pair(c, Aksharalu[c]);
 			} else {
 				Missing[c]++;
 				return make_pair(c, "");
@@ -555,7 +563,7 @@ class TeluguText {
 		}
 
 		bool isSkippable(unsigned short c) {
-	
+
 			if (Skip.find(c) != Skip.end()) {
 				return true;
 			}
@@ -563,23 +571,23 @@ class TeluguText {
 			if (text.size() > 0) {
 				string prev = text.back().second;
 				// if ( prev == string("య") || prev == string("మ") ) {
-				// } else 
+				// } else
 				if ( c == 0x54 ) { // "ు"
 					// if ( Deergalu[c] == string("ు") ) {
 					if ( prev == string("మ") ) {
-						text.push_back(make_pair(c, "ు"));
+						text.push_back(make_pair(0x54, "ు"));
 						return true;
-					} else if ( Aksharalu[text.back().first] == string("వ") ) {
+					} else if ( Achulu[text.back().first] == string("వ") ) {
 						text.pop_back();
 						text.push_back(make_pair(c, "మ"));
 						return true;
-					} else if ( Aksharalu[text.back().first] == string("య") ) {
+					} else if ( Achulu[text.back().first] == string("య") ) {
 						text.pop_back();
 						text.push_back(make_pair(c, "య"));
 						return true;
 					}
 				} else if ( c == 0xF7 ) {
-					if ( Aksharalu[text.back().first] == string("వ") ) {
+					if ( Achulu[text.back().first] == string("వ") ) {
 						text.pop_back();
 						text.push_back(make_pair(c, "మ"));
 						text.push_back(make_pair(c, "ా"));
@@ -615,6 +623,115 @@ class TeluguText {
 					}
 
 					return true;
+				} else if ( Aksharalu.find(c) != Aksharalu.end() ) {
+					switch(c) {
+						case 0x24:  // "వి"
+							text.push_back(make_pair(c, "వ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x4D:  // "వీ"
+							text.push_back(make_pair(c, "వ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x5D:  // "రి"
+							text.push_back(make_pair(c, "ర"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x6:   // "శ్రీ"
+							text.push_back(make_pair(c, "శ"));
+							text.push_back(make_pair(c, "్"));
+							text.push_back(make_pair(c, "ర"));
+							break;
+						case 0x70:  // "జూ"
+							text.push_back(make_pair(c, "జ"));
+							text.push_back(make_pair(0x4C, "ూ"));
+							break;
+						case 0x72:  // "తీ"
+							text.push_back(make_pair(c, "త"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x2039:// "తీ"
+							text.push_back(make_pair(c, "త"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0xEC:  // "ని"
+							text.push_back(make_pair(c, "న"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0xF5:  // "జి"
+							text.push_back(make_pair(c, "జ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x02D9:// "నీ"
+							text.push_back(make_pair(c, "న"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0xD8:  // "రీ"
+							text.push_back(make_pair(c, "ర"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x222B:// "చి"
+							text.push_back(make_pair(c, "చ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x2013:// "గి"
+							text.push_back(make_pair(c, "గ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x2A:  // "లి"
+							text.push_back(make_pair(c, "ల"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x3b:  // "బీ"
+							text.push_back(make_pair(c, "బ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x41:  // "ాూ"
+							text.push_back(make_pair(c, "ా"));
+							text.push_back(make_pair(0x4C, "ూ"));
+							break;
+						case 0x42:  // "దీ"
+							text.push_back(make_pair(c, "ద"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x45:  // "జు"
+							text.push_back(make_pair(c, "జ"));
+							text.push_back(make_pair(0x54, "ు"));
+							break;
+						case 0x4A:  // "జీ"
+							text.push_back(make_pair(c, "జ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x4E:  // "చీ"
+							text.push_back(make_pair(c, "చ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x51:  // "ాు"
+							text.push_back(make_pair(c, "ా"));
+							text.push_back(make_pair(0x54, "ు"));
+							break;
+						case 0x5E:  // "గీ"
+							text.push_back(make_pair(c, "గ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+						case 0x5F:  // "బి"
+							text.push_back(make_pair(c, "బ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x2022:// "శి"
+							text.push_back(make_pair(c, "శ"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x7E:  // "ది"
+							text.push_back(make_pair(c, "ద"));
+							text.push_back(make_pair(0xE6, "ి"));
+							break;
+						case 0x221E:// "ళీ"
+							text.push_back(make_pair(c, "ళ"));
+							text.push_back(make_pair(0xB0, "ీ"));
+							break;
+					}
+					return true;
 				} else if ( prev == string("హ")  && Deergalu[c] == string("ా") ) {
 					return true;
 				}
@@ -647,7 +764,7 @@ class TeluguText {
 			// 		}
 
 			// 		if ( current == string("క") ) {
-			// 			text.push_back(make_pair(c, "్క"));	
+			// 			text.push_back(make_pair(c, "్క"));
 			// 			return true;
 			// 		} else if ( current == string("ఖ") ) {
 			// 			text.push_back(make_pair(c, "్ఖ"));
@@ -1081,7 +1198,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 						<< offset_y << " "
 						<< pszToken << endl;
 			} else if ( strcmp( pszToken, "T*" ) == 0 ) {
-				
+
 			} else if ( strcmp( pszToken, "cs" ) == 0 ) {
 
 			} else if ( strcmp( pszToken, "i" ) == 0 ) {
@@ -1089,7 +1206,7 @@ std::string extract( PdfMemDocument* pDocument, PdfPage* pPage , string removefo
 			} else if ( strcmp( pszToken, "scn" ) == 0 ) {
 
 			} else if( strcmp( pszToken, "Tj" ) == 0 || strcmp( pszToken, "'" ) == 0 ) {
-				
+
 			// if( bTextBlock )
 			// {
 				if(record) {
@@ -1313,7 +1430,7 @@ int main()
 	std::cout.imbue(std::locale(std::cout.getloc(), new std::numpunct<char>()));
 	outdata.imbue(std::locale());
 
-	setupFontLUT(); 
+	setupFontLUT();
 
 	system("mkdir -p finial");
 

@@ -1,6 +1,6 @@
 all:
-	@g++ myPdf.cpp -g -lpodofo -o myPdf
+	@g++ src/*.cpp -g -lpodofo -o myPdf
 run: all
 	@./myPdf
 clean:
-	@rm -rf myPdf *~ output.pdf
+	@rm -rf myPdf *.pdf *~ output.pdf finial
