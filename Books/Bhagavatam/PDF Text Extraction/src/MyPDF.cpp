@@ -44,8 +44,8 @@ std::string MyPDF::extract(int pn)
 	PdfVariant       var;
 	EPdfContentsType eType;
 
-	PdfPage* pPage = PDF.GetPage(pn);
-	PdfContentsTokenizer tokenizer( pPage );
+	double cur_x            = 0.0;
+	double cur_y            = 0.0;
 
 	double x            = 0.0;
 	double y            = 0.0;
@@ -66,238 +66,201 @@ std::string MyPDF::extract(int pn)
 
 	double size;
 	double g;
-	string str;
 
 	bool record = true;
+	int count = 0;
 
 	bool   bTextBlock   = false;
 	PdfObject* pFont;
 	PdfFont* pCurFont   = NULL;
 
-	int count = 0;
 
 	std::stack<PdfVariant> stack;
-	std::ostringstream block;
+
+	PdfPage* pPage = PDF.GetPage(pn);
+	PdfContentsTokenizer tokenizer( pPage );
 
 	while( tokenizer.ReadNext( eType, pszToken, var ) )
 	{
 		if( eType == ePdfContentsType_Keyword )
 		{
-			if( strcmp( pszToken, "cm" ) == 0 )	{
-				offset_y = stack.top().GetReal();
-				stack.pop();
-				offset_x = stack.top().GetReal();
-				stack.pop();
-				scale_y  = stack.top().GetReal();
-				stack.pop();
-				shear_y  = stack.top().GetReal();
-				stack.pop();
-				shear_x  = stack.top().GetReal();
-				stack.pop();
-				scale_x  = stack.top().GetReal();
-				stack.pop();
+			if( strcmp( pszToken, "BT" ) == 0 || strcmp( pszToken, "ET" ) == 0 ) {
+				// Text object operators
 
-				if(record) {
-					block << scale_x << " "
-						<< shear_x << " "
-						<< shear_y << " "
-						<< scale_y << " "
-						<< offset_x << " "
-						<< offset_y << " cm " << endl;
-				}
-			} else if( strcmp( pszToken, "re" ) == 0 ) {
-				offset_y = stack.top().GetReal();
-				stack.pop();
-				offset_x = stack.top().GetReal();
-				stack.pop();
-				scale_y  = stack.top().GetReal();
-				stack.pop();
-				shear_y  = stack.top().GetReal();
-				stack.pop();
+				if( strcmp( pszToken, "BT" ) == 0 ) {
 
-				if(record) {
-					block << shear_y << " "
-						<< scale_y << " "
-						<< offset_x << " "
-						<< offset_y << " "
-						<< pszToken << " " << endl;
-				}
-			} else if ( strcmp( pszToken, "W" ) == 0 ||
-				strcmp( pszToken, "n" ) == 0 ||
-				strcmp( pszToken, "q" ) == 0 ||
-				strcmp( pszToken, "Q" ) == 0 ) {
-				if(record) {
-					block << pszToken << endl;
-				}
-			} else if ( strcmp( pszToken, "w" ) == 0 ||
-				strcmp( pszToken, "Tz" ) == 0 ||
-				strcmp( pszToken, "g" ) == 0 ||
-				strcmp( pszToken, "G" ) == 0 ) {
-					g = stack.top().GetReal();
-					stack.pop();
-				if(record) {
-					block << g << " " << pszToken << endl;
-				}
-			} else if ( strcmp( pszToken, "rg" ) == 0 || strcmp( pszToken, "RG" ) == 0 ) {
-				blue = stack.top().GetReal();
-				stack.pop();
-				green = stack.top().GetReal();
-				stack.pop();
-				red = stack.top().GetReal();
-				stack.pop();
+					bTextBlock   = true;
+					if(record) { }
 
-				red = 0.396;   // 0.0 for black
-				green = 0.482; // 0.0 for black
-				blue = 0.514;  // 0.0 for black
-
-				if(record) {
-					block << red << " "
-						<< green << " "
-						<< blue << " "
-						<< pszToken << endl;
-				}
-
-				// cout << red << " "
-				//       << green << " "
-				//       << blue << " "
-				//       << pszToken << endl;
-			} else if( strcmp( pszToken, "l" ) == 0 || strcmp( pszToken, "m" ) == 0 ) {
-				// support 'l' and 'm' tokens
-				x = stack.top().GetReal(); stack.pop();
-				y = stack.top().GetReal(); stack.pop();
-			} else if( strcmp( pszToken, "BT" ) == 0 ) {
-				bTextBlock   = true;
-				if(record) {
-					block << "BT" << endl;
-				}
-			} else if( strcmp( pszToken, "ET" ) == 0 ) {
-				if(record) {
-					block << "ET" << endl;
-					outdata << endl;
-				}
-			} else if( strcmp( pszToken, "Tf" ) == 0 ) {
-				size = stack.top().GetReal(); stack.pop();
-
-				PdfName fontName = stack.top().GetName();
-				// cout << fontName.GetName() << endl;
-				pFont = pPage->GetFromResources( PdfName("Font"), fontName );
-				pCurFont = PDF.GetFont( pFont );
-
-				if(fontName.GetName().compare( skipFont ) == 0)
-					record = false;
-				else {
-					if(count)
-						record = true;
-					else
-						record = false;
-					count++;
-				}
-
-				if(record)
-					block << "/"
-							<< fontName.GetName()
-							<< " " << size << " "
-							<< "Tf" << endl;
-
-				// cout << "/"
-				//       << str
-				//       << " " << size << " "
-				//       << "Tf" << endl;
-			} else if( strcmp( pszToken, "gs" ) == 0 ) {
-				block << "/"
-						<< stack.top().GetName().GetName()
-						<< " " << "gs" << endl;
-			} else if( strcmp( pszToken, "Tc" ) == 0 || strcmp( pszToken, "TL" ) == 0 || strcmp( pszToken, "Tw" ) == 0 ) {
-				td_y = stack.top().GetReal(); stack.pop();
-
-				block << td_y << " " << pszToken << endl;
-			} else if( strcmp( pszToken, "TD" ) == 0 || strcmp( pszToken, "Td" ) == 0) {
-				td_y = stack.top().GetReal(); stack.pop();
-				td_x = stack.top().GetReal(); stack.pop();
-
-				block << td_x << " "
-						<< td_y << " "
-						<< pszToken << endl;
-			} else if( strcmp( pszToken, "Tm" ) == 0 ) {
-				offset_y = stack.top().GetReal(); stack.pop();
-				offset_x = stack.top().GetReal(); stack.pop();
-				scale_y  = stack.top().GetReal(); stack.pop();
-				shear_y  = stack.top().GetReal(); stack.pop();
-				shear_x  = stack.top().GetReal(); stack.pop();
-				scale_x  = stack.top().GetReal(); stack.pop();
-
-				block << scale_x << " "
-						<< shear_x << " "
-						<< shear_y << " "
-						<< scale_y << " "
-						<< offset_x << " "
-						<< offset_y << " "
-						<< pszToken << endl;
-			} else if ( strcmp( pszToken, "T*" ) == 0 ) {
-
-			} else if ( strcmp( pszToken, "cs" ) == 0 ) {
-
-			} else if ( strcmp( pszToken, "i" ) == 0 ) {
-
-			} else if ( strcmp( pszToken, "scn" ) == 0 ) {
-
-			} else if( strcmp( pszToken, "Tj" ) == 0 || strcmp( pszToken, "'" ) == 0 ) {
-
-			// if( bTextBlock )
-			// {
-				if(record) {
-					if (strcmp( pszToken, "'" ) == 0) {
-						// cout << endl;
+				} else if( strcmp( pszToken, "ET" ) == 0 ) {
+					if(record) {
+						outdata << endl;
 					}
-					PdfString pStr = stack.top().GetString(); stack.pop();
-					string text = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont).GetStringUtf8();
-					teluguText.set(text);
-
-					// cout << endl;
-					outdata << teluguText << endl;
-					// outdata << teluguText.details() << endl << endl;
-					
-					// return "";
-
-					ReplaceStringInPlace(str, "\\", "\\\\");
-					ReplaceStringInPlace(str, "(", "\\(");
-					ReplaceStringInPlace(str, ")", "\\)");
-
-					block << "(" << str
-							<< ")" << pszToken << endl;
 				}
-			} else if( strcmp( pszToken, "TJ" ) == 0 ) {
-				PdfArray array = stack.top().GetArray();
-				stack.pop();
 
-				block << "[";
+			} else if( strcmp( pszToken, "Tc" ) == 0 || strcmp( pszToken, "Tw" ) == 0 ||
+					strcmp( pszToken, "Tz" ) == 0 || strcmp( pszToken, "TL" ) == 0 ||
+					strcmp( pszToken, "Tr" ) == 0 || strcmp( pszToken, "Ts" ) == 0 ||
+					strcmp( pszToken, "Tf" ) == 0 ) {
+					// Text state operators
 
-				for( int i=0; i<static_cast<int>(array.GetSize()); i++ )
-				{
-					if( array[i].IsString() || array[i].IsHexString() ) {
-						PdfString pdfstr = array[i].GetString();
-						string text = pdfstr.GetStringUtf8();
+				if( strcmp( pszToken, "Tf" ) == 0 ) {
+
+					size = stack.top().GetReal(); stack.pop();
+					PdfName fontName = stack.top().GetName(); stack.pop();
+
+					pFont = pPage->GetFromResources( PdfName("Font"), fontName );
+					pCurFont = PDF.GetFont( pFont );
+
+					// cout << fontName.GetName() << endl;
+					if(fontName.GetName().compare( skipFont ) == 0)
+						record = false;
+					else {
+						if(count)
+							record = true;
+						else
+							record = false;
+						count++;
+					}
+				} else if (strcmp( pszToken, "Tz" ) == 0 ) {
+					g = stack.top().GetReal(); stack.pop();
+				} else {
+					td_y = stack.top().GetReal(); stack.pop();
+				}
+
+			} else if( strcmp( pszToken, "Td" ) == 0 || strcmp( pszToken, "TD" ) == 0 ||
+					strcmp( pszToken, "Tm" ) == 0 || strcmp( pszToken, "T*" ) == 0 ) {
+				// Text positioning operators
+
+				if( strcmp( pszToken, "TD" ) == 0 || strcmp( pszToken, "Td" ) == 0) {
+					// TD - move to x, y
+					// Td - move to x, y
+
+					td_y = stack.top().GetReal(); stack.pop();
+					td_x = stack.top().GetReal(); stack.pop();
+
+				} else if( strcmp( pszToken, "Tm" ) == 0 ) {
+
+					offset_y = stack.top().GetReal(); stack.pop();
+					offset_x = stack.top().GetReal(); stack.pop();
+					scale_y  = stack.top().GetReal(); stack.pop();
+					shear_y  = stack.top().GetReal(); stack.pop();
+					shear_x  = stack.top().GetReal(); stack.pop();
+					scale_x  = stack.top().GetReal(); stack.pop();
+
+				} else if ( strcmp( pszToken, "T*" ) == 0 ) {
+					// T* - New line
+				}
+
+			} else if( strcmp( pszToken, "Tj" ) == 0 || strcmp( pszToken, "'" ) == 0 ||
+					strcmp( pszToken, "\"" ) == 0 || strcmp( pszToken, "TJ" ) == 0 ) {
+				// Text showing operators
+
+				if( strcmp( pszToken, "TJ" ) == 0 ) {
+					PdfArray array = stack.top().GetArray(); stack.pop();
+					for( int i=0; i<static_cast<int>(array.GetSize()); i++ )
+					{
+						if( array[i].IsString() || array[i].IsHexString() ) {
+							PdfString pdfstr = array[i].GetString();
+							string text = pdfstr.GetStringUtf8();
+							teluguText.set(text);
+
+							outdata << teluguText;
+						}
+						else if( array[i].IsNumber()) {
+							// cout << "Real TJ" << endl;
+						}
+					}
+				} else {
+					// "  - Use Character and word spacing (TC and TW), and then ' operator
+					// '  - move to new line, and then Tj operator
+					// Tj - print text at current co-ordinates
+					if(record) {
+						PdfString pStr = stack.top().GetString(); stack.pop();
+
+						string text = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont).GetStringUtf8();
 						teluguText.set(text);
 
-						// cout << endl;
-						outdata << teluguText;
+						if (strcmp( pszToken, "'" ) == 0 || strcmp( pszToken, "\"" ) == 0) {
+							if (strcmp( pszToken, "\"" ) == 0) {
+								// double tc_c = stack.top().GetReal(); stack.pop();
+								// double tc_w = stack.top().GetReal(); stack.pop();
+							}
+							// cout << endl;
+						}
 
-						string str = pdfstr.GetString();
-						// cout << "String TJ, " << text.length() << " String: " << boolalpha << array[i].IsString() << endl;
-						ReplaceStringInPlace(str, "\\", "\\\\");
-						ReplaceStringInPlace(str, "(", "\\(");
-						ReplaceStringInPlace(str, ")", "\\)");
-
-						block << "("
-								<< str
-								<< ")";
-					}
-					else if( array[i].IsNumber()) {
-						// cout << "Real TJ" << endl;
-						block << array[i].GetReal();
+						outdata << teluguText << endl;
+						// outdata << teluguText.details() << endl << endl;
 					}
 				}
-				block << "]" << pszToken << endl;
+
+			} else if( strcmp( pszToken, "cm" ) == 0 || strcmp( pszToken, "gs" ) == 0 ||
+					strcmp( pszToken, "w" ) == 0 || strcmp( pszToken, "i" ) == 0 ||
+					strcmp( pszToken, "q" ) == 0 ||	strcmp( pszToken, "Q" ) == 0 ) {
+				// Graphics state operators
+
+				if( strcmp( pszToken, "cm" ) == 0 )	{
+					offset_y = stack.top().GetReal(); stack.pop();
+					offset_x = stack.top().GetReal(); stack.pop();
+					scale_y  = stack.top().GetReal(); stack.pop();
+					shear_y  = stack.top().GetReal(); stack.pop();
+					shear_x  = stack.top().GetReal(); stack.pop();
+					scale_x  = stack.top().GetReal(); stack.pop();
+				} else if ( strcmp( pszToken, "i" ) == 0 ) {
+
+				} else if( strcmp( pszToken, "gs" ) == 0 ) {
+
+				} else if ( strcmp( pszToken, "w" ) == 0 ) {
+
+					g = stack.top().GetReal(); stack.pop();
+				} 
+
+			} else if( strcmp( pszToken, "CS" ) == 0 || strcmp( pszToken, "cs" ) == 0  ||
+				strcmp( pszToken, "SC" ) == 0 || strcmp( pszToken, "SCN" ) == 0 ||
+				strcmp( pszToken, "sc" ) == 0 || strcmp( pszToken, "scn" ) == 0 ||
+				strcmp( pszToken, "G" ) == 0  || strcmp( pszToken, "g" ) == 0   ||
+				strcmp( pszToken, "RG" ) == 0 || strcmp( pszToken, "rg" ) == 0  ||
+				strcmp( pszToken, "K" ) == 0  || strcmp( pszToken, "k" ) == 0 ) {
+				// Color Space operators
+	
+				if ( strcmp( pszToken, "cs" ) == 0 ) {
+
+				} else if ( strcmp( pszToken, "scn" ) == 0 ) {
+
+				} else if ( strcmp( pszToken, "g" ) == 0 || strcmp( pszToken, "G" ) == 0 ) {
+
+				} else if ( strcmp( pszToken, "rg" ) == 0 || strcmp( pszToken, "RG" ) == 0 ) {
+
+					blue = stack.top().GetReal(); stack.pop();
+					green = stack.top().GetReal(); stack.pop();
+					red = stack.top().GetReal(); stack.pop();
+
+					red = 0.396;   // 0.0 for black
+					green = 0.482; // 0.0 for black
+					blue = 0.514;  // 0.0 for black
+				}
+
+			} else if ( strcmp( pszToken, "re" ) == 0 || strcmp( pszToken, "W" ) == 0 ||
+					strcmp( pszToken, "l" ) == 0 || strcmp( pszToken, "m" ) == 0 ||
+					strcmp( pszToken, "n" ) == 0 ) {
+				// Path operators
+
+				if( strcmp( pszToken, "re" ) == 0 ) {
+
+					offset_y = stack.top().GetReal(); stack.pop();
+					offset_x = stack.top().GetReal(); stack.pop();
+					scale_y  = stack.top().GetReal(); stack.pop();
+					shear_y  = stack.top().GetReal(); stack.pop();
+
+				} else if ( strcmp( pszToken, "W" ) == 0 ||
+					strcmp( pszToken, "n" ) == 0 ) {
+
+				} else if( strcmp( pszToken, "l" ) == 0 || strcmp( pszToken, "m" ) == 0 ) {
+					// support 'l' and 'm' tokens
+					x = stack.top().GetReal(); stack.pop();
+					y = stack.top().GetReal(); stack.pop();
+				}
+
 			} else {
 				MissingCmds[pszToken] = pszToken;
 			}
@@ -308,7 +271,7 @@ std::string MyPDF::extract(int pn)
 		}
 	}
 
-	return block.str();
+	return "";
 }
 
 void MyPDF::saveAs(string output)
@@ -565,7 +528,6 @@ void MyPDF::genMap(string outMap) {
 		// std::wcout << "Wide string: " << &wstr[0] << '\n'
         //        << "The length, including '\\0': " << wstr.size() << '\n';
 
-
 		// pdfStr = PdfString(teluguText.getChar(c->first).c_str());
 		// pdfStr = PdfString("శి");
 		// const pdf_utf8 utf8Text = "శి";
@@ -580,7 +542,6 @@ void MyPDF::genMap(string outMap) {
 
 		pos -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
 	}
-
 
     painter.FinishPage();
 
