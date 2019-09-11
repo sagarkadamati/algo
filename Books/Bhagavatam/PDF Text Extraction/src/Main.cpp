@@ -14,7 +14,7 @@ void convert(string input, string output, string removeFont, int start, int end)
 	// myPDF.genMap("map.pdf");
 	// myPDF.saveAs(output);
 
-	// myPDF.printMissing();
+	myPDF.printMissing();
 }
 
 int main()
