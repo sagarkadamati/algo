@@ -317,6 +317,9 @@ static void setupHallulu(TeluguDict &lut) {
 	lut.mapVothulu("్స", 0x2021);
 
 	lut.mapVothulu("్హ", 0x03A9);
+
+	// convert to vothu
+	lut.mapVothulu(".", 0xDB); // 219 Û
 }
 
 static void setupVothulu(TeluguDict &lut) {
@@ -352,7 +355,6 @@ void setupFontLUT(TeluguDict &lut) {
 	lut.mapSpecial("?", 0x3F); //  63 ?
 	lut.mapSpecial("-", 0x60); //  96 `
 	lut.mapSpecial(".", 0xA4); // 164 ¤
-	lut.mapSpecial(".", 0xDB); // 219 Û
 	lut.mapSpecial(".", 0xF2); // 242 ò
 	lut.mapSpecial(".", 0x192);
 	lut.mapSpecial("|", 0x02C6);

@@ -179,10 +179,11 @@ std::string MyPDF::extract(int pn)
 					// Tj - print text at current co-ordinates
 					// if(record) {
 						PdfString pStr = stack.top().GetString(); stack.pop();
-						if (pStr.IsUnicode())
+						if (pStr.IsUnicode()) {
 							pStr = pStr.ToUnicode();
+							// pStr = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont);
+						}
 						string text = pStr.GetStringUtf8();
-						// string text = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont).GetStringUtf8();
 						teluguText.set(text);
 
 						if (strcmp( pszToken, "'" ) == 0 || strcmp( pszToken, "\"" ) == 0) {

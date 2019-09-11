@@ -1,4 +1,5 @@
 #include "TeluguDict.h"
+#include <iostream>
 
 map<unsigned int, int> MissingChar;
 
@@ -207,7 +208,27 @@ void TeluguDict::getNewDeergam(unsigned short old, unsigned short c, pair<unsign
 }
 
 void TeluguDict::fillVothulu(unsigned short c, pair<unsigned short, string> &achchu, pair<unsigned short, string> &deergam, vector< pair<unsigned short, string> > &vothulu) {
-	vothulu.push_back(make_pair(c, Vothulu[c]));
+	if (c == 0xDB) {
+		if (achchu.second == string("చ")) {
+			achchu = make_pair(c, "ఛ");
+		}
+		else if (achchu.second == string("డ")) {
+			achchu = make_pair(c, "ఢ");
+		}
+		else if (achchu.second == string("ద")) {
+			achchu = make_pair(c, "ధ");
+		}
+		else if (achchu.second == string("ప")) {
+			achchu = make_pair(c, "ఫ");
+		}
+		else if (achchu.second == string("బ")) {
+			achchu = make_pair(c, "భ");
+		} else {
+			std::cout << "Fount new . vothu" << endl;
+		}
+	} else {
+		vothulu.push_back(make_pair(c, Vothulu[c]));
+	}
 }
 
 void TeluguDict::fillAksharam(unsigned short c, pair<unsigned short, string> &achchu, pair<unsigned short, string> &deergam, vector< pair<unsigned short, string> > &vothulu) {
