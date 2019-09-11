@@ -116,11 +116,11 @@ std::string MyPDF::extract(int pn)
 					if(fontName.GetName().compare( skipFont ) == 0)
 						record = false;
 					else {
-						if(count)
-							record = true;
-						else
-							record = false;
-						count++;
+						record = true;
+						// if(count)
+						// else
+						// 	record = false;
+						// count++;
 					}
 				} else if (strcmp( pszToken, "Tz" ) == 0 ) {
 					g = stack.top().GetReal(); stack.pop();
@@ -160,15 +160,25 @@ std::string MyPDF::extract(int pn)
 					PdfArray array = stack.top().GetArray(); stack.pop();
 					for( int i=0; i<static_cast<int>(array.GetSize()); i++ )
 					{
+						outdata << endl;
 						if( array[i].IsString() || array[i].IsHexString() ) {
 							PdfString pdfstr = array[i].GetString();
 							string text = pdfstr.GetStringUtf8();
 							teluguText.set(text);
 
 							outdata << teluguText;
-						}
-						else if( array[i].IsNumber()) {
-							// cout << "Real TJ" << endl;
+							// cout << "TJ - String: " << pn << endl;
+						} else if( array[i].IsHexString() ) {
+							PdfString pdfstr = array[i].GetString();
+							string text = pdfstr.GetStringUtf8();
+							teluguText.set(text);
+
+							outdata << teluguText;
+							cout << "TJ - Hex String: " << pn << endl;
+						} else if( array[i].IsNumber()) {
+							cout << "TJ - Real: " << pn << endl;
+						} else {
+							cout << "TJ - Missing: " << pn << endl;
 						}
 					}
 				} else {
@@ -186,10 +196,13 @@ std::string MyPDF::extract(int pn)
 								// double tc_c = stack.top().GetReal(); stack.pop();
 								// double tc_w = stack.top().GetReal(); stack.pop();
 							}
+							outdata << endl;
 							// cout << endl;
+						} else {
+							cout << "Missing in TJ else: " << pn << endl;
 						}
 
-						outdata << teluguText << endl;
+						outdata << teluguText;
 						// outdata << teluguText.details() << endl << endl;
 					}
 				}
@@ -333,6 +346,7 @@ void MyPDF::extractTo(string outText) {
 	// pc = 3;
 	for (int pn = 0; pn < pc; ++pn) {
 		extract(pn);
+		outdata << endl;
 	}
 	pc = PDF.GetPageCount();
 
@@ -482,7 +496,8 @@ void MyPDF::genMap(string outMap) {
     PdfFont* english = PDF.CreateFont( "Arial" );
     english->SetFontSize( 20.0 );
 
-    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding( 0, 0xffff, true ) );
+	// noto sans telugu regular
+    PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding( 0, 0xffff, true ));
     teluguNoto->SetFontSize( 20.0 );
 
 	PDF.DeletePages(0, 1);
@@ -533,12 +548,31 @@ void MyPDF::genMap(string outMap) {
 		// const pdf_utf8 utf8Text = "శి";
 		// pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>("「PoDoFo」శి"));
 		// painter.DrawText( 240, pos, PdfString( &wstr[0], wstr.size()) );
-		// pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(string(" -> " + teluguText.getChar(c->first)), teluguNoto).GetBuffer());
+		// pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(teluguText.getChar(c->first), teluguNoto).GetBuffer());
 
-		pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>("「PoDoFo」శి"));
+		// pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>("శి"));
+		// pdfStr = PdfString("శి");
+		// pdfStr = PdfString(teluguText.getChar(c->first));
+		// wchar_t *data = "శి";
+		// pdfStr = PdfString(reinterpret_cast<const wchar_t*>(&wstr[0]), 1);
+		// unsigned short ws = 0x0C10;
+		// pdfStr = PdfString((wchar_t*)&ws, 1);
+		// pdfStr = PdfString(string("శి").c_str());
+		// 0x0C10
+		// 0000 1100 0001 0000
+		// 
+		// 1110 0000 = 0xE0
+		// 10 1100 00 = 0xB0
+		// 10 01 0000 = 0x90
+		// char ws[] = { 0xE0, 0xB0 , 0x85 , '\0' };
+		// pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>(&ws));
+		// pdfStr = PdfString(telugu->GetEncoding()->ConvertToEncoding(pdfStr, teluguNoto).GetBuffer());
+
+		pdfStr = PdfString(teluguText.getChar(c->first));
 
 		painter.SetFont( teluguNoto );
 		painter.DrawText( 240, pos, pdfStr );
+		// cout << c->first << hex << teluguText.getChar(c->first) << "\t" << endl;
 
 		pos -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
 	}

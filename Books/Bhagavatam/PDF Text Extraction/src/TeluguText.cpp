@@ -19,6 +19,8 @@ unsigned short TeluguText::nextChar(string &str, int *i) {
 		c |= (str[(*i)++] & 0x3F);
 		if (c != 0 && AllChar.find(c) == AllChar.end())
 			AllChar[c] = str.substr (*i - 3, 3);
+	} else {
+		cout << "Found 4 byte char" << endl;
 	}
 
 	text.push_back(lut.getCharPair(c));
