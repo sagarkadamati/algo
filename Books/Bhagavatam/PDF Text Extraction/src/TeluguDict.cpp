@@ -226,8 +226,108 @@ void TeluguDict::fillVothulu(unsigned short c, pair<unsigned short, string> &ach
 		} else {
 			std::cout << "Fount new . vothu" << endl;
 		}
+	} else if (c == 0xA4) {
+		if (vothulu.size() > 0) {
+			if (vothulu.back().second == string("్చ")) {
+				vothulu.back() = make_pair(c, "్ఛ");
+			}
+			else if (vothulu.back().second == string("్డ")) {
+				vothulu.back() = make_pair(c, "్ఢ");
+			}
+			else if (vothulu.back().second == string("్ద")) {
+				vothulu.back() = make_pair(c, "్ధ");
+			}
+			else if (vothulu.back().second == string("్ప")) {
+				vothulu.back() = make_pair(c, "్ఫ");
+			}
+			else if (vothulu.back().second == string("్బ")) {
+				vothulu.back() = make_pair(c, "్భ");
+			} else {
+				std::cout << "Fount new . vothu" << endl;
+			}
+		} else {
+			vothulu.push_back(make_pair(c, Vothulu[c]));
+		}
 	} else {
 		vothulu.push_back(make_pair(c, Vothulu[c]));
+		// string current = Vothulu[c];
+		// if ( current == string("్క") ) {
+		// 	vothulu.push_back(make_pair(c, "క"));
+		// } else if ( current == string("్ఖ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఖ"));
+		// } else if ( current == string("్గ") ) {
+		// 	vothulu.push_back(make_pair(c, "గ"));
+		// } else if ( current == string("్ఘ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఘ"));
+		// } else if ( current == string("్ఙ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఙ"));
+		// } else if ( current == string("్చ") ) {
+		// 	vothulu.push_back(make_pair(c, "చ"));
+		// } else if ( current == string("్ఛ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఛ"));
+		// } else if ( current == string("్జ") ) {
+		// 	vothulu.push_back(make_pair(c, "జ"));
+		// } else if ( current == string("్జ") ) {
+		// 	vothulu.push_back(make_pair(c, "జ"));
+		// } else if ( current == string("్ఝ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఝ"));
+		// } else if ( current == string("్ఞ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఞ"));
+		// } else if ( current == string("్ట") ) {
+		// 	vothulu.push_back(make_pair(c, "ట"));
+		// } else if ( current == string("్ఠ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఠ"));
+		// } else if ( current == string("్డ") ) {
+		// 	vothulu.push_back(make_pair(c, "డ"));
+		// } else if ( current == string("్ఢ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఢ"));
+		// } else if ( current == string("్ణ") ) {
+		// 	vothulu.push_back(make_pair(c, "ణ"));
+		// } else if ( current == string("్త") ) {
+		// 	vothulu.push_back(make_pair(c, "త"));
+		// } else if ( current == string("్థ") ) {
+		// 	vothulu.push_back(make_pair(c, "థ"));
+		// } else if ( current == string("్ద") ) {
+		// 	vothulu.push_back(make_pair(c, "ద"));
+		// } else if ( current == string("్ధ") ) {
+		// 	vothulu.push_back(make_pair(c, "ధ"));
+		// } else if ( current == string("్న") ) {
+		// 	vothulu.push_back(make_pair(c, "న"));
+		// } else if ( current == string("్ప") ) {
+		// 	vothulu.push_back(make_pair(c, "ప"));
+		// } else if ( current == string("్ఫ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఫ"));
+		// } else if ( current == string("్బ") ) {
+		// 	vothulu.push_back(make_pair(c, "బ"));
+		// } else if ( current == string("్భ") ) {
+		// 	vothulu.push_back(make_pair(c, "భ"));
+		// } else if ( current == string("్మ") ) {
+		// 	vothulu.push_back(make_pair(c, "మ"));
+		// } else if ( current == string("్య") ) {
+		// 	vothulu.push_back(make_pair(c, "య"));
+		// } else if ( current == string("్ర") ) {
+		// 	vothulu.push_back(make_pair(c, "ర"));
+		// } else if ( current == string("్ఱ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఱ"));
+		// } else if ( current == string("్ల") ) {
+		// 	vothulu.push_back(make_pair(c, "ల"));
+		// } else if ( current == string("్ళ") ) {
+		// 	vothulu.push_back(make_pair(c, "ళ"));
+		// } else if ( current == string("్ఴ") ) {
+		// 	vothulu.push_back(make_pair(c, "ఴ"));
+		// } else if ( current == string("్వ") ) {
+		// 	vothulu.push_back(make_pair(c, "వ"));
+		// } else if ( current == string("్శ") ) {
+		// 	vothulu.push_back(make_pair(c, "శ"));
+		// } else if ( current == string("్ష") ) {
+		// 	vothulu.push_back(make_pair(c, "ష"));
+		// } else if ( current == string("్స") ) {
+		// 	vothulu.push_back(make_pair(c, "స"));
+		// } else if ( current == string("్హ") ) {
+		// 	vothulu.push_back(make_pair(c, "హ"));
+		// } else {
+		// 	cout << "Found new vothu: " << hex << c << endl;
+		// }
 	}
 }
 
