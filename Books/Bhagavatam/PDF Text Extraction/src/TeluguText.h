@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <stack>
+#include <queue>
 #include <vector>
 #include <map>
 
@@ -23,6 +24,7 @@ class TeluguText {
 		TeluguDict lut;
 		vector<TeluguAksharam> aksharalu;
 		vector< pair<unsigned short, string> > text;
+		queue< pair<unsigned short, string> > backup;
 		struct strmake {
 			std::stringstream s;
 			template <typename T> strmake& operator << (const T& x) {

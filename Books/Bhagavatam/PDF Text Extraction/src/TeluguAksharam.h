@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <queue>
 #include <vector>
 
 #include <bitset>
@@ -22,11 +23,11 @@ class TeluguAksharam {
 	bool isSpecial;
 public:
 	TeluguAksharam();
-	TeluguAksharam(TeluguDict &l);
+	TeluguAksharam(TeluguDict &l, queue< pair<unsigned short, string> > &backup);
 	~TeluguAksharam();
 	string toString();
-	void insert(unsigned short c);
-	void insertVothu(unsigned short c);
+	void insert(unsigned short c, queue< pair<unsigned short, string> > &backup);
+	void insertVothu(unsigned short c, queue< pair<unsigned short, string> > &backup);
 };
 
 #endif /* TELUGU_AKSHARAM_H */

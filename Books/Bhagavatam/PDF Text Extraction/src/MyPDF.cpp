@@ -153,12 +153,12 @@ std::string MyPDF::extract(int pn)
 					y = cur_y - pCurFont->GetFontMetrics()->GetLineSpacing();
 				}
 
-				if (abs(cur_y - y) > pCurFont->GetFontMetrics()->GetLineSpacing()) {
-					outdata << endl << endl;
-				} else {
-					if (cur_x !=0 && cur_y != 0)
-						outdata << endl;
-				}
+				if (cur_x !=0 && cur_y != 0)
+					if (abs(cur_y - y) > pCurFont->GetFontMetrics()->GetLineSpacing()) {
+						outdata << endl << endl;
+					} else {
+							outdata << endl;
+					}
 
 				cur_x = x;
 				cur_y = y;
@@ -287,7 +287,15 @@ std::string MyPDF::extract(int pn)
 					x = stack.top().GetReal(); stack.pop();
 					y = stack.top().GetReal(); stack.pop();
 
-					outdata << endl;
+					if (cur_x !=0 && cur_y != 0)
+						if (abs(cur_y - y) > pCurFont->GetFontMetrics()->GetLineSpacing()) {
+							outdata << endl << endl;
+						} else {
+								outdata << endl;
+						}
+
+					cur_x = x;
+					cur_y = y;
 				}
 
 			} else {
@@ -328,7 +336,6 @@ void MyPDF::extractTo(string outText) {
 
 	for (int pn = 0; pn < pc; ++pn) {
 		extract(pn);
-		outdata << endl;
 	}
 	pc = PDF.GetPageCount();
 

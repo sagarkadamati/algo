@@ -7,12 +7,17 @@ TeluguAksharam::TeluguAksharam() {
 	// setupFont(*lut)((*lut));
 }
 
-TeluguAksharam::TeluguAksharam(TeluguDict &l) {
+TeluguAksharam::TeluguAksharam(TeluguDict &l, queue< pair<unsigned short, string> > &backup) {
 	achchu.second = "";
 	deergam.second = "";
 	isSpecial = false;
 
 	lut = &l;
+
+	while (!backup.empty()) {
+		vothulu.push_back(backup.front());
+		backup.pop();
+	} 
 }
 
 TeluguAksharam::~TeluguAksharam() {
@@ -33,11 +38,15 @@ string TeluguAksharam::toString() {
 	return s;
 }
 
-void TeluguAksharam::insertVothu(unsigned short c) {
-	vothulu.push_back(make_pair(c, "్" + (*lut)[c].second));
+void TeluguAksharam::insertVothu(unsigned short c, queue< pair<unsigned short, string> > &backup) {
+	if ((*lut)[c].second == string("ర")) {
+		backup.push(make_pair(c, "్" + (*lut)[c].second));
+	} else {
+		vothulu.push_back(make_pair(c, "్" + (*lut)[c].second));
+	}
 }
 
-void TeluguAksharam::insert(unsigned short c) {
+void TeluguAksharam::insert(unsigned short c, queue< pair<unsigned short, string> > &backup) {
 	if (lut->isSkip(c)) {
 		return;
 	} else if (lut->isAchu(c)) {
@@ -46,7 +55,11 @@ void TeluguAksharam::insert(unsigned short c) {
 	} else if (lut->isDeergam(c)) {
 		lut->getNewDeergam(deergam.first, c, achchu, deergam, vothulu);
 	} else if (lut->isVothu(c)) {
-		lut->fillVothulu(c, achchu, deergam, vothulu);
+		if ((*lut)[c].second == string("్ర")) {
+			backup.push(make_pair(c, (*lut)[c].second));
+		} else {
+			lut->fillVothulu(c, achchu, deergam, vothulu);
+		}
 	} else if (lut->isSarga(c)) {
 		sarga = (*lut)[c];
 	} else if (lut->isAksharam(c)) {

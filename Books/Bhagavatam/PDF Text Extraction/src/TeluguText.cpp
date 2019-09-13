@@ -41,14 +41,14 @@ void TeluguText::set(string &str) {
 				lut.isSpecial(c) ||
 				lut.isAchu(c) ||
 				lut.isAksharam(c)) {
-			aksharalu.push_back(TeluguAksharam(lut));
+			aksharalu.push_back(TeluguAksharam(lut, backup));
 		}
 
 		if ( lut[c].second == string("్") ) {
 			c = nextChar(str, &i);
-			aksharalu.back().insertVothu(c);;
+			aksharalu.back().insertVothu(c, backup);
 		} else {
-			aksharalu.back().insert(c);;
+			aksharalu.back().insert(c, backup);
 		}
 	}
 }
