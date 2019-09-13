@@ -27,219 +27,6 @@ unsigned short TeluguText::nextChar(string &str, int *i) {
 	return c;
 }
 
-// bool TeluguText::isSkippable(unsigned short c) {
-
-	// if (lut.isSkip(c)) {
-	// 	return true;
-	// }
-
-	// if (text.size() > 0) {
-	// 	string prev = text.back().second;
-	// 	if ( prev == string("య") || prev == string("మ") ) {
-	// 	} else
-	// 	if ( c == 0x54 ) { // "ు"
-	// 		// if ( Deergalu[c] == string("ు") ) {
-	// 		if ( prev == string("మ") ) {
-	// 			text.push_back(make_pair(0x54, "ు"));
-	// 			return true;
-	// 		} else if ( lut[text.back().first].second == string("వ") ) {
-	// 			text.pop_back();
-	// 			text.push_back(make_pair(c, "మ"));
-	// 			return true;
-	// 		} else if ( lut[text.back().first].second == string("య") ) {
-	// 			text.pop_back();
-	// 			text.push_back(make_pair(c, "య"));
-	// 			return true;
-	// 		}
-	// 	} else if ( c == 0xF7 ) {
-	// 		if ( lut[text.back().first].second == string("వ") ) {
-	// 			text.pop_back();
-	// 			text.push_back(make_pair(c, "మ"));
-	// 			text.push_back(make_pair(c, "ా"));
-	// 			return true;
-	// 		}
-	// 	} else if ( prev == string("్") ) {
-	// 		cout << endl << "entered"<< endl;
-	// 		pair<unsigned short, string> ahrr = text.back();
-	// 		text.pop_back();
-
-	// 		pair<unsigned short, string> deergram = text.back();
-	// 		if ( lut.isDeergam(deergram.first) ) {
-	// 			text.pop_back();
-
-	// 			text.push_back(ahrr);
-	// 			text.push_back(lut.getCharPair(c));
-
-	// 			text.push_back(deergram);
-	// 		} else {
-	// 			text.push_back(ahrr);
-	// 			text.push_back(lut.getCharPair(c));
-	// 		}
-
-	// 		return true;
-	// 	}
-	// 	} else if ( lut.isVothu(c) ) {
-	// 		pair<unsigned short, string> deergram = text.back();
-	// 		if ( lut.isDeergam(deergram.first) ) {
-	// 			text.pop_back();
-	// 			text.push_back(lut.getCharPair(c));
-	// 			text.push_back(deergram);
-	// 		} else {
-	// 			text.push_back(lut.getCharPair(c));
-	// 		}
-
-	// 		return true;
-	// 	} else if ( lut.isAksharam(c) ) {
-	// 		switch(c) {
-	// 			case 0x24:  // "వి"
-	// 				text.push_back(make_pair(c, "వ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x4D:  // "వీ"
-	// 				text.push_back(make_pair(c, "వ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x5D:  // "రి"
-	// 				text.push_back(make_pair(c, "ర"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x6C:   // "శ్రీ"
-	// 				text.push_back(make_pair(c, "శ"));
-	// 				text.push_back(make_pair(c, "్"));
-	// 				text.push_back(make_pair(c, "ర"));
-	// 				text.push_back(make_pair(c, "ీ"));
-	// 				break;
-	// 			case 0x70:  // "జూ"
-	// 				text.push_back(make_pair(c, "జ"));
-	// 				text.push_back(make_pair(0x4C, "ూ"));
-	// 				break;
-	// 			case 0x72:  // "తీ"
-	// 				text.push_back(make_pair(c, "త"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x2039:// "తీ"
-	// 				text.push_back(make_pair(c, "త"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0xEC:  // "ని"
-	// 				text.push_back(make_pair(c, "న"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0xF5:  // "జి"
-	// 				text.push_back(make_pair(c, "జ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x02D9:// "నీ"
-	// 				text.push_back(make_pair(c, "న"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0xD8:  // "రీ"
-	// 				text.push_back(make_pair(c, "ర"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x222B:// "చి"
-	// 				text.push_back(make_pair(c, "చ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x2013:// "గి"
-	// 				text.push_back(make_pair(c, "గ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x2A:  // "లి"
-	// 				text.push_back(make_pair(c, "ల"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x3b:  // "బీ"
-	// 				text.push_back(make_pair(c, "బ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x41:  // "ాూ"
-	// 				text.push_back(make_pair(c, "ా"));
-	// 				text.push_back(make_pair(0x4C, "ూ"));
-	// 				break;
-	// 			case 0x42:  // "దీ"
-	// 				text.push_back(make_pair(c, "ద"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x45:  // "జు"
-	// 				text.push_back(make_pair(c, "జ"));
-	// 				text.push_back(make_pair(0x54, "ు"));
-	// 				break;
-	// 			case 0x4A:  // "జీ"
-	// 				text.push_back(make_pair(c, "జ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x4E:  // "చీ"
-	// 				text.push_back(make_pair(c, "చ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x51:  // "ాు"
-	// 				text.push_back(make_pair(c, "ా"));
-	// 				text.push_back(make_pair(0x54, "ు"));
-	// 				break;
-	// 			case 0x5E:  // "గీ"
-	// 				text.push_back(make_pair(c, "గ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 			case 0x5F:  // "బి"
-	// 				text.push_back(make_pair(c, "బ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x2022:// "శి"
-	// 				text.push_back(make_pair(c, "శ"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x7E:  // "ది"
-	// 				text.push_back(make_pair(c, "ద"));
-	// 				text.push_back(make_pair(0xE6, "ి"));
-	// 				break;
-	// 			case 0x221E:// "ళీ"
-	// 				text.push_back(make_pair(c, "ళ"));
-	// 				text.push_back(make_pair(0xB0, "ీ"));
-	// 				break;
-	// 		}
-	// 		return true;
-	// 	} else if ( prev == string("హ")  && lut[c].second == string("ా") ) {
-	// 		return true;
-	// 	}
-	// }
-
-// 	return false;
-// }
-
-// bool TeluguText::isReplaceable(unsigned short c) {
-	// if (text.size() > 0) {
-	// 	string prev = text.back().second;
-	// 	if ( prev == string("ె")  && lut[c].second == string("ై") ) {
-	// 		return true;
-	// 	}
-	// }
-
-// 	return false;
-// }
-
-// bool TeluguText::substitue(unsigned short c) {
-	// if (text.size() > 0) {
-	// 	string prev = text.back().second;
-	// 	string current = getCharPair(c).second;
-
-	// 	if ( prev == string("్") ) {
-	// 		text.pop_back();
-	// 		pair<unsigned short, string> deegram = text.back();
-	// 		if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
-	// 			text.pop_back();
-	// 		}
-
-
-	// 		if ( Deergalu.find(deegram.first) != Deergalu.end() ) {
-	// 			text.push_back(deegram);
-	// 		}
-	// 	}
-	// }
-
-// 	return false;
-// }
-
 void TeluguText::set(string &str) {
 	text.clear();
 	aksharalu.clear();
@@ -263,34 +50,6 @@ void TeluguText::set(string &str) {
 		} else {
 			aksharalu.back().insert(c);;
 		}
-
-		// if (!isSkippable(c)) {
-			// if (isReplaceable(c)) {
-				// text.pop_back();
-
-				// if (( fchar == string("య") || fchar == string("వ") ) && teluguText[i] == string("ు") ) {
-				// 	i++;
-
-				// 	if (fchar == string("వ")) {
-				// 		out << "మ";
-				// 		// cout << "మ";
-				// 		// cout << " Found maa, using maa" << endl;
-				// 	}
-				// } else if ( fchar == string("ె")  && teluguText[i] == string("ై") ) {
-				// 	// cout << teluguText[i++] << endl;
-				// 	out << teluguText[i++];
-				// } else if ( fchar == string("హ")  && teluguText[i] == string("ా") ) {
-				// 	out << fchar;
-				// 	i++;
-				// } else {
-				// 	// cout << fchar << endl;
-				// 	out << fchar;
-			// }
-
-			// if (!substitue(c)) {
-				// text.push_back(lut.getCharPair(c));
-			// }
-		// }
 	}
 }
 
@@ -307,27 +66,7 @@ string TeluguText::operator[] (int index) {
 	bool debug = true;
 
 	if (index < aksharalu.size()) {
-	// if (index < text.size()) {
-	// 	if (debug) {
-	// 		unsigned short c = text[index].first;
-
-	// 		cout << setw(8) << dec << c;
-	// 		cout << setw(8) << hex << c;
-	// 		cout << setw(20) << bitset<16>(c);
-
-	// 		if (c == 32 || c == 46) {
-	// 			cout << setw(4);
-	// 		} else {
-	// 			cout << setw(6);
-	// 		}
-
-	// 		cout << text[index].second;
-	// 		cout << endl;
-	// 	}
-
-		// cout << aksharalu[index].toString() << endl;
 		return aksharalu[index].toString();
-	// 	return text[index].second;
 	} else {
 		return empty;
 	}
@@ -342,7 +81,6 @@ unsigned short TeluguText::charCode (int index) {
 }
 
 int TeluguText::size() {
-	// return text.size();
 	return aksharalu.size();
 }
 
@@ -361,23 +99,6 @@ ostream & operator << (ostream &out, TeluguText &teluguText) {
 
 	return out;
 }
-
-// string TeluguText::details() {
-// 	int textSize = text.size();
-// 	string data = "";
-
-// 	int i = 0;
-// 	while (i < textSize) {
-// 		 data += "| ";
-// 		 data += text[i].second;
-// 		 data += " -> ";
-// 		 data += strmake() << "0x" <<  hex << text[i++].first;
-// 		 data += " ";
-// 	}
-// 	data += "|";
-
-// 	return data;
-// }
 
 string TeluguText::details() {
 	int textSize = text.size();

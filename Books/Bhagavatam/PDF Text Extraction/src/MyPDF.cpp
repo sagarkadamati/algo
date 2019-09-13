@@ -65,6 +65,7 @@ std::string MyPDF::extract(int pn)
 	double size;
 	double g;
 
+	bool debug = false;
 	bool record = true;
 	int count = 0;
 
@@ -131,8 +132,8 @@ std::string MyPDF::extract(int pn)
 					// TD - move to x, y
 					// Td - move to x, y
 
-					y = stack.top().GetReal(); stack.pop();
-					x = stack.top().GetReal(); stack.pop();
+					y = cur_y + stack.top().GetReal(); stack.pop();
+					x = cur_x + stack.top().GetReal(); stack.pop();
 
 				} else if( strcmp( pszToken, "Tm" ) == 0 ) {
 
@@ -143,8 +144,8 @@ std::string MyPDF::extract(int pn)
 					shear_x  = stack.top().GetReal(); stack.pop();
 					scale_x  = stack.top().GetReal(); stack.pop();
 
-					x = offset_x;
-					y = offset_y;
+					x = cur_x + offset_x;
+					y = cur_y + offset_y;
 				} else if ( strcmp( pszToken, "T*" ) == 0 ) {
 					// T* - New line
 					// outdata << endl;
@@ -179,6 +180,8 @@ std::string MyPDF::extract(int pn)
 							teluguText.set(text);
 
 							outdata << teluguText << " ";
+							if (debug)
+								outdata << endl << x << ", " << y << teluguText.details() << endl;
 						} else if( array[i].IsNumber() ) {
 							// long long n = stack.top().GetNumber(); stack.pop();
 						} else if( array[i].IsReal() ) {
@@ -213,8 +216,8 @@ std::string MyPDF::extract(int pn)
 
 						// Handle TJ or ' or " here
 						outdata << teluguText << " ";
-						// outdata << teluguText << endl;
-						// outdata << teluguText.details() << endl << endl;
+						if (debug)
+							outdata << endl << x << ", " << y << teluguText.details() << endl;
 					// }
 				}
 
@@ -339,7 +342,8 @@ void MyPDF::genMap(string outMap) {
 	}
 	pc = PDF.GetPageCount();
 
-	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("R7") );
+	// PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("R7") );
+	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("F1") );
 	PdfFont* telugu = PDF.GetFont( fontObject );
     telugu->SetFontSize( 32.0 );
 
