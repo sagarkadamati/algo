@@ -65,7 +65,7 @@ std::string MyPDF::extract(int pn)
 	double size;
 	double g;
 
-	bool debug = false;
+	bool debug = true;
 	bool record = true;
 	int count = 0;
 

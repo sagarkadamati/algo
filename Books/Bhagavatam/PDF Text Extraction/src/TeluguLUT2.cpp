@@ -137,7 +137,7 @@ static void setupHallulu(TeluguDict &lut) {
 	// చిహ్నములు
 	H("ఽ", 0x0000);
 
-	//  skip ్
+	//   ్
 	H("్", 0x59);
 	H("్", 0x74);
 	H("్", 0xE9);
@@ -156,7 +156,7 @@ static void setupTeluguVarnamala(TeluguDict &lut) {
 
 static void setupAksharamlu(TeluguDict &lut) {
 	AK("గి", 0x2013);	AK("గీ", 0x5E);
-	AK("చి", 0x222B);	AK("చీ", 0x4E);
+	AK("చి", 0x06);		AK("చీ", 0x4E);
 	AK("జి", 0xF5);		AK("జీ", 0x4A);		AK("జు", 0x45);		AK("జూ", 0x70);
 	AK("తీ", 0x72);		AK("తీ", 0x2039);
 	AK("ది", 0x7E);		AK("దీ", 0x42);
