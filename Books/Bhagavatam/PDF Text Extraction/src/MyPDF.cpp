@@ -339,7 +339,7 @@ void MyPDF::genMap(string outMap) {
 	}
 	pc = PDF.GetPageCount();
 
-	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("F1") );
+	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("R7") );
 	PdfFont* telugu = PDF.GetFont( fontObject );
     telugu->SetFontSize( 32.0 );
 
