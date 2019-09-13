@@ -11,7 +11,7 @@ void convert(string input, string output, string removeFont, int start, int end)
 	// myPDF.removeFont(removeFont);
 	// myPDF.deletePages(start, end);
 	myPDF.extractTo("data.txt");
-	// myPDF.genMap("map.pdf");
+	myPDF.genMap("map.pdf");
 	// myPDF.saveAs(output);
 
 	myPDF.printMissing();

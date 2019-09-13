@@ -102,6 +102,8 @@ std::string MyPDF::extract(int pn)
 					// Text state operators
 
 				if( strcmp( pszToken, "Tf" ) == 0 ) {
+					if (cur_x !=0 && cur_y != 0)
+						outdata << endl;
 
 					size = stack.top().GetReal(); stack.pop();
 					PdfName fontName = stack.top().GetName(); stack.pop();
@@ -146,9 +148,20 @@ std::string MyPDF::extract(int pn)
 				} else if ( strcmp( pszToken, "T*" ) == 0 ) {
 					// T* - New line
 					// outdata << endl;
+
+					y = cur_y - pCurFont->GetFontMetrics()->GetLineSpacing();
 				}
 
-				outdata << endl;
+				if (abs(cur_y - y) > pCurFont->GetFontMetrics()->GetLineSpacing()) {
+					outdata << endl << endl;
+				} else {
+					if (cur_x !=0 && cur_y != 0)
+						outdata << endl;
+				}
+
+				cur_x = x;
+				cur_y = y;
+				// outdata << endl;
 			} else if( strcmp( pszToken, "Tj" ) == 0 || strcmp( pszToken, "'" ) == 0 ||
 					strcmp( pszToken, "\"" ) == 0 || strcmp( pszToken, "TJ" ) == 0 ) {
 				// Text showing operators
@@ -165,7 +178,7 @@ std::string MyPDF::extract(int pn)
 							string text = pdfstr.GetStringUtf8();
 							teluguText.set(text);
 
-							outdata << teluguText;
+							outdata << teluguText << " ";
 						} else if( array[i].IsNumber() ) {
 							// long long n = stack.top().GetNumber(); stack.pop();
 						} else if( array[i].IsReal() ) {
@@ -199,7 +212,7 @@ std::string MyPDF::extract(int pn)
 						}
 
 						// Handle TJ or ' or " here
-						outdata << teluguText;
+						outdata << teluguText << " ";
 						// outdata << teluguText << endl;
 						// outdata << teluguText.details() << endl << endl;
 					// }
@@ -326,16 +339,16 @@ void MyPDF::genMap(string outMap) {
 	}
 	pc = PDF.GetPageCount();
 
-	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("R7") );
+	PdfObject* fontObject =  PDF.GetPage(0)->GetFromResources( PdfName("Font"), PdfName("F1") );
 	PdfFont* telugu = PDF.GetFont( fontObject );
-    telugu->SetFontSize( 20.0 );
+    telugu->SetFontSize( 32.0 );
 
     PdfFont* english = PDF.CreateFont( "Arial" );
-    english->SetFontSize( 20.0 );
+    english->SetFontSize( 32.0 );
 
 	// noto sans telugu regular
     PdfFont* teluguNoto = PDF.CreateFont( "Noto Sans Telugu", false, false, new PdfIdentityEncoding( 0, 0xffff, true ));
-    teluguNoto->SetFontSize( 20.0 );
+    teluguNoto->SetFontSize( 32.0 );
 
 	PDF.DeletePages(0, 1);
 	PdfPage* page = PDF.CreatePage( PdfPage::CreateStandardPageSize( ePdfPageSize_A4 ) );
@@ -347,26 +360,33 @@ void MyPDF::genMap(string outMap) {
     PdfPainter painter;
 	painter.SetPage( page );
 
-	int pos = page->GetPageSize().GetHeight() - 60;
+	int x = 60;
+	int y = page->GetPageSize().GetHeight() - 60;
 	for(map<unsigned short, string >::iterator c = AllChar.begin(); c != AllChar.end(); c++) {
-		if (pos <= 20) {
+		if (y <= 20) {
 			page = PDF.CreatePage( PdfPage::CreateStandardPageSize( ePdfPageSize_A4 ) );
 			if( !page ) {
 				cout << "Error creating page" << endl;
 				PODOFO_RAISE_ERROR( ePdfError_InvalidHandle );
 			}
-			pos = page->GetPageSize().GetHeight() - 60;
+			y = page->GetPageSize().GetHeight() - 60;
 			painter.SetPage( page );
 		}
 
 		PdfString pdfStr = PdfString(reinterpret_cast<const pdf_utf8*>(c->second.c_str()));
 		painter.SetFont( telugu );
-		painter.DrawText( 60, pos, pdfStr );
+		painter.DrawText( x, y, pdfStr );
 
 		painter.SetFont( english );
-		painter.DrawText( 120, pos, PdfString(string(strmake() << " -> " << hex << c->first)) );
+		painter.DrawText( x + 40, y, PdfString(string(strmake() << " -> " << hex << c->first)) );
 
-		pos -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
+		if (x == 60) {
+			x = 350;
+		} else {
+			x = 60;
+			y -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
+			y -= painter.GetFont()->GetFontMetrics()->GetLineSpacing();
+		}
 	}
 
     painter.FinishPage();
