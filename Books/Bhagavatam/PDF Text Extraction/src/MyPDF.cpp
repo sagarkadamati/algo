@@ -42,6 +42,7 @@ std::string MyPDF::extract(int pn)
 	PdfVariant       var;
 	EPdfContentsType eType;
 
+	double cur_fontSize		= 0.0;
 	double cur_x            = 0.0;
 	double cur_y            = 0.0;
 
@@ -65,7 +66,7 @@ std::string MyPDF::extract(int pn)
 	double size;
 	double g;
 
-	bool debug = true;
+	bool debug = false;
 	bool record = true;
 	int count = 0;
 
@@ -103,6 +104,7 @@ std::string MyPDF::extract(int pn)
 					// Text state operators
 
 				if( strcmp( pszToken, "Tf" ) == 0 ) {
+					double fontSize;
 					if (cur_x !=0 && cur_y != 0)
 						outdata << endl;
 
@@ -111,6 +113,11 @@ std::string MyPDF::extract(int pn)
 
 					pFont = pPage->GetFromResources( PdfName("Font"), fontName );
 					pCurFont = PDF.GetFont( pFont );
+					fontSize = pCurFont->GetFontSize();
+
+					if (cur_fontSize != fontSize)
+						outdata << endl;
+					cur_fontSize = fontSize;
 
 					// cout << fontName.GetName() << endl;
 					if(fontName.GetName().compare( skipFont ) == 0)
@@ -157,7 +164,7 @@ std::string MyPDF::extract(int pn)
 					if (abs(cur_y - y) > pCurFont->GetFontMetrics()->GetLineSpacing()) {
 						outdata << endl << endl;
 					} else {
-							outdata << endl;
+							// outdata << endl;
 					}
 
 				cur_x = x;
@@ -173,10 +180,12 @@ std::string MyPDF::extract(int pn)
 					for( int i=0; i<static_cast<int>(array.GetSize()); i++ )
 					{
 						if( array[i].IsString() || array[i].IsHexString() ) {
-							PdfString pdfstr = array[i].GetString();
-							if (pdfstr.IsUnicode())
-								pdfstr = pdfstr.ToUnicode();
-							string text = pdfstr.GetStringUtf8();
+							PdfString pStr = array[i].GetString();
+							if (pStr.IsUnicode()) {
+								pStr = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont);
+								// pdfstr = pStr.ToUnicode();
+							}
+							string text = pStr.GetStringUtf8();
 							teluguText.set(text);
 
 							outdata << teluguText << " ";
@@ -197,8 +206,8 @@ std::string MyPDF::extract(int pn)
 					// if(record) {
 						PdfString pStr = stack.top().GetString(); stack.pop();
 						if (pStr.IsUnicode()) {
-							pStr = pStr.ToUnicode();
-							// pStr = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont);
+							// pStr = pStr.ToUnicode();
+							pStr = pCurFont->GetEncoding()->ConvertToUnicode(pStr, pCurFont);
 						}
 						string text = pStr.GetStringUtf8();
 						teluguText.set(text);
@@ -208,7 +217,7 @@ std::string MyPDF::extract(int pn)
 								double tc_c = stack.top().GetReal(); stack.pop();
 								double tc_w = stack.top().GetReal(); stack.pop();
 							}
-							outdata << endl;
+							// outdata << endl;
 						} else {
 							if ( strcmp( pszToken, "Tj" ) != 0 )
 								cout << "Tj - New Type detected in page " << pn << endl;
@@ -336,6 +345,7 @@ void MyPDF::extractTo(string outText) {
 
 	for (int pn = 0; pn < pc; ++pn) {
 		extract(pn);
+		// outdata << endl;
 	}
 	pc = PDF.GetPageCount();
 
